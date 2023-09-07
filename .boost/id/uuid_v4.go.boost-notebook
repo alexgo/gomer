@@ -1,0 +1,56 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package id\n\nimport (\n\t\"time\"\n)\n\n// UUID specification is found in RFC 4122 (https://tools.ietf.org/html/rfc4122). A variant 4 UUID is one that includes\n// 122 random bits, and 6 fixed bits (2 for the UUID variant, 4 for the UUID version).\n//\n// Section 4.1.2 of the RFC (https://tools.ietf.org/html/rfc4122#section-4.1.2) has a similar diagram of the bit layout\n// for a UUID. This has been modified in two ways. First, the bit ordering has been reversed to be more natural to the\n// binary representation of a byte (e.g. a byte with only the least significant bit set is 0b00000001). The second\n// difference is that this diagram shows what each byte contains so as to be explicit about where the UUID variant\n// (indicated by VAR) and version (indicated by VERSION) values go. The bits for variant and to indicate v4 are found\n// below.\n//\n//   Octet → 0               1               2               3\n// Chars     7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0 7 6 5 4 3 2 1 0\n//   ↓      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n//  0-7     | time_low (3)  : time_low (2)  : time_low (1)  : time_low (0)  |    most\n//          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n//  8-15    | time_mid (1)  : time_mid (0)  :VERSION| t_h+4 :  time_hi (0)  |\n//          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n// 16-23    |VAR| clk_seq_hi|  clk_seq_low  :   node (1)    :   node (0)    |\n//          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n// 24-31    |   node (5)    :   node (4)    :   node (3)    :   node (2)    |    least\n//          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+      ↑\n//                most                                            least      ← Significance\n\nvar UuidV4 = NewUuidV4IdGenerator(time.Now().UnixNano(), true)\n\n// NewUuidV4IdGenerator returns a generator that generate versions 4 (i.e. randomly generated) UUIDs. The 'seed'\n// parameter specifies what value to use to start the production of random values, and 'withHyphens' determines if the\n// generated values have the common hyphen separators between the different UUID fields. For convenience, a pre-seeded\n// UuidV4 generator (with hyphens) has been predefined.\n//\n// UuidV4IdGenerators are safe for concurrent use by multiple goroutines.\nfunc NewUuidV4IdGenerator(seed int64, withHyphens bool) Generator {\n\treturn uuidV4{\n\t\tbase16:      NewBaseNIdGenerator(32, Chars, []byte(HexDigits), seed).(*baseNIdGenerator),\n\t\twithHyphens: withHyphens,\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\ntype uuidV4 struct {\n\tbase16      *baseNIdGenerator\n\twithHyphens bool\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 43
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nconst (\n\tversionNibble = 12 // per diagram above (upper left is byte '0')\n\tvariantNibble = 16 // per diagram above (upper left is byte '0')\n\n\tv4VersionBits = 0b0100\n\tvariantBits   = 0b10 << 2\n)\n\nfunc (u uuidV4) Generate() string {\n\tchars := u.base16.generateChars()\n\n\tchars[versionNibble] = u.base16.encoding[v4VersionBits]                                   // Should be encoded as '4'\n\tchars[variantNibble] = u.base16.encoding[variantBits|hexToBits(chars[variantNibble])&0x3] // variant bits ORed with the current char's bottom 2 bits\n\n\tif u.withHyphens {\n\t\ts := make([]byte, 36)\n\t\tcopy(s, chars[0:8])\n\t\ts[8] = '-'\n\t\tcopy(s[9:], chars[8:12])\n\t\ts[13] = '-'\n\t\tcopy(s[14:], chars[12:16])\n\t\ts[18] = '-'\n\t\tcopy(s[19:], chars[16:20])\n\t\ts[23] = '-'\n\t\tcopy(s[24:], chars[20:32])\n\n\t\treturn string(s)\n\t} else {\n\t\treturn string(chars)\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 48
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc hexToBits(b byte) byte {\n\tif b >= '0' && b <= '9' {\n\t\treturn b - '0'\n\t} else if b >= 'A' && b <= 'F' {\n\t\treturn (b - 'A') + 10\n\t} else {\n\t\tpanic(\"provided value is not encoded in hexadecimal: \" + string(b))\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 80
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./id/uuid_v4.go"
+  }
+}

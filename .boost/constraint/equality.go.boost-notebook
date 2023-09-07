@@ -1,0 +1,304 @@
+{
+  "cells": [
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 10:18:59 AM PDT\n\nThis code snippet is written in Go and is part of a package named `constraint`. This package likely contains various constraints or rules that can be applied to data for validation purposes. \n\nThe code defines a function `Equals` which takes a parameter `value` of type `interface{}`. This means `value` can be of any type. The function returns an instance of `Constraint`, which is likely a type defined elsewhere in the `constraint` package.\n\nThe `Equals` function creates a new `Constraint` using the `New` function (presumably defined elsewhere in the `constraint` package) with three arguments: the string \"Equals\", the input `value`, and a function that takes an `interface{}` and returns a `gomerr.Gomerr`.\n\n`gomerr.Gomerr` is likely a custom error type defined in the `gomerr` package. This package is imported at the beginning of the code snippet and is likely used throughout the project for error handling.\n\nThe function passed as the third argument to `New` performs the actual constraint check. It uses `flect.IndirectInterface` to get the underlying value of `toTest` if it's a pointer. If `toTest` is not a pointer or its underlying value is not equal to `value`, the function returns `NotSatisfied(toTest)`, which is likely a function that generates a `gomerr.Gomerr` indicating the constraint was not satisfied. If `toTest` is equal to `value`, the function returns `nil`, indicating no error.\n\nIn terms of algorithms, this code doesn't use any complex ones. It primarily uses equality comparison and pointer dereferencing.\n\nThe code appears to align with common Go practices. It makes good use of interfaces to allow for flexibility and leverages a custom error type for detailed error information.\n\nFor more information on Go interfaces, you can refer to the official Go documentation: https://golang.org/doc/effective_go#interfaces. For more information on error handling in Go, you can refer to this blog post: https://blog.golang.org/error-handling-and-go."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 10:19:59 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->ExampleProcess;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:20:24 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:21:51 AM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 11\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in the flect.IndirectInterface function can be computationally expensive and slow down performance. Reflection is generally slower than direct operations, and it can also lead to increased memory usage.\n\n   **Solution**: Consider redesigning the code to avoid the need for reflection. If reflection is necessary, ensure that it's used as sparingly as possible. Also, consider caching the results of reflection if the same operations are performed multiple times on the same types. Here is a link to an article that provides more information on optimizing reflection in Go: https://medium.com/@val_deleplace/go-reflection-tips-and-tricks-527b7e4a1e2a\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 11,
+                "severity": 6,
+                "bugType": "CPU",
+                "description": "The use of reflection in the flect.IndirectInterface function can be computationally expensive and slow down performance. Reflection is generally slower than direct operations, and it can also lead to increased memory usage.",
+                "solution": "Consider redesigning the code to avoid the need for reflection. If reflection is necessary, ensure that it's used as sparingly as possible. Also, consider caching the results of reflection if the same operations are performed multiple times on the same types. Here is a link to an article that provides more information on optimizing reflection in Go: https://medium.com/@val_deleplace/go-reflection-tips-and-tricks-527b7e4a1e2a"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:23:28 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "0",
+      "value": "package constraint\n\nimport (\n\t\"reflect\"\n\n\t\"github.com/jt0/gomer/flect\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\nfunc Equals(value interface{}) Constraint {\n\treturn New(\"Equals\", value, func(toTest interface{}) gomerr.Gomerr {\n\t\tif tt, ok := flect.IndirectInterface(toTest); !ok || tt != value {\n\t\t\treturn NotSatisfied(toTest)\n\t\t}\n\t\treturn nil\n\t})\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 10:19:20 AM PDT\n\nThis is a function in Go that creates a constraint for data validation. The function is named `NotEquals` and it takes an `interface{}` type as an argument. This function returns a `Constraint`, which is likely a custom type defined elsewhere in the code.\n\nThe `NotEquals` function uses a closure to define the constraint. This closure takes a value to test (`toTest`) and returns an error of type `gomerr.Gomerr` if the constraint is not satisfied. \n\nHere's a breakdown of the closure:\n\n1. `tt, ok := flect.IndirectInterface(toTest)`: This line uses the `flect` package's `IndirectInterface` function to get the actual value of `toTest` if it is a pointer. The function returns two values: the possibly indirected value (`tt`) and a boolean (`ok`) that is `false` if the value couldn't be indirected (i.e., it's not a pointer).\n\n2. `!ok || tt == value`: This condition checks if the `toTest` value couldn't be indirected or if it equals the `value` passed to the `NotEquals` function. If either condition is true, the constraint is not satisfied.\n\n3. `return NotSatisfied(toTest)`: If the constraint is not satisfied, this line returns an error of type `gomerr.Gomerr`. The `NotSatisfied` function likely creates this error and includes `toTest` as part of the error message.\n\n4. `return nil`: If the constraint is satisfied, the closure returns `nil`, indicating no error.\n\nIn summary, this function creates a constraint that checks if a value is not equal to a specified value. It uses the `flect` package to handle indirect interfaces (pointers), and the `gomerr` package to handle errors.\n\nFor more information on Go's interfaces, you can refer to [A Tour of Go](https://tour.golang.org/methods/9).\n\nFor more information on Go's closures, you can refer to [Go by Example: Closures](https://gobyexample.com/closures).\n\nPlease note that `flect` and `gomerr` are likely custom packages used in this project, and you might need to look at their source code or documentation for more detailed understanding."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 10:20:05 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExamplErrorPath-->End;\n```\n\nThe code snippet provided does not have any control flow."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:20:28 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:22:05 AM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 37\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in the `flect.IndirectInterface(toTest)` function call can be computationally expensive and slow down performance.\n\n   **Solution**: Consider refactoring the code to avoid using reflection. If the types of `value` and `toTest` are known in advance, use type assertions or type switches instead. More on Go's reflection package can be found here: https://golang.org/pkg/reflect/\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 20,
+                "severity": 7,
+                "bugType": "CPU",
+                "description": "The use of reflection in the `flect.IndirectInterface(toTest)` function call can be computationally expensive and slow down performance.",
+                "solution": "Consider refactoring the code to avoid using reflection. If the types of `value` and `toTest` are known in advance, use type assertions or type switches instead. More on Go's reflection package can be found here: https://golang.org/pkg/reflect/"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:23:58 AM PDT\n\n1. **Severity**: 4/10\n\n   **Line Number**: 39\n\n   **Bug Type**: GDPR\n\n   **Description**: The function does not appear to anonymize or encrypt the 'value' parameter, which could be a GDPR violation if it contains personally identifiable information (PII).\n\n   **Solution**: Encrypt or anonymize any PII before processing it. Consider using a library for this purpose, such as Go's 'crypto' package.\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 39\n\n   **Bug Type**: PCI DSS\n\n   **Description**: If 'value' contains cardholder data, the function could violate PCI DSS requirements, as it does not appear to use secure methods to protect this data.\n\n   **Solution**: Ensure all cardholder data is encrypted and securely stored. Use secure coding techniques and libraries to protect this data.\n\n\n3. **Severity**: 5/10\n\n   **Line Number**: 39\n\n   **Bug Type**: HIPAA\n\n   **Description**: If 'value' contains protected health information (PHI), the function could violate HIPAA regulations, as it does not appear to protect this data.\n\n   **Solution**: Ensure all PHI is encrypted and securely stored. Use secure coding techniques and libraries to protect this data.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 22,
+                "severity": 4,
+                "bugType": "GDPR",
+                "description": "The function does not appear to anonymize or encrypt the 'value' parameter, which could be a GDPR violation if it contains personally identifiable information (PII).",
+                "solution": "Encrypt or anonymize any PII before processing it. Consider using a library for this purpose, such as Go's 'crypto' package."
+              },
+              {
+                "lineNumber": 22,
+                "severity": 5,
+                "bugType": "PCI DSS",
+                "description": "If 'value' contains cardholder data, the function could violate PCI DSS requirements, as it does not appear to use secure methods to protect this data.",
+                "solution": "Ensure all cardholder data is encrypted and securely stored. Use secure coding techniques and libraries to protect this data."
+              },
+              {
+                "lineNumber": 22,
+                "severity": 5,
+                "bugType": "HIPAA",
+                "description": "If 'value' contains protected health information (PHI), the function could violate HIPAA regulations, as it does not appear to protect this data.",
+                "solution": "Ensure all PHI is encrypted and securely stored. Use secure coding techniques and libraries to protect this data."
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc NotEquals(value interface{}) Constraint {\n\treturn New(\"NotEquals\", value, func(toTest interface{}) gomerr.Gomerr {\n\t\tif tt, ok := flect.IndirectInterface(toTest); !ok || tt == value {\n\t\t\treturn NotSatisfied(toTest)\n\t\t}\n\t\treturn nil\n\t})\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 17
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 10:19:45 AM PDT\n\nThis Go code defines a function `OneOf` that returns a `Constraint`. It checks if a given value is one of the specified values. The function uses reflection to check the type of the values and to convert the value to test to the same type as the specified values. The code also uses a custom error type `gomerr.Gomerr`.\n\nThe algorithm in this function can be broken down as follows:\n\n1. The function takes a variadic parameter `values`. This means it can accept any number of arguments of any type.\n\n2. If no values are provided, the function panics with a custom error message using `gomerr.Configuration`.\n\n3. The function gets the type of the first value in the `values` slice using `reflect.TypeOf`.\n\n4. The function returns a new `Constraint` which is a function that takes an `interface{}` type parameter `toTest`.\n\n5. Inside the `Constraint` function, it checks if `toTest` can be read and is not a nil pointer or interface using `flect.ReadableIndirectValue`. If it's not readable, it returns a `NotSatisfied` error.\n\n6. If `toTest` can be converted to the type of `values` using `ttv.CanConvert(valuesType)`, it does the conversion and compares the converted `toTest` value with each value in `values`. If a match is found, the function returns `nil`, indicating no error.\n\n7. If `toTest` cannot be converted to `valuesType`, or if no match is found in the `values` slice, the function returns a `NotSatisfied` error.\n\nThe `flect` package used in this code is likely a utility package in the same project or a third-party package that provides helper functions for reflection. The `gomerr` package is likely a custom error handling package in the same project.\n\nThis function is an example of a constraint function that can be used in data validation. It ensures that a value is one of the specified values, which can be useful in many scenarios such as checking if a string is one of the allowed strings, or if a number is one of the allowed numbers.\n\nFor more information on the topics used in this code, you can refer to the following resources:\n\n- [Go by Example: Variadic Functions](https://gobyexample.com/variadic-functions)\n- [Go by Example: Errors](https://gobyexample.com/errors)\n- [Go by Example: Reflection](https://gobyexample.com/reflection)\n- [Ardan Labs: Using the reflect Package in Go](https://www.ardanlabs.com/blog/2018/05/using-the-reflect-package-in-go.html)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 10:20:11 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe code snippet provided does not have any control flow."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:20:42 AM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 57\n\n   **Bug Type**: Insecure Coding Practices\n\n   **Description**: The function uses the panic function to handle errors. This is an insecure coding practice as it can lead to denial of service if not properly caught and handled. It is generally recommended to avoid panic in Go unless there is a truly exceptional condition that warrants it. See Go's official blog post on the subject: https://go.dev/blog/defer-panic-and-recover\n\n   **Solution**: Instead of using panic to handle errors, consider returning an error from the function and handle this error in the calling code. This allows the calling code to decide how to handle the error and prevents the program from crashing unexpectedly.\n\n\n2. **Severity**: 4/10\n\n   **Line Number**: 59\n\n   **Bug Type**: Insecure Coding Practices\n\n   **Description**: The function uses the reflect package to perform dynamic type checking and conversion. This can lead to potential security issues if not properly validated. The reflect package should be used with caution as it can potentially break type safety. See Go's official documentation on the subject: https://golang.org/pkg/reflect/\n\n   **Solution**: Consider using static type checking where possible, as it is safer and more efficient. If dynamic type checking is necessary, make sure to properly validate the types and handle potential errors.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": [
+              {
+                "lineNumber": 31,
+                "severity": 6,
+                "bugType": "Insecure Coding Practices",
+                "description": "The function uses the panic function to handle errors. This is an insecure coding practice as it can lead to denial of service if not properly caught and handled. It is generally recommended to avoid panic in Go unless there is a truly exceptional condition that warrants it. See Go's official blog post on the subject: https://go.dev/blog/defer-panic-and-recover",
+                "solution": "Instead of using panic to handle errors, consider returning an error from the function and handle this error in the calling code. This allows the calling code to decide how to handle the error and prevents the program from crashing unexpectedly."
+              },
+              {
+                "lineNumber": 33,
+                "severity": 4,
+                "bugType": "Insecure Coding Practices",
+                "description": "The function uses the reflect package to perform dynamic type checking and conversion. This can lead to potential security issues if not properly validated. The reflect package should be used with caution as it can potentially break type safety. See Go's official documentation on the subject: https://golang.org/pkg/reflect/",
+                "solution": "Consider using static type checking where possible, as it is safer and more efficient. If dynamic type checking is necessary, make sure to properly validate the types and handle potential errors."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:22:29 AM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 59\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in Go, specifically the 'reflect.TypeOf' and 'reflect.ValueOf' functions, is known to be computationally expensive and can significantly slow down the execution of the program.\n\n   **Solution**: Avoid using reflection unless absolutely necessary. If the types are known ahead of time, consider using a type switch or interface instead. More details can be found here: https://go.dev/blog/laws-of-reflection\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 66\n\n   **Bug Type**: CPU\n\n   **Description**: The use of a loop to iterate over the values array for each input could lead to poor performance for large input arrays.\n\n   **Solution**: Consider using a more efficient data structure to store the values, such as a map for constant time lookup. More details can be found here: https://yourbasic.org/golang/data-structures-complexity/\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 33,
+                "severity": 7,
+                "bugType": "CPU",
+                "description": "The use of reflection in Go, specifically the 'reflect.TypeOf' and 'reflect.ValueOf' functions, is known to be computationally expensive and can significantly slow down the execution of the program.",
+                "solution": "Avoid using reflection unless absolutely necessary. If the types are known ahead of time, consider using a type switch or interface instead. More details can be found here: https://go.dev/blog/laws-of-reflection"
+              },
+              {
+                "lineNumber": 40,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The use of a loop to iterate over the values array for each input could lead to poor performance for large input arrays.",
+                "solution": "Consider using a more efficient data structure to store the values, such as a map for constant time lookup. More details can be found here: https://yourbasic.org/golang/data-structures-complexity/"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 10:24:17 AM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 52\n\n   **Bug Type**: Data Validation\n\n   **Description**: The function 'OneOf' uses reflection to dynamically convert and compare values. This can potentially lead to unexpected behavior and data leaks if not properly controlled. This could be a violation of GDPR, PCI DSS, and HIPAA as these regulations require strict control over data processing and handling.\n\n   **Solution**: Consider replacing the use of reflection with a more type-safe approach. If reflection is necessary, ensure that all possible data paths are thoroughly tested and validated to prevent data leaks or unintended behavior. Additionally, consider implementing a robust logging and monitoring system to catch any potential issues as soon as they occur.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 26,
+                "severity": 6,
+                "bugType": "Data Validation",
+                "description": "The function 'OneOf' uses reflection to dynamically convert and compare values. This can potentially lead to unexpected behavior and data leaks if not properly controlled. This could be a violation of GDPR, PCI DSS, and HIPAA as these regulations require strict control over data processing and handling.",
+                "solution": "Consider replacing the use of reflection with a more type-safe approach. If reflection is necessary, ensure that all possible data paths are thoroughly tested and validated to prevent data leaks or unintended behavior. Additionally, consider implementing a robust logging and monitoring system to catch any potential issues as soon as they occur.",
+                "webLink": "https://www.owasp.org/index.php/Data_Validation"
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc OneOf(values ...interface{}) Constraint {\n\tif len(values) == 0 {\n\t\tpanic(gomerr.Configuration(\"OneOf constraint defined without values\"))\n\t}\n\tvaluesType := reflect.TypeOf(values[0])\n\n\treturn New(\"OneOf\", values, func(toTest interface{}) gomerr.Gomerr {\n\t\tif ttv, ok := flect.ReadableIndirectValue(toTest); !ok {\n\t\t\treturn NotSatisfied(toTest)\n\t\t} else if !ttv.CanConvert(valuesType) {\n\t\t\treturn NotSatisfied(toTest)\n\t\t} else {\n\t\t\ttti := ttv.Convert(valuesType).Interface()\n\t\t\tfor _, value := range values {\n\t\t\t\tif tti == value {\n\t\t\t\t\treturn nil\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn NotSatisfied(toTest)\n\t})\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 26
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./constraint/equality.go"
+  }
+}

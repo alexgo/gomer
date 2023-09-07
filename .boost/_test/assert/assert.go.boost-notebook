@@ -1,0 +1,104 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package assert\n\nimport (\n\t\"errors\"\n\t\"fmt\"\n\t\"reflect\"\n\t\"testing\"\n\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\nfunc Assert(tb testing.TB, condition bool, msgAndArgs ...interface{}) {\n\tvar msg string\n\tvar msgArgs []interface{}\n\tif len(msg) > 0 {\n\t\tmsg = msgAndArgs[0].(string)\n\t\tif len(msg) > 1 {\n\t\t\tmsgArgs = msgAndArgs[1:]\n\t\t}\n\t}\n\n\tif !condition {\n\t\tfmt.Printf(\"Assert failed. \"+msg+\"\\n\", msgArgs...)\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc Success(tb testing.TB, err error) {\n\tif err != nil {\n\t\tfmt.Printf(\"Expected success, but got: %s\\n\", errString(err))\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 26
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc Fail(tb testing.TB, err error) {\n\tif err == nil {\n\t\tfmt.Println(\"Expected an error, but err is nil\")\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 33
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc Error(tb testing.TB, err error, msgAndArgs ...interface{}) {\n\tvar msg string\n\tvar msgArgs []interface{}\n\tif len(msg) > 0 {\n\t\tmsg = msgAndArgs[0].(string)\n\t\tif len(msg) > 1 {\n\t\t\tmsgArgs = msgAndArgs[1:]\n\t\t}\n\t}\n\n\tif err == nil {\n\t\tfmt.Printf(\"Expected error to be non-nil. \"+msg+\"\\n\", msgArgs...)\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 40
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc ErrorType(tb testing.TB, err error, target error, msgAndArgs ...interface{}) {\n\tvar msg string\n\tvar msgArgs []interface{}\n\tif len(msg) > 0 {\n\t\tmsg = msgAndArgs[0].(string)\n\t\tif len(msg) > 1 {\n\t\t\tmsgArgs = msgAndArgs[1:]\n\t\t}\n\t}\n\n\tif err == nil {\n\t\tfmt.Printf(\"Expected an error. \"+msg+\"\\n\", msgArgs...)\n\t\ttb.FailNow()\n\t}\n\n\tisTargetType := errors.Is(err, target)\n\n\t// If a batch error, validate each one in turn. TODO:p3 support an array of target error types\n\tif be, ok := err.(*gomerr.BatchError); ok && !isTargetType {\n\t\tfor _, ge := range be.Errors() {\n\t\t\tErrorType(tb, ge, target, msgAndArgs)\n\t\t}\n\t\treturn\n\t}\n\n\tif !isTargetType {\n\t\tfmt.Printf(\"Wrong error type. Expected 'errors.Is(%s, %s)' to succeed. \"+msg+\"\\n\", append([]interface{}{reflect.TypeOf(err).String(), reflect.TypeOf(target).String()}, msgArgs...)...)\n\t\tfmt.Printf(\"Received: \" + errString(err) + \"\\n\")\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 56
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc Equals(tb testing.TB, expected, actual interface{}, msgAndArgs ...interface{}) {\n\tif !reflect.DeepEqual(expected, actual) {\n\t\tvar msg string\n\t\tvar msgArgs []interface{}\n\t\tif len(msg) > 0 {\n\t\t\tmsg = msgAndArgs[0].(string)\n\t\t\tif len(msg) > 1 {\n\t\t\t\tmsgArgs = msgAndArgs[1:]\n\t\t\t}\n\t\t}\n\t\tfmt.Printf(\"Failed equality check: \"+msg+\"\\n\\tExpected: %#v\\n\\tActual:   %#v\\n\", append(append([]interface{}{}, msgArgs...), expected, actual)...)\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 88
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc NotEquals(tb testing.TB, expected, actual interface{}, msgAndArgs ...interface{}) {\n\tif reflect.DeepEqual(expected, actual) {\n\t\tvar msg string\n\t\tvar msgArgs []interface{}\n\t\tif len(msg) > 0 {\n\t\t\tmsg = msgAndArgs[0].(string)\n\t\t\tif len(msg) > 1 {\n\t\t\t\tmsgArgs = msgAndArgs[1:]\n\t\t\t}\n\t\t}\n\t\tfmt.Printf(\"Failed non-equality check: \"+msg+\"\\n\\tExpected: %#v\\n Actual: %#v\\n\", append(append([]interface{}{}, msgArgs...), expected, actual)...)\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 103
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc errString(err error) string {\n\tif ge, ok := err.(gomerr.Gomerr); ok {\n\t\treturn \"\\n\" + ge.String()\n\t}\n\treturn err.Error()\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 118
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./_test/assert/assert.go"
+  }
+}

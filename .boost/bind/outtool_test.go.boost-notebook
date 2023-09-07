@@ -1,0 +1,80 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package bind_test\n\nimport (\n\t\"encoding/json\"\n\t\"testing\"\n\n\t\"github.com/jt0/gomer/_test/assert\"\n\t\"github.com/jt0/gomer/bind\"\n)\n\ntype OutStruct struct {\n\tFoo string       `out:\"+\"`\n\tBar BarInterface `out:\"+\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\ntype BarInterface interface {\n\tBar()\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 14
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\ntype StringBar string\n\nfunc (*StringBar) Bar() {}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 18
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\ntype IntBar int\n\nfunc (*IntBar) Bar() {}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 22
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc TestInterface(t *testing.T) {\n\tvar barInterface BarInterface\n\tbarOut := OutStruct{\"foo\", barInterface}\n\toutBytes := bindToJson(t, barOut)\n\tassert.JsonEqual(t, []byte(`{\"Foo\": \"foo\"}`), outBytes)\n\n\tvar stringBar StringBar\n\tbarInterface = &stringBar\n\tstringBarOut := OutStruct{\"foo\", barInterface}\n\tstringBarBytes := bindToJson(t, stringBarOut)\n\tassert.JsonEqual(t, []byte(`{\"Foo\": \"foo\", \"Bar\": \"\"}`), stringBarBytes)\n\n\tstringBar = \"bar\"\n\tstringBarOut = OutStruct{\"foo\", barInterface}\n\tstringBarBytes = bindToJson(t, stringBarOut)\n\tassert.JsonEqual(t, []byte(`{\"Foo\": \"foo\", \"Bar\": \"bar\"}`), stringBarBytes)\n\n\tvar intBar IntBar\n\tbarInterface = &intBar\n\tintBarOut := OutStruct{\"foo\", barInterface}\n\tintBarBytes := bindToJson(t, intBarOut)\n\tassert.JsonEqual(t, []byte(`{\"Foo\": \"foo\", \"Bar\": 0}`), intBarBytes)\n\n\tintBar = 1\n\tintBarOut = OutStruct{\"foo\", barInterface}\n\tintBarBytes = bindToJson(t, intBarOut)\n\tassert.JsonEqual(t, []byte(`{\"Foo\": \"foo\", \"Bar\": 1}`), intBarBytes)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 26
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc bindToJson(t *testing.T, stringBarOut OutStruct) []byte {\n\tdata, ge := bind.Out(stringBarOut, bind.DefaultOutTool)\n\tassert.Success(t, ge)\n\tbytes, err := json.MarshalIndent(data, \"\", \"  \")\n\tassert.Success(t, err)\n\n\treturn bytes\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 55
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./bind/outtool_test.go"
+  }
+}

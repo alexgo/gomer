@@ -1,0 +1,68 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package gomerr\n\nimport (\n\t\"reflect\"\n)\n\ntype BatchError struct {\n\tGomerr\n\terrors []Gomerr\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc Batcher(errors []Gomerr) Gomerr {\n\tswitch len(errors) {\n\tcase 0:\n\t\treturn nil\n\tcase 1:\n\t\treturn errors[0]\n\tdefault:\n\t\tb := Build(&BatchError{}).(*BatchError)\n\t\tb.errors = errors\n\t\treturn b\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 10
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc Batch(errors ...Gomerr) Gomerr {\n\tvar nnErrors []Gomerr\n\tfor _, ge := range errors {\n\t\tif ge != nil {\n\t\t\tnnErrors = append(nnErrors, ge)\n\t\t}\n\t}\n\treturn Batcher(nnErrors)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 23
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc (b *BatchError) Errors() []Gomerr {\n\treturn b.errors\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 33
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nvar batchTypeString = reflect.TypeOf((*BatchError)(nil)).String()\n\nfunc (b *BatchError) ToMap() map[string]interface{} {\n\terrors := make([]map[string]interface{}, len(b.errors))\n\tfor i, ge := range b.errors {\n\t\terrors[i] = ge.ToMap()\n\t}\n\n\tm := map[string]interface{}{\n\t\t\"$.errorType\": batchTypeString,\n\t\t\"Errors\":      errors,\n\t}\n\n\tg := b.Gomerr.(*gomerr)\n\tif g.attributes != nil && len(g.attributes) > 0 {\n\t\tm[\"_attributes\"] = g.attributes\n\t}\n\n\treturn m\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 37
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./gomerr/batch.go"
+  }
+}

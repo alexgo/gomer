@@ -1,0 +1,32 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package dataerr\n\nimport (\n\t\"github.com/jt0/gomer/data\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype NoIndexMatchError struct {\n\tgomerr.Gomerr\n\tAvailableIndexes map[string]interface{}\n\tQueryable        data.Queryable `gomerr:\"include_type\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc NoIndexMatch(availableIndexes map[string]interface{}, queryable data.Queryable) *NoIndexMatchError {\n\treturn gomerr.Build(new(NoIndexMatchError), availableIndexes, queryable).(*NoIndexMatchError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 12
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./data/dataerr/noindexmatch.go"
+  }
+}

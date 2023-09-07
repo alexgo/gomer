@@ -1,0 +1,140 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package dynamodb\n\nimport (\n\t\"encoding/base64\"\n\t\"encoding/json\"\n\t\"fmt\"\n\t\"strings\"\n\t\"time\"\n\n\t\"github.com/aws/aws-sdk-go/aws\"\n\t\"github.com/aws/aws-sdk-go/service/dynamodb\"\n\n\t\"github.com/jt0/gomer/crypto\"\n\t\"github.com/jt0/gomer/data\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype nextTokenizer struct {\n\tcipher crypto.Cipher\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\ntype nextToken struct {\n\tVersion          uint               `json:\"v\"`\n\tFilter           map[string]*string `json:\"fd\"`\n\tLastEvaluatedKey map[string]string  `json:\"lek\"`\n\tExpiration       time.Time          `json:\"exp\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 20
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc (nt nextToken) ExpiresAt() time.Time {\n\treturn nt.Expiration\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 27
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nconst (\n\tstringPrefix = \"S:\"\n\tnumberPrefix = \"N:\"\n\n\tNextPageToken = \"NextPageToken\"\n)\n\nvar formatVersionExpirations = []time.Time{\n\ttime.Date(1971, 11, 30, 3, 56, 0, 0, time.UTC), // Version \"0\" expired a while ago\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 31
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nvar formatVersion = uint(len(formatVersionExpirations))\n\n// TODO: add queryable details into token\nfunc (t *nextTokenizer) tokenize(q data.Queryable, lastEvaluatedKey map[string]*dynamodb.AttributeValue) (*string, gomerr.Gomerr) {\n\tif lastEvaluatedKey == nil {\n\t\treturn nil, nil\n\t}\n\n\tnt := &nextToken{\n\t\tVersion:          formatVersion,\n\t\tFilter:           nil, // TODO\n\t\tLastEvaluatedKey: encodeLastEvaluatedKey(lastEvaluatedKey),\n\t\tExpiration:       expirationTime(),\n\t}\n\n\ttoEncrypt, err := json.Marshal(nt)\n\tif err != nil {\n\t\treturn nil, gomerr.Marshal(NextPageToken, nt).Wrap(err)\n\t}\n\n\t// TODO: provide an encryption context - probably w/ q data\n\tencrypted, ge := t.cipher.Encrypt(toEncrypt, nil)\n\tif ge != nil {\n\t\treturn nil, ge\n\t}\n\n\tencoded := base64.RawURLEncoding.EncodeToString(encrypted)\n\treturn &encoded, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 42
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\n// untokenize will pull the NextPageToken from the queryable and (if there is one) decode the value. Possible errors:\n//\n//  gomerr.BadValueError's Type:\n//      Expired:\n//      \tIf the token was generated more than 24 hours ago (a hard-coded duration)\n//          If the token is using an old format version\n//      Malformed:\n//          If the token is not Base64-encoded\n//          If the token fails decryption\n//\n// See the crypto.kmsDataKeyDecrypter Decrypt operation for additional errors types.\nfunc (t *nextTokenizer) untokenize(q data.Queryable) (map[string]*dynamodb.AttributeValue, gomerr.Gomerr) {\n\tif q.NextPageToken() == nil {\n\t\treturn nil, nil\n\t}\n\n\tencrypted, err := base64.RawURLEncoding.DecodeString(*q.NextPageToken())\n\tif err != nil {\n\t\treturn nil, gomerr.MalformedValue(NextPageToken, nil).Wrap(err)\n\t}\n\n\ttoUnmarshal, ge := t.cipher.Decrypt(encrypted, nil)\n\tif ge != nil {\n\t\treturn nil, gomerr.MalformedValue(NextPageToken, nil).Wrap(ge)\n\t}\n\n\tnt := &nextToken{}\n\tif err = json.Unmarshal(toUnmarshal, nt); err != nil {\n\t\treturn nil, gomerr.MalformedValue(NextPageToken, nil).Wrap(err)\n\t}\n\n\t// only one version to check so far...\n\tif nt.Version != formatVersion {\n\t\treturn nil, gomerr.ValueExpired(NextPageToken, formatVersionExpirations[nt.Version]).Wrap(ge)\n\t}\n\n\tif nt.tokenExpired() {\n\t\treturn nil, gomerr.ValueExpired(NextPageToken, nt.Expiration)\n\t}\n\n\t// TODO: validate filter\n\n\treturn decodeLastEvaluatedKey(nt.LastEvaluatedKey), nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 72
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc expirationTime() time.Time {\n\treturn time.Now().UTC().Add(time.Hour * 24)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 117
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc (nt *nextToken) tokenExpired() bool {\n\treturn time.Now().UTC().After(nt.Expiration)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 121
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\nfunc (nt *nextToken) formatVersionExpired() bool {\n\tif nt.Version == formatVersion {\n\t\treturn false\n\t}\n\treturn time.Now().UTC().After(formatVersionExpirations[nt.Version])\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 125
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "9",
+      "value": "\nfunc encodeLastEvaluatedKey(lastEvaluatedKey map[string]*dynamodb.AttributeValue) map[string]string {\n\tlek := make(map[string]string, len(lastEvaluatedKey))\n\n\tfor key, value := range lastEvaluatedKey {\n\t\tif value.S != nil {\n\t\t\tlek[key] = fmt.Sprintf(\"%s%s\", stringPrefix, *value.S)\n\t\t} else if value.N != nil {\n\t\t\tlek[key] = fmt.Sprintf(\"%s%s\", numberPrefix, *value.N)\n\t\t}\n\t}\n\n\treturn lek\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 9,
+        "type": "originalCode",
+        "lineNumberBase": 132
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "10",
+      "value": "\nfunc decodeLastEvaluatedKey(lek map[string]string) map[string]*dynamodb.AttributeValue {\n\tvar exclusiveStartKey = make(map[string]*dynamodb.AttributeValue)\n\n\tfor key, value := range lek {\n\t\tif strings.HasPrefix(value, numberPrefix) {\n\t\t\texclusiveStartKey[key] = &dynamodb.AttributeValue{N: aws.String(strings.TrimPrefix(value, numberPrefix))}\n\t\t} else {\n\t\t\texclusiveStartKey[key] = &dynamodb.AttributeValue{S: aws.String(strings.TrimPrefix(value, stringPrefix))}\n\t\t}\n\t}\n\n\treturn exclusiveStartKey\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 10,
+        "type": "originalCode",
+        "lineNumberBase": 146
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./data/dynamodb/nexttoken.go"
+  }
+}

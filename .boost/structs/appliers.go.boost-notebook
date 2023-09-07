@@ -1,0 +1,128 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package structs\n\nimport (\n\t\"reflect\"\n\t\"strings\"\n\n\t\"github.com/jt0/gomer/flect\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype Applier interface {\n\tApply(structValue reflect.Value, fieldValue reflect.Value, toolContext *ToolContext) gomerr.Gomerr\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\ntype StructApplier struct {\n\tSource string\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 13
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc (a StructApplier) Apply(sv reflect.Value, fv reflect.Value, _ *ToolContext) gomerr.Gomerr {\n\tvalue, ge := ValueFromStruct(sv, fv, a.Source)\n\tif ge != nil {\n\t\treturn ge\n\t}\n\n\tif ge = flect.SetValue(fv, value); ge != nil {\n\t\treturn gomerr.Configuration(\"Unable to set value\").AddAttributes(\"Source\", a.Source, \"Value\", value).Wrap(ge)\n\t}\n\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 17
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc ValueFromStruct(sv reflect.Value, fv reflect.Value, source string) (interface{}, gomerr.Gomerr) {\n\tif source == \"$\" {\n\t\treturn sv.Interface(), nil\n\t}\n\n\tif len(source) < 3 || source[0:2] != \"$.\" {\n\t\treturn nil, gomerr.Configuration(\"Unexpected source format (expected field/function name with '$.' prefix): \" + source)\n\t}\n\n\tsource = source[2:]\n\tif source[len(source)-1] == ')' {\n\t\tm := sv.MethodByName(source[0:strings.IndexByte(source, '(')])\n\t\tif !m.IsValid() {\n\t\t\treturn nil, gomerr.Configuration(\"Source method not found\").AddAttribute(\"Source\", source)\n\t\t}\n\n\t\tvar in []reflect.Value\n\t\tif m.Type().NumIn() == 1 {\n\t\t\tin = []reflect.Value{fv}\n\t\t}\n\n\t\tresults := m.Call(in)\n\t\treturn results[0].Interface(), nil\n\t}\n\n\tf := sv.FieldByName(source)\n\tif !f.IsValid() {\n\t\treturn nil, gomerr.Configuration(\"Source field not found\").AddAttribute(\"Source\", source)\n\t}\n\n\tif f.Kind() == reflect.Ptr && f.IsNil() && source == \"Attributes\" {\n\t\tprintln(\"Source is nil!!\")\n\t}\n\treturn f.Interface(), nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 30
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\ntype ValueApplier struct {\n\tStaticValue string\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 66
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nvar valueConstants = make(map[string]interface{})\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 70
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc RegisterValueConstants(constants map[string]interface{}) {\n\tfor k, v := range constants {\n\t\tif len(k) < 2 || len(k) > 64 || k[0] != '#' {\n\t\t\tpanic(\"Constants must start with a '#' symbol and be between 2 and 64 characters long\")\n\t\t}\n\t\tvalueConstants[k] = v\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 72
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc (a ValueApplier) Apply(_ reflect.Value, fv reflect.Value, _ *ToolContext) gomerr.Gomerr {\n\tstaticValue, ok := valueConstants[a.StaticValue]\n\tif !ok {\n\t\tstaticValue = a.StaticValue\n\t}\n\tif ge := flect.SetValue(fv, staticValue); ge != nil {\n\t\treturn gomerr.Configuration(\"Unable to set field to value\").AddAttribute(\"Value\", a.StaticValue).Wrap(ge)\n\t}\n\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 81
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\ntype NoApplier struct{}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 93
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "9",
+      "value": "\nfunc (NoApplier) Apply(reflect.Value, reflect.Value, *ToolContext) gomerr.Gomerr {\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 9,
+        "type": "originalCode",
+        "lineNumberBase": 95
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./structs/appliers.go"
+  }
+}

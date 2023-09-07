@@ -1,0 +1,411 @@
+{
+  "cells": [
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 11:14:42 AM PDT\n\nThis code is written in Go, a statically typed, compiled language created at Google. It's a part of a test suite for a package named `constraint`. The `constraint` package, as the name suggests, is likely used to define and enforce constraints on data.\n\nThe specific test function `TestStartsWithNilSucceeds` is testing a function `StartsWith` in the `constraint` package. \n\nHere is a detailed breakdown of the code:\n\n1. `package constraint_test`: This line declares the package name for this file. The `_test` suffix is a convention in Go which means that this file contains test functions (i.e., it's a test file).\n\n2. `import (...)`: This section imports necessary packages for this test file. The `testing` package is a standard Go package for writing test functions. The `github.com/jt0/gomer/_test/assert` and `github.com/jt0/gomer/constraint` are custom packages used in the project.\n\n3. `func TestStartsWithNilSucceeds(t *testing.T) { ... }`: This is a test function. In Go, any function with a name starting with `Test` in a `_test.go` file, and takes a pointer to `testing.T` as its only parameter, is considered a test function. The `testing` package's `T` type provides methods for reporting test failures and logging.\n\n4. Inside the test function, `c := constraint.StartsWith(nil)` calls the `StartsWith` function from the `constraint` package with `nil` as the argument and assigns the returned value to `c`.\n\n5. `ge := c.Validate(\"field\", \"abc\")` calls the `Validate` method on `c` (which is likely an instance of a struct or an interface that has a `Validate` method) with parameters `\"field\"` and `\"abc\"` and assigns the returned value to `ge`.\n\n6. `assert.Success(t, ge)` is a custom assertion function that checks if `ge` represents a successful operation. If not, it will call methods on the `t` parameter (which is a `*testing.T` instance) to mark the test as failed.\n\nThe algorithm used in this code is not directly visible as it's encapsulated in the `StartsWith` and `Validate` functions. However, the test's name suggests that the `StartsWith` function should succeed when the argument is `nil`.\n\nYou can learn more about testing in Go from the official documentation: https://golang.org/pkg/testing/"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 11:17:49 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->ExampleProcess;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:19:10 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:20:07 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:21:01 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "0",
+      "value": "package constraint_test\n\nimport (\n\t\"testing\"\n\n\t\"github.com/jt0/gomer/_test/assert\"\n\t\"github.com/jt0/gomer/constraint\"\n)\n\nfunc TestStartsWithNilSucceeds(t *testing.T) {\n\tc := constraint.StartsWith(nil)\n\tge := c.Validate(\"field\", \"abc\")\n\tassert.Success(t, ge)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 11:15:31 AM PDT\n\nThis is a unit test function in Go language, specifically using the built-in `testing` package and the `assert` package (which is likely a third-party package, possibly `github.com/stretchr/testify/assert`).\n\nThe function `TestStartsWith` is testing a function called `StartsWith` from the `constraint` package. The `StartsWith` function checks if a string starts with a specified prefix.\n\nHere is a step-by-step explanation of the code:\n\n1. The function `TestStartsWith` is declared. It takes a pointer to a `testing.T` object as an argument, which provides methods for error reporting and logging during the test.\n\n2. An array of anonymous structs is declared, each representing a test case. Each struct contains four fields:\n   - `name`: A string that describes the test case.\n   - `prefix`: A string that will be used as the prefix to test.\n   - `toTest`: The string to be tested against the prefix.\n   - `shouldSucceed`: A boolean that indicates whether the test case is expected to pass or fail.\n\n3. A for loop is used to iterate over each test case in the `tests` array.\n\n4. For each test case, the `t.Run` method is called with the test case name and a function that performs the test. This allows each test case to be run independently and have its own setup and tear-down code.\n\n5. Inside the function passed to `t.Run`, the `constraint.StartsWith` function is called with a pointer to the `prefix` of the test case. This returns a `Constraint` object.\n\n6. The `Validate` method of the `Constraint` object is called with a field name and the `toTest` string of the test case. This returns an error if the validation fails.\n\n7. If `shouldSucceed` of the test case is true, `assert.Success` is called with the error returned from `Validate`. This asserts that the error is `nil`, and logs an error message if it's not.\n\n8. If `shouldSucceed` of the test case is false, `assert.Fail` is called with the error returned from `Validate`. This asserts that the error is not `nil`, and logs an error message if it is.\n\nHere are some resources for further reading:\n\n- [Go testing package](https://golang.org/pkg/testing/)\n- [Go by Example: Testing](https://gobyexample.com/testing)\n- [Testify assert package](https://github.com/stretchr/testify#assert-package)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 11:18:46 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleProcess;\nStart-->ExampleProcess;\nStart-->ExampleProcess;\nStart-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\nExampleProcess-->ExampleProcess;\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:19:13 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:20:11 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:21:05 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc TestStartsWith(t *testing.T) {\n\ttests := []struct {\n\t\tname          string\n\t\tprefix        string\n\t\ttoTest        string\n\t\tshouldSucceed bool\n\t}{\n\t\t{\"ZeroValueStartsWithZeroValue\", \"\", \"\", true},\n\t\t{\"ZeroValueStartsWithValue\", \"hello\", \"\", false},\n\t\t{\"CaseMatches\", \"hello\", \"hello world\", true},\n\t\t{\"CaseDoesNotMatch\", \"hello\", \"Hello world\", false},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tc := constraint.StartsWith(&tt.prefix)\n\t\t\tge := c.Validate(\"field\", tt.toTest)\n\t\t\tif tt.shouldSucceed {\n\t\t\t\tassert.Success(t, ge)\n\t\t\t} else {\n\t\t\t\tassert.Fail(t, ge)\n\t\t\t}\n\t\t})\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 14
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 11:16:05 AM PDT\n\nThis is a unit test written in Go. Unit tests are used to verify the correctness of a small piece of code, such as a function or method. The `testing` package in Go provides support for automated testing of Go packages.\n\nHere's a breakdown of the code:\n\n`func TestEndsWithNilSucceeds(t *testing.T) { }` \n\nThis declares a test function named `TestEndsWithNilSucceeds`. The `*testing.T` argument is a test handler provided by the `testing` package. \n\n`c := constraint.EndsWith(nil)`\n\nThis line is calling the `EndsWith` function of the `constraint` package with `nil` as an argument. It assigns the returned value to `c`. The `EndsWith` function likely returns a constraint that checks if a given value ends with the provided suffix. In this case, the suffix is `nil`.\n\n`ge := c.Validate(\"field\", \"abc\")`\n\nThis line is calling the `Validate` method on `c` with `\"field\"` and `\"abc\"` as arguments. The `Validate` method likely checks if the value `\"abc\"` ends with `nil` (the suffix defined earlier). The result is assigned to `ge`.\n\n`assert.Success(t, ge)`\n\nThis line is calling the `Success` function of the `assert` package with `t` and `ge` as arguments. This function likely checks if `ge` is a successful validation result. If it's not, the function will make the test fail.\n\nIn terms of algorithms, this code doesn't seem to use any complex algorithms. It's mostly about calling functions and methods and checking the results.\n\nFor more information about testing in Go, you can refer to the Go documentation: https://golang.org/pkg/testing/"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 11:18:51 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleProcess;\nExampleProcess-->End;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:19:16 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:20:14 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:21:08 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc TestEndsWithNilSucceeds(t *testing.T) {\n\tc := constraint.EndsWith(nil)\n\tge := c.Validate(\"field\", \"abc\")\n\tassert.Success(t, ge)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 39
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 11:16:50 AM PDT\n\nThe provided code is a Go test function for a function called `EndsWith`. This function is presumably a part of a `constraint` package that is used to validate if a given string ends with a specified suffix. \n\nThe test function, `TestEndsWith`, uses table-driven tests - a common idiom in Go for testing multiple scenarios for a function. This approach is recommended by the Go team as it helps to keep the test code DRY (Don't Repeat Yourself) and makes it easy to add new test cases.\n\nHere's a detailed breakdown of the code:\n\n1. A slice of unnamed struct is declared, each struct in the slice represents a test case. The struct contains the following fields:\n   - `name`: a string that describes the test case.\n   - `suffix`: a string that will be used as the suffix in the `EndsWith` function.\n   - `toTest`: a string that will be tested to see if it ends with the `suffix`.\n   - `shouldSucceed`: a boolean that represents the expected result of the test.\n\n2. The test function loops over the slice of test cases using a `range` loop. For each test case, it runs a sub-test using the `t.Run` function. The sub-test is named using the `name` field of the test case.\n\n3. Inside each sub-test, the `EndsWith` function is called with the `suffix` from the test case. The returned constraint is then validated against the `toTest` string.\n\n4. If `shouldSucceed` is `true`, the test asserts that the validation is successful using `assert.Success`. If `shouldSucceed` is `false`, the test asserts that the validation fails using `assert.Fail`.\n\nThis test function is a good example of how to write table-driven tests in Go. It is simple, clear, and easy to extend with new test cases.\n\nFor more information on table-driven tests in Go, you can refer to the following resources:\n\n- [TableDrivenTests](https://github.com/golang/go/wiki/TableDrivenTests) from the Go Wiki.\n- [Using table-driven tests in Go](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests) by Dave Cheney."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 11:18:56 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe code snippet provided does not have any control flow."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:19:20 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:20:44 AM PDT\n\n1. **Severity**: 1/10\n\n   **Line Number**: 90\n\n   **Bug Type**: CPU\n\n   **Description**: This function is a test function, and it's not expected to have a significant performance impact. However, it uses the 'range' keyword to iterate through test cases, which can be slightly less efficient than using a traditional for loop if the number of test cases is large.\n\n   **Solution**: In this specific case, the performance impact is negligible due to the small number of test cases. However, for a larger number of test cases, consider using a traditional for loop with an index.\n\n\n2. **Severity**: 1/10\n\n   **Line Number**: 98\n\n   **Bug Type**: CPU\n\n   **Description**: The function 'constraint.EndsWith' is called inside the loop for each test case. If this function is computationally expensive, it could slow down the test execution.\n\n   **Solution**: Without knowing the implementation details of 'constraint.EndsWith', it's hard to provide a specific solution. However, if this function is expensive, consider optimizing its implementation or using a different approach that achieves the same result more efficiently.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 45,
+                "severity": 1,
+                "bugType": "CPU",
+                "description": "This function is a test function, and it's not expected to have a significant performance impact. However, it uses the 'range' keyword to iterate through test cases, which can be slightly less efficient than using a traditional for loop if the number of test cases is large.",
+                "solution": "In this specific case, the performance impact is negligible due to the small number of test cases. However, for a larger number of test cases, consider using a traditional for loop with an index."
+              },
+              {
+                "lineNumber": 53,
+                "severity": 1,
+                "bugType": "CPU",
+                "description": "The function 'constraint.EndsWith' is called inside the loop for each test case. If this function is computationally expensive, it could slow down the test execution.",
+                "solution": "Without knowing the implementation details of 'constraint.EndsWith', it's hard to provide a specific solution. However, if this function is expensive, consider optimizing its implementation or using a different approach that achieves the same result more efficiently."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:21:12 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc TestEndsWith(t *testing.T) {\n\ttests := []struct {\n\t\tname          string\n\t\tsuffix        string\n\t\ttoTest        string\n\t\tshouldSucceed bool\n\t}{\n\t\t{\"ZeroValueStartsWithZeroValue\", \"\", \"\", true},\n\t\t{\"ZeroValueStartsWithValue\", \"world\", \"\", false},\n\t\t{\"CaseMatches\", \"world\", \"hello world\", true},\n\t\t{\"CaseDoesNotMatch\", \"world\", \"Hello World\", false},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tc := constraint.EndsWith(&tt.suffix)\n\t\t\tge := c.Validate(\"field\", tt.toTest)\n\t\t\tif tt.shouldSucceed {\n\t\t\t\tassert.Success(t, ge)\n\t\t\t} else {\n\t\t\t\tassert.Fail(t, ge)\n\t\t\t}\n\t\t})\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 45
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 11:17:37 AM PDT\n\nThe provided code is a unit test written in Go, specifically for testing a regular expression (Regexp) constraint function. The testing framework used is the built-in \"testing\" package in Go. \n\nHere's a detailed explanation of the code:\n\n1. The function `TestRegexp(t *testing.T)` is a test function that takes a pointer to `testing.T` as its argument. `testing.T` is a type passed to Test functions to manage test state and support formatted test logs.\n\n2. Inside this function, a slice of anonymous structs is defined, with each struct representing a test case. Each struct contains a `name` (the name of the test), `regexp` (the regular expression to be tested), `toTest` (the string to apply the regular expression to), and `shouldSucceed` (a boolean indicating whether the test should pass or fail).\n\n3. The for loop `for _, tt := range tests` iterates over each test case in the slice.\n\n4. `t.Run(tt.name, func(t *testing.T)` is a function provided by the `testing` package that allows for running subtests, each with a different name. This can be useful for running different test cases for the same function.\n\n5. Inside this subtest, the `constraint.Regexp(tt.regexp)` function is called to create a regular expression constraint with the provided regular expression. The `Validate` method of the constraint is then called with \"field\" as the field name and `tt.toTest` as the value to validate.\n\n6. Finally, an if-else statement checks whether the test should succeed or fail based on the `shouldSucceed` value of the test case. If `shouldSucceed` is true, `assert.Success(t, ge)` is called to assert that the validation succeeded. If `shouldSucceed` is false, `assert.Fail(t, ge)` is called to assert that the validation failed.\n\nThe algorithm used here is straightforward: it simply loops over a set of predefined test cases, applies a regular expression constraint to a value, and checks whether the result matches the expected outcome.\n\nFor more information on Go testing, you can refer to the following resources:\n\n- [Go Testing](https://go.dev/doc/testing)\n- [Go Testing in 5 Minutes](https://www.youtube.com/watch?v=yszygk1cpEc)\n- [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests/)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 11:19:02 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe code snippet provided does not have any control flow within the function. It consists of a test case definition and a loop that iterates over the test cases. Each test case runs a validation function and checks the result. Therefore, the control flow graph is not applicable in this case."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:19:56 AM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 145\n\n   **Bug Type**: Uncontrolled Format String (CWE-134)\n\n   **Description**: The code uses 'tt.name' as a format string in the t.Run function. If 'tt.name' can be controlled by an attacker, it could lead to a format string vulnerability, which can result in a variety of security issues, ranging from information disclosure to code execution.\n\n   **Solution**: Ensure that format strings are not user-controllable, or use functions that do not interpret the format string. You can read more about format string vulnerabilities here: https://owasp.org/www-community/attacks/Format_string_attack. In this case, you can ensure that 'tt.name' is not user-controllable or use a function that does not interpret the format string.\n\n\n2. **Severity**: 3/10\n\n   **Line Number**: 147\n\n   **Bug Type**: Regular Expression Denial of Service (ReDoS) (CWE-400)\n\n   **Description**: The code uses 'tt.regexp' as a regular expression in the constraint.Regexp function. If 'tt.regexp' can be controlled by an attacker, it could lead to a Regular Expression Denial of Service (ReDoS) attack, which can cause the application to consume a large amount of CPU, leading to a denial of service.\n\n   **Solution**: Ensure that regular expressions are not user-controllable, or use regular expressions that cannot cause exponential backtracking. You can read more about ReDoS attacks here: https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS. In this case, you can ensure that 'tt.regexp' is not user-controllable or use a regular expression that cannot cause exponential backtracking.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": [
+              {
+                "lineNumber": 75,
+                "severity": 2,
+                "bugType": "Uncontrolled Format String (CWE-134)",
+                "description": "The code uses 'tt.name' as a format string in the t.Run function. If 'tt.name' can be controlled by an attacker, it could lead to a format string vulnerability, which can result in a variety of security issues, ranging from information disclosure to code execution.",
+                "solution": "Ensure that format strings are not user-controllable, or use functions that do not interpret the format string. You can read more about format string vulnerabilities here: https://owasp.org/www-community/attacks/Format_string_attack. In this case, you can ensure that 'tt.name' is not user-controllable or use a function that does not interpret the format string."
+              },
+              {
+                "lineNumber": 77,
+                "severity": 3,
+                "bugType": "Regular Expression Denial of Service (ReDoS) (CWE-400)",
+                "description": "The code uses 'tt.regexp' as a regular expression in the constraint.Regexp function. If 'tt.regexp' can be controlled by an attacker, it could lead to a Regular Expression Denial of Service (ReDoS) attack, which can cause the application to consume a large amount of CPU, leading to a denial of service.",
+                "solution": "Ensure that regular expressions are not user-controllable, or use regular expressions that cannot cause exponential backtracking. You can read more about ReDoS attacks here: https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS. In this case, you can ensure that 'tt.regexp' is not user-controllable or use a regular expression that cannot cause exponential backtracking."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:20:51 AM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 140\n\n   **Bug Type**: CPU\n\n   **Description**: Inefficient use of regular expressions. Compiling a regular expression in every iteration of the loop can be CPU intensive if the number of tests is large.\n\n   **Solution**: Consider compiling the regular expression once before the loop and reusing it. This can significantly improve the performance of this function. Here is a link to the Go documentation that explains this in more detail: https://golang.org/pkg/regexp/#Regexp\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 70,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "Inefficient use of regular expressions. Compiling a regular expression in every iteration of the loop can be CPU intensive if the number of tests is large.",
+                "solution": "Consider compiling the regular expression once before the loop and reusing it. This can significantly improve the performance of this function. Here is a link to the Go documentation that explains this in more detail: https://golang.org/pkg/regexp/#Regexp"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 11:21:17 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc TestRegexp(t *testing.T) {\n\ttests := []struct {\n\t\tname          string\n\t\tregexp        string\n\t\ttoTest        string\n\t\tshouldSucceed bool\n\t}{\n\t\t{\"ZeroValueMatchesZeroValue\", \"\", \"\", true},\n\t\t{\"ZeroValueMatchesChar\", \".\", \"\", false},\n\t\t{\"ZeroValueMatches0orMoreChar\", \".*\", \"\", true},\n\t\t{\"ValueMatches0orMoreChar\", \".*\", \"abc\", true},\n\t\t{\"BadPattern\", \"bad[\", \"abc\", false},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tc := constraint.Regexp(tt.regexp)\n\t\t\tge := c.Validate(\"field\", tt.toTest)\n\t\t\tif tt.shouldSucceed {\n\t\t\t\tassert.Success(t, ge)\n\t\t\t} else {\n\t\t\t\tassert.Fail(t, ge)\n\t\t\t}\n\t\t})\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 70
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./constraint/string_test.go"
+  }
+}

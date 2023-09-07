@@ -1,0 +1,784 @@
+{
+  "cells": [
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:37:51 AM PDT\n\nThis code is written in Go programming language and is part of an HTTP package. The purpose of this code is to define a new type called \"Op\" and a function \"NewOp\" to create a new instance of this type.\n\nThe \"Op\" type is defined as a byte, which means it can hold 8 bits of information. The comment above the type definition explains how these bits are used: \n\n- The bottom five bits correspond to the action type. This could be various HTTP methods such as GET, POST, PUT, DELETE, etc. The exact interpretation of these bits is not shown in this code snippet but would be defined elsewhere in the program.\n\n- The sixth and seventh bits specify what resource type the action is against (instance or a collection; a singleton counts as an instance). This could be used to differentiate between actions on individual items vs. actions on collections of items.\n\n- The highest bit indicates if the operation is built-in or customer-defined. This could be used to distinguish between standard operations provided by the system vs. custom operations defined by the user.\n\nThe \"NewOp\" function takes a method (which is presumably an enumeration of HTTP methods) and a category (which is a type from the \"resource\" package). It uses bitwise operations to construct a new \"Op\" value. \n\nThe function first converts the category to bits using the \"toCategoryBits\" function (which is not shown in this code snippet). It then checks if the method and category bits are valid by using bitwise AND and bitwise complement operations. If either of them is not valid, it returns an \"InvalidHttpOp\" constant.\n\nIf both the method and category bits are valid, it uses bitwise OR operations to combine the customer bit, category bits, and method bits into a single byte, which it returns as a new \"Op\" value.\n\nThis code follows the principle of encapsulation, as it hides the details of how the \"Op\" type is represented and provides a function to create new instances of this type. It also uses bitwise operations efficiently to pack multiple pieces of information into a single byte.\n\nFor more information on bitwise operations in Go, you can refer to the following resources:\n\n- [Bitwise operators in Go](https://yourbasic.org/golang/bitwise-operator-cheat-sheet/)\n- [Go by Example: Constants](https://gobyexample.com/constants) explains how to define constants in Go, including the use of the `iota` keyword for creating enumerated constants."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:44:29 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->ExampleProcess;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:47:20 AM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 17\n\n   **Bug Type**: Insecure Direct Object References (IDOR)\n\n   **Description**: The function NewOp takes a method and category as parameters and uses them to construct a new Op. However, there is no validation or sanitization of these inputs. This can lead to Insecure Direct Object References (IDOR), where an attacker can manipulate these parameters to access unauthorized resources.\n\n   **Solution**: Add input validation and sanitization to ensure that the method and category parameters are within expected ranges and formats. Also, consider implementing access control checks to ensure that the user has the necessary permissions to perform the requested operation. More information about IDOR can be found here: https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control\n\n\n2. **Severity**: 4/10\n\n   **Line Number**: 19\n\n   **Bug Type**: Improper Error Handling\n\n   **Description**: When the method and rtBits do not meet the specified conditions, the function returns an InvalidHttpOp. However, it does not provide any error message or further information about why the operation failed. This can make it difficult to debug and can also provide an attacker with an opportunity to probe the system and find vulnerabilities.\n\n   **Solution**: Implement proper error handling that provides informative error messages. However, be careful not to disclose sensitive information in error messages. More information about proper error handling can be found here: https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": [
+              {
+                "lineNumber": 17,
+                "severity": 7,
+                "bugType": "Insecure Direct Object References (IDOR)",
+                "description": "The function NewOp takes a method and category as parameters and uses them to construct a new Op. However, there is no validation or sanitization of these inputs. This can lead to Insecure Direct Object References (IDOR), where an attacker can manipulate these parameters to access unauthorized resources.",
+                "solution": "Add input validation and sanitization to ensure that the method and category parameters are within expected ranges and formats. Also, consider implementing access control checks to ensure that the user has the necessary permissions to perform the requested operation. More information about IDOR can be found here: https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control"
+              },
+              {
+                "lineNumber": 19,
+                "severity": 4,
+                "bugType": "Improper Error Handling",
+                "description": "When the method and rtBits do not meet the specified conditions, the function returns an InvalidHttpOp. However, it does not provide any error message or further information about why the operation failed. This can make it difficult to debug and can also provide an attacker with an opportunity to probe the system and find vulnerabilities.",
+                "solution": "Implement proper error handling that provides informative error messages. However, be careful not to disclose sensitive information in error messages. More information about proper error handling can be found here: https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:15 AM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 17\n\n   **Bug Type**: CPU\n\n   **Description**: Bitwise operations can be CPU-intensive when used frequently.\n\n   **Solution**: Consider refactoring the code to minimize the use of bitwise operations, or use a more efficient algorithm if possible. If the bitwise operations are necessary, consider optimizing other parts of the code to offset the CPU usage.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 17,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "Bitwise operations can be CPU-intensive when used frequently.",
+                "solution": "Consider refactoring the code to minimize the use of bitwise operations, or use a more efficient algorithm if possible. If the bitwise operations are necessary, consider optimizing other parts of the code to offset the CPU usage."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:50:56 AM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 5\n\n   **Bug Type**: GDPR\n\n   **Description**: The operation type (Op) byte may contain sensitive data that could be logged or exposed in error messages. This could violate GDPR requirements for data minimization and security.\n\n   **Solution**: Ensure sensitive data is not included in the operation type byte. Implement data masking or redaction for any logged or displayed data.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 16\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function NewOp does not perform any checks to ensure that the data it processes is not Protected Health Information (PHI). This could lead to HIPAA violations if PHI is included in the method or category parameters.\n\n   **Solution**: Implement checks to ensure that PHI is not included in the method or category parameters. Alternatively, ensure that this function is never called with PHI.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 16\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function NewOp does not perform any checks to ensure that the data it processes is not cardholder data. This could lead to PCI DSS violations if cardholder data is included in the method or category parameters.\n\n   **Solution**: Implement checks to ensure that cardholder data is not included in the method or category parameters. Alternatively, ensure that this function is never called with cardholder data.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 5,
+                "severity": 5,
+                "bugType": "GDPR",
+                "description": "The operation type (Op) byte may contain sensitive data that could be logged or exposed in error messages. This could violate GDPR requirements for data minimization and security.",
+                "solution": "Ensure sensitive data is not included in the operation type byte. Implement data masking or redaction for any logged or displayed data.",
+                "webLink": "https://gdpr-info.eu/art-5-gdpr/"
+              },
+              {
+                "lineNumber": 16,
+                "severity": 6,
+                "bugType": "HIPAA",
+                "description": "The function NewOp does not perform any checks to ensure that the data it processes is not Protected Health Information (PHI). This could lead to HIPAA violations if PHI is included in the method or category parameters.",
+                "solution": "Implement checks to ensure that PHI is not included in the method or category parameters. Alternatively, ensure that this function is never called with PHI.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              },
+              {
+                "lineNumber": 16,
+                "severity": 7,
+                "bugType": "PCI DSS",
+                "description": "The function NewOp does not perform any checks to ensure that the data it processes is not cardholder data. This could lead to PCI DSS violations if cardholder data is included in the method or category parameters.",
+                "solution": "Implement checks to ensure that cardholder data is not included in the method or category parameters. Alternatively, ensure that this function is never called with cardholder data.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/why_security_matters"
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "0",
+      "value": "package http\n\nimport (\n\t\"github.com/jt0/gomer/resource\"\n)\n\n// Op has 8 bits where the bottom five bits correspond to the action type, the sixth and seventh bit specifies what\n// resource type the action is against (instance or a collection; a singleton counts as an instance) and the highest bit\n// indicates if the op is built-in or customer-defined. The seventh bit is reserved. Use NewOp rather than try to\n// construct manually to allow for the introduction of new, built-in Method values.\ntype Op byte\n\nconst InvalidHttpOp = 0b00000000\n\nfunc NewOp(method Method, category resource.Category) Op {\n\trtBits := toCategoryBits(category)\n\tif method&^methodMask != 0 || rtBits&^categoryMask != 0 {\n\t\treturn InvalidHttpOp\n\t}\n\n\treturn customer | rtBits | method\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:38:29 AM PDT\n\nThe provided code snippet is a method definition in Go language. The method `IsValid()` is defined on the receiver `o` of type `Op`.\n\nLet's break down the code:\n\n- `func (o Op) IsValid() bool {}` : This is the function definition of `IsValid`. The function does not take any parameters and returns a boolean value. This function is defined on a receiver `o` of type `Op`. This means `IsValid` is a method that can be called on any object of type `Op`.\n\n- `return o != InvalidHttpOp` : This is the body of the function. It checks if the receiver `o` is not equal to `InvalidHttpOp`. The `InvalidHttpOp` is likely a constant or variable of type `Op` defined elsewhere in the code. If `o` is not equal to `InvalidHttpOp`, the function returns `true`, indicating that `o` is valid. If `o` is equal to `InvalidHttpOp`, the function returns `false`, indicating that `o` is not valid.\n\nThe algorithm used here is a simple comparison operation. It's a common way to validate an object's state in many programming languages.\n\nThis code is consistent with the Go language's conventions and idioms. It's a straightforward, idiomatic way to provide a validation method for a type.\n\nFor more information about methods in Go, you can refer to the official Go documentation: [https://golang.org/doc/effective_go#methods](https://golang.org/doc/effective_go#methods)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:44:37 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nExampleProcess-->End;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:47:24 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:20 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:51:01 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc (o Op) IsValid() bool {\n\treturn o != InvalidHttpOp\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 22
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:39:09 AM PDT\n\nThe provided code snippet is a method of a struct or type alias named `Op` in Go. The method is named `Method` and it returns a string.\n\nThe method `Method` uses bitwise AND operation to get the method associated with a particular operation. It uses the variable `o` which is an instance of `Op`, and `methodMask`, which is likely a constant that is used to mask out irrelevant bits of the operation code.\n\nThe `&` operator is a bitwise AND operation which takes two numbers as operands and does AND on every bit of two numbers. The AND operation is performed as follows: If both bits are 1, the resultant bit is 1. Otherwise, the resultant bit is 0.\n\nThe operation `o&methodMask` is used to extract a subset of the bits from `o` (presumably those that correspond to the method). The result of this operation is used as an index to access an element from the `methods` slice or array. The accessed string is then returned.\n\nThis method is likely part of a larger system where operations are represented as binary codes, and different parts of the code represent different aspects of the operation (e.g., the method to be used, any flags or options, etc.).\n\nHere are some links for further reading:\n- [Bitwise operation in Go](https://yourbasic.org/golang/bitwise-operator-cheat-sheet/)\n- [Methods in Go](https://gobyexample.com/methods)\n- [Arrays, slices (and strings): The mechanics of 'append'](https://go.dev/blog/slices)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:44:43 AM PDT\n\n```mermaid\ngraph TD;\n    style Start fill:#228B22, stroke:#000000, stroke-width:2px;\n    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\n    Start-->ExampleProcess;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:47:28 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:25 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:51:05 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc (o Op) Method() string {\n\treturn methods[o&methodMask]\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 26
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:39:54 AM PDT\n\nThis is a function in Go language that belongs to the `Op` type. It's called `ResourceType` and it returns a value of type `resource.Category`.\n\nHere's a breakdown of its operation:\n\n1. `func (o Op) ResourceType() resource.Category {`: This line declares a method named `ResourceType` that belongs to the type `Op`. The method doesn't accept any arguments and returns a value of type `resource.Category`.\n\n2. `return toCategoryConst(o & categoryMask)`: This line is doing a bitwise AND operation between the value of `o` and `categoryMask`. The result of this operation is then passed to the `toCategoryConst` function, and the return value of `toCategoryConst` is what gets returned by `ResourceType`.\n\nThe bitwise AND operation (`&`) is a low-level operation that works directly on the binary representations of numbers. It goes through each bit of the operands, and if the corresponding bits in both operands are `1`, then the resulting bit is `1`. Otherwise, the resulting bit is `0`.\n\nThe `categoryMask` is likely a constant value that is used to mask certain bits of the `Op` value. This is a common technique used to extract certain bits from a number or to set certain bits to a specific value.\n\nThe `toCategoryConst` function is likely a function that converts the result of the bitwise operation into a `resource.Category` value. Without seeing the implementation of this function, it's hard to say exactly what it does.\n\nThis code doesn't conflict with any architectural guidelines as it appears to be a common pattern in Go for creating methods on types and using bitwise operations for low-level manipulation of data.\n\nFor more information on bitwise operations in Go, you can refer to this link: https://yourbasic.org/golang/bitwise-operator-cheatsheet/"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:44:50 AM PDT\n\n```mermaid\ngraph TD;\n    style Start fill:#228B22, stroke:#000000, stroke-width:2px;\n    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\n    Start-->ExampleProcess;\n    ExampleProcess-->End;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:47:31 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:29 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:51:10 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc (o Op) ResourceType() resource.Category {\n\treturn toCategoryConst(o & categoryMask)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 30
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:40:17 AM PDT\n\nThis is a simple function in the Go language, defined on a type `Op`. The function is called `IsBuiltIn` and it returns a boolean value.\n\nThe function checks if the `Op` object `o` is a built-in type. It does this by performing a bitwise AND operation between `o` and a constant value `creatorTypeMask`, then comparing the result to another constant value `builtIn`.\n\nIn more detail:\n\n1. `o&creatorTypeMask` is a bitwise AND operation. It operates on the binary representations of `o` and `creatorTypeMask`. For each bit in these binary representations, if the bit is set (1) in both numbers, the bit will be set in the result. Otherwise, the bit in the result is unset (0).\n\n2. The result of this operation is then compared to `builtIn` using the `==` operator. If the two are equal, the function returns `true`; otherwise, it returns `false`.\n\nThis function is likely part of a larger type system or framework within the software. The `Op` type could represent an operation or operator in this system, and this function could be used to determine if an operation is a built-in operation or a user-defined one.\n\nAs for the architectural analysis, this function seems to be consistent with common Go practices. It is a method on a type, it uses bitwise operations for efficient computation, and it is straightforward and easy to understand.\n\nFor more learning on bitwise operations in Go, you can refer to this link: [Bitwise operation in Go](https://yourbasic.org/golang/bitwise-operator-cheat-sheet/)\n\nFor more learning on methods in Go, you can refer to this link: [A Tour of Go - Methods](https://tour.golang.org/methods/1)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:45:02 AM PDT\n\n```mermaid\ngraph TD;\n    style Start fill:#228B22, stroke:#000000, stroke-width:2px;\n    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\n    Start-->ExampleProcess;\n    Start-->ExampleErrorPath;\n    ExampleProcess-->End;\n    ExampleErrorPath-->End;\n```\n\nThe control flow graph for the provided code snippet is a simple linear flow with no branching or error paths. The function `IsBuiltIn()` returns a boolean value based on the condition `o&creatorTypeMask == builtIn`. The primary path is the default non-colored style, indicating the normal flow of execution."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:47:36 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:33 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:51:13 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc (o Op) IsBuiltIn() bool {\n\treturn o&creatorTypeMask == builtIn\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 34
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:41:33 AM PDT\n\nThe provided code is written in Go and it appears to be defining HTTP methods for a web server or API. Let's break it down:\n\n1. `type Method = Op`: This line is defining a new type `Method` that is equivalent to another type `Op`. The type `Op` is not defined in the provided code, so we can't provide more details about it.\n\n2. `const (...)`: This block defines a list of constants representing HTTP methods. The `iota` keyword is used to generate incrementing integer values for each constant. The first constant `noMethod` is assigned the value of `iota` which is 0 initially, and then `iota` increments by 1 for each subsequent constant. It's important to note that the comments indicating binary values (`0b00000001`, `0b00000010`, etc.) are not accurate, as `iota` increments by 1, not by shifting bits. \n\n3. `methodBitsCount` and `methodMask` are constants used to define a bit mask that can be used to manipulate or interpret the method values. `methodBitsCount` is set to 5, meaning we are working with 5 bits. `methodMask` is calculated as `1<<methodBitsCount - 1` which shifts 1 by 5 bits to the left and then subtracts 1, resulting in `0b00011111`.\n\n4. The `methods` variable is an array of strings where each string corresponds to a HTTP method. The size of the array is `1 << methodBitsCount`, which is equivalent to raising 2 to the power of `methodBitsCount`, resulting in an array of size 32. The HTTP method strings are placed in the array at the indices corresponding to their constant values.\n\nThis code doesn't appear to use any specific algorithms, but it uses bitwise operations to create a compact and efficient representation of HTTP methods. The use of `iota` and bit shifting is a common idiom in Go for creating sets of related constants.\n\nFor more information about these concepts, you can refer to the following resources:\n\n- [Go by Example: Constants](https://gobyexample.com/constants)\n- [Go by Example: Iota](https://gobyexample.com/iota)\n- [Go by Example: Bit Shifting](https://gobyexample.com/bit-shifting)\n- [Go by Example: Bitwise Operators](https://yourbasic.org/golang/bitwise-operator-cheat-sheet/)\n  \nAs for the architectural guidelines, the code seems to follow standard Go practices for defining constants and types. It's modular and reusable, and it could easily be integrated into a larger codebase. Without more context, it's difficult to say whether it conflicts with any specific architectural guidelines."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:45:16 AM PDT\n\n```mermaid\ngraph TD;\n    style Start fill:#228B22, stroke:#000000, stroke-width:2px;\n    style noMethod fill:#228B22, stroke:#000000, stroke-width:2px;\n    style Put fill:#228B22, stroke:#000000, stroke-width:2px;\n    style Post fill:#228B22, stroke:#000000, stroke-width:2px;\n    style Get fill:#228B22, stroke:#000000, stroke-width:2px;\n    style Patch fill:#228B22, stroke:#000000, stroke-width:2px;\n    style Delete_ fill:#228B22, stroke:#000000, stroke-width:2px;\n    style Head fill:#228B22, stroke:#000000, stroke-width:2px;\n    style Options fill:#228B22, stroke:#000000, stroke-width:2px;\n\n    Start-->noMethod;\n    Start-->Put;\n    Start-->Post;\n    Start-->Get;\n    Start-->Patch;\n    Start-->Delete_;\n    Start-->Head;\n    Start-->Options;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:47:58 AM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 81\n\n   **Bug Type**: Insecure Direct Object References (IDOR)\n\n   **Description**: The constant values for HTTP methods are defined as integers. This could potentially lead to Insecure Direct Object References (IDOR) vulnerabilities, where an attacker could manipulate these values to gain unauthorized access to certain methods.\n\n   **Solution**: A safer approach would be to use an enumeration or a string-based approach to define the HTTP methods. This would prevent potential manipulation of the method values. For more information, refer to the OWASP guide on IDOR: https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control\n\n\n2. **Severity**: 2/10\n\n   **Line Number**: 95\n\n   **Bug Type**: Information Disclosure\n\n   **Description**: The 'methods' array publicly exposes the HTTP methods supported by the application. This could potentially lead to information disclosure, as an attacker could use this information to target specific methods.\n\n   **Solution**: Consider making the 'methods' array private or encapsulating it within a function to limit its visibility. For more information, refer to the OWASP guide on Information Disclosure: https://owasp.org/www-community/Information_exposure\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": [
+              {
+                "lineNumber": 43,
+                "severity": 3,
+                "bugType": "Insecure Direct Object References (IDOR)",
+                "description": "The constant values for HTTP methods are defined as integers. This could potentially lead to Insecure Direct Object References (IDOR) vulnerabilities, where an attacker could manipulate these values to gain unauthorized access to certain methods.",
+                "solution": "A safer approach would be to use an enumeration or a string-based approach to define the HTTP methods. This would prevent potential manipulation of the method values. For more information, refer to the OWASP guide on IDOR: https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control"
+              },
+              {
+                "lineNumber": 57,
+                "severity": 2,
+                "bugType": "Information Disclosure",
+                "description": "The 'methods' array publicly exposes the HTTP methods supported by the application. This could potentially lead to information disclosure, as an attacker could use this information to target specific methods.",
+                "solution": "Consider making the 'methods' array private or encapsulating it within a function to limit its visibility. For more information, refer to the OWASP guide on Information Disclosure: https://owasp.org/www-community/Information_exposure"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:39 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:52:09 AM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 76\n\n   **Bug Type**: GDPR\n\n   **Description**: The code does not implement any form of data protection or privacy by design and by default which is a requirement under GDPR. This could lead to unauthorized access or misuse of personal data.\n\n   **Solution**: Implement data protection measures such as encryption and anonymization where necessary, and ensure that privacy settings are set at a high level by default.\n\n\n2. **Severity**: 7/10\n\n   **Line Number**: 76\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The code does not implement any form of data protection or encryption for cardholder data, which is a requirement under PCI DSS. This could lead to unauthorized access or misuse of cardholder data.\n\n   **Solution**: Implement data protection measures such as encryption and tokenization where necessary, and ensure that cardholder data is securely stored and transmitted.\n\n\n3. **Severity**: 6/10\n\n   **Line Number**: 76\n\n   **Bug Type**: HIPAA\n\n   **Description**: The code does not implement any form of data protection or encryption for protected health information (PHI), which is a requirement under HIPAA. This could lead to unauthorized access or misuse of PHI.\n\n   **Solution**: Implement data protection measures such as encryption and anonymization where necessary, and ensure that PHI is securely stored and transmitted.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 38,
+                "severity": 5,
+                "bugType": "GDPR",
+                "description": "The code does not implement any form of data protection or privacy by design and by default which is a requirement under GDPR. This could lead to unauthorized access or misuse of personal data.",
+                "solution": "Implement data protection measures such as encryption and anonymization where necessary, and ensure that privacy settings are set at a high level by default.",
+                "reference": "https://gdpr-info.eu/art-25-gdpr/"
+              },
+              {
+                "lineNumber": 38,
+                "severity": 7,
+                "bugType": "PCI DSS",
+                "description": "The code does not implement any form of data protection or encryption for cardholder data, which is a requirement under PCI DSS. This could lead to unauthorized access or misuse of cardholder data.",
+                "solution": "Implement data protection measures such as encryption and tokenization where necessary, and ensure that cardholder data is securely stored and transmitted.",
+                "reference": "https://www.pcisecuritystandards.org/pci_security/why_security_matters"
+              },
+              {
+                "lineNumber": 38,
+                "severity": 6,
+                "bugType": "HIPAA",
+                "description": "The code does not implement any form of data protection or encryption for protected health information (PHI), which is a requirement under HIPAA. This could lead to unauthorized access or misuse of PHI.",
+                "solution": "Implement data protection measures such as encryption and anonymization where necessary, and ensure that PHI is securely stored and transmitted.",
+                "reference": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "5",
+      "value": "\ntype Method = Op\n\nconst (\n\tnoMethod Method = iota // 0b00000000\n\tPut                    // 0b00000001\n\tPost                   // 0b00000010\n\tGet                    // 0b00000011\n\tPatch                  // 0b00000100\n\tDelete_                // 0b00000101\n\tHead                   // 0b00000110\n\tOptions                // 0b00000111\n\n\tmethodBitsCount = 5\n\tmethodMask      = 1<<methodBitsCount - 1 // 0b00011111\n)\n\n// Should be applied in order to consts above\nvar methods = [1 << methodBitsCount]string{\n\t\"\", // noMethod\n\t\"PUT\",\n\t\"POST\",\n\t\"GET\",\n\t\"PATCH\",\n\t\"DELETE\",\n\t\"HEAD\",\n\t\"OPTIONS\",\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 38
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:42:30 AM PDT\n\nThis Go code defines a type alias, constants, and a function related to the categorization of resources in a system.\n\nFirstly, `type resourceCategory = Op` defines a type alias `resourceCategory` for `Op`. The exact type of `Op` is not shown in the code snippet, but it is likely an integer type used for bitwise operations.\n\nThe `const` block defines four constants of type `resourceCategory` using the `iota` keyword and bitwise shift (`<<`). `iota` is a predeclared identifier in Go that represents successive untyped integer constants. It is reset to 0 whenever the reserved word `const` appears in the code and increments after each `ConstSpec`. The bitwise shift operator `<<` shifts the bits of its left operand to the left by the number of places specified by its right operand.\n\nIn this code, `noResource`, `collection`, `instance`, and `reserved` are constants representing different categories of resources, assigned values using `iota` and bitwise shift. The `methodBitsCount` is not shown in the code snippet, but it likely represents the number of bits that should be shifted.\n\nThe `categoryBitsCount` and `categoryMask` constants are used for manipulating bits related to the category of a resource.\n\nThe `toCategoryBits` function converts a `resource.Category` value to a `resourceCategory` value. It uses a switch statement to check the category of the resource and returns the corresponding `resourceCategory` constant. If the category is not `resource.CollectionCategory` or `resource.InstanceCategory`, it returns `noResource`.\n\nThis code is a good example of using bitwise operations for efficient storage and manipulation of categorization data in Go. Bitwise operations are a fundamental part of many algorithms and can be used to perform tasks more efficiently in terms of memory and processing time.\n\nFor more information on bitwise operations in Go, you can refer to the following resources:\n\n- [Bitwise operation in Go](https://yourbasic.org/golang/bitwise-operator-cheat-sheet/)\n- [The iota keyword in Go](https://go101.org/article/iota.html)\n- [Constants in Go](https://go.dev/tour/basics/16)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:45:26 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->toCategoryBits;\ntoCategoryBits-->switch;\nswitch-->caseCollectionCategory;\ncaseCollectionCategory-->returnCollection;\nswitch-->caseInstanceCategory;\ncaseInstanceCategory-->returnInstance;\nswitch-->caseDefault;\ncaseDefault-->returnNoResource;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:48:02 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:43 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:52:54 AM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 141\n\n   **Bug Type**: GDPR\n\n   **Description**: The function `toCategoryBits` does not have any data validation or error handling. This could lead to improper data processing, which could violate GDPR's data accuracy principle.\n\n   **Solution**: Add data validation and error handling to ensure that only valid data is processed. Consider using a default case in your switch statement that throws an error when an unexpected value is encountered.\n\n\n2. **Severity**: 4/10\n\n   **Line Number**: 132\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The data types and constants defined at the beginning of the code are not properly documented. This could lead to misuse or misinterpretation of these data types, potentially resulting in data breaches or unauthorized data access, violating PCI DSS requirement for maintaining a secure network and systems.\n\n   **Solution**: Provide clear and comprehensive comments for each data type and constant to explain their purpose and how they should be used. This will help prevent misuse and improve the overall security of your code.\n\n\n3. **Severity**: 5/10\n\n   **Line Number**: 141\n\n   **Bug Type**: HIPAA\n\n   **Description**: The `toCategoryBits` function processes data without any form of encryption or security measures. This could potentially lead to unauthorized access or exposure of sensitive health information, which is a violation of HIPAA's Security Rule.\n\n   **Solution**: Implement encryption measures and/or other security controls to protect sensitive health information when it is processed by the `toCategoryBits` function.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 75,
+                "severity": 3,
+                "bugType": "GDPR",
+                "description": "The function `toCategoryBits` does not have any data validation or error handling. This could lead to improper data processing, which could violate GDPR's data accuracy principle.",
+                "solution": "Add data validation and error handling to ensure that only valid data is processed. Consider using a default case in your switch statement that throws an error when an unexpected value is encountered."
+              },
+              {
+                "lineNumber": 66,
+                "severity": 4,
+                "bugType": "PCI DSS",
+                "description": "The data types and constants defined at the beginning of the code are not properly documented. This could lead to misuse or misinterpretation of these data types, potentially resulting in data breaches or unauthorized data access, violating PCI DSS requirement for maintaining a secure network and systems.",
+                "solution": "Provide clear and comprehensive comments for each data type and constant to explain their purpose and how they should be used. This will help prevent misuse and improve the overall security of your code."
+              },
+              {
+                "lineNumber": 75,
+                "severity": 5,
+                "bugType": "HIPAA",
+                "description": "The `toCategoryBits` function processes data without any form of encryption or security measures. This could potentially lead to unauthorized access or exposure of sensitive health information, which is a violation of HIPAA's Security Rule.",
+                "solution": "Implement encryption measures and/or other security controls to protect sensitive health information when it is processed by the `toCategoryBits` function."
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "6",
+      "value": "\ntype resourceCategory = Op\n\nconst (\n\tnoResource resourceCategory = iota << methodBitsCount // 0b00000000\n\tcollection                                            // 0b00100000\n\tinstance                                              // 0b01000000\n\treserved                                              // 0b01100000\n\n\tcategoryBitsCount = 2\n\tcategoryMask      = (1<<categoryBitsCount - 1) << methodBitsCount\n)\n\nfunc toCategoryBits(category resource.Category) resourceCategory {\n\tswitch category {\n\tcase resource.CollectionCategory:\n\t\treturn collection\n\tcase resource.InstanceCategory:\n\t\treturn instance\n\tdefault:\n\t\treturn noResource\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 66
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:43:17 AM PDT\n\nThis code is a function in Go programming language. The function, `toCategoryConst`, takes an input parameter `resourceType` of type `resourceCategory` and returns a value of type `resource.Category`.\n\nThe function uses a switch-case statement, a control flow statement that allows the code to execute different blocks of code based on the condition provided. In this case, the condition is the `resourceType` input parameter.\n\nHere's a detailed breakdown of the function:\n\n1. The function `toCategoryConst` is defined with one parameter `resourceType` of type `resourceCategory`.\n\n2. Inside the function, a switch-case statement is used to evaluate the `resourceType`.\n\n3. If `resourceType` is `collection`, the function returns `resource.CollectionCategory`. If `resourceType` is `instance`, the function returns `resource.InstanceCategory`.\n\n4. If `resourceType` is neither `collection` nor `instance`, the function returns an empty string `\"\"`.\n\nThis function is a straightforward mapping of the `resourceType` to a corresponding `resource.Category`. It's a common pattern in Go to use switch-case statements for such mappings.\n\nThe algorithm used in this code is a simple decision tree with a branch for each case. The time complexity is O(1) because it takes constant time to evaluate the switch-case statement regardless of the input size.\n\nThere are no apparent conflicts between this code and the provided architectural guidelines. The code appears to be consistent with Go best practices.\n\nFor more information on Go switch-case statements, you can refer to the following resources:\n\n- [Go by Example: Switch](https://gobyexample.com/switch)\n- [Effective Go: Switch](https://golang.org/doc/effective_go#switch)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:45:59 AM PDT\n\n```mermaid\ngraph TD;\n    style Start fill:#228B22, stroke:#000000, stroke-width:2px;\n    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\n    Start-->resourceTypeCheck;\n    resourceTypeCheck-->collectionCheck;\n    resourceTypeCheck-->instanceCheck;\n    collectionCheck-->returnCollectionCategory;\n    instanceCheck-->returnInstanceCategory;\n    returnCollectionCategory-->End;\n    returnInstanceCategory-->End;\n    collectionCheck-->defaultCase;\n    instanceCheck-->defaultCase;\n    defaultCase-->returnEmptyCategory;\n    returnEmptyCategory-->End;\n```\n\nThe control flow graph for the provided code is as follows:\n\n1. The control flow starts at the \"Start\" node.\n2. The code enters the \"resourceTypeCheck\" node, which represents the switch statement on the \"resourceType\" variable.\n3. From the \"resourceTypeCheck\" node, there are two possible paths:\n   - If the value of \"resourceType\" is \"collection\", the code goes to the \"collectionCheck\" node.\n   - If the value of \"resourceType\" is \"instance\", the code goes to the \"instanceCheck\" node.\n4. From the \"collectionCheck\" node, the code goes to the \"returnCollectionCategory\" node, which represents the return statement with the value \"resource.CollectionCategory\".\n5. From the \"instanceCheck\" node, the code goes to the \"returnInstanceCategory\" node, which represents the return statement with the value \"resource.InstanceCategory\".\n6. If the value of \"resourceType\" is neither \"collection\" nor \"instance\", the code goes to the \"defaultCase\" node.\n7. From the \"defaultCase\" node, the code goes to the \"returnEmptyCategory\" node, which represents the return statement with an empty string as the value.\n8. Finally, the control flow reaches the \"End\" node, indicating the end of the code.\n\nThe primary path through the code is the path from the \"Start\" node to the \"End\" node, passing through the \"resourceTypeCheck\", \"collectionCheck\", and \"returnCollectionCategory\" nodes. This path is highlighted with the \"ExampleProcess\" style.\n\nThe alternate non-error paths are the paths from the \"Start\" node to the \"End\" node, passing through the \"resourceTypeCheck\", \"instanceCheck\", and \"returnInstanceCategory\" nodes, as well as the path from the \"Start\" node to the \"End\" node, passing through the \"resourceTypeCheck\", \"defaultCase\", and \"returnEmptyCategory\" nodes. These paths are shown with the default non-colored style.\n\nThere are no error paths in the provided code."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:48:06 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:48 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:52:59 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc toCategoryConst(resourceType resourceCategory) resource.Category {\n\tswitch resourceType {\n\tcase collection:\n\t\treturn resource.CollectionCategory\n\tcase instance:\n\t\treturn resource.InstanceCategory\n\tdefault:\n\t\treturn \"\"\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 89
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:44:08 AM PDT\n\nThe given code is written in Go programming language and it is using the concept of bitwise operations and iota for creating constants. \n\nThe first part of the code defines a set of constants using iota and bit shifting. Iota is a predeclared identifier in Go, representing the untyped integer ordinal number of the current const specification in a (usually parenthesized) const declaration. It is reset to 0 whenever the reserved word const appears in the source and increments after each ConstSpec. \n\nThe `builtIn` constant is generated by shifting iota left by the sum of `methodBitsCount` and `categoryBitsCount`. The `customer` constant is then implicitly assigned the next value of iota, which is 1, and it is shifted left by the same number of bits. The `creatorTypeMask` is a mask used to isolate the creator type bits in a larger bit field.\n\nThe second part of the code is creating constants for different HTTP methods for both collection and instance. The `PutCollection`, `PostCollection`, `GetCollection`, etc., are the constants for HTTP methods on a collection. Similarly, `PutInstance`, `PostInstance`, `GetInstance`, etc., are the constants for HTTP methods on an instance. \n\nThe `+` operation here is a bitwise OR operation. It combines the bits of `Put`, `Post`, `Get`, etc., with `collection` or `instance`. This is a way to create distinct bit flags for each operation on either a collection or an instance.\n\nHere's a link for more information on iota and bitwise operations in Go:\n- [Iota](https://go.dev/play/p/-TDMgnzIQZ)\n- [Bitwise operations](https://yourbasic.org/golang/bitwise-operator-cheatsheet/)\n\nAnd here's a link for more information on HTTP methods:\n- [HTTP methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:46:22 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle PutCollection fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle PostCollection fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle GetCollection fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle PatchCollection fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle DeleteCollection fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle HeadCollection fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle OptionsCollection fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle PutInstance fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle PostInstance fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle GetInstance fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle PatchInstance fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle DeleteInstance fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle HeadInstance fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle OptionsInstance fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->PutCollection;\nStart-->PostCollection;\nStart-->GetCollection;\nStart-->PatchCollection;\nStart-->DeleteCollection;\nStart-->HeadCollection;\nStart-->OptionsCollection;\nStart-->PutInstance;\nStart-->PostInstance;\nStart-->GetInstance;\nStart-->PatchInstance;\nStart-->DeleteInstance;\nStart-->HeadInstance;\nStart-->OptionsInstance;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:48:09 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:49:53 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:53:24 AM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 200\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The code does not appear to have any direct data privacy issues related to GDPR, PCI DSS, or HIPAA compliance. However, it's important to ensure that the methods and operations represented by these constants are implemented in a way that respects data privacy regulations.\n\n   **Solution**: Ensure that operations such as Put, Post, Get, Patch, Delete, Head, and Options are implemented with data privacy in mind. For example, when implementing the Get method, ensure that only authorized users can access the data, and that sensitive data is properly encrypted.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 100,
+                "severity": 3,
+                "bugType": "Data Privacy",
+                "description": "The code does not appear to have any direct data privacy issues related to GDPR, PCI DSS, or HIPAA compliance. However, it's important to ensure that the methods and operations represented by these constants are implemented in a way that respects data privacy regulations.",
+                "solution": "Ensure that operations such as Put, Post, Get, Patch, Delete, Head, and Options are implemented with data privacy in mind. For example, when implementing the Get method, ensure that only authorized users can access the data, and that sensitive data is properly encrypted.",
+                "link": "https://gdpr-info.eu/"
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "8",
+      "value": "\nconst (\n\tbuiltIn  = iota << (methodBitsCount + categoryBitsCount) // 0b00000000\n\tcustomer                                                 // 0b10000000\n\n\tcreatorTypeMask = 1 << (methodBitsCount + categoryBitsCount) // 0b10000000\n)\n\nconst (\n\tPutCollection     = Put + collection\n\tPostCollection    = Post + collection\n\tGetCollection     = Get + collection\n\tPatchCollection   = Patch + collection\n\tDeleteCollection  = Delete_ + collection\n\tHeadCollection    = Head + collection\n\tOptionsCollection = Options + collection\n\n\tPutInstance     = Put + instance\n\tPostInstance    = Post + instance\n\tGetInstance     = Get + instance\n\tPatchInstance   = Patch + instance\n\tDeleteInstance  = Delete_ + instance\n\tHeadInstance    = Head + instance\n\tOptionsInstance = Options + instance\n)\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 100
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./api/http/op.go"
+  }
+}

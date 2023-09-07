@@ -1,0 +1,32 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package dataerr\n\nimport (\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype StoreError struct {\n\tgomerr.Gomerr\n\tOperation string\n\tData      interface{} `gomerr:\"include_type\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc Store(operation string, data interface{}) *StoreError {\n\treturn gomerr.Build(new(StoreError), operation, data).(*StoreError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 11
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./data/dataerr/store.go"
+  }
+}

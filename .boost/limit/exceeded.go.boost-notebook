@@ -1,0 +1,44 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package limit\n\nimport (\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype ExceededError struct {\n\tgomerr.Gomerr\n\tLimiter   interface{}\n\tLimited   interface{}\n\tLimit     Amount\n\tCurrent   Amount\n\tAttempted Amount\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc Exceeded(limiter, limited interface{}, limit, current, attempted Amount) *ExceededError {\n\treturn gomerr.Build(new(ExceededError), limiter, limited, limit, current, attempted).(*ExceededError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 14
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc UnquantifiedExcess(limiter, limited interface{}) *ExceededError {\n\treturn gomerr.Build(new(ExceededError), limiter, limited, Unknown, Unknown, Unknown).(*ExceededError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 18
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./limit/exceeded.go"
+  }
+}

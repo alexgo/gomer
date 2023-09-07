@@ -1,0 +1,274 @@
+{
+  "cells": [
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:17:10 AM PDT\n\nThe provided code is written in Go and it defines a struct named `BindDirectiveConfiguration` in the `http` package. This struct is used to configure how HTTP binding directives are handled. \n\nIn the context of HTTP, binding usually refers to the process of mapping HTTP request data (like query parameters, headers, path parameters, and body) to a certain data structure. This struct seems to be part of a larger system that handles this kind of mapping.\n\nHere's a breakdown of the fields in the `BindDirectiveConfiguration` struct:\n\n- `PathBindingPrefix`, `HeaderBindingPrefix`, `QueryParamBindingPrefix`, `PayloadBindingPrefix`: These fields are used to define default prefixes for different types of qualified directives. A qualified directive in this context would likely refer to a specific instruction for how to bind a certain type of data.\n\n- `SkipField`, `IncludeField`, `BindBody`: These fields define default values for unqualified directives. An unqualified directive would likely be a more general instruction for how to handle binding, not tied to a specific type of data.\n\n- `EmptyDirectiveHandling`: This field defines how to handle a field's binding if no directive is specified. The default behavior is to skip. `EmptyDirectiveHandlingType` is likely a custom type defined elsewhere in the codebase that enumerates the possible handling methods.\n\n- `OmitEmptyDirective`, `IncludeEmptyDirective`: These fields are used to define directives for handling empty values.\n\n- `EmptyValueHandlingDefault`: This field defines how an empty value is marshaled unless overridden by `OmitEmptyDirective` or `IncludeEmptyDirective`. The default behavior is to omit. `EmptyValueHandlingType` is likely another custom type defined elsewhere in the codebase that enumerates the possible handling methods for empty values.\n\nThis struct does not use any specific algorithms, but it serves as a configuration object for a larger system that likely uses algorithms to parse HTTP requests and bind data to certain structures based on these configurations.\n\nFor more information on Go structs and how they're used, refer to the [Go documentation](https://golang.org/doc/effective_go#composite_literals). For more information on HTTP and HTTP binding, you might find [this article on HTTP fundamentals](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview) and [this article on data binding in Go](https://medium.com/@xoen/golang-read-from-an-io-readwriter-line-by-line-2a8105fc55dc) helpful."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:19:23 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle BindDirectiveConfiguration fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->BindDirectiveConfiguration;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:20:02 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:20:19 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:21:11 AM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 1\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The BindDirectiveConfiguration struct could potentially be used to bind sensitive data such as Personally Identifiable Information (PII) or Payment Card Information (PCI) to HTTP requests. This could lead to data exposure if not properly handled.\n\n   **Solution**: Ensure that any sensitive data bound to HTTP requests is properly encrypted and that access to this data is strictly controlled. Consider using secure methods for transmitting sensitive data, such as HTTPS.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 1\n\n   **Bug Type**: Data Compliance\n\n   **Description**: The BindDirectiveConfiguration struct does not include any mechanisms for data anonymization or pseudonymization, which are required under GDPR for the handling of personal data.\n\n   **Solution**: Implement mechanisms for data anonymization or pseudonymization when handling personal data. This could include methods for hashing or encrypting data, or replacing identifiers with pseudonyms.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 1\n\n   **Bug Type**: Data Compliance\n\n   **Description**: The BindDirectiveConfiguration struct does not include any mechanisms for data retention or deletion, which are required under GDPR, PCI DSS, and HIPAA. This could lead to non-compliance with these regulations if personal data, payment card data, or health information is stored for longer than necessary or not properly deleted.\n\n   **Solution**: Implement mechanisms for data retention and deletion, such as setting a time limit for data storage and providing a method for securely deleting data.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 1,
+                "severity": 5,
+                "bugType": "Data Privacy",
+                "description": "The BindDirectiveConfiguration struct could potentially be used to bind sensitive data such as Personally Identifiable Information (PII) or Payment Card Information (PCI) to HTTP requests. This could lead to data exposure if not properly handled.",
+                "solution": "Ensure that any sensitive data bound to HTTP requests is properly encrypted and that access to this data is strictly controlled. Consider using secure methods for transmitting sensitive data, such as HTTPS."
+              },
+              {
+                "lineNumber": 1,
+                "severity": 6,
+                "bugType": "Data Compliance",
+                "description": "The BindDirectiveConfiguration struct does not include any mechanisms for data anonymization or pseudonymization, which are required under GDPR for the handling of personal data.",
+                "solution": "Implement mechanisms for data anonymization or pseudonymization when handling personal data. This could include methods for hashing or encrypting data, or replacing identifiers with pseudonyms."
+              },
+              {
+                "lineNumber": 1,
+                "severity": 7,
+                "bugType": "Data Compliance",
+                "description": "The BindDirectiveConfiguration struct does not include any mechanisms for data retention or deletion, which are required under GDPR, PCI DSS, and HIPAA. This could lead to non-compliance with these regulations if personal data, payment card data, or health information is stored for longer than necessary or not properly deleted.",
+                "solution": "Implement mechanisms for data retention and deletion, such as setting a time limit for data storage and providing a method for securely deleting data."
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "0",
+      "value": "package http\n\ntype BindDirectiveConfiguration struct {\n\t// Default prefixes for qualified directives\n\tPathBindingPrefix       string\n\tHeaderBindingPrefix     string\n\tQueryParamBindingPrefix string\n\tPayloadBindingPrefix    string\n\n\t// Default values for unqualified directives\n\tSkipField    string\n\tIncludeField string\n\tBindBody     string\n\n\t// Defines how a field's binding be handled if no directive is specified. Default is to skip.\n\tEmptyDirectiveHandling EmptyDirectiveHandlingType\n\n\tOmitEmptyDirective    string\n\tIncludeEmptyDirective string\n\n\t// Defines how an empty value is marshaled unless overridden by OmitEmptyDirective or IncludeEmptyDirective. Default\n\t// is to omit.\n\tEmptyValueHandlingDefault EmptyValueHandlingType\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:18:19 AM PDT\n\nThe provided code is a function written in Go language. The function is named `NewBindDirectiveConfiguration` and it doesn't accept any arguments. The function returns a value of type `BindDirectiveConfiguration`.\n\n`BindDirectiveConfiguration` is presumably a struct defined elsewhere in the code. The function is creating a new instance of this struct and populating its fields with predefined default values. \n\nHere is a breakdown of the struct fields and their assigned values:\n\n- `PathBindingPrefix`: This field is assigned the value of `DefaultPathBindingPrefix`. This suggests that it's used to set a prefix for path bindings.\n\n- `HeaderBindingPrefix`: This field is assigned the value of `DefaultHeaderBindingPrefix`. It's likely used to set a prefix for header bindings.\n\n- `QueryParamBindingPrefix`: This field is assigned the value of `DefaultQueryParamBindingPrefix`. It's presumably used to set a prefix for query parameter bindings.\n\n- `PayloadBindingPrefix`: This field is assigned the value of `DefaultPayloadBindingPrefix`. It's likely used to set a prefix for payload bindings.\n\n- `SkipField`: This field is assigned the value of `DefaultSkipFieldDirective`. It could be used to indicate whether a certain field should be skipped during binding.\n\n- `IncludeField`: This field is assigned the value of `DefaultBindToFieldNameDirective`. It could be used to specify a field to include during binding.\n\n- `BindBody`: This field is assigned the value of `DefaultBodyBindingDirective`. It's presumably used to control whether the body should be bound.\n\n- `EmptyDirectiveHandling`: This field is assigned the value of `DefaultEmptyDirectiveHandling`. It's likely used to control how empty directives are handled.\n\n- `OmitEmptyDirective`: This field is assigned the value of `DefaultOmitEmptyDirective`. It could be used to indicate whether empty directives should be omitted.\n\n- `IncludeEmptyDirective`: This field is assigned the value of `DefaultIncludeEmptyDirective`. It could be used to indicate whether empty directives should be included.\n\n- `EmptyValueHandlingDefault`: This field is assigned the value of `DefaultEmptyValueHandlingDefault`. It's presumably used to control the default behavior for handling empty values.\n\nThis function is probably used to create a default configuration for binding data from various sources (like path, header, query parameters, and payload) to a struct.\n\nThere's no specific algorithm used in this code. It's more of a configuration setup based on predefined constants.\n\nFor more information on Go struct and functions, you can refer to the following resources:\n\n- [A Tour of Go - Structs](https://tour.golang.org/moretypes/2)\n- [A Tour of Go - Functions](https://tour.golang.org/basics/4)\n- [Go by Example: Structs](https://gobyexample.com/structs)\n- [Go by Example: Functions](https://gobyexample.com/functions)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:19:30 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nExampleProcess-->End;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:20:06 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:20:23 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:22:04 AM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 52\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'NewBindDirectiveConfiguration' binds data to various prefixes without any apparent checks for user consent or data minimization principles. This could potentially lead to a violation of GDPR, which requires explicit user consent for data processing and mandates that only necessary data should be processed.\n\n   **Solution**: Implement checks to ensure that user consent has been obtained before data binding occurs. Also, review the data being bound to ensure that it is minimized to only what is necessary for the function to perform its task. Consider using a privacy-by-design approach in your data handling processes.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 55\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function 'NewBindDirectiveConfiguration' binds data to various prefixes without any apparent checks for sensitive cardholder data. This could potentially lead to a violation of PCI DSS, which requires protection of stored cardholder data.\n\n   **Solution**: Implement checks to ensure that no cardholder data is being bound without appropriate protection measures such as encryption. Consider using a data protection impact assessment (DPIA) to identify and mitigate risks related to data handling.\n\n\n3. **Severity**: 8/10\n\n   **Line Number**: 58\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function 'NewBindDirectiveConfiguration' binds data to various prefixes without any apparent checks for Protected Health Information (PHI). This could potentially lead to a violation of HIPAA, which requires secure handling of PHI.\n\n   **Solution**: Implement checks to ensure that no PHI is being bound without appropriate protection measures such as encryption. Consider implementing a secure data handling process that complies with the HIPAA Security Rule.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 28,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The function 'NewBindDirectiveConfiguration' binds data to various prefixes without any apparent checks for user consent or data minimization principles. This could potentially lead to a violation of GDPR, which requires explicit user consent for data processing and mandates that only necessary data should be processed.",
+                "solution": "Implement checks to ensure that user consent has been obtained before data binding occurs. Also, review the data being bound to ensure that it is minimized to only what is necessary for the function to perform its task. Consider using a privacy-by-design approach in your data handling processes.",
+                "link": "https://gdpr-info.eu/art-5-gdpr/"
+              },
+              {
+                "lineNumber": 31,
+                "severity": 6,
+                "bugType": "PCI DSS",
+                "description": "The function 'NewBindDirectiveConfiguration' binds data to various prefixes without any apparent checks for sensitive cardholder data. This could potentially lead to a violation of PCI DSS, which requires protection of stored cardholder data.",
+                "solution": "Implement checks to ensure that no cardholder data is being bound without appropriate protection measures such as encryption. Consider using a data protection impact assessment (DPIA) to identify and mitigate risks related to data handling.",
+                "link": "https://www.pcisecuritystandards.org/pci_security/maintaining_payment_security"
+              },
+              {
+                "lineNumber": 34,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "The function 'NewBindDirectiveConfiguration' binds data to various prefixes without any apparent checks for Protected Health Information (PHI). This could potentially lead to a violation of HIPAA, which requires secure handling of PHI.",
+                "solution": "Implement checks to ensure that no PHI is being bound without appropriate protection measures such as encryption. Consider implementing a secure data handling process that complies with the HIPAA Security Rule.",
+                "link": "https://www.hhs.gov/hipaa/for-professionals/security/index.html"
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc NewBindDirectiveConfiguration() BindDirectiveConfiguration {\n\treturn BindDirectiveConfiguration{\n\t\tPathBindingPrefix:         DefaultPathBindingPrefix,\n\t\tHeaderBindingPrefix:       DefaultHeaderBindingPrefix,\n\t\tQueryParamBindingPrefix:   DefaultQueryParamBindingPrefix,\n\t\tPayloadBindingPrefix:      DefaultPayloadBindingPrefix,\n\t\tSkipField:                 DefaultSkipFieldDirective,\n\t\tIncludeField:              DefaultBindToFieldNameDirective,\n\t\tBindBody:                  DefaultBodyBindingDirective,\n\t\tEmptyDirectiveHandling:    DefaultEmptyDirectiveHandling,\n\t\tOmitEmptyDirective:        DefaultOmitEmptyDirective,\n\t\tIncludeEmptyDirective:     DefaultIncludeEmptyDirective,\n\t\tEmptyValueHandlingDefault: DefaultEmptyValueHandlingDefault,\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 24
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:19:13 AM PDT\n\nThe provided code seems to be written in Go language and contains constants, type declarations, and commented function definition. Let's break down each part:\n\n1. **Type Declarations and Constants**\n\n   The code defines two custom types, `EmptyDirectiveHandlingType` and `EmptyValueHandlingType`, each as an integer type. For each type, it declares two constants using the `iota` keyword, which represents successive untyped integer constants in Go. \n\n   `EmptyDirectiveHandlingType` has two constants: `SkipField` and `BindToFieldName`. `EmptyValueHandlingType` has two constants: `OmitEmpty` and `IncludeEmpty`. These constants are likely used to control the behavior of some functions or methods in the program, particularly in handling empty fields or values.\n\n2. **Additional Constants**\n\n   The code also defines a series of string constants, likely used as default values or keys in the program. For example, `DefaultContentType` is set to \"application/json\", suggesting that the program deals with JSON data. Similarly, the constants starting with `Default` likely represent default behaviors or directives in the program.\n\n   The constants `ContentTypeHeader`, `AcceptsHeader`, and `AcceptLanguageKey` are likely used in HTTP request handling, as these are common HTTP headers and parameters.\n\n   The constants ending with `Key` (e.g., `pathPartsKey`, `queryParamsKey`, etc.) seem to be used as keys for accessing specific parts of a request or response, for instance, path parts, query parameters, headers, and body bytes.\n\n3. **Commented Function**\n\n   The commented function `toApplications` takes a `ToolContext` and a variable number of `toolNames` as arguments. It creates an array of `Application` objects from the provided `toolNames`, each associated with the same `ToolContext`. However, since this function is commented out, it is not contributing to the program's current behavior.\n\nThe code seems to follow standard Go practices. It's modular, and types and constants are defined clearly. However, without the context of the rest of the program, it's hard to evaluate how these types and constants are used.\n\nFor more information on Go's `iota` keyword and constants, you can refer to these resources:\n\n- [Go by Example: Constants](https://gobyexample.com/constants)\n- [Understanding iota in Go](https://medium.com/learning-the-go-programming-language/bit-hacking-with-go-e0acee258827)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:19:54 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle EmptyDirectiveHandlingType fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle EmptyValueHandlingType fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultContentType fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultPathBindingPrefix fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultHeaderBindingPrefix fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultQueryParamBindingPrefix fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultPayloadBindingPrefix fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultSkipFieldDirective fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultBindToFieldNameDirective fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultBodyBindingDirective fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultEmptyDirectiveHandling fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultOmitEmptyDirective fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultIncludeEmptyDirective fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle DefaultEmptyValueHandlingDefault fill:#228B22, stroke:#000000, stroke-width:2px;\n\nStart-->EmptyDirectiveHandlingType;\nStart-->EmptyValueHandlingType;\nStart-->DefaultContentType;\nStart-->DefaultPathBindingPrefix;\nStart-->DefaultHeaderBindingPrefix;\nStart-->DefaultQueryParamBindingPrefix;\nStart-->DefaultPayloadBindingPrefix;\nStart-->DefaultSkipFieldDirective;\nStart-->DefaultBindToFieldNameDirective;\nStart-->DefaultBodyBindingDirective;\nStart-->DefaultEmptyDirectiveHandling;\nStart-->DefaultOmitEmptyDirective;\nStart-->DefaultIncludeEmptyDirective;\nStart-->DefaultEmptyValueHandlingDefault;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:20:10 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:20:28 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:22:08 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "2",
+      "value": "\ntype EmptyDirectiveHandlingType int\n\nconst (\n\tSkipField EmptyDirectiveHandlingType = iota\n\tBindToFieldName\n)\n\ntype EmptyValueHandlingType int\n\nconst (\n\tOmitEmpty EmptyValueHandlingType = iota\n\tIncludeEmpty\n)\n\nconst (\n\tDefaultContentType               = \"application/json\"\n\tDefaultPathBindingPrefix         = \"path.\"\n\tDefaultHeaderBindingPrefix       = \"header.\"\n\tDefaultQueryParamBindingPrefix   = \"query.\"\n\tDefaultPayloadBindingPrefix      = \"\"\n\tDefaultSkipFieldDirective        = \"-\"\n\tDefaultBindToFieldNameDirective  = \"+\"\n\tDefaultBodyBindingDirective      = \"body\"\n\tDefaultEmptyDirectiveHandling    = SkipField\n\tDefaultOmitEmptyDirective        = \"omitempty\"\n\tDefaultIncludeEmptyDirective     = \"includeempty\"\n\tDefaultEmptyValueHandlingDefault = OmitEmpty\n\n\tContentTypeHeader = \"Content-Type\"\n\tAcceptsHeader     = \"Accepts\"\n\n\tAcceptLanguageKey = \"$_accept_language\"\n\n\tpathPartsKey   = \"$_path_parts\"\n\tqueryParamsKey = \"$_query_params\"\n\theadersKey     = \"$_headers\"\n\tbodyBytesKey   = \"$_body_bytes\"\n\n\t// toolsWithContextKey = \"$_tools_with_context\"\n)\n\n//\n// func toApplications(tc fields.ToolContext, toolNames ...string) []fields.Application {\n// \tapplications := make([]fields.Application, len(toolNames))\n// \tfor i, toolName := range toolNames {\n// \t\tapplications[i] = fields.Application{toolName, tc}\n// \t}\n// \treturn applications\n// }\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 40
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./api/http/bind.go"
+  }
+}

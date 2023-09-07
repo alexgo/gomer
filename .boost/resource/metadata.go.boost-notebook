@@ -1,0 +1,92 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package resource\n\nimport (\n\t\"reflect\"\n\t\"strings\"\n\n\t\"github.com/jt0/gomer/data\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype Metadata interface {\n\tResourceType(Category) reflect.Type\n\tActions() map[interface{}]func() Action\n\t// Parent() Metadata\n\tChildren() []Metadata\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc Register(instance Instance, collection Collection, actions map[interface{}]func() Action, dataStore data.Store, parentMetadata Metadata) (md *metadata, ge gomerr.Gomerr) {\n\tif instance == nil {\n\t\treturn nil, gomerr.Configuration(\"Must register with an Instance type\")\n\t}\n\n\tit := reflect.TypeOf(instance)\n\tmd, _ = resourceTypeToMetadata[it]\n\tif md != nil {\n\t\treturn md, nil\n\t}\n\n\tif actions == nil {\n\t\treturn nil, gomerr.Configuration(\"Must register with a non-nil Actions\")\n\t}\n\n\tunqualifiedInstanceName := it.String()\n\tunqualifiedInstanceName = unqualifiedInstanceName[strings.Index(unqualifiedInstanceName, \".\")+1:]\n\n\tvar ct reflect.Type\n\tvar unqualifiedCollectionName string\n\tif collection != nil {\n\t\tct = reflect.TypeOf(collection)\n\t\tunqualifiedCollectionName = it.String()\n\t\tunqualifiedCollectionName = unqualifiedCollectionName[strings.Index(unqualifiedCollectionName, \".\")+1:]\n\t}\n\n\tnilSafeParentMetadata, _ := parentMetadata.(*metadata)\n\n\tmd = &metadata{\n\t\tinstanceType:   it,\n\t\tinstanceName:   unqualifiedInstanceName,\n\t\tcollectionType: ct,\n\t\tcollectionName: unqualifiedCollectionName,\n\t\tactions:        actions,\n\t\tdataStore:      dataStore,\n\t\tparent:         nilSafeParentMetadata,\n\t\tchildren:       make([]Metadata, 0),\n\t}\n\n\tif nilSafeParentMetadata != nil {\n\t\tnilSafeParentMetadata.children = append(nilSafeParentMetadata.children, md)\n\t}\n\n\tresourceTypeToMetadata[it] = md\n\tif ct != nil {\n\t\tresourceTypeToMetadata[ct] = md\n\t}\n\n\treturn md, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 16
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nvar resourceTypeToMetadata = make(map[reflect.Type]*metadata)\n\ntype metadata struct {\n\tinstanceType   reflect.Type\n\tinstanceName   string\n\tcollectionType reflect.Type\n\tcollectionName string\n\tactions        map[interface{}]func() Action\n\tdataStore      data.Store\n\tparent         *metadata\n\tchildren       []Metadata // Using interface type since we aren't currently using child attributes\n\n\t// idFields       []field\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 67
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc (m *metadata) ResourceType(category Category) reflect.Type {\n\tswitch category {\n\tcase InstanceCategory:\n\t\treturn m.instanceType\n\tcase CollectionCategory:\n\t\treturn m.collectionType\n\tdefault:\n\t\treturn nil\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 82
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc (m *metadata) Actions() map[interface{}]func() Action {\n\treturn m.actions\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 93
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\n// func (m *metadata) Parent() Metadata {\n// \tif m.parent == nil {\n// \t\treturn nil\n// \t}\n//\n// \treturn m.parent\n// }\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 97
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc (m *metadata) Children() []Metadata {\n\treturn m.children\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 105
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./resource/metadata.go"
+  }
+}

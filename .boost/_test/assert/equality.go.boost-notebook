@@ -1,0 +1,44 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package assert\n\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n\t\"strconv\"\n\t\"testing\"\n)\n\n// JsonEqual accepts two JSON-containing byte arrays and compares their content equality (rather than their byte\n// equality). This allows ordering to be ignored\nfunc JsonEqual(tb testing.TB, expected, actual []byte, msg ...interface{}) {\n\tvar expectedMap map[string]interface{}\n\terr := json.Unmarshal(expected, &expectedMap)\n\tSuccess(tb, err)\n\n\tvar actualMap map[string]interface{}\n\terr = json.Unmarshal(actual, &actualMap)\n\tSuccess(tb, err)\n\n\tif !mapsEqual(expectedMap, actualMap, \"\") {\n\t\tfmt.Println(append([]interface{}{\"Failed equality check\"}, msg...)...)\n\t\ttb.FailNow()\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\n// mapsEqual accepts two map[string]interface{}s, walking both looking at per-key and value equivalency. Any mismatches\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 25
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "// will be printed to standard out and overall inequality will result in a\nfunc mapsEqual(expected, actual map[string]interface{}, path string) bool {\n\tif expected == nil || actual == nil {\n\t\tif expected == nil && actual == nil {\n\t\t\treturn true\n\t\t}\n\t\tfmt.Println(\"\\tmap and nil cannot be compared\")\n\t\treturn false\n\t}\n\n\tm1 := expected\n\tm2 := actual\n\tequal := true\n\tif len(expected) > len(actual) {\n\t\tfmt.Printf(\"\\t'expected' has more attributes than 'actual' (%d vs %d)\\n\", len(m1), len(m2))\n\t\tequal = false\n\t} else if len(expected) < len(actual) {\n\t\tfmt.Printf(\"\\t'actual' has more attributes than 'expected' (%d vs %d)\\n\", len(m2), len(m1))\n\t\tequal = false\n\t\tm1, m2 = m2, m1 // flip maps so we can emit the missing key\n\t}\n\n\tfor k, v1 := range m1 {\n\t\tv2, ok := m2[k]\n\t\tif !ok {\n\t\t\tprintln(\"\\tkey missing:\", path+k)\n\t\t\tcontinue\n\t\t}\n\t\tswitch a1 := v1.(type) {\n\t\tcase map[string]interface{}:\n\t\t\tequal = equal && mapsEqual(v1.(map[string]interface{}), v2.(map[string]interface{}), path+k+\".\")\n\t\tcase []interface{}:\n\t\t\ta2 := v2.([]interface{})\n\t\t\tif len(a1) != len(a2) {\n\t\t\t\tfmt.Printf(\"\\tlen(%s) are not equal (%d vs %d)\", path+k, len(a1), len(a2))\n\t\t\t\tequal = false\n\t\t\t}\n\t\t\tfor i, _ := range a1 {\n\t\t\t\tif i >= len(a2) {\n\t\t\t\t\tbreak\n\t\t\t\t}\n\t\t\t\te2 := a2[i]\n\t\t\t\tswitch e1 := a1[i].(type) {\n\t\t\t\tcase map[string]interface{}:\n\t\t\t\t\t// TODO: verify e2's type\n\t\t\t\t\tequal = equal && mapsEqual(e1, e2.(map[string]interface{}), path+k+\"[\"+strconv.Itoa(i)+\"].\")\n\t\t\t\tdefault:\n\t\t\t\t\tif e1 != e2 {\n\t\t\t\t\t\tfmt.Printf(\"\\tkey %s[%d]'s values not equal: %v != %v\\n\", path+k, i, e1, e2)\n\t\t\t\t\t\tequal = false\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\tdefault:\n\t\t\tif v1 != v2 {\n\t\t\t\tfmt.Printf(\"\\tkey %s's values not equal: %v != %v\\n\", path+k, v1, v2)\n\t\t\t\tequal = false\n\t\t\t}\n\t\t}\n\t}\n\n\treturn equal\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 27
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./_test/assert/equality.go"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package structs\n\nimport (\n\t\"reflect\"\n\t\"strings\"\n\t\"time\"\n\n\t\"github.com/jt0/gomer/flect\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype ToolFunction func(structValue reflect.Value, fieldValue reflect.Value, toolContext *ToolContext) (output interface{}, ge gomerr.Gomerr)\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc (f ToolFunction) Apply(sv reflect.Value, fv reflect.Value, tc *ToolContext) gomerr.Gomerr {\n\tvalue, ge := f(sv, fv, tc)\n\tif ge != nil {\n\t\treturn ge\n\t}\n\n\tif ge = flect.SetValue(fv, value); ge != nil {\n\t\treturn gomerr.Configuration(\"Unable to set field to function result\").AddAttribute(\"FunctionResult\", value).Wrap(ge)\n\t}\n\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 12
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc init() {\n\tSetNowToolFunctionPrecision(time.Millisecond)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 25
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc RegisterToolFunctions(functions map[string]ToolFunction) gomerr.Gomerr {\n\tvar errors []gomerr.Gomerr\n\tfor name, function := range functions {\n\t\tif ge := RegisterToolFunction(name, function); ge != nil {\n\t\t\terrors = append(errors, ge)\n\t\t}\n\t}\n\treturn gomerr.Batcher(errors)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 29
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc RegisterToolFunction(name string, function ToolFunction) gomerr.Gomerr {\n\tif len(name) < 2 {\n\t\treturn gomerr.Configuration(\"Field function names must start with a '$' symbol and be between 2 and 64 characters long\")\n\t} else if name[0] != '$' || len(name) > 64 {\n\t\treturn gomerr.Configuration(\"Field function names must start with a '$' symbol and be between 2 and 64 characters long\")\n\t} else if name[1] == '_' && !strings.HasPrefix(reflect.TypeOf(function).PkgPath(), \"github.com/jt0/gomer\") {\n\t\treturn gomerr.Configuration(\"Field function names cannot start with '$_'\")\n\t}\n\n\tputToolFunction(name, function)\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 39
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc SetNowToolFunctionPrecision(precision time.Duration) {\n\tputToolFunction(\"$_now\", func(reflect.Value, reflect.Value, *ToolContext) (interface{}, gomerr.Gomerr) {\n\t\treturn time.Now().UTC().Truncate(precision), nil\n\t})\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 52
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nvar functions = map[string]ToolFunction{}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 58
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc putToolFunction(name string, function ToolFunction) {\n\tfunctions[strings.ToLower(name)] = function\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 60
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\nfunc GetToolFunction(name string) ToolFunction {\n\treturn functions[strings.ToLower(name)]\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 64
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./structs/toolfunction.go"
+  }
+}

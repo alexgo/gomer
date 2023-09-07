@@ -1,0 +1,32 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package id\n\nimport (\n\t\"testing\"\n)\n\nfunc TestBaseNIdGenerator_CharsPerId(t *testing.T) {\n\t//goland:noinspection SpellCheckingInspection\n\ttests := []struct {\n\t\tname       string\n\t\tgenerator  func(idLength int, lengthUnit LengthUnit) Generator\n\t\tbitsPerId  int\n\t\tcharsPerId uint16\n\t}{\n\t\t{\"Base10\", NewBase10IdGenerator, 128, 39},\n\t\t{\"Base16\", NewBase16IdGenerator, 128, 32},\n\t\t{\"Base36\", NewBase36IdGenerator, 128, 25},\n\t\t{\"Base62\", NewBase62IdGenerator, 128, 22},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tg := tt.generator(tt.bitsPerId, Bits).(*baseNIdGenerator)\n\t\t\tif charsPerId := charsPerId[Bits](tt.bitsPerId, uint16(g.base)); charsPerId != tt.charsPerId {\n\t\t\t\tt.Errorf(\"charsPerId = %d, want %d\", charsPerId, tt.charsPerId)\n\t\t\t}\n\t\t})\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\n// func Test_baseNIdGenerator_Generate(t *testing.T) {\n// \ttype fields struct {\n// \t\tbitsPerId      int\n// \t\tbase           uint64\n// \t\tcharsPerId     int\n// \t\tcharsPerUint64 int\n// \t\tchars          []byte\n// \t}\n// \ttests := []struct {\n// \t\tname   string\n// \t\tfields fields\n// \t\twant   string\n// \t}{\n// \t}\n// \tfor _, tt := range tests {\n// \t\tt.Run(tt.name, func(t *testing.T) {\n// \t\t\tg := baseNIdGenerator{\n// \t\t\t\tbitsPerId:      tt.fields.bitsPerId,\n// \t\t\t\tbase:           tt.fields.base,\n// \t\t\t\tcharsPerId:     tt.fields.charsPerId,\n// \t\t\t\tcharsPerUint64: tt.fields.charsPerUint64,\n// \t\t\t\tchars:          tt.fields.chars,\n// \t\t\t}\n// \t\t\tif got := g.Generate(); got != tt.want {\n// \t\t\t\tt.Errorf(\"Generate() = %v, want %v\", got, tt.want)\n// \t\t\t}\n// \t\t})\n// \t}\n// }\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 28
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./id/base_n_test.go"
+  }
+}

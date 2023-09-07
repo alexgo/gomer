@@ -1,0 +1,176 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package bind\n\nimport (\n\t\"github.com/jt0/gomer/structs\"\n)\n\nconst (\n\tInKey  = \"$_gomer_bind_in\"\n\tOutKey = \"$_gomer_bind_out\"\n\n\tskipField    = \"-\"\n\tincludeField = \"+\"\n\n\tomitEmpty    = \"omitempty\"\n\tincludeEmpty = \"includeempty\"\n)\n\ntype casingFn func(s string) string\n\nvar (\n\tPascalCase casingFn = func(fieldName string) string { return fieldName } // Exported fields are already PascalCase\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\tCamelCase  casingFn = func(fieldName string) string {\n\t\t// NB: only supports field names with an initial ASCII character\n\t\tfirstChar := fieldName[0]\n\t\tif 'A' <= firstChar && firstChar <= 'Z' {\n\t\t\tfirstChar += 'a' - 'A'\n\t\t}\n\t\treturn string(firstChar) + fieldName[1:]\n\t}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 21
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\t// Feature:p2 support case insensitive. Additionally consider support matching output case to input\n)\n\ntype Configuration struct {\n\t// Empty directive default\n\temptyDirective string\n\n\t// Empty field value default\n\temptyValue string\n\n\t// Specifies the casing used for inbound and outbound data. Simplifies the naming configuration if the only\n\t// difference between a data attribute and struct field name is the casing.\n\t// TODO:p3 I can imagine a situation where the casing might vary depending on where it's coming from or going to,\n\t//  so perhaps should be map[string]FieldCaseType where the key = scope...\n\ttoCase *casingFn\n\n\textension ExtensionProvider\n\n\t// TODO:p2 RawBytesBindingDirective string\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 29
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc (bc *Configuration) withOptions(options ...func(*Configuration)) Configuration {\n\tfor _, option := range options {\n\t\toption(bc)\n\t}\n\treturn *bc\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 49
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc NewConfiguration(options ...func(*Configuration)) Configuration {\n\tbc := &Configuration{\n\t\temptyDirective: skipField,\n\t\temptyValue:     omitEmpty,\n\t\ttoCase:         &PascalCase,\n\t\t// strictMode: false,  // true if should fail on extra input values, false otherwise\n\t}\n\n\treturn bc.withOptions(options...)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 56
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc CopyConfigurationWithOptions(b Configuration, options ...func(*Configuration)) Configuration {\n\treturn (&b).withOptions(options...)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 67
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc EmptyDirectiveSkipsField(c *Configuration) {\n\tc.emptyDirective = skipField\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 71
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc EmptyDirectiveIncludesField(c *Configuration) {\n\tc.emptyDirective = includeField\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 75
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\nfunc OmitEmpty(c *Configuration) {\n\tc.emptyValue = omitEmpty\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 79
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "9",
+      "value": "\nfunc IncludeEmpty(c *Configuration) {\n\tc.emptyValue = includeEmpty\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 9,
+        "type": "originalCode",
+        "lineNumberBase": 83
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "10",
+      "value": "\nfunc PascalCaseData(c *Configuration) {\n\tc.toCase = &PascalCase\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 10,
+        "type": "originalCode",
+        "lineNumberBase": 87
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "11",
+      "value": "\nfunc CamelCaseData(c *Configuration) {\n\tc.toCase = &CamelCase\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 11,
+        "type": "originalCode",
+        "lineNumberBase": 91
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "12",
+      "value": "\ntype ExtensionProvider interface {\n\tstructs.ApplierProvider\n\tType() string\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 12,
+        "type": "originalCode",
+        "lineNumberBase": 95
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "13",
+      "value": "\nfunc ExtendsWith(extension ExtensionProvider) func(*Configuration) {\n\treturn func(c *Configuration) {\n\t\tif c.extension != nil {\n\t\t\t// panic may be too severe, but we do want people to be aware that the value may be overwritten\n\t\t\tpanic(\"Configuration already has an extension configured. Consider chaining if more than one is needed.\")\n\t\t}\n\t\tc.extension = extension\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 13,
+        "type": "originalCode",
+        "lineNumberBase": 100
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./bind/bind.go"
+  }
+}

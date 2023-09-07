@@ -1,0 +1,140 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package resource\n\nimport (\n\t\"reflect\"\n\n\t\"github.com/jt0/gomer/auth\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype Resource interface {\n\tMetadata() Metadata\n\tSubject() auth.Subject\n\tDoAction(Action) (Resource, gomerr.Gomerr)\n\n\tsetSelf(Resource)\n\tmetadata() *metadata\n\tsetMetadata(*metadata)\n\tsetSubject(auth.Subject)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\ntype Action interface {\n\tName() string\n\tAppliesToCategory() Category\n\tFieldAccessPermissions() auth.AccessPermissions\n\tPre(Resource) gomerr.Gomerr\n\tDo(Resource) gomerr.Gomerr\n\tOnDoSuccess(Resource) (Resource, gomerr.Gomerr)\n\tOnDoFailure(Resource, gomerr.Gomerr) gomerr.Gomerr\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 19
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\ntype Category string\n\nconst (\n\tInstanceCategory   Category = \"Instance\"\n\tCollectionCategory Category = \"Collection\"\n)\n\nfunc New(resourceType reflect.Type, subject auth.Subject) (Resource, gomerr.Gomerr) {\n\tmd, ok := resourceTypeToMetadata[resourceType]\n\tif !ok {\n\t\treturn nil, gomerr.Unprocessable(\"Unknown Resource type. Was resource.Register() called for it?\", resourceType)\n\t}\n\n\tresource := reflect.New(resourceType.Elem()).Interface().(Resource)\n\tresource.setSelf(resource)\n\tresource.setMetadata(md)\n\tresource.setSubject(subject)\n\n\treturn resource, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 29
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\ntype BaseResource struct {\n\tself Resource\n\tmd   *metadata\n\tsub  auth.Subject\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 50
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc (b *BaseResource) Metadata() Metadata {\n\treturn b.md\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 56
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc (b *BaseResource) Subject() auth.Subject {\n\treturn b.sub\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 60
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc (b *BaseResource) DoAction(action Action) (Resource, gomerr.Gomerr) {\n\tif ge := action.Pre(b.self); ge != nil {\n\t\treturn nil, ge\n\t}\n\n\tif ge := action.Do(b.self); ge != nil {\n\t\treturn nil, action.OnDoFailure(b.self, ge)\n\t}\n\n\treturn action.OnDoSuccess(b.self)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 64
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc (b *BaseResource) metadata() *metadata {\n\treturn b.md\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 76
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\nfunc (b *BaseResource) setSelf(self Resource) {\n\tb.self = self\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 80
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "9",
+      "value": "\nfunc (b *BaseResource) setMetadata(metadata *metadata) {\n\tb.md = metadata\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 9,
+        "type": "originalCode",
+        "lineNumberBase": 84
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "10",
+      "value": "\nfunc (b *BaseResource) setSubject(subject auth.Subject) {\n\tb.sub = subject\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 10,
+        "type": "originalCode",
+        "lineNumberBase": 88
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./resource/resource.go"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package dataerr\n\nimport (\n\t\"github.com/jt0/gomer/data\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype KeyValueNotFoundError struct {\n\tgomerr.Gomerr\n\tKeyName     string\n\tKeyFields   []string\n\tPersistable data.Persistable `gomerr:\"include_type\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc KeyValueNotFound(keyName string, keyFields []string, persistable data.Persistable) *KeyValueNotFoundError {\n\treturn gomerr.Build(new(KeyValueNotFoundError), keyName, keyFields, persistable).(*KeyValueNotFoundError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 13
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./data/dataerr/keyvaluenotfound.go"
+  }
+}

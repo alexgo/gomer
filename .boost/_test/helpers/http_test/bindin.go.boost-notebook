@@ -1,0 +1,248 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package http_test\n\nimport (\n\t\"bytes\"\n\t\"encoding/json\"\n\t\"fmt\"\n\t\"io/ioutil\"\n\t\"net/http\"\n\t\"net/url\"\n\t\"strings\"\n)\n\n// String attribute\nfunc Attr(k, v string) string {\n\tif v == \"\" {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": \"%s\"`, k, v)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\n// String attribute\nfunc AttrJson(k, v string) string {\n\tif v == \"\" {\n\t\treturn \"\"\n\t}\n\tvb, _ := json.Marshal(v)\n\treturn fmt.Sprintf(`\"%s\": %s`, k, string(vb))\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 19
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\n// Pointer to string attribute\nfunc AttrP(k string, v *string) string {\n\tif v == nil {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": \"%s\"`, k, *v)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 28
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\n// Raw string to attribute\nfunc AttrR(k, v string) string {\n\tif v == \"\" {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": %s`, k, v)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 36
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\n// Int to attribute\nfunc AttrI(k string, i int) string {\n\tif i == 0 {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": %d`, k, i)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 44
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\n// Uint to attribute\nfunc AttrU(k string, u uint) string {\n\tif u == 0 {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": %d`, k, u)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 52
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\n// Float to attribute\nfunc AttrF(k string, f float64) string {\n\tif f == 0 {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": %f`, k, f)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 60
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\n// Float to attribute\nfunc AttrPF(k string, f *float64) string {\n\tif f == nil || *f == 0 {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": %f`, k, *f)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 68
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\n// Float to attribute\nfunc AttrPF32(k string, f *float32) string {\n\tif f == nil || *f == 0 {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(`\"%s\": %f`, k, *f)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 76
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "9",
+      "value": "\n// Object from processed attributes\nfunc Obj(attrs ...string) string {\n\treturn wrap('{', attrs, '}')\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 9,
+        "type": "originalCode",
+        "lineNumberBase": 84
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "10",
+      "value": "\n// Slice from processed attributes\nfunc Slice(attrs ...string) string {\n\treturn wrap('[', attrs, ']')\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 10,
+        "type": "originalCode",
+        "lineNumberBase": 89
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "11",
+      "value": "\nfunc Path(parts ...string) string {\n\tvar b bytes.Buffer\n\tb.Grow(32)\n\n\tfor _, p := range parts {\n\t\tb.WriteByte('/')\n\t\tb.WriteString(p)\n\t}\n\n\treturn b.String()\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 11,
+        "type": "originalCode",
+        "lineNumberBase": 94
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "12",
+      "value": "\nfunc QAttr(k, v string) string {\n\tif v == \"\" {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(\"%s=%s\", k, v)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 12,
+        "type": "originalCode",
+        "lineNumberBase": 106
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "13",
+      "value": "\nfunc QAttrP(k string, v *string) string {\n\tif v == nil {\n\t\treturn \"\"\n\t}\n\treturn QAttr(k, *v)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 13,
+        "type": "originalCode",
+        "lineNumberBase": 113
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "14",
+      "value": "\nfunc QAttrI(k string, i int) string {\n\tif i == 0 {\n\t\treturn \"\"\n\t}\n\treturn fmt.Sprintf(\"%s=%d\", k, i)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 14,
+        "type": "originalCode",
+        "lineNumberBase": 120
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "15",
+      "value": "\nfunc Query(attrs ...string) string {\n\tvar b bytes.Buffer\n\tb.Grow(32)\n\n\tb.WriteByte('?')\n\tfor _, a := range attrs {\n\t\tb.WriteString(omitempty(a, \"&\"))\n\t}\n\tb.Truncate(b.Len() - 1) // either trims the trailing & or initial ?\n\n\treturn b.String()\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 15,
+        "type": "originalCode",
+        "lineNumberBase": 127
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "16",
+      "value": "\nconst NoBody = \"\"\n\nfunc Request(pathAndQueryParams string, body string) *http.Request {\n\tparsed, err := url.Parse(pathAndQueryParams)\n\tif err != nil {\n\t\tfmt.Print(\"Failed to parse url:\", pathAndQueryParams, \" Error:\", err.Error())\n\t}\n\treturn &http.Request{URL: parsed, Body: ioutil.NopCloser(strings.NewReader(body))}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 16,
+        "type": "originalCode",
+        "lineNumberBase": 140
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "17",
+      "value": "\nfunc AddHeaders(req *http.Request, attrs ...string) {\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 17,
+        "type": "originalCode",
+        "lineNumberBase": 150
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "18",
+      "value": "\nfunc wrap(open byte, attrs []string, close byte) string {\n\tvar b bytes.Buffer\n\tb.Grow(64)\n\n\tb.WriteByte(open)\n\tfor _, a := range attrs {\n\t\tb.WriteString(omitempty(a, \", \")) // adds \", \" to all non-empty values\n\t}\n\tif bLen := b.Len(); bLen > 1 {\n\t\tb.Truncate(bLen - 2) // trims trailing \", \"\n\t}\n\tb.WriteByte(close)\n\n\treturn b.String()\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 18,
+        "type": "originalCode",
+        "lineNumberBase": 153
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "19",
+      "value": "\nfunc omitempty(s, nonEmptySuffix string) string {\n\tif s == \"\" || s == \"{}\" || s == \"[]\" {\n\t\treturn \"\"\n\t}\n\n\treturn s + nonEmptySuffix\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 19,
+        "type": "originalCode",
+        "lineNumberBase": 169
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./_test/helpers/http_test/bindin.go"
+  }
+}

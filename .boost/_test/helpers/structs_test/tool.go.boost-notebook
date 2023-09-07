@@ -1,0 +1,32 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package structs_test\n\nimport (\n\t\"testing\"\n\n\t\"github.com/jt0/gomer/_test/assert\"\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/structs\"\n)\n\ntype TestCase struct {\n\tName     string\n\tTool     *structs.Tool\n\tContext  *structs.ToolContext\n\tInput    interface{}\n\tExpected interface{} // can be the same type as output or a gomerr.Gomerr\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc RunTests(t *testing.T, tests []TestCase) {\n\tfor _, tt := range tests {\n\t\tt.Run(tt.Name, func(t *testing.T) {\n\t\t\tge := structs.ApplyTools(tt.Input, tt.Context, tt.Tool)\n\t\t\tif expectedError, ok := tt.Expected.(gomerr.Gomerr); !ok {\n\t\t\t\tassert.Success(t, ge)\n\t\t\t\tassert.Equals(t, tt.Expected, tt.Input)\n\t\t\t} else {\n\t\t\t\tassert.ErrorType(t, ge, expectedError, \"Error did not match expected type\")\n\t\t\t}\n\t\t})\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 17
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./_test/helpers/structs_test/tool.go"
+  }
+}

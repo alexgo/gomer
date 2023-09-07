@@ -1,0 +1,212 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package structs\n\nimport (\n\t\"reflect\"\n\t\"time\"\n\t\"unicode\"\n\n\t\"github.com/jt0/gomer/flect\"\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/id\"\n)\n\n// TODO: Build a mechanism to generate structs from Smithy models and JSON schema definitions\n\nfunc ApplyTools(v interface{}, tc *ToolContext, tools ...*Tool) gomerr.Gomerr {\n\tvv, ge := flect.IndirectValue(v, false)\n\tif ge != nil {\n\t\treturn gomerr.Unprocessable(\"Unable to apply tools to invalid value\", v).Wrap(ge)\n\t}\n\n\tvt := vv.Type()\n\tvts := vt.String()\n\tif vt.Kind() != reflect.Struct {\n\t\treturn gomerr.Configuration(\"Can only apply tools to struct (or pointer to struct) types\").AddAttribute(\"Type\", vts)\n\t}\n\n\tps, ok := preparedStructs[vts]\n\tif !ok {\n\t\tps = &preparedStruct{\n\t\t\ttypeName: vts,\n\t\t\tfields:   make([]*field, 0, vt.NumField()),\n\t\t\tapplied:  make(map[string]bool, len(tools)),\n\t\t}\n\t\tpreparedStructs[vts] = ps\n\t}\n\n\treturn ps.applyTools(vv, tc, tools...)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc Preprocess(v interface{}, tools ...*Tool) gomerr.Gomerr {\n\tvt := flect.IndirectType(v)\n\tps, errors := process(vt, tools...)\n\tif ps == nil {\n\t\treturn gomerr.Configuration(\"Invalid type: must be a struct or pointer to struct\").AddAttribute(\"Type\", vt.String())\n\t}\n\treturn gomerr.Batcher(errors)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 38
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc NewTool(toolType string, ap ApplierProvider, dp DirectiveProvider) *Tool {\n\treturn &Tool{toolType + \"_\" + idGen.Generate(), toolType, ap, dp}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 47
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\n// Tool contains references to some behavior that can be applied to structs present in an application.\ntype Tool struct {\n\tid                string\n\ttoolType          string\n\tapplierProvider   ApplierProvider\n\tdirectiveProvider DirectiveProvider\n\t// around            func(Apply) gomerr.Gomerr\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 51
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc (t *Tool) Id() string {\n\treturn t.id\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 60
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc (t *Tool) Type() string {\n\treturn t.toolType\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 64
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc (t *Tool) applierFor(st reflect.Type, sf reflect.StructField) (Applier, gomerr.Gomerr) {\n\treturn applyScopes(t.applierProvider, st, sf, t.directiveProvider.Get(st, sf))\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 68
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\ntype ApplierProvider interface {\n\tApplier(structType reflect.Type, structField reflect.StructField, directive string) (Applier, gomerr.Gomerr)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 72
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\ntype DirectiveProvider interface {\n\tGet(structType reflect.Type, structField reflect.StructField) string\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 76
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "9",
+      "value": "\ntype StructTagDirectiveProvider struct {\n\tTagKey string\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 9,
+        "type": "originalCode",
+        "lineNumberBase": 80
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "10",
+      "value": "\nfunc (s StructTagDirectiveProvider) Get(_ reflect.Type, structField reflect.StructField) string {\n\treturn structField.Tag.Get(s.TagKey)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 10,
+        "type": "originalCode",
+        "lineNumberBase": 84
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "11",
+      "value": "\nvar (\n\tidGen           = id.NewBase36IdGenerator(4, id.Chars)\n\tpreparedStructs = map[string]*preparedStruct{}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 11,
+        "type": "originalCode",
+        "lineNumberBase": 88
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "12",
+      "value": "\ttimeType        = reflect.TypeOf((*time.Time)(nil)).Elem()\n)\n\nfunc process(st reflect.Type, tools ...*Tool) (*preparedStruct, []gomerr.Gomerr) {\n\tfor k := st.Kind(); k != reflect.Struct; k = st.Kind() {\n\t\tswitch st.Kind() {\n\t\tcase reflect.Array, reflect.Map, reflect.Ptr, reflect.Slice:\n\t\t\tst = st.Elem()\n\t\tdefault:\n\t\t\treturn nil, nil\n\t\t}\n\t}\n\n\t// Time structs are a special case, ignore.\n\tif st == timeType {\n\t\treturn nil, nil\n\t}\n\n\tvar toolsForStruct []*Tool\n\ttypeName := st.String()\n\tps, ok := preparedStructs[typeName]\n\tif ok {\n\t\tfor _, tool := range tools {\n\t\t\tif !ps.applied[tool.Id()] {\n\t\t\t\ttoolsForStruct = append(toolsForStruct, tool)\n\t\t\t}\n\t\t}\n\t\tif len(toolsForStruct) == 0 {\n\t\t\t// No work to do, return\n\t\t\treturn ps, nil\n\t\t}\n\t} else {\n\t\ttoolsForStruct = tools\n\t\tps = &preparedStruct{\n\t\t\ttypeName: typeName,\n\t\t\tfields:   make([]*field, 0, st.NumField()),\n\t\t\tapplied:  make(map[string]bool, len(toolsForStruct)),\n\t\t}\n\t}\n\n\terrors := make([]gomerr.Gomerr, 0)\n\tfor i := 0; i < st.NumField(); i++ {\n\t\tsf := st.Field(i)\n\n\t\tif sf.Tag.Get(\"structs\") == \"ignore\" {\n\t\t\tcontinue\n\t\t}\n\n\t\tsft := sf.Type\n\t\tswitch sft.Kind() {\n\t\tcase reflect.Struct:\n\t\t\tif subStruct, subErrors := process(sf.Type, toolsForStruct...); len(subErrors) > 0 {\n\t\t\t\terrors = append(errors, subErrors...)\n\t\t\t} else if sf.Anonymous {\n\t\t\t\tfor _, f := range subStruct.fields {\n\t\t\t\t\tps.addAppliers(f.name, f.appliers)\n\t\t\t\t}\n\t\t\t}\n\t\tcase reflect.Array, reflect.Map, reflect.Ptr, reflect.Slice:\n\t\t\tif sft.String() == \"*resource.metadata\" {\n\t\t\t\tprintln(\"Found\", sft.String())\n\t\t\t}\n\t\t\t_, subErrors := process(sft.Elem(), tools...)\n\t\t\terrors = append(errors, subErrors...)\n\t\t}\n\n\t\t// TODO: Is there a case where we want to interpret a directive on this attribute?\n\t\tif unicode.IsLower([]rune(sf.Name)[0]) {\n\t\t\tcontinue\n\t\t}\n\n\t\tappliers := map[string]Applier{}\n\t\tfor _, tool := range toolsForStruct {\n\t\t\tif applier, ge := tool.applierFor(st, sf); ge != nil {\n\t\t\t\terrors = append(errors, ge)\n\t\t\t} else if applier != nil {\n\t\t\t\tappliers[tool.Id()] = applier\n\t\t\t}\n\t\t\tps.applied[tool.Id()] = true\n\t\t}\n\t\tps.addAppliers(sf.Name, appliers)\n\t}\n\n\tif len(errors) == 0 {\n\t\tpreparedStructs[ps.typeName] = ps\n\t}\n\n\treturn ps, errors\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 12,
+        "type": "originalCode",
+        "lineNumberBase": 92
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "13",
+      "value": "\ntype preparedStruct struct {\n\ttypeName string\n\tfields   []*field\n\tapplied  map[string]bool // tool id -> true (if applied)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 13,
+        "type": "originalCode",
+        "lineNumberBase": 181
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "14",
+      "value": "\ntype field struct {\n\tname     string\n\tappliers map[string]Applier\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 14,
+        "type": "originalCode",
+        "lineNumberBase": 187
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "15",
+      "value": "\nfunc (ps *preparedStruct) addAppliers(fieldName string, appliersToAdd map[string]Applier) {\n\tfor _, f := range ps.fields {\n\t\tif f.name == fieldName {\n\t\t\tfor toolId, toAdd := range appliersToAdd {\n\t\t\t\tif _, hasApplier := f.appliers[toolId]; !hasApplier {\n\t\t\t\t\tf.appliers[toolId] = toAdd\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn\n\t\t}\n\t}\n\n\tps.fields = append(ps.fields, &field{fieldName, appliersToAdd})\n\treturn\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 15,
+        "type": "originalCode",
+        "lineNumberBase": 192
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "16",
+      "value": "\n// ApplyTools will apply the tool associated with each tool type in the appliers slice, in order, to each value in sv.\nfunc (ps *preparedStruct) applyTools(sv reflect.Value, tc *ToolContext, tools ...*Tool) gomerr.Gomerr {\n\tvar errors []gomerr.Gomerr\n\tfor _, tool := range tools {\n\t\tif !ps.applied[tool.Id()] {\n\t\t\t// TODO:p3 verify all tools applied....\n\t\t\tif _, pErrors := process(sv.Type(), tools...); len(pErrors) > 0 {\n\t\t\t\treturn gomerr.Batcher(pErrors)\n\t\t\t}\n\t\t}\n\n\t\tfor _, f := range ps.fields {\n\t\t\tapplier, ok := f.appliers[tool.Id()]\n\t\t\tif !ok {\n\t\t\t\tcontinue\n\t\t\t}\n\t\t\tfv := sv.FieldByName(f.name) // fv should always be valid\n\t\t\tif ge := applier.Apply(sv, fv, tc); ge != nil {\n\t\t\t\tif fieldAttr, exists := ge.AttributeLookup(\"Field\"); exists {\n\t\t\t\t\tge.ReplaceAttribute(\"Field\", f.name+\".\"+fieldAttr.(string))\n\t\t\t\t} else {\n\t\t\t\t\tge.AddAttribute(\"Field\", f.name)\n\t\t\t\t}\n\t\t\t\terrors = append(errors, ge)\n\t\t\t}\n\t\t}\n\t}\n\treturn gomerr.Batcher(errors)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 16,
+        "type": "originalCode",
+        "lineNumberBase": 208
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./structs/tool.go"
+  }
+}

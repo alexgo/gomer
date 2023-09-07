@@ -1,0 +1,20 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package helpers\n\nimport (\n\t\"encoding/json\"\n\t\"reflect\"\n\n\t\"github.com/jt0/gomer/auth\"\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/resource\"\n)\n\nfunc Unmarshal(resourceType reflect.Type, subject auth.Subject, bytes []byte) (resource.Resource, gomerr.Gomerr) {\n\tnewResource, ge := resource.New(resourceType, subject)\n\tif ge != nil {\n\t\treturn nil, ge\n\t}\n\n\tif len(bytes) != 0 {\n\t\tif err := json.Unmarshal(bytes, &newResource); err != nil {\n\t\t\treturn nil, gomerr.Unmarshal(\"Resource\", bytes, resourceType).Wrap(err)\n\t\t}\n\t}\n\n\treturn newResource, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./_test/helpers/resource.go"
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package bind_test\n\nimport (\n\t\"encoding/json\"\n\t\"testing\"\n\n\t\"github.com/jt0/gomer/_test/assert\"\n\t\"github.com/jt0/gomer/bind\"\n)\n\ntype Foo struct {\n\tA int `in:\"+\"`\n\ta int `in:\"+\"`\n\tB int `in:\"+\"`\n\tc int `in:\"+\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\ntype bar struct {\n\tZ string `in:\"+\"`\n\tz string `in:\"+\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 16
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\ntype Bat struct {\n\tFoo `in:\"+\"`\n\tbar `in:\"+\"`\n\n\tFoo2 Foo `in:\"+\"`\n\tBar2 bar `in:\"+\"`\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 21
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc TestAnonymous(t *testing.T) {\n\tvar v Bat\n\tinData := dataFrom(t, in1)\n\tge := bind.In(inData, &v, bind.DefaultInTool)\n\tassert.Success(t, ge)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 29
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc dataFrom(t *testing.T, b []byte) map[string]interface{} {\n\td := map[string]interface{}{}\n\terr := json.Unmarshal(b, &d)\n\tassert.Success(t, err)\n\treturn d\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 36
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nvar in1 = []byte(`\n  {\n    \"A\": 1,\n    \"a\": 2,\n    \"b\": 3,\n    \"B\": 4,\n    \"c\": 5,\n    \"Foo2\": {\n      \"A\": 6,\n      \"a\": 7,\n      \"b\": 8,\n      \"B\": 9,\n      \"c\": 10\n    },\n    \"Z\": \"bar.Z\",\n    \"z\": \"bar.z\",\n    \"Bar2\": {\n      \"Z\": \"Bar2.Z\",\n      \"z\": \"Bar2.z\"\n    }\n  }\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 43
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "`)\n\n// Lists, maps, structs, pointers, pointer-pointers\n// functions\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 65
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./bind/intool_test.go"
+  }
+}

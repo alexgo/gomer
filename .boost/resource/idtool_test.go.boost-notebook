@@ -1,0 +1,92 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package resource_test\n\nimport (\n\t\"testing\"\n\n\t\"github.com/jt0/gomer/_test/assert\"\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/resource\"\n\t\"github.com/jt0/gomer/structs\"\n)\n\ntype Base struct {\n\tBaseId   string\n\tSecretId string\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\ntype One struct {\n\tBase\n\tId string `id:\"BaseId,~SecretId\"` // implicitly treated as 'Id,BaseId,~SecretId'\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 15
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\ntype Two struct {\n\tOne\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 20
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nvar _ = resource.NewIdTool(structs.StructTagDirectiveProvider{\"id\"})\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 24
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc TestCopyFromStruct(t *testing.T) {\n\tsource := &One{Base{\"base_id\", \"secret_id\"}, \"wrapper_id\"}\n\ttc := structs.EnsureContext().Put(resource.SourceValue, source)\n\n\tdestination := &One{}\n\tge := structs.ApplyTools(destination, tc, resource.DefaultIdFieldTool)\n\tassert.Success(t, ge)\n\tassert.Equals(t, source, destination)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 26
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc TestCopyFromAnonymous(t *testing.T) {\n\tsource := &Two{One{Base{\"base_id\", \"secret_id\"}, \"wrapper_id\"}}\n\ttc := structs.EnsureContext().Put(resource.SourceValue, source)\n\n\tdestination := &Two{}\n\tge := structs.ApplyTools(destination, tc, resource.DefaultIdFieldTool)\n\tassert.Success(t, ge)\n\tassert.Equals(t, source, destination)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 36
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc TestTwoIdFieldsFail(t *testing.T) {\n\ttype TwoIdsTest struct {\n\t\tId1 string `id:\"+\"`\n\t\tId2 string `id:\"+\"`\n\t}\n\n\tge := structs.ApplyTools(TwoIdsTest{\"a\", \"b\"}, nil, resource.DefaultIdFieldTool)\n\tassert.ErrorType(t, ge, &gomerr.ConfigurationError{}, \"Should fail due to multiple fields with 'id' struct tag\")\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 46
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./resource/idtool_test.go"
+  }
+}

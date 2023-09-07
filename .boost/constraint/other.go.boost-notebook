@@ -1,0 +1,316 @@
+{
+  "cells": [
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 9:12:12 AM PDT\n\nThis Go code is defining a package named `constraint` and a function `Success` within it. The function `Success` returns a `Constraint` type that is defined elsewhere in the project. The function takes a string argument `msg` and returns a `Constraint` object which is created by calling the `New` function with three arguments: a string, a `nil`, and a function that accepts an `interface{}` and returns a `gomerr.Gomerr`.\n\nLet's break down the code:\n\n1. `package constraint`: This line declares the package name as `constraint`. This is the name by which other code will import and refer to the code in this file.\n\n2. `import \"github.com/jt0/gomer/gomerr\"`: This line imports a package named `gomerr` which is hosted on GitHub under the user `jt0` in a repository named `gomer`. The `gomerr` package is most likely a custom error handling package for this project.\n\n3. `func Success(msg string) Constraint`: This line declares a function named `Success` that takes one argument, a string `msg`, and returns an object of type `Constraint`. \n\n4. `return New(\"Success: \"+msg, nil, func(interface{}) gomerr.Gomerr { return nil })`: This line is doing a few things:\n   - `\"Success: \"+msg` simply concatenates the string \"Success: \" with the `msg` string that was passed as argument to the `Success` function.\n   - `nil` is the second argument passed to the `New` function. It seems like this argument is not needed for a \"success\" constraint.\n   - The third argument is an anonymous function (or lambda function) that takes an `interface{}` as argument and returns a `gomerr.Gomerr`. This function always returns `nil`, meaning that it will not return any error. \n\nThe `New` function that is called in the return statement is not defined in this code snippet, but it's likely a function that creates a new `Constraint` object.\n\nThe `Success` function seems to be a utility function to create a `Constraint` that always succeeds (i.e., does not return any error). This could be useful in tests or in situations where a `Constraint` object is required but you don't want it to perform any validation.\n\nThe Go programming language does not have built-in support for exceptions like some other languages. Instead, it uses error values to indicate an abnormal state. The `gomerr` package seems to be a custom implementation to handle these error values in a more structured way.\n\nFor more information on error handling in Go, you can refer to the official Go blog post on the topic: [Error handling and Go](https://blog.golang.org/error-handling-and-go)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 9:14:15 AM PDT\n\n```mermaid\ngraph TD;\n    style Start fill:#228B22, stroke:#000000, stroke-width:2px;\n    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\n    Start-->ExampleProcess;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:14:40 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:15:30 AM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 7\n\n   **Bug Type**: Memory\n\n   **Description**: Each call to the `Success` function creates a new instance of a `Constraint` object. If called frequently, this could lead to high memory usage.\n\n   **Solution**: Consider reusing `Constraint` objects where possible, especially if the `msg` parameter is often the same. This can be done by storing commonly used `Constraint` objects in a map or similar data structure for easy retrieval.\n\n\n2. **Severity**: 1/10\n\n   **Line Number**: 7\n\n   **Bug Type**: CPU\n\n   **Description**: The string concatenation operation in the `New` function call could be slightly inefficient if `msg` is a large string. However, this is unlikely to have a significant impact on performance unless the `Success` function is called extremely frequently with large strings.\n\n   **Solution**: If performance becomes an issue, consider using a `strings.Builder` or `fmt.Sprintf` for more efficient string concatenation.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 7,
+                "severity": 2,
+                "bugType": "Memory",
+                "description": "Each call to the `Success` function creates a new instance of a `Constraint` object. If called frequently, this could lead to high memory usage.",
+                "solution": "Consider reusing `Constraint` objects where possible, especially if the `msg` parameter is often the same. This can be done by storing commonly used `Constraint` objects in a map or similar data structure for easy retrieval."
+              },
+              {
+                "lineNumber": 7,
+                "severity": 1,
+                "bugType": "CPU",
+                "description": "The string concatenation operation in the `New` function call could be slightly inefficient if `msg` is a large string. However, this is unlikely to have a significant impact on performance unless the `Success` function is called extremely frequently with large strings.",
+                "solution": "If performance becomes an issue, consider using a `strings.Builder` or `fmt.Sprintf` for more efficient string concatenation."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:16:37 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "0",
+      "value": "package constraint\n\nimport (\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\nfunc Success(msg string) Constraint {\n\treturn New(\"Success: \"+msg, nil, func(interface{}) gomerr.Gomerr {\n\t\treturn nil\n\t})\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 9:13:03 AM PDT\n\nThis is a function written in Go language. The function `Fail` takes a string parameter `msg` and returns a `Constraint`. The `Constraint` is likely a custom type or interface defined elsewhere in the codebase.\n\nThe `Fail` function uses a closure to return a `Constraint` object. The closure is a function that encapsulates its surrounding state. In this case, the closure function takes an `interface{}` type parameter `toTest` and returns a `gomerr.Gomerr` type.\n\n`gomerr.Gomerr` is likely a custom error type defined in the `gomerr` package. The `gomerr` package is probably part of the same project or a third-party library used for error handling in Go.\n\nThe function `NotSatisfied` is called with the `toTest` parameter and its return value is used as the return value of the closure function. This suggests that `NotSatisfied` is a function that takes an `interface{}` type parameter and returns a `gomerr.Gomerr` error. It's likely that `NotSatisfied` is a function that checks if a condition is met and returns an error if it's not.\n\nThe `New` function is called with three parameters: `msg`, `nil`, and the closure function. This suggests that `New` is a function that takes a string, an optional parameter (perhaps a context or a configuration object), and a function that takes an `interface{}` parameter and returns a `gomerr.Gomerr` error. The `New` function likely constructs a new `Constraint` object.\n\nThis `Fail` function is likely used to create a `Constraint` that always fails when tested, returning an error with the provided message. This could be useful in scenarios where you need to simulate a failure or when you want to force an error for testing purposes.\n\nThis function does not directly use any complex algorithms. It's a straightforward function that leverages closures and custom error handling in Go. \n\nFor more information on error handling in Go, you can refer to the official Go blog post: [Error handling and Go](https://blog.golang.org/error-handling-and-go)\n\nFor more information on closures in Go, you can refer to this article: [Anonymous Functions and Closures](https://www.callicoder.com/golang-anonymous-functions-lambda-functions/)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 9:14:21 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nIn the provided code snippet, there is no control flow present. The code consists of a single function definition and does not have any branching or conditional statements. Therefore, the control flow graph is not applicable in this case."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:14:44 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:15:59 AM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 24\n\n   **Bug Type**: CPU\n\n   **Description**: This function creates a new Constraint object every time it is called, even if the message is the same. This could lead to unnecessary CPU usage for object creation and garbage collection.\n\n   **Solution**: Consider using a cache or pool of Constraint objects that can be reused. This could reduce the overhead of object creation and garbage collection and improve CPU usage. For more details, refer to Go's sync.Pool documentation: https://golang.org/pkg/sync/#Pool\n\n\n2. **Severity**: 3/10\n\n   **Line Number**: 24\n\n   **Bug Type**: Memory\n\n   **Description**: This function creates a new Constraint object every time it is called, which could lead to high memory usage if the function is called frequently.\n\n   **Solution**: Consider using a cache or pool of Constraint objects that can be reused. This could reduce memory usage and improve performance. For more details, refer to Go's sync.Pool documentation: https://golang.org/pkg/sync/#Pool\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 13,
+                "severity": 2,
+                "bugType": "CPU",
+                "description": "This function creates a new Constraint object every time it is called, even if the message is the same. This could lead to unnecessary CPU usage for object creation and garbage collection.",
+                "solution": "Consider using a cache or pool of Constraint objects that can be reused. This could reduce the overhead of object creation and garbage collection and improve CPU usage. For more details, refer to Go's sync.Pool documentation: https://golang.org/pkg/sync/#Pool"
+              },
+              {
+                "lineNumber": 13,
+                "severity": 3,
+                "bugType": "Memory",
+                "description": "This function creates a new Constraint object every time it is called, which could lead to high memory usage if the function is called frequently.",
+                "solution": "Consider using a cache or pool of Constraint objects that can be reused. This could reduce memory usage and improve performance. For more details, refer to Go's sync.Pool documentation: https://golang.org/pkg/sync/#Pool"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:17:10 AM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 22\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'Fail' logs a message without any clear mechanism to anonymize or redact potentially sensitive information. This could potentially violate GDPR's principle of data minimization and purpose limitation if any personal data is included in the log message.\n\n   **Solution**: Implement a mechanism to redact or anonymize sensitive information before logging.\n\n\n2. **Severity**: 2/10\n\n   **Line Number**: 22\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function 'Fail' logs a message without any clear mechanism to anonymize or redact potentially sensitive information. This could potentially violate PCI DSS Requirement 3.4 if any cardholder data is included in the log message.\n\n   **Solution**: Implement a mechanism to redact or anonymize sensitive information before logging.\n\n\n3. **Severity**: 2/10\n\n   **Line Number**: 22\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function 'Fail' logs a message without any clear mechanism to anonymize or redact potentially sensitive information. This could potentially violate HIPAA's Privacy Rule if any Protected Health Information (PHI) is included in the log message.\n\n   **Solution**: Implement a mechanism to redact or anonymize sensitive information before logging.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 11,
+                "severity": 2,
+                "bugType": "GDPR",
+                "description": "The function 'Fail' logs a message without any clear mechanism to anonymize or redact potentially sensitive information. This could potentially violate GDPR's principle of data minimization and purpose limitation if any personal data is included in the log message.",
+                "solution": "Implement a mechanism to redact or anonymize sensitive information before logging."
+              },
+              {
+                "lineNumber": 11,
+                "severity": 2,
+                "bugType": "PCI DSS",
+                "description": "The function 'Fail' logs a message without any clear mechanism to anonymize or redact potentially sensitive information. This could potentially violate PCI DSS Requirement 3.4 if any cardholder data is included in the log message.",
+                "solution": "Implement a mechanism to redact or anonymize sensitive information before logging."
+              },
+              {
+                "lineNumber": 11,
+                "severity": 2,
+                "bugType": "HIPAA",
+                "description": "The function 'Fail' logs a message without any clear mechanism to anonymize or redact potentially sensitive information. This could potentially violate HIPAA's Privacy Rule if any Protected Health Information (PHI) is included in the log message.",
+                "solution": "Implement a mechanism to redact or anonymize sensitive information before logging."
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc Fail(msg string) Constraint {\n\treturn New(msg, nil, func(toTest interface{}) gomerr.Gomerr {\n\t\treturn NotSatisfied(toTest)\n\t})\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 11
+      }
+    },
+    {
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 9:14:01 AM PDT\n\nThe provided code snippet is written in Go language. It defines a function named `ConfigurationError`. This function takes one parameter, `problem`, which is a string that presumably describes a problem or error with configuration. The function returns an object of type `Constraint`.\n\nThe `ConfigurationError` function uses a factory method `New` to create a new `Constraint` object. The `New` function is not defined in the provided code snippet, but based on the usage, it appears to accept three parameters:\n\n1. `problem`: a string that describes the problem. This is passed directly from the `ConfigurationError` function's parameter.\n\n2. `nil`: This could be a placeholder for a parameter that is not needed in this specific case. Without the definition of the `New` function, it's hard to say what this parameter would normally be.\n\n3. An anonymous function (also known as a lambda or closure) that accepts an `interface{}` type parameter named `toTest` and returns a `gomerr.Gomerr` object. This anonymous function itself calls the `gomerr.Configuration` function with the `problem` string as its argument. The `gomerr.Configuration` function is likely a constructor for creating new `gomerr.Gomerr` objects, but without its definition, this is an educated guess.\n\nThe `gomerr.Gomerr` type is not defined in the provided code snippet, but based on the naming, it's likely an error type used by the `gomerr` package. This is a common pattern in Go, where custom error types are used to provide more detailed error information.\n\nThe `Constraint` type is also not defined in the provided code snippet, but based on the context, it is likely a type that represents a constraint or validation rule. The `New` function is likely a constructor for creating new `Constraint` objects.\n\nThe `interface{}` type in Go is an empty interface, which means it can hold values of any type. This is often used when the type of the parameter is not known or can be of multiple types.\n\nIn terms of architectural analysis, this function fits well within the Go programming paradigm and does not seem to conflict with any architectural guidelines. It demonstrates good use of Go's type system, error handling, and functional programming features.\n\nFor more information about error handling in Go, you can refer to the official Go blog post: [Error handling and Go](https://blog.golang.org/error-handling-and-go).\n\nFor more information about interfaces in Go, you can refer to the official Go documentation: [Interface types](https://golang.org/ref/spec#Interface_types)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 9:14:27 AM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nIn the provided code snippet, there is no control flow. The function `ConfigurationError` simply returns a `Constraint` object."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:14:48 AM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:16:26 AM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 36\n\n   **Bug Type**: CPU\n\n   **Description**: The function ConfigurationError creates a new Constraint every time it is called, which may be inefficient if it is called frequently. Every call to New involves memory allocation and potentially CPU-intensive operations.\n\n   **Solution**: Consider using a singleton pattern for Constraints that do not change, to avoid creating a new object every time. Alternatively, consider caching Constraints that are frequently used. This will reduce the number of calls to New, thereby reducing CPU usage and potentially improving performance.\n\n\n2. **Severity**: 4/10\n\n   **Line Number**: 38\n\n   **Bug Type**: CPU\n\n   **Description**: The function gomerr.Configuration is called every time the Constraint is checked, which could be CPU-intensive if the Constraint is checked frequently.\n\n   **Solution**: If the problem string does not change, consider calling gomerr.Configuration once and storing the result, rather than calling it every time the Constraint is checked. This will reduce CPU usage and potentially improve performance.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 19,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The function ConfigurationError creates a new Constraint every time it is called, which may be inefficient if it is called frequently. Every call to New involves memory allocation and potentially CPU-intensive operations.",
+                "solution": "Consider using a singleton pattern for Constraints that do not change, to avoid creating a new object every time. Alternatively, consider caching Constraints that are frequently used. This will reduce the number of calls to New, thereby reducing CPU usage and potentially improving performance."
+              },
+              {
+                "lineNumber": 21,
+                "severity": 4,
+                "bugType": "CPU",
+                "description": "The function gomerr.Configuration is called every time the Constraint is checked, which could be CPU-intensive if the Constraint is checked frequently.",
+                "solution": "If the problem string does not change, consider calling gomerr.Configuration once and storing the result, rather than calling it every time the Constraint is checked. This will reduce CPU usage and potentially improve performance."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 9:17:57 AM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 36\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'ConfigurationError' logs the 'problem' string which may contain sensitive user information. This could be a violation of GDPR if personal data is logged without explicit user consent.\n\n   **Solution**: Ensure that no personal data is included in the 'problem' string. If it is necessary to include personal data in logs, ensure that explicit user consent is obtained and that the data is anonymized or pseudonymized. Anonymization could involve removing or replacing personal identifiers, while pseudonymization could involve replacing personal identifiers with pseudonyms.\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 36\n\n   **Bug Type**: PCI DSS\n\n   **Description**: If the 'problem' string contains cardholder data, this could be a violation of PCI DSS. PCI DSS requires that cardholder data not be stored unless it is necessary for the business.\n\n   **Solution**: Ensure that no cardholder data is included in the 'problem' string. If it is necessary to store cardholder data, ensure that it is encrypted and protected in accordance with PCI DSS requirements.\n\n\n3. **Severity**: 5/10\n\n   **Line Number**: 36\n\n   **Bug Type**: HIPAA\n\n   **Description**: If the 'problem' string contains Protected Health Information (PHI), this could be a violation of HIPAA. HIPAA requires that PHI not be disclosed unless it is necessary for the provision of healthcare services.\n\n   **Solution**: Ensure that no PHI is included in the 'problem' string. If it is necessary to disclose PHI, ensure that it is done in accordance with HIPAA requirements, including obtaining patient consent and limiting the disclosure to the minimum necessary information.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 19,
+                "severity": 5,
+                "bugType": "GDPR",
+                "description": "The function 'ConfigurationError' logs the 'problem' string which may contain sensitive user information. This could be a violation of GDPR if personal data is logged without explicit user consent.",
+                "solution": "Ensure that no personal data is included in the 'problem' string. If it is necessary to include personal data in logs, ensure that explicit user consent is obtained and that the data is anonymized or pseudonymized. Anonymization could involve removing or replacing personal identifiers, while pseudonymization could involve replacing personal identifiers with pseudonyms."
+              },
+              {
+                "lineNumber": 19,
+                "severity": 5,
+                "bugType": "PCI DSS",
+                "description": "If the 'problem' string contains cardholder data, this could be a violation of PCI DSS. PCI DSS requires that cardholder data not be stored unless it is necessary for the business.",
+                "solution": "Ensure that no cardholder data is included in the 'problem' string. If it is necessary to store cardholder data, ensure that it is encrypted and protected in accordance with PCI DSS requirements."
+              },
+              {
+                "lineNumber": 19,
+                "severity": 5,
+                "bugType": "HIPAA",
+                "description": "If the 'problem' string contains Protected Health Information (PHI), this could be a violation of HIPAA. HIPAA requires that PHI not be disclosed unless it is necessary for the provision of healthcare services.",
+                "solution": "Ensure that no PHI is included in the 'problem' string. If it is necessary to disclose PHI, ensure that it is done in accordance with HIPAA requirements, including obtaining patient consent and limiting the disclosure to the minimum necessary information."
+              }
+            ]
+          }
+        }
+      ],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc ConfigurationError(problem string) Constraint {\n\treturn New(problem, nil, func(toTest interface{}) gomerr.Gomerr {\n\t\treturn gomerr.Configuration(problem)\n\t})\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 17
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./constraint/other.go"
+  }
+}

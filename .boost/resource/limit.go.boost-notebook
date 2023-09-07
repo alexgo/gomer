@@ -1,0 +1,56 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package resource\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/limit\"\n)\n\ntype limitAction func(limit.Limiter, limit.Limited) gomerr.Gomerr\n\nfunc checkAndIncrement(limiter limit.Limiter, limited limit.Limited) gomerr.Gomerr {\n\tcurrent := limiter.Current(limited)\n\tmaximum := limiter.Maximum(limited)\n\tnewAmount := current.Increment(limited.LimitAmount())\n\n\tif newAmount.Equals(current) {\n\t\treturn nil\n\t}\n\n\tif newAmount.Exceeds(maximum) {\n\t\treturn limit.Exceeded(limiter, limited, maximum, current, newAmount)\n\t}\n\n\tlimiter.SetCurrent(limited, newAmount)\n\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc decrement(limiter limit.Limiter, limited limit.Limited) gomerr.Gomerr {\n\tcurrent := limiter.Current(limited)\n\tnewAmount := current.Decrement(limited.LimitAmount())\n\n\tif newAmount.Equals(current) {\n\t\treturn nil\n\t}\n\n\t// This could go below zero, though there may be valid application cases to support this. For now, no extra checks to verify.\n\tlimiter.SetCurrent(limited, newAmount)\n\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 29
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc applyLimitAction(limitAction limitAction, i Resource) (limit.Limiter, gomerr.Gomerr) {\n\tlimited, ok := i.(limit.Limited)\n\tif !ok {\n\t\treturn nil, nil\n\t}\n\n\tlimiter, ge := limited.Limiter()\n\tif ge != nil {\n\t\treturn nil, gomerr.Configuration(i.metadata().instanceName + \" did not provide a Limiter for itself.\").Wrap(ge)\n\t}\n\n\tli, ok := limiter.(Instance)\n\tif !ok {\n\t\treturn nil, gomerr.Configuration(\"Limiter from \" + i.metadata().instanceName + \" does not implement resource.Instance\")\n\t}\n\n\t// If the metadata isn't set, then this is a new object and needs to be loaded\n\tvar loaded bool\n\tif li.metadata() == nil {\n\t\tresourceType := reflect.TypeOf(limiter)\n\t\tmetadata, ok := resourceTypeToMetadata[resourceType]\n\t\tif !ok {\n\t\t\treturn nil, gomerr.Unprocessable(\"Unknown Resource type. Was resource.Register() called for it?\", resourceType)\n\t\t}\n\n\t\tli.setSelf(li)\n\t\tli.setMetadata(metadata)\n\t\tli.setSubject(i.Subject())\n\n\t\t// TODO: cache in case needed by more than one resource...\n\t\tif ge = li.metadata().dataStore.Read(li); ge != nil {\n\t\t\treturn nil, ge\n\t\t}\n\n\t\tloaded = true\n\t}\n\n\tif ge := limitAction(limiter, limited); ge != nil {\n\t\treturn nil, ge\n\t}\n\n\t// If we didn't load the updatable, we'll let other code handle the save\n\tif !loaded {\n\t\tlimiter = nil\n\t}\n\n\treturn limiter, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 43
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc saveLimiterIfDirty(limiter limit.Limiter) {\n\t// TODO: need an optimistic lock mechanism to avoid overwriting\n\tif limiter == nil || !limiter.IsDirty() {\n\t\treturn\n\t}\n\n\tlimiterInstance := limiter.(Instance) // Should always be true\n\tge := limiterInstance.metadata().dataStore.Update(limiterInstance, nil)\n\tif ge != nil {\n\t\t// TODO: use provided logger\n\t\tfmt.Printf(\"Failed to save limiter (type: %s, id: %s). Error:\\n%s\\n\", limiterInstance.metadata().instanceName, limiterInstance.Id(), ge)\n\t\treturn\n\t}\n\n\tlimiter.ClearDirty()\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 92
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./resource/limit.go"
+  }
+}

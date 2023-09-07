@@ -1,0 +1,152 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package structs\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n\t\"regexp\"\n\t\"strings\"\n\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\nfunc ExpressionApplierProvider(_ reflect.Type, sf reflect.StructField, directive string) (Applier, gomerr.Gomerr) {\n\tif directive == \"\" {\n\t\treturn nil, nil\n\t}\n\n\t// special chars: $, [ (if map or slice/array)\n\n\t// if directive[0] != '$' {\n\t//\n\t// }\n\n\tif directive[1] == '.' {\n\t\treturn StructApplier{directive}, nil\n\t} else {\n\t\ttf := GetToolFunction(directive) // include the '$'\n\t\tif tf == nil {\n\t\t\treturn nil, gomerr.Configuration(\"Field function not found: \" + directive)\n\t\t}\n\t\treturn tf, nil\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\n// ScopeAlias allows the caller to specify an alternative value to use when defining scoped configuration from the\n// scope used during the application of a tool. Aliases need to be defined before PrepareTool() is called.\nfunc ScopeAlias(alias, scope string) {\n\tif scope == \"\" {\n\t\tdelete(scopeAliases, alias)\n\t\treturn\n\t}\n\n\tif current, ok := scopeAliases[alias]; ok && current != scope {\n\t\tpanic(fmt.Sprintf(\"%s already aliased tp %s. First delete the existing alias to %s first.\", alias, current, scope))\n\t}\n\n\tscopeAliases[alias] = scope\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 32
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc ScopeAliases(aliasToScope map[string]string) {\n\tfor alias, scope := range aliasToScope {\n\t\tScopeAlias(alias, scope)\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 47
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nconst (\n\tanyScope = \"*\"\n\tscopeKey = \"$_gomer_scope\"\n)\n\nvar (\n\tscopeAliases = make(map[string]string)\n\tscopeRegexp  = regexp.MustCompile(`(?:([^;:]*[^\\\\]):)?([^;]*)`)\n)\n\n// Format: [<scope>:]<tool_config>[;[<scope>:]<tool_config>]]*\n// Note that both ':' and ';' are special chars. Once a scope has been provided, colons are allowed until the\n// end of the input or a ';' is found. If a colon should be used for what would otherwise not contain a scope,\n// one can use the wildcard scope (e.g. \"*:this_colon_:_does_not_indicate_a_scope\").\n//\n// NB: scopes can't be reused within the input. If a scope repeats, the last one wins. This is true for wildcards\n//     (implicit, explicit, or both) as well.\nfunc applyScopes(ap ApplierProvider, structType reflect.Type, structField reflect.StructField, directive string) (Applier, gomerr.Gomerr) {\n\tappliers := make(map[string]Applier)\n\tfor _, match := range scopeRegexp.FindAllStringSubmatch(directive, -1) {\n\t\tscope := match[1]\n\t\tif scope == \"\" {\n\t\t\tscope = anyScope\n\t\t} else if actualScope, ok := scopeAliases[scope]; ok {\n\t\t\tscope = actualScope\n\t\t} // else equals the matched value\n\n\t\tscopedDirective := match[2]\n\t\t// TODO: integrate this w/ expressions logic rather than include here...\n\t\tif strings.IndexAny(directive, \"?&\") == -1 {\n\t\t\tscopedDirective = strings.ReplaceAll(scopedDirective, \"\\\\:\", \":\")\n\t\t}\n\n\t\tapplier, ge := ap.Applier(structType, structField, scopedDirective)\n\t\tif ge != nil {\n\t\t\treturn nil, ge.AddAttribute(\"Scope\", scope)\n\t\t} else if applier != nil {\n\t\t\tappliers[scope] = applier\n\t\t} else if scope != anyScope {\n\t\t\tappliers[scope] = NoApplier{}\n\t\t} // else skip\n\t}\n\n\tswitch len(appliers) {\n\tcase 0:\n\t\treturn nil, nil\n\tcase 1:\n\t\t// If only an anyScope applier, avoid the wrapper\n\t\tif applier, ok := appliers[anyScope]; ok {\n\t\t\treturn applier, nil\n\t\t}\n\t}\n\n\treturn scopeSelect{appliers}, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 53
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\ntype scopeSelect struct {\n\tappliers map[string]Applier\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 109
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc (s scopeSelect) Apply(sv reflect.Value, fv reflect.Value, tc *ToolContext) gomerr.Gomerr {\n\tscopedApplier, ok := s.appliers[tc.Scope()]\n\tif !ok {\n\t\tscopedApplier, ok = s.appliers[anyScope]\n\t\tif !ok {\n\t\t\treturn nil // no applier for scope/any, return\n\t\t}\n\t}\n\n\treturn scopedApplier.Apply(sv, fv, tc)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 113
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\n// Composite checks for a composition directive (either '?' or '&') and if found will create a composed Applier from\n// those based on the specified semantic. If there isn't a composition directive, this returns nil for both Applier and\n// gomerr.Gomerr.\n// TODO:p2 this should perhaps be a default intermediary similar to how the scope applier can be\nfunc Composite(directive string, tool *Tool, st reflect.Type, sf reflect.StructField) (Applier, gomerr.Gomerr) {\n\tif strings.HasPrefix(directive, \"if(\") && directive[len(directive)-1] == ')' {\n\t\t// TODO:p1\n\t\t// Format: if({test},{do}<,{else}>)\n\t\t// Example: if($.Enabled,+,-) or if($IsAdmin,+,=*****)\n\t}\n\n\ttIndex := strings.IndexAny(directive, \"?&\")\n\tif tIndex == -1 {\n\t\treturn nil, nil\n\t}\n\n\tvar left Applier\n\tvar leftGe gomerr.Gomerr\n\tif lhs := directive[:tIndex]; len(lhs) > 0 {\n\t\tleft, leftGe = applyScopes(tool.applierProvider, st, sf, lhs)\n\t\tif _, ok := leftGe.(*gomerr.ConfigurationError); leftGe != nil && !ok {\n\t\t\tleftGe = gomerr.Configuration(fmt.Sprintf(\"Unable to process directive: %s\", directive)).Wrap(leftGe)\n\t\t}\n\t}\n\tvar right Applier\n\tvar rightGe gomerr.Gomerr\n\tif rhs := directive[tIndex+1:]; len(rhs) > 0 {\n\t\tright, rightGe = applyScopes(tool.applierProvider, st, sf, rhs)\n\t\tif _, ok := rightGe.(*gomerr.ConfigurationError); rightGe != nil && !ok {\n\t\t\trightGe = gomerr.Configuration(fmt.Sprintf(\"Unable to process directive: %s\", directive)).Wrap(rightGe)\n\t\t}\n\t}\n\tif ge := gomerr.Batch(leftGe, rightGe); ge != nil || (left == nil && right == nil) {\n\t\treturn nil, ge\n\t}\n\n\t// TODO:p0 special case \"$_b64[encode_type]&[output location]\"\n\n\tvar testFn func(reflect.Value) bool\n\tif directive[tIndex] == '?' {\n\t\ttestFn = func(value reflect.Value) bool { return !value.IsZero() }\n\t} else { // '&'\n\t\ttestFn = func(reflect.Value) bool { return false }\n\t}\n\n\treturn leftTestRightApplier{sf.Name, left, testFn, right}, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 125
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\n// func (t *Tool) ifApplier(st reflect.Type, sf reflect.StructField, directive string) (Applier, gomerr.Gomerr) {\n// \treturn nil, nil\n// }\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 173
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "8",
+      "value": "\ntype ifThenElseApplier struct {\n\tname   string\n\ttest   func(value reflect.Value) bool\n\tthen   Applier\n\torElse Applier\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 8,
+        "type": "originalCode",
+        "lineNumberBase": 177
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "9",
+      "value": "\n//func (a ifThenElseApplier) Apply(sv reflect.Value, fv reflect.Value, tc *ToolContext) gomerr.Gomerr {\n//}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 9,
+        "type": "originalCode",
+        "lineNumberBase": 184
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "10",
+      "value": "\ntype leftTestRightApplier struct {\n\tname  string\n\tleft  Applier\n\ttest  func(value reflect.Value) bool\n\tright Applier\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 10,
+        "type": "originalCode",
+        "lineNumberBase": 187
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "11",
+      "value": "\nfunc (a leftTestRightApplier) Apply(sv reflect.Value, fv reflect.Value, tc *ToolContext) gomerr.Gomerr {\n\tvar leftGe gomerr.Gomerr\n\n\tif a.left != nil {\n\t\tleftGe = a.left.Apply(sv, fv, tc)\n\t}\n\n\tif leftGe == nil && a.test(fv) {\n\t\treturn nil\n\t}\n\n\tif a.right == nil {\n\t\treturn leftGe\n\t}\n\n\tge := a.right.Apply(sv, fv, tc)\n\tif ge != nil {\n\t\treturn gomerr.Batch(ge, leftGe) // Okay if leftGe is nil\n\t} else if leftGe != nil {\n\t\t// TODO: replace w/ debug-level log statement\n\t\tfmt.Println(\"Left-side applier failed, but right side succeeded. Left error:\\n\", leftGe.String())\n\t}\n\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 11,
+        "type": "originalCode",
+        "lineNumberBase": 194
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./structs/applierprovider.go"
+  }
+}

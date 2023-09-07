@@ -1,0 +1,20 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package id\n\nimport (\n\t\"bytes\"\n\t\"testing\"\n\t\"time\"\n)\n\nfunc TestUuidV4IdGenerator_Generate(t *testing.T) {\n\ttests := []struct {\n\t\tname        string\n\t\tseed        int64\n\t\twithHyphens bool\n\t\texpected    []byte\n\t}{\n\t\t{\"Seed_1_WithHyphen\", 1, true, []byte(\"78629A0F-5F3F-464F-8D65-822107FCFD52\")},\n\t\t{\"Seed_2_WithHyphen\", 2, true, []byte(\"21ED4CAA-C044-416F-9569-F9E2CB82822F\")},\n\t\t{\"Seed_3_WithHyphen\", 3, true, []byte(\"D38967F9-31A5-4490-9C28-64602BE7FB85\")},\n\t\t{\"Seed_4_WithHyphen\", 4, true, []byte(\"8D11FED4-81CA-40AF-9F26-CE1D9C7D80E2\")},\n\t\t{\"Seed_1_WithoutHyphen\", 1, false, []byte(\"78629A0F5F3F464F8D65822107FCFD52\")},\n\t\t{\"Seed_2_WithoutHyphen\", 2, false, []byte(\"21ED4CAAC044416F9569F9E2CB82822F\")},\n\t\t{\"Seed_3_WithoutHyphen\", 3, false, []byte(\"D38967F931A544909C2864602BE7FB85\")},\n\t\t{\"Seed_4_WithoutHyphen\", 4, false, []byte(\"8D11FED481CA40AF9F26CE1D9C7D80E2\")},\n\t\t{\"Seed_Unique_Check_Bits_1\", time.Now().UnixNano(), true, nil},\n\t\t{\"Seed_Unique_Check_Bits_2\", time.Now().UnixNano(), true, nil},\n\t\t{\"Seed_Unique_Check_Bits_3\", time.Now().UnixNano(), true, nil},\n\t\t{\"Seed_Unique_Check_Bits_4\", time.Now().UnixNano(), true, nil},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tg := NewUuidV4IdGenerator(tt.seed, tt.withHyphens)\n\t\t\tuuid := []byte(g.Generate())\n\t\t\tif tt.expected != nil {\n\t\t\t\tif !bytes.Equal(uuid, tt.expected) {\n\t\t\t\t\tt.Errorf(\"Got %s, but expected  %s\", uuid, tt.expected)\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\t// Version is a 4-bit (aka one character) value, hence comparison to '4'\n\t\t\t\tif version := uuid[14]; version != '4' {\n\t\t\t\t\tt.Errorf(\"Got version %b, but expected 0b0100\", version)\n\t\t\t\t}\n\t\t\t\t// Variant is a 2-bit value, hence the conversion to bits and comparison to 0b10. By way of chars, the\n\t\t\t\t// value should be one of 8, 9, A, B (aka 0b10xx).\n\t\t\t\tif variant := hexToBits(uuid[19]) >> 2; variant != 0b10 {\n\t\t\t\t\tt.Errorf(\"Got variant %b, but expected 0b10\", variant)\n\t\t\t\t}\n\t\t\t}\n\t\t})\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./id/uuid_v4_test.go"
+  }
+}

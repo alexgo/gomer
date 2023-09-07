@@ -1,0 +1,104 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package resource\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n\t\"strings\"\n\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/id\"\n\t\"github.com/jt0/gomer/structs\"\n)\n\nfunc RegisterIdGeneratorFieldFunction(idGenerator id.Generator) {\n\tfn := func(reflect.Value, reflect.Value, *structs.ToolContext) (interface{}, gomerr.Gomerr) {\n\t\treturn idGenerator.Generate(), nil\n\t}\n\t_ = structs.RegisterToolFunction(\"$id\", fn)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nvar DefaultIdFieldTool = NewIdTool(structs.StructTagDirectiveProvider{\"id\"})\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 18
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\n// NewIdTool produces a structs.Applier that will take each of the defined id fields and propagate them to another\n// struct value.\n// Todo:p3 specify that should be ordered in decreasing specificity.\nfunc NewIdTool(dp structs.DirectiveProvider) *structs.Tool {\n\treturn structs.NewTool(\"resource.IdTool\", idTool{}, dp)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 20
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\ntype idTool struct{}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 27
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc (idTool) Applier(st reflect.Type, sf reflect.StructField, directive string) (structs.Applier, gomerr.Gomerr) {\n\tif directive == \"\" {\n\t\treturn nil, nil\n\t}\n\n\tvar typeName string\n\tif parts := strings.Split(directive, \"/\"); len(parts) < 2 {\n\t\ttypeName = st.String()\n\t} else if len(parts) == 2 {\n\t\tdirective = parts[0]\n\t\ttypeName = parts[1]\n\t} else {\n\t\treturn nil, gomerr.Configuration(fmt.Sprintf(\"Only one explicit type name may be specified, found %d in %s\", len(parts)-1, directive))\n\t}\n\n\tapplier := copyIdsApplier{hidden: make(map[string]bool)}\n\tfor _, idField := range strings.Split(directive, \",\") {\n\t\tidField = strings.TrimSpace(idField)\n\t\tif idField == \"\" {\n\t\t\tcontinue\n\t\t}\n\t\tif idField[0] == '~' {\n\t\t\tapplier.hidden[idField] = true\n\t\t\tidField = idField[1:]\n\t\t} else if idField == \"+\" {\n\t\t\tidField = sf.Name\n\t\t}\n\t\tapplier.idFields = append(applier.idFields, idField)\n\t}\n\n\tswitch len(applier.idFields) {\n\tcase 0:\n\t\tapplier.idFields = []string{sf.Name}\n\tdefault:\n\t\tif applier.idFields[0] != sf.Name {\n\t\t\tapplier.idFields = append([]string{sf.Name}, applier.idFields...)\n\t\t}\n\t}\n\n\tif sa, exists := structIdFields[typeName]; exists {\n\t\tif !reflect.DeepEqual(*sa, applier) {\n\t\t\treturn nil, gomerr.Configuration(\"Already have an id attribute specified for this struct: \" + sa.idFields[0])\n\t\t}\n\t} else {\n\t\tstructIdFields[typeName] = &applier\n\t}\n\n\treturn applier, nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 29
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nconst SourceValue = \"$_source_value\"\n\nvar structIdFields = make(map[string]*copyIdsApplier)\n\ntype copyIdsApplier struct {\n\tidFields []string\n\thidden   map[string]bool\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 79
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "6",
+      "value": "\nfunc (a copyIdsApplier) Apply(sv reflect.Value, _ reflect.Value, tc *structs.ToolContext) gomerr.Gomerr {\n\tsourceValue, ok := tc.Lookup(SourceValue)\n\tif !ok {\n\t\treturn gomerr.Configuration(\"Missing source for ids to copy\")\n\t}\n\n\tsource, ok := sourceValue.(reflect.Value)\n\tif !ok {\n\t\tsource = reflect.ValueOf(sourceValue)\n\t\tif source.Kind() == reflect.Ptr {\n\t\t\tsource = source.Elem()\n\t\t}\n\t}\n\n\tfor _, idField := range a.idFields {\n\t\tsvf := sv.FieldByName(idField)\n\t\tif !svf.IsValid() || !svf.CanSet() {\n\t\t\treturn gomerr.Unprocessable(\"Field is invalid: \", idField)\n\t\t}\n\t\tsvf.Set(source.FieldByName(idField))\n\t}\n\n\treturn nil\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 6,
+        "type": "originalCode",
+        "lineNumberBase": 88
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "7",
+      "value": "\nfunc Id(sv reflect.Value) (string, gomerr.Gomerr) {\n\tidfa, ok := structIdFields[sv.Type().String()]\n\tif !ok {\n\t\t// TODO: dummy call to just prepare type is kinda...yeah. Maybe need a \"Prepare\" or something after all.\n\t\t_ = structs.ApplyTools(sv, nil, DefaultIdFieldTool)\n\n\t\tidfa, ok = structIdFields[sv.Type().String()]\n\t\tif !ok {\n\t\t\treturn \"\", gomerr.Unprocessable(\"Unprocessed type or no field marked as an 'id'\", sv.Type().String())\n\t\t}\n\t}\n\n\tfv := sv.FieldByName(idfa.idFields[0])\n\tif !fv.IsValid() {\n\t\treturn \"\", gomerr.Unprocessable(\"Provided struct's 'id' field is not valid\", idfa.idFields[0])\n\t}\n\n\tif idfa.hidden[idfa.idFields[0]] {\n\t\treturn \"**********\", nil\n\t}\n\n\tswitch t := fv.Interface().(type) {\n\tcase string:\n\t\treturn t, nil\n\tcase fmt.Stringer:\n\t\treturn t.String(), nil\n\tdefault:\n\t\treturn \"\", gomerr.Unprocessable(\"Id value does not provide a string representation\", t)\n\t}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 7,
+        "type": "originalCode",
+        "lineNumberBase": 113
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./resource/idtool.go"
+  }
+}

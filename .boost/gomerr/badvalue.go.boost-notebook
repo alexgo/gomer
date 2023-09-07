@@ -1,0 +1,80 @@
+{
+  "cells": [
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "0",
+      "value": "package gomerr\n\nimport \"time\"\n\ntype BadValueType string\n\nconst (\n\tExpiredValueType    BadValueType = \"Expired\"\n\tGenericBadValueType BadValueType = \"BadValue\"\n\tInvalidValueType    BadValueType = \"Invalid\"\n\tMalformedValueType  BadValueType = \"Malformed\"\n\n\treasonAttributeKey   = \"Reason\"\n\texpectedAttributeKey = \"Expected\"\n)\n\ntype BadValueError struct {\n\tGomerr\n\tType  BadValueType\n\tName  string\n\tValue interface{}\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 0,
+        "type": "originalCode",
+        "lineNumberBase": 0
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "1",
+      "value": "\nfunc BadValue(badValueType BadValueType, name string, value interface{}) *BadValueError {\n\treturn Build(new(BadValueError), badValueType, name, value).(*BadValueError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 1,
+        "type": "originalCode",
+        "lineNumberBase": 22
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "2",
+      "value": "\nfunc InvalidValue(name string, value interface{}, expected interface{}) *BadValueError {\n\treturn Build(new(BadValueError), InvalidValueType, name, value).AddAttributes(expectedAttributeKey, expected).(*BadValueError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 2,
+        "type": "originalCode",
+        "lineNumberBase": 26
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "3",
+      "value": "\nfunc MalformedValue(name string, value interface{}) *BadValueError {\n\treturn Build(new(BadValueError), MalformedValueType, name, value).(*BadValueError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 3,
+        "type": "originalCode",
+        "lineNumberBase": 30
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "4",
+      "value": "\nfunc ValueExpired(name string, expiredAt time.Time) *BadValueError {\n\treturn Build(new(BadValueError), ExpiredValueType, name, expiredAt).(*BadValueError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 4,
+        "type": "originalCode",
+        "lineNumberBase": 34
+      }
+    },
+    {
+      "outputs": [],
+      "languageId": "go",
+      "id": "5",
+      "value": "\nfunc (bve *BadValueError) WithReason(reason string) *BadValueError {\n\treturn bve.AddAttribute(reasonAttributeKey, reason).(*BadValueError)\n}\n",
+      "kind": 2,
+      "metadata": {
+        "id": 5,
+        "type": "originalCode",
+        "lineNumberBase": 38
+      }
+    }
+  ],
+  "metadata": {
+    "defaultDir": ".boost",
+    "sourceFile": "./gomerr/badvalue.go"
+  }
+}
