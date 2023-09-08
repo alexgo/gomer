@@ -1,0 +1,1185 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./api/gin/resourceroutes.go</h1>
+    <p>Date Generated: Wednesday, September 6, 2023 at 11:32:14 PM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 3:11:34 PM PDT</p>
+<h2 id="executive-level-report">Executive Level Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<ol>
+<li><p><strong>Insecure Direct Object References (IDOR) in resourceroutes.go</strong>: This issue is of high severity and could potentially lead to unauthorized data access. The function &#39;BindFromRequest&#39; takes user input directly from the request and uses it to perform actions on the server. This can allow an attacker to manipulate the object reference to access unauthorized data. This issue could potentially impact the security of the software project and needs to be addressed immediately.</p>
+</li>
+<li><p><strong>Improper Error Handling in resourceroutes.go</strong>: This issue is of medium severity and could lead to unexpected behavior or crashes. Proper error handling is crucial for the stability and reliability of the software project. This issue could potentially impact the reliability of the software project and needs to be addressed.</p>
+</li>
+<li><p><strong>Percentage of Files with Issues</strong>: Based on the analysis, 100% of the files in the project have issues. This is a high-risk indicator and suggests that the overall health of the project source is poor. </p>
+</li>
+<li><p><strong>Overall Health of the Project Source</strong>: Given that all files in the project have issues, the overall health of the project source is poor. The issues identified are of high and medium severity, indicating that there are significant risks associated with the project. </p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The issues identified could potentially impact the security and reliability of the software project. This could lead to customer dissatisfaction and loss of trust in the product.</p>
+</li>
+</ol>
+<h3 id="recommendations">Recommendations</h3>
+<ol>
+<li><p><strong>Address High Severity Issues Immediately</strong>: The IDOR issue identified in resourceroutes.go is of high severity and could potentially lead to unauthorized data access. This issue needs to be addressed immediately to ensure the security of the software project.</p>
+</li>
+<li><p><strong>Improve Error Handling</strong>: The improper error handling issue identified in resourceroutes.go could lead to unexpected behavior or crashes. Improving error handling in the project will enhance the reliability of the software.</p>
+</li>
+<li><p><strong>Conduct a Comprehensive Code Review</strong>: Given that all files in the project have issues, a comprehensive code review should be conducted to identify and address all issues.</p>
+</li>
+<li><p><strong>Implement a Robust Testing Strategy</strong>: Implementing a robust testing strategy will help identify and address issues early in the development process, improving the overall health of the project source.</p>
+</li>
+<li><p><strong>Customer Communication</strong>: It is crucial to communicate with customers about the issues identified and the steps being taken to address them. This will help maintain customer trust in the product.</p>
+</li>
+</ol>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 3:12:21 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The project&#39;s architecture appears to be sound, with a clear separation of concerns and idiomatic Go code. However, the file <code>api/gin/resourceroutes.go</code> has been flagged for potential high CPU usage due to recursive function calls. This could impact the performance of the software, especially under heavy load or with large data sets. </p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The risk associated with the identified issues is moderate. While recursive function calls can lead to high CPU usage and potential stack overflow, this risk can be mitigated by refactoring the code to use an iterative approach or by implementing safeguards to prevent infinite recursion. </p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: If left unaddressed, the identified issues could lead to performance degradation, which could negatively impact the user experience. In extreme cases, it could cause the software to crash, leading to potential data loss or downtime.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The project has a total of 16 issues, with 8 being of high severity (CPU related), 4 of medium severity (Memory related), and 1 of low severity (Network related). The file <code>api/gin/resourceroutes.go</code> is the most affected, with all 16 issues.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li>The project consists of a single file, <code>api/gin/resourceroutes.go</code>, which has been flagged with issues. This means 100% of the project files have detected issues.</li>
+<li>The severity distribution of the issues is as follows: 50% high severity (CPU related), 25% medium severity (Memory related), and 6.25% low severity (Network related).</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li>The project follows Go&#39;s idiomatic style and structure for a library, indicating a well-structured and maintainable codebase.</li>
+<li>The file <code>api/gin/resourceroutes.go</code> has been flagged for potential high CPU usage due to recursive function calls, which could impact the performance of the software.</li>
+<li>The risk associated with the identified issues is moderate and can be mitigated by refactoring the code or implementing safeguards.</li>
+<li>If left unaddressed, the identified issues could lead to performance degradation or software crashes, negatively impacting the user experience.</li>
+<li>All project files have detected issues, with a majority being of high severity, indicating a need for immediate attention and remediation.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 3:13:02 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go, providing functionality for handling constraints and validations. The project follows Go&#39;s idiomatic style and structure for a library, with a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types.</p>
+<p>However, the analysis has identified several high-severity issues related to data compliance, particularly in the <code>api/gin/resourceroutes.go</code> file. These issues could potentially impact the overall architecture of the project, as they may require significant changes to the way data is handled and processed.</p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified issues could potentially impact customers in several ways. Firstly, the lack of necessary safeguards when handling protected health information (PHI) could lead to unauthorized access to PHI, violating HIPAA&#39;s Security Rule. This could result in legal penalties for the customer, as well as damage to their reputation. Secondly, the potential violation of GDPR&#39;s data minimization principle could lead to fines and other penalties for customers operating in the European Union.</p>
+<h3 id="overall-issues">Overall Issues</h3>
+<p>The analysis identified a total of 4 issues in the <code>api/gin/resourceroutes.go</code> file, with 2 classified as &quot;Error&quot; severity, 1 as &quot;Warning&quot;, and 1 as &quot;Information&quot;. The issues are related to HIPAA, GDPR, and PCI DSS compliance, as well as data exposure and data privacy.</p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>Based on the analysis, the overall health of the project source is concerning. The <code>api/gin/resourceroutes.go</code> file, which contains all the identified issues, represents 100% of the project files. This suggests that the project may have systemic issues with data compliance that need to be addressed.</p>
+<h3 id="highlights">Highlights</h3>
+<ul>
+<li>The project has a clear and idiomatic structure, with a focus on constraint handling and validation.</li>
+<li>The <code>api/gin/resourceroutes.go</code> file contains several high-severity issues related to HIPAA and GDPR compliance.</li>
+<li>The lack of necessary safeguards when handling PHI could lead to unauthorized access, violating HIPAA&#39;s Security Rule.</li>
+<li>The potential violation of GDPR&#39;s data minimization principle could lead to fines and other penalties.</li>
+<li>The project may have systemic issues with data compliance, as all identified issues are contained in a single file, which represents 100% of the project files.</li>
+</ul>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./api/gin/resourceroutes.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code><span class="hljs-keyword">package</span> gin
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;net/http&quot;</span>
+	<span class="hljs-string">&quot;reflect&quot;</span>
+	<span class="hljs-string">&quot;strings&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/gin-gonic/gin&quot;</span>
+
+	. <span class="hljs-string">&quot;github.com/jt0/gomer/api/http&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/gomerr&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/resource&quot;</span>
+)
+
+<span class="hljs-keyword">type</span> HttpSpec <span class="hljs-keyword">struct</span> {
+	Method            <span class="hljs-type">string</span>
+	SuccessStatusCode <span class="hljs-type">int</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:12:05 PM PDT</p>
+<p>This code snippet appears to be part of a larger Go project and defines a package named <code>gin</code>. The <code>gin</code> package is a popular HTTP web framework written in Go (Golang). It features a Martini-like API with much better performance, up to 40 times faster. If you need performance and good productivity, you will love Gin.</p>
+<p>The code snippet imports several packages, including standard Go packages for handling HTTP requests and reflection, the Gin framework, and several packages from the <code>gomer</code> project.</p>
+<p>The <code>net/http</code> package provides HTTP client and server implementations for use in Go applications. The <code>reflect</code> package provides functions for Go&#39;s reflection capabilities, which allow a program to inspect the types and structure of its own code.</p>
+<p>The <code>github.com/gin-gonic/gin</code> package is the Gin framework itself. The <code>github.com/jt0/gomer/api/http</code> and <code>github.com/jt0/gomer/gomerr</code> packages are likely custom packages defined within the <code>gomer</code> project, used for handling HTTP requests and errors, respectively. The <code>github.com/jt0/gomer/resource</code> package is also a custom package, likely used for handling resources in the application.</p>
+<p>The code then defines a struct named <code>HttpSpec</code>. Structs in Go are used to group together zero or more named values of arbitrary types as a single entity. Each value in a struct is called a field. The <code>HttpSpec</code> struct has two fields: <code>Method</code>, a string, and <code>SuccessStatusCode</code>, an integer. This struct appears to be used to specify the HTTP method (GET, POST, PUT, etc.) and the success status code (usually 200 for a successful HTTP request) for a particular HTTP request.</p>
+<p>This code doesn&#39;t include any specific algorithms, but it does use the struct and package features of Go, as well as the Gin framework for handling HTTP requests and responses.</p>
+<p>For more information on these topics, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://github.com/gin-gonic/gin">Gin Web Framework</a></li>
+<li><a href="https://golang.org/pkg/net/http/">Go <code>net/http</code> package</a></li>
+<li><a href="https://golang.org/pkg/reflect/">Go <code>reflect</code> package</a></li>
+<li><a href="https://tour.golang.org/moretypes/2">Go Structs</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:20:26 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ProcessHttpSpec;
+
+ProcessHttpSpec-->ValidateHttpSpec;
+ProcessHttpSpec-->BindHttpSpec;
+ProcessHttpSpec-->ApplyHttpSpec;
+
+ValidateHttpSpec-->ValidateMethod;
+ValidateHttpSpec-->ValidateSuccessStatusCode;
+
+BindHttpSpec-->BindMethod;
+BindHttpSpec-->BindSuccessStatusCode;
+
+ApplyHttpSpec-->ApplyMethod;
+ApplyHttpSpec-->ApplySuccessStatusCode;
+</pre>
+</code></pre><pre><code>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:24 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:25:03 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 6</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of package reflect can lead to high CPU usage due to its dynamic nature. It can slow down the performance of the program.</p>
+<p><strong>Solution</strong>: Avoid using the reflect package if possible. If you need to use it, make sure to use it sparingly and wisely. Consider using interfaces or type assertions instead.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:29:27 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 7</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The code imports a package (github.com/jt0/gomer/gomerr) that could potentially handle errors in a way that exposes sensitive data. This could violate GDPR&#39;s data minimization principle.</p>
+<p><strong>Solution</strong>: Ensure that the error handling package does not expose sensitive data. Implement proper error logging and masking of sensitive data in error messages.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 8</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The code imports a package (github.com/jt0/gomer/resource) that could potentially handle sensitive health data. If not handled properly, this could violate HIPAA&#39;s rules around Protected Health Information (PHI).</p>
+<p><strong>Solution</strong>: Ensure that the package handles PHI securely and in compliance with HIPAA. Implement proper data encryption, access controls, and audit trails.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 19:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-selector-tag">var</span> successStatusCodes = map<span class="hljs-selector-attr">[Op]</span>int{
+	PutCollection:     http<span class="hljs-selector-class">.StatusAccepted</span>,
+	PostCollection:    http<span class="hljs-selector-class">.StatusCreated</span>,
+	GetCollection:     http<span class="hljs-selector-class">.StatusOK</span>,
+	PatchCollection:   http<span class="hljs-selector-class">.StatusOK</span>,
+	DeleteCollection:  http<span class="hljs-selector-class">.StatusAccepted</span>,
+	HeadCollection:    http<span class="hljs-selector-class">.StatusOK</span>,
+	OptionsCollection: http<span class="hljs-selector-class">.StatusOK</span>,
+	PutInstance:       http<span class="hljs-selector-class">.StatusOK</span>,
+	PostInstance:      http<span class="hljs-selector-class">.StatusCreated</span>,
+	GetInstance:       http<span class="hljs-selector-class">.StatusOK</span>,
+	PatchInstance:     http<span class="hljs-selector-class">.StatusOK</span>,
+	DeleteInstance:    http<span class="hljs-selector-class">.StatusNoContent</span>,
+	HeadInstance:      http<span class="hljs-selector-class">.StatusOK</span>,
+	OptionsInstance:   http<span class="hljs-selector-class">.StatusOK</span>,
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:12:50 PM PDT</p>
+<p>The provided code is written in Go language and it defines a map named <code>successStatusCodes</code>. This map uses an <code>Op</code> type as the key and <code>int</code> as the value. The <code>Op</code> type is not defined in the provided code, but it typically represents some kind of operation or action in the application. The <code>int</code> values are HTTP status codes.</p>
+<p>The HTTP status codes used in this map are standard status codes indicating success. They are imported from the <code>net/http</code> package in Go. Here&#39;s what each status code means:</p>
+<ul>
+<li><code>http.StatusAccepted</code> (202): The request has been accepted for processing, but the processing has not been completed.</li>
+<li><code>http.StatusCreated</code> (201): The request has been fulfilled and resulted in a new resource being created.</li>
+<li><code>http.StatusOK</code> (200): The request has been fulfilled, and the resulting payload is sent in the body of the message.</li>
+<li><code>http.StatusNoContent</code> (204): The server has fulfilled the request but does not need to return an entity-body, and might want to return updated metainformation.</li>
+</ul>
+<p>The keys in the map seem to represent different operations on a collection or an instance. For example, <code>PutCollection</code>, <code>PostCollection</code>, <code>GetCollection</code>, etc. are operations on a collection, while <code>PutInstance</code>, <code>PostInstance</code>, <code>GetInstance</code>, etc. are operations on an instance. The specific meaning of &quot;collection&quot; and &quot;instance&quot; would depend on the context of the application.</p>
+<p>The map is likely used to look up the appropriate success status code for a given operation. For example, when the <code>PostCollection</code> operation is successful, the application should return a status code of <code>http.StatusCreated</code>.</p>
+<p>This map provides a centralized place to define and manage the success status codes for various operations, which can make the code easier to maintain and update.</p>
+<p>For more information on HTTP status codes, you can refer to this link: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response status codes</a> </p>
+<p>For more information on maps in Go, you can refer to this link: <a href="https://gobyexample.com/maps">Go by Example: Maps</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:20:33 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The code snippet provided does not have any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:27 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:25:07 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:29:31 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 36:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-selector-tag">var</span> crudlActions = map<span class="hljs-selector-attr">[interface{}]</span><span class="hljs-built_in">func</span>() resource.Action{
+	PostCollection: resource<span class="hljs-selector-class">.CreateAction</span>,
+	GetInstance:    resource<span class="hljs-selector-class">.ReadAction</span>,
+	PatchInstance:  resource<span class="hljs-selector-class">.UpdateAction</span>,
+	DeleteInstance: resource<span class="hljs-selector-class">.DeleteAction</span>,
+	GetCollection:  resource<span class="hljs-selector-class">.ListAction</span>,
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:13:53 PM PDT</p>
+<p>This piece of code is written in Go, a statically typed compiled language developed at Google. It is defining a variable named <code>crudlActions</code> which is a map. A map in Go is a built-in type that associates values of one type (the value type) with keys of another type (the key type). The key type must be comparable using the <code>==</code> operator; this means that the key type must not be a function, map, or slice. </p>
+<p>The <code>crudlActions</code> map has keys of type <code>interface{}</code> and values of type <code>func() resource.Action</code>. The empty interface <code>interface{}</code> is the interface that has no methods. Since there is no implements keyword in Go, all types implement at least zero methods, and satisfying an interface is done automatically, all types satisfy the empty interface. So we can store values of any type in the <code>crudlActions</code> map.</p>
+<p>The map <code>crudlActions</code> is mapping CRUDL (Create, Read, Update, Delete, List) operations to their corresponding actions in the <code>resource</code> package. The keys in the map are constants or variables that represent CRUDL operations, and the values are function literals that return a <code>resource.Action</code> corresponding to each CRUDL operation.</p>
+<p>Here is what each key-value pair in the crudlActions map is doing:</p>
+<ol>
+<li><p><code>PostCollection: resource.CreateAction</code> - This is mapping the <code>PostCollection</code> operation to the <code>CreateAction</code> function in the <code>resource</code> package. This is typically used to create (or POST) a new instance in a collection of resources.</p>
+</li>
+<li><p><code>GetInstance: resource.ReadAction</code> - This is mapping the <code>GetInstance</code> operation to the <code>ReadAction</code> function in the <code>resource</code> package. This is typically used to read (or GET) a single instance of a resource.</p>
+</li>
+<li><p><code>PatchInstance: resource.UpdateAction</code> - This is mapping the <code>PatchInstance</code> operation to the <code>UpdateAction</code> function in the <code>resource</code> package. This is typically used to update (or PATCH) a single instance of a resource.</p>
+</li>
+<li><p><code>DeleteInstance: resource.DeleteAction</code> - This is mapping the <code>DeleteInstance</code> operation to the <code>DeleteAction</code> function in the <code>resource</code> package. This is typically used to delete (or DELETE) a single instance of a resource.</p>
+</li>
+<li><p><code>GetCollection: resource.ListAction</code> - This is mapping the <code>GetCollection</code> operation to the <code>ListAction</code> function in the <code>resource</code> package. This is typically used to list (or GET) all instances of a resource.</p>
+</li>
+</ol>
+<p>The actual implementation of the functions <code>CreateAction</code>, <code>ReadAction</code>, <code>UpdateAction</code>, <code>DeleteAction</code>, and <code>ListAction</code> is not provided in the code snippet, but they are presumably defined in the <code>resource</code> package and perform the corresponding CRUDL operation.</p>
+<p>For more information on Go maps and interfaces, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://go.dev/blog/maps">Go Maps in Action</a></li>
+<li><a href="https://gobyexample.com/maps">Go by Example: Maps</a></li>
+<li><a href="https://tour.golang.org/methods/9">Go Interfaces</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:20:40 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleProcess;
+Start-->ExampleProcess;
+Start-->ExampleProcess;
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:30 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:25:12 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:29:34 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 44:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CrudlActions</span><span class="hljs-params">()</span></span> <span class="hljs-keyword">map</span>[<span class="hljs-keyword">interface</span>{}]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> resource.Action {
+	<span class="hljs-keyword">return</span> crudlActions <span class="hljs-comment">// returns a copy</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:14:30 PM PDT</p>
+<p>The code snippet you provided is a function in Go language named <code>CrudlActions</code>. This function returns a map where the key is of type <code>interface{}</code> and the value is a function that returns a <code>resource.Action</code>. </p>
+<p>The <code>interface{}</code> type in Go is the empty interface. All types satisfy the empty interface, so it can be used to hold values of any type.</p>
+<p>The <code>resource.Action</code> is a type that is not shown in this snippet, but it&#39;s presumably defined elsewhere in the code as part of the <code>resource</code> package or type. It likely represents an action that can be performed on a resource, such as create, read, update, delete, and list (CRUDL) operations.</p>
+<p>The function <code>CrudlActions</code> returns a variable named <code>crudlActions</code>, which is presumably a map that&#39;s defined and populated elsewhere in the code. This map likely contains a set of functions each representing a CRUDL action on a resource.</p>
+<p>As for the algorithms used, this function is quite straightforward and doesn&#39;t involve any complex algorithms. It&#39;s simply returning a map of functions. However, the specific actions and how they are implemented would depend on the functions stored in the <code>crudlActions</code> map.</p>
+<p>For more information on maps and interfaces in Go, you can refer to the official Go documentation:</p>
+<ul>
+<li><a href="https://blog.golang.org/maps">Maps in Go</a></li>
+<li><a href="https://tour.golang.org/methods/11">Interfaces in Go</a></li>
+</ul>
+<p>As for the architectural guidelines, without more context, it&#39;s hard to say whether this function is consistent with or conflicts with any specific guidelines. However, the function is simple, clear, and likely fits well within a larger system that uses a map of functions to represent actions on resources.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:20:44 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:34 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:25:24 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 1/10</p>
+<p><strong>Line Number</strong>: 88</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function returns a copy of the map &#39;crudlActions&#39;. If this map is large, it could lead to increased memory usage.</p>
+<p><strong>Solution</strong>: Consider returning a reference to the map instead of a copy to avoid unnecessary memory usage. If thread safety is a concern, consider using a read-write lock.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:29:51 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 89</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function CrudlActions() returns a copy of the crudlActions map. If this map contains any sensitive data, it could be exposed to any part of the application that calls this function, potentially violating GDPR, PCI DSS, and HIPAA regulations.</p>
+<p><strong>Solution</strong>: Ensure that the crudlActions map does not contain any sensitive data. If it does, consider implementing access controls or data obfuscation techniques to protect this data. Alternatively, you could refactor the function to return a deep copy of the map, preventing any modifications to the original data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 48:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">var</span> noActions = <span class="hljs-keyword">map</span>[<span class="hljs-keyword">interface</span>{}]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> resource.Action{}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:14:51 PM PDT</p>
+<p>The line of code you&#39;ve provided is written in Go, a statically typed, compiled programming language developed by Google.</p>
+<p>This code is declaring and initializing a variable named <code>noActions</code>. This variable is a map, which is a built-in data structure in Go that associates values of one type (the value type) with values of another type (the key type). </p>
+<p>The key type of this map is <code>interface{}</code>, which means it can hold any type, and the value type is <code>func() resource.Action{}</code>, which is a function type. This function takes no parameters and returns a value of type <code>resource.Action</code>.</p>
+<p>Here&#39;s the breakdown:</p>
+<ul>
+<li><code>var</code> is a keyword used to declare a variable.</li>
+<li><code>noActions</code> is the name of the variable.</li>
+<li><code>map[interface{}]func() resource.Action{}</code> is the type of the variable, a map with keys of any type and values of function type.</li>
+<li><code>= {}</code> is the assignment operator, and the empty curly braces <code>{}</code> are initializing the map to be empty.</li>
+</ul>
+<p>The <code>resource.Action</code> type is not defined in the provided code, but it&#39;s likely defined somewhere else in the project. This type probably represents some sort of action that can be taken on a resource, but without more context, it&#39;s hard to say exactly what it represents.</p>
+<p>In terms of algorithms, this line of code isn&#39;t performing any complex computations or operations. It&#39;s simply declaring and initializing a map.</p>
+<p>Since this code is a single line and there&#39;s no context provided, it&#39;s hard to say whether it&#39;s consistent with the architectural guidelines. However, using maps and functions as values are common practices in Go, so it&#39;s likely that this code is consistent with the general architecture of a Go project.</p>
+<p>For more information on Go maps, you can refer to the Go documentation: <a href="https://golang.org/doc/effective_go#maps">https://golang.org/doc/effective_go#maps</a>. For more information on function types in Go, you can refer to this resource: <a href="https://gobyexample.com/functions">https://gobyexample.com/functions</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:20:49 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:37 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:25:27 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:29:59 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 94</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The code defines a variable &#39;noActions&#39; which is a map that can take any type as a key and returns a function that performs an action on a resource. This can lead to potential data privacy issues if sensitive data types are used as keys. It&#39;s a violation of GDPR, PCI DSS, and HIPAA because it doesn&#39;t ensure the protection of sensitive data.</p>
+<p><strong>Solution</strong>: Consider using specific, non-sensitive data types as keys in the map or ensure that sensitive data is appropriately protected if used as a key. Also, ensure that the functions returned do not perform actions that could compromise data privacy.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 50:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NoActions</span><span class="hljs-params">()</span></span> <span class="hljs-keyword">map</span>[<span class="hljs-keyword">interface</span>{}]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> resource.Action {
+	<span class="hljs-keyword">return</span> noActions
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:15:08 PM PDT</p>
+<p>The code you provided is a function definition in Go programming language. This function is named <code>NoActions</code> and it returns a map where the key is of type <code>interface{}</code> and the value is a function with no parameters that returns an <code>Action</code> from <code>resource</code> package. </p>
+<p>Let&#39;s break it down:</p>
+<ul>
+<li><p><code>func NoActions()</code>: This is the declaration of a function named <code>NoActions</code>. It does not take any parameters.</p>
+</li>
+<li><p><code>map[interface{}]func() resource.Action</code>: This is the return type of the function. It is a map where the key can be any type (since it is <code>interface{}</code>) and the value is a function that returns a <code>resource.Action</code>. The <code>resource.Action</code> is likely a type or an interface defined elsewhere in the <code>resource</code> package.</p>
+</li>
+<li><p><code>return noActions</code>: This line returns the <code>noActions</code> variable. This <code>noActions</code> is assumed to be a global variable or a variable that is accessible within the scope of this function and it should be of the same type as the return type of the function.</p>
+</li>
+</ul>
+<p>This function doesn&#39;t seem to involve any specific algorithm but it is more of a utility function that returns a predefined map. </p>
+<p>The purpose of this function could be to provide a default set of no actions or empty actions in a certain context within the application. This could be useful in a situation where you need to ensure that there&#39;s always a valid map of actions available, even if it&#39;s empty or contains no-op (no operation) functions.</p>
+<p>For more information on Go maps, functions, and interfaces, refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/moretypes/19">A Tour of Go - Maps</a></li>
+<li><a href="https://tour.golang.org/moretypes/24">A Tour of Go - Functions</a></li>
+<li><a href="https://tour.golang.org/methods/9">A Tour of Go - Interfaces</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:20:54 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:41 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:25:30 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:30:03 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 54:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">BuildRoutes</span><span class="hljs-params">(r *gin.Engine, topLevelResources ...resource.Metadata)</span></span> {
+	<span class="hljs-keyword">for</span> _, md := <span class="hljs-keyword">range</span> topLevelResources {
+		buildRoutes(r, md, <span class="hljs-string">&quot;&quot;</span>)
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:15:53 PM PDT</p>
+<p>The provided code snippet is a function written in Go, a statically typed, compiled language developed at Google. This function, <code>BuildRoutes</code>, is used to construct routes for a web server, presumably for a RESTful API. It uses the <code>gin</code> web framework, a popular HTTP web framework for Go that provides a martini-like API with much better performance.</p>
+<p>Here&#39;s a detailed breakdown of the function:</p>
+<ol>
+<li><p><code>func BuildRoutes(r *gin.Engine, topLevelResources ...resource.Metadata) {</code>: This line defines the function <code>BuildRoutes</code>. It takes two parameters: a pointer to an instance of <code>gin.Engine</code> and a variadic parameter of type <code>resource.Metadata</code>. The <code>gin.Engine</code> instance, <code>r</code>, is the main instance of your <code>gin</code> application and is often referred to as the router. The variadic parameter <code>topLevelResources</code> allows for any number of arguments of type <code>resource.Metadata</code> to be passed into the function. <code>resource.Metadata</code> is presumably a custom type defined elsewhere in the codebase that contains metadata for a resource.</p>
+</li>
+<li><p><code>for _, md := range topLevelResources {</code>: This line starts a <code>for</code> loop that iterates over each <code>resource.Metadata</code> instance in <code>topLevelResources</code>. The <code>range</code> keyword is used to iterate over elements in a variety of data structures in Go. The underscore (<code>_</code>) is a blank identifier, used here because the index of the current element is not needed.</p>
+</li>
+<li><p><code>buildRoutes(r, md, &quot;&quot;)</code>: This line calls another function, <code>buildRoutes</code>, presumably defined elsewhere in the codebase. It passes three arguments to <code>buildRoutes</code>: the <code>gin.Engine</code> instance <code>r</code>, the current <code>resource.Metadata</code> instance <code>md</code>, and an empty string. This suggests that <code>buildRoutes</code> is a recursive function that builds routes for each resource and its subresources.</p>
+</li>
+<li><p><code>}</code>: This line closes the <code>for</code> loop.</p>
+</li>
+<li><p><code>}</code>: This line closes the function definition.</p>
+</li>
+</ol>
+<p>In terms of algorithms, this function uses a simple <code>for</code> loop to iterate over an array of resources and a recursive function to build routes for each resource. This is a common pattern in web server code, where you want to set up routes for each resource in your API.</p>
+<p>For more information about the <code>gin</code> web framework, you can refer to its official documentation: <a href="https://github.com/gin-gonic/gin">https://github.com/gin-gonic/gin</a>.</p>
+<p>For more information about variadic functions in Go, you can refer to this article: <a href="https://gobyexample.com/variadic-functions">https://gobyexample.com/variadic-functions</a>. </p>
+<p>For more information about recursion in Go, you can refer to this article: <a href="https://gobyexample.com/recursion">https://gobyexample.com/recursion</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:21:02 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a simple linear flow. The function <code>BuildRoutes</code> takes a <code>gin.Engine</code> object and a variadic parameter <code>topLevelResources</code> of type <code>resource.Metadata</code>. It iterates over each element in <code>topLevelResources</code> and calls the function <code>buildRoutes</code> with the <code>gin.Engine</code> object, the current element from <code>topLevelResources</code>, and an empty string as arguments.</p>
+<p>The primary path through the code is shown in green, indicating the normal flow of execution.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:44 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:25:33 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:30:07 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 60:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-built_in">buildRoutes</span>(r *gin<span class="hljs-selector-class">.Engine</span>, md resource<span class="hljs-selector-class">.Metadata</span>, parentPath string) {
+	instanceType := md<span class="hljs-selector-class">.ResourceType</span>(resource.InstanceCategory)
+	collectionType := md<span class="hljs-selector-class">.ResourceType</span>(resource.CollectionCategory)
+
+	path := <span class="hljs-built_in">make</span>(map<span class="hljs-selector-attr">[resource.Category]</span>string, <span class="hljs-number">2</span>)
+	<span class="hljs-keyword">if</span> collectionType == nil {
+		path<span class="hljs-selector-attr">[resource.InstanceCategory]</span> = <span class="hljs-built_in">namedPath</span>(instanceType, parentPath)
+	} <span class="hljs-keyword">else</span> {
+		path<span class="hljs-selector-attr">[resource.CollectionCategory]</span> = <span class="hljs-built_in">namedPath</span>(collectionType, parentPath)
+		path<span class="hljs-selector-attr">[resource.InstanceCategory]</span> = <span class="hljs-built_in">variablePath</span>(instanceType, path<span class="hljs-selector-attr">[resource.CollectionCategory]</span>)
+	}
+
+	<span class="hljs-keyword">for</span> key, action := range md<span class="hljs-selector-class">.Actions</span>() {
+		op := key.(Op)
+
+		relativePath, ok := path<span class="hljs-selector-attr">[op.ResourceType()]</span>
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;invalid resource type; does not map to a path: &quot;</span> + op<span class="hljs-selector-class">.ResourceType</span>())
+		}
+
+		successStatus, ok := successStatusCodes<span class="hljs-selector-attr">[op]</span>
+		<span class="hljs-keyword">if</span> !ok {
+			successStatus = http<span class="hljs-selector-class">.StatusOK</span>
+		}
+
+		r<span class="hljs-selector-class">.Handle</span>(op<span class="hljs-selector-class">.Method</span>(), relativePath, <span class="hljs-built_in">handler</span>(md<span class="hljs-selector-class">.ResourceType</span>(<span class="hljs-built_in">action</span>()<span class="hljs-selector-class">.AppliesToCategory</span>()), action, successStatus))
+	}
+
+	<span class="hljs-keyword">if</span> collectionType != nil { <span class="hljs-comment">// Cannot have resources other than instances under a collection</span>
+		<span class="hljs-keyword">for</span> _, childMetadata := range md<span class="hljs-selector-class">.Children</span>() {
+			<span class="hljs-built_in">buildRoutes</span>(r, childMetadata, path<span class="hljs-selector-attr">[resource.InstanceCategory]</span>)
+		}
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:16:41 PM PDT</p>
+<p>The function <code>buildRoutes</code> is used to dynamically generate routes for a web server, specifically a server using the <code>gin</code> framework in Go. The function takes three parameters: <code>r</code> which is an instance of the <code>gin</code> server, <code>md</code> which is the metadata of the resource, and <code>parentPath</code> which is the string of the parent path.</p>
+<p>The algorithm used in the function is essentially a recursive tree traversal algorithm. It traverses the resource metadata tree, and for each node (resource), it builds the routes related to that resource. </p>
+<p>Here is a detailed line-by-line explanation of what the function does:</p>
+<ol>
+<li><p>It first determines the type of the resource instance and resource collection using the <code>ResourceType</code> method.</p>
+</li>
+<li><p>If there is no collection type, it creates a named path using the instance type and parent path. If there is a collection type, it creates a named path for the collection and a variable path for the instance.</p>
+</li>
+<li><p>It then loops through the actions defined in the metadata. For each action, it determines the operation <code>op</code> and the corresponding relative path. If the resource type of the operation does not map to a path, it panics and throws an error.</p>
+</li>
+<li><p>It then checks if there is a predefined success status code for the operation. If not, it defaults to HTTP 200 OK status.</p>
+</li>
+<li><p>It then adds a new route to the <code>gin</code> server using the <code>Handle</code> method. The route is defined by the HTTP method, the relative path, and a handler function. The handler function is generated by the <code>handler</code> function which takes the resource type, the action, and the success status as parameters.</p>
+</li>
+<li><p>If the resource has a collection type, it cannot have resources other than instances under it. So, it recursively calls <code>buildRoutes</code> for each child resource, with the instance path as the parent path.</p>
+</li>
+</ol>
+<p>This function is a good example of how to dynamically generate routes based on resource metadata in a Go server application using the <code>gin</code> framework. The use of recursion allows it to handle resources with arbitrary depth and complexity.</p>
+<p>For more information on the <code>gin</code> framework and how to define routes, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gin-gonic.com/">Gin Web Framework</a></li>
+<li><a href="https://gin-gonic.com/docs/routing/">Gin Routing</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:21:24 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Loop fill:#228B22, stroke:#000000, stroke-width:2px;
+style Error fill:#B22222, stroke:#000000, stroke-width:2px;
+style External fill:#FFA500, stroke:#000000, stroke-width:2px;
+
+Start  };
+Loop-->|op.ResourceType  ;
+Loop-->|op.ResourceType   in path|HandleRequest;
+HandleRequest-->End;
+Error-->End;
+Loop-->|collectionType != nil|Loop2{for each childMetadata in md.Children  };
+Loop2-->HandleRequest2;
+HandleRequest2-->End;
+End  ;</pre>
+</code></pre><p>The control flow graph above represents the control flow of the provided source code. Here&#39;s a breakdown of the different elements in the graph:</p>
+<ul>
+<li>Start: Represents the start of the <code>buildRoutes</code> function.</li>
+<li>Loop: Represents the loop that iterates over the actions in <code>md.Actions()</code>.</li>
+<li>Error: Represents the error path when the resource type does not map to a path.</li>
+<li>HandleRequest: Represents the handling of the request for a valid resource type.</li>
+<li>External: Represents the external function call to <code>handler</code>.</li>
+<li>Loop2: Represents the loop that iterates over the children in <code>md.Children()</code>.</li>
+<li>HandleRequest2: Represents the handling of the request for each child metadata.</li>
+<li>End: Represents the end of the <code>buildRoutes</code> function.</li>
+</ul>
+<p>The primary path through the code is from the Start node to the Loop node, then to the HandleRequest node, and finally to the End node. This path represents the iteration over the actions and handling of the requests.</p>
+<p>The error path is from the Loop node to the Error node when the resource type does not map to a path.</p>
+<p>There is also a secondary path from the Loop node to the Loop2 node when the collectionType is not nil. This path represents the iteration over the children and handling of the requests for each child metadata.</p>
+<p>Please note that the graph does not include the details of the <code>handler</code> function as it is an external function call.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:47 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:26:06 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 125</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of panic can cause the program to crash and result in high CPU usage as the system tries to recover.</p>
+<p><strong>Solution</strong>: Replace panic with error handling mechanisms. This can be done by returning an error from the function and handling it in the calling function. Reference: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 134</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: Recursive function calls can lead to high CPU usage and potential stack overflow if the recursion depth is too high.</p>
+<p><strong>Solution</strong>: Consider using an iterative approach instead of a recursive function call if the depth of recursion can be high. If recursion is necessary, ensure there is a base case to prevent infinite recursion. Reference: <a href="https://stackoverflow.com/questions/2093618/can-a-recursive-function-be-changed-to-iterative">https://stackoverflow.com/questions/2093618/can-a-recursive-function-be-changed-to-iterative</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 118</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function creates a new map for each call, which can lead to high memory usage if the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider reusing the map if possible, or using a data structure with a smaller memory footprint if the map&#39;s size is not large. Reference: <a href="https://go101.org/article/map.html">https://go101.org/article/map.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:30:47 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 131</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;buildRoutes&#39; does not contain any data sanitization or validation before processing. This could lead to the processing of personal data without consent, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement data validation and sanitization before processing. Also, ensure that user consent is obtained before processing personal data.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 131</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;buildRoutes&#39; could potentially handle cardholder data but does not implement any form of data encryption or tokenization. This is a violation of PCI DSS requirement 3, which mandates the protection of stored cardholder data.</p>
+<p><strong>Solution</strong>: Implement data encryption or tokenization when handling cardholder data to ensure compliance with PCI DSS requirement 3.</p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 131</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;buildRoutes&#39; could potentially handle protected health information (PHI) but lacks necessary safeguards like encryption, access control, or audit controls. This could lead to unauthorized access to PHI, violating HIPAA&#39;s Security Rule.</p>
+<p><strong>Solution</strong>: Implement necessary safeguards like encryption, access control, and audit controls when handling PHI to ensure compliance with HIPAA&#39;s Security Rule.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 95:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func variable<span class="hljs-constructor">Path(<span class="hljs-params">resourceType</span> <span class="hljs-params">reflect</span>.Type, <span class="hljs-params">path</span> <span class="hljs-params">string</span>)</span> <span class="hljs-built_in">string</span> {
+	return path + <span class="hljs-string">&quot;/:&quot;</span> + <span class="hljs-keyword">type</span><span class="hljs-constructor">Name(<span class="hljs-params">resourceType</span>)</span> + <span class="hljs-string">&quot;Id&quot;</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:17:19 PM PDT</p>
+<p>This Go function, <code>variablePath</code>, is used to create a dynamic path for a given resource type. It takes two parameters, <code>resourceType</code> and <code>path</code>, and returns a string. </p>
+<p>The <code>resourceType</code> parameter is of type <code>reflect.Type</code>. The <code>reflect</code> package in Go provides functions to inspect the type and value of variables at runtime. It is often used for building programs that need to handle types in a flexible way or need to analyze arbitrary data types. </p>
+<p>The <code>path</code> parameter is a string representing the base path or the existing path to which the resource identifier will be appended.</p>
+<p>In the function body, the <code>path</code> string is concatenated with &quot;/:&quot; and the result of <code>typeName(resourceType) + &quot;Id&quot;</code>. The <code>typeName</code> is likely another function (not shown here) that takes a <code>reflect.Type</code> and returns a string representation of that type. The string &quot;Id&quot; is appended to the result, creating a variable part in the path that can be used to identify a specific resource of the given type.</p>
+<p>For example, if the <code>resourceType</code> is <code>User</code> and the <code>path</code> is &quot;/api&quot;, the resulting string would be &quot;/api/:UserId&quot;.</p>
+<p>This is a common pattern in web development where URLs are used to point to specific resources, and the ID of the resource is part of the URL. This kind of URL is often seen in REST APIs.</p>
+<p>This function does not appear to use any specific algorithm, but it does make use of the <code>reflect</code> package to handle types dynamically.</p>
+<p>For more information on the <code>reflect</code> package in Go, you can refer to the official Go documentation: <a href="https://pkg.go.dev/reflect">https://pkg.go.dev/reflect</a></p>
+<p>As for REST APIs and how URLs are structured, you can refer to this guide: <a href="https://restfulapi.net/resource-naming/">https://restfulapi.net/resource-naming/</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:21:29 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:51 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:26:28 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 190</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in Go, as seen in the typeName function call, can be computationally expensive and slow down performance. This could potentially impact the software&#39;s scalability and responsiveness, especially under heavy load.</p>
+<p><strong>Solution</strong>: Avoid using reflection whenever possible. Consider passing the type name as a string parameter to the function instead of determining it using reflection.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 190</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: String concatenation in Go creates a new string and leaves the old strings eligible for garbage collection. This can lead to increased memory usage and pressure on the garbage collector if this function is called frequently.</p>
+<p><strong>Solution</strong>: Consider using a strings.Builder or a bytes.Buffer for more efficient string concatenation. See <a href="https://golang.org/pkg/strings/#Builder">https://golang.org/pkg/strings/#Builder</a> for more information.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:31:03 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 193</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;variablePath&#39; appears to be using a resource type to generate a path. If the resource type includes personal data, this could be a violation of GDPR, as personal data should not be used in this way without explicit consent.</p>
+<p><strong>Solution</strong>: Review the data types used to generate paths and ensure that they do not include personal data. If personal data is necessary, ensure that explicit consent is obtained and that the data is encrypted in transit.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 99:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func named<span class="hljs-constructor">Path(<span class="hljs-params">resourceType</span> <span class="hljs-params">reflect</span>.Type, <span class="hljs-params">path</span> <span class="hljs-params">string</span>)</span> <span class="hljs-built_in">string</span> {
+	return path + <span class="hljs-string">&quot;/&quot;</span> + strings.<span class="hljs-constructor">ToLower(<span class="hljs-params">typeName</span>(<span class="hljs-params">resourceType</span>)</span>)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:17:58 PM PDT</p>
+<p>The provided code is a simple function written in Go language. The function <code>namedPath</code> takes two arguments, <code>resourceType</code> of type <code>reflect.Type</code> and <code>path</code> of type <code>string</code>, and returns a <code>string</code>.</p>
+<p>Here is the breakdown of the function:</p>
+<ul>
+<li><p><code>reflect.Type</code>: This is a built-in interface in Go&#39;s <code>reflect</code> package. It represents the type of a Go object and has methods to inspect the type&#39;s properties.</p>
+</li>
+<li><p><code>strings.ToLower</code>: This is a built-in function in Go&#39;s <code>strings</code> package. It converts all the Unicode letters in a string to their lower-case equivalent.</p>
+</li>
+<li><p><code>typeName</code>: This appears to be a function not shown in the provided code. It likely takes a <code>reflect.Type</code> object and returns a string representation of the type&#39;s name.</p>
+</li>
+</ul>
+<p>The function concatenates the <code>path</code> string, a forward slash (<code>/</code>), and the lower-case string representation of the <code>resourceType</code>&#39;s name. The result is a new path string that incorporates the name of the resource type.</p>
+<p>This function does not seem to use any particular algorithm, but it does use the <code>reflect</code> package for type introspection and the <code>strings</code> package for string manipulation.</p>
+<p>As for architectural guidelines, this function is quite simple and does not appear to violate any common principles. It is a utility function that can be used throughout the application to generate a standardized path string for different resource types.</p>
+<p>Here are some resources for further reading:</p>
+<ul>
+<li><a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></li>
+<li><a href="https://gobyexample.com/string-functions">Go by Example: String Functions</a></li>
+<li><a href="https://golang.org/pkg/reflect/">GoDoc: reflect package</a></li>
+<li><a href="https://golang.org/pkg/strings/">GoDoc: strings package</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:21:33 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:55 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:26:59 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 198</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function namedPath uses reflection to get the type name of the resourceType parameter. Reflection in Go is known to be slow and can consume significant CPU resources if used frequently.</p>
+<p><strong>Solution</strong>: If possible, avoid using reflection. Consider passing the type name as a string parameter to the function instead of the actual type. If the type name can be determined at compile time, this will be more efficient. Here is a reference to better understand the cost of reflection in Go: <a href="https://go.dev/play/p/0mgLsDiXUn-0">https://go.dev/play/p/0mgLsDiXUn-0</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 199</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function namedPath uses string concatenation with the &#39;+&#39; operator. In Go, string concatenation with the &#39;+&#39; operator can be inefficient as it creates a new string and can lead to increased memory usage and CPU cycles if used in a loop or called frequently.</p>
+<p><strong>Solution</strong>: Consider using the strings.Builder or fmt.Sprintf function for string concatenation. These functions are designed to handle string concatenation more efficiently. Here is a reference to better understand efficient string concatenation in Go: <a href="https://go.dev/play/p/0mgLsDiXUn-0">https://go.dev/play/p/0mgLsDiXUn-0</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:31:07 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 103:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">typeName</span><span class="hljs-params">(t reflect.Type)</span></span> <span class="hljs-type">string</span> {
+	s := t.String()
+	dotIndex := strings.Index(s, <span class="hljs-string">&quot;.&quot;</span>)
+
+	<span class="hljs-keyword">return</span> s[dotIndex+<span class="hljs-number">1</span>:]
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:18:37 PM PDT</p>
+<p>This function, <code>typeName</code>, is a utility function that extracts the name of the type from a <code>reflect.Type</code> object. The <code>reflect</code> package in Go provides functionality for inspecting the type and value of variables at runtime. </p>
+<p>Here&#39;s a line-by-line breakdown of the code:</p>
+<ol>
+<li><p><code>func typeName(t reflect.Type) string {</code>: This line declares the function <code>typeName</code> that takes one argument <code>t</code> of type <code>reflect.Type</code> and returns a string. </p>
+</li>
+<li><p><code>s := t.String()</code>: This line calls the <code>String()</code> method on the <code>reflect.Type</code> object <code>t</code> to get a string representation of the type. The string representation typically includes the package path and the type name.</p>
+</li>
+<li><p><code>dotIndex := strings.Index(s, &quot;.&quot;)</code>: This line uses the <code>Index</code> function from the <code>strings</code> package to find the index of the first occurrence of the character <code>&quot;.&quot;</code> in the string <code>s</code>. The <code>&quot;.&quot;</code> character separates the package path from the type name in the string representation of the type.</p>
+</li>
+<li><p><code>return s[dotIndex+1:]</code>: This line returns the substring of <code>s</code> starting from the character after the <code>&quot;.&quot;</code>. This effectively removes the package path from the string, leaving only the type name.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is straightforward. It involves string manipulation to extract the type name from the string representation of the type. </p>
+<p>This function assumes that the type is defined in a package and therefore includes a <code>&quot;.&quot;</code> in its string representation. If a type is not defined in a package (for example, built-in types like <code>int</code> or <code>string</code>), this function will not work as expected.</p>
+<p>For more information about the <code>reflect</code> package in Go, you can refer to the official Go documentation: <a href="https://golang.org/pkg/reflect/">https://golang.org/pkg/reflect/</a></p>
+<p>For more information about the <code>strings</code> package in Go, you can refer to the official Go documentation: <a href="https://golang.org/pkg/strings/">https://golang.org/pkg/strings/</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:21:38 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style typeName fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start-->typeName;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:58 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:27:25 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 204</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in Go can be computationally expensive and slow down performance. This could potentially impact the software&#39;s scalability and responsiveness, especially under heavy load.</p>
+<p><strong>Solution</strong>: Avoid using reflection unless absolutely necessary. If the type is known at compile time, consider using a type switch or type assertion instead. For more information, refer to: <a href="https://go.dev/blog/laws-of-reflection">https://go.dev/blog/laws-of-reflection</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 207</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of strings.Index and string slicing to find and extract a substring can be inefficient, especially for larger strings. This could potentially impact the software&#39;s performance.</p>
+<p><strong>Solution</strong>: Consider using strings.Split, which can be more efficient for larger strings. Alternatively, consider using a third-party library such as <code>strings.Builder</code> or <code>bytes.Buffer</code> for more efficient string manipulation. For more information, refer to: <a href="https://go.dev/play/p/8ByVn2K9ZnH">https://go.dev/play/p/8ByVn2K9ZnH</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:31:11 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 110:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">handler</span><span class="hljs-params">(resourceType reflect.Type, actionFunc <span class="hljs-keyword">func</span>()</span></span> resource.Action, successStatus <span class="hljs-type">int</span>) <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> {
+	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *gin.Context)</span></span> {
+		action := actionFunc()
+		<span class="hljs-keyword">if</span> r, ge := BindFromRequest(c.Request, resourceType, Subject(c), action.Name()); ge != <span class="hljs-literal">nil</span> {
+			_ = c.Error(ge)
+		} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> r, ge = r.DoAction(action); ge != <span class="hljs-literal">nil</span> {
+			_ = c.Error(ge)
+		} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ge = renderResult(reflect.ValueOf(r).Elem(), c, action.Name(), successStatus); ge != <span class="hljs-literal">nil</span> {
+			_ = c.Error(ge)
+		}
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:19:24 PM PDT</p>
+<p>The provided code is written in Go and uses the Gin Web Framework, which is a framework for building web applications in Go. This code defines a function <code>handler</code> which is used to handle HTTP requests and perform certain actions based on the request.</p>
+<p>Here&#39;s a detailed breakdown of the code:</p>
+<ol>
+<li><p>The <code>handler</code> function takes three parameters:</p>
+<ul>
+<li><code>resourceType</code>: This is the type of resource that the handler will be working with. It&#39;s of type <code>reflect.Type</code>, which is a built-in interface in Go for representing types.</li>
+<li><code>actionFunc</code>: This is a function that returns a <code>resource.Action</code> when called. This action will be performed on the resource.</li>
+<li><code>successStatus</code>: This is the HTTP status code that will be returned if the action is performed successfully.</li>
+</ul>
+</li>
+<li><p>The <code>handler</code> function returns another function, which takes a <code>*gin.Context</code> as a parameter. This returned function is the actual HTTP handler that Gin will use to handle requests.</p>
+</li>
+<li><p>Inside the returned function:</p>
+<ul>
+<li>It first calls <code>actionFunc()</code> to get the action to be performed.</li>
+<li>Then it calls <code>BindFromRequest</code> function with the HTTP request, <code>resourceType</code>, subject from the context, and the action&#39;s name. This function is likely used to bind the request data to a new instance of the resource type. If there&#39;s an error (ge != nil), it&#39;s added to the Gin context&#39;s error list.</li>
+<li>If binding was successful, it calls <code>DoAction</code> on the resource with the action. If there&#39;s an error, it&#39;s added to the Gin context&#39;s error list.</li>
+<li>If the action was successful, it calls <code>renderResult</code> to render the result of the action. If there&#39;s an error, it&#39;s added to the Gin context&#39;s error list.</li>
+</ul>
+</li>
+</ol>
+<p>This code doesn&#39;t seem to use any specific algorithm, but it uses the concept of reflection to work with different types of resources, and the concept of higher-order functions (functions that take other functions as parameters or return other functions) to create a flexible HTTP handler.</p>
+<p>You can learn more about Go&#39;s reflection package here: <a href="https://golang.org/pkg/reflect/">Go reflect package</a></p>
+<p>And about Gin Web Framework here: <a href="https://gin-gonic.com/">Gin Web Framework</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:21:58 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style BindFromRequest fill:#228B22, stroke:#000000, stroke-width:4px;
+style DoAction fill:#228B22, stroke:#000000, stroke-width:4px;
+style renderResult fill:#228B22, stroke:#000000, stroke-width:4px;
+style Error fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->BindFromRequest;
+BindFromRequest-->Error;
+BindFromRequest-->DoAction;
+DoAction-->Error;
+DoAction-->renderResult;
+renderResult-->Error;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<ol>
+<li>The control flow starts at the <code>handler</code> function.</li>
+<li>The <code>handler</code> function takes two parameters: <code>resourceType</code> and <code>actionFunc</code>.</li>
+<li>Inside the <code>handler</code> function, a new function is returned as the result.</li>
+<li>The returned function takes a <code>gin.Context</code> parameter.</li>
+<li>The control flow then enters the returned function.</li>
+<li>Inside the returned function, the <code>actionFunc</code> is called to get an <code>action</code> object.</li>
+<li>The control flow then checks if the <code>BindFromRequest</code> function returns an error (<code>ge</code>).</li>
+<li>If there is an error, the control flow goes to the <code>Error</code> block.</li>
+<li>If there is no error, the control flow continues to the next step.</li>
+<li>The control flow then checks if the <code>DoAction</code> function returns an error (<code>ge</code>).</li>
+<li>If there is an error, the control flow goes to the <code>Error</code> block.</li>
+<li>If there is no error, the control flow continues to the next step.</li>
+<li>The control flow then calls the <code>renderResult</code> function.</li>
+<li>The control flow checks if the <code>renderResult</code> function returns an error (<code>ge</code>).</li>
+<li>If there is an error, the control flow goes to the <code>Error</code> block.</li>
+<li>If there is no error, the control flow ends.</li>
+</ol>
+<p>Note: The primary path through the code is the default non-colored style, while the error paths are shown in the <code>Error</code> style.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:23:34 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 222</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The function &#39;BindFromRequest&#39; takes user input directly from the request and uses it to perform actions on the server. This can allow an attacker to manipulate the object reference to access unauthorized data.</p>
+<p><strong>Solution</strong>: Always validate and sanitize user input. Consider using an access control mechanism to ensure that users can only access data they are authorized to access. More details can be found here: <a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control">https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 224</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The function &#39;DoAction&#39; may throw an error that is not properly handled. This can lead to unexpected behavior and potential security vulnerabilities.</p>
+<p><strong>Solution</strong>: Ensure that all errors are properly handled and logged. Avoid revealing sensitive information in error messages. More details can be found here: <a href="https://owasp.org/www-community/Improper_Error_Handling">https://owasp.org/www-community/Improper_Error_Handling</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 226</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The function &#39;renderResult&#39; may throw an error that is not properly handled. This can lead to unexpected behavior and potential security vulnerabilities.</p>
+<p><strong>Solution</strong>: Ensure that all errors are properly handled and logged. Avoid revealing sensitive information in error messages. More details can be found here: <a href="https://owasp.org/www-community/Improper_Error_Handling">https://owasp.org/www-community/Improper_Error_Handling</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:28:03 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 223</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in <code>reflect.ValueOf(r).Elem()</code> can be computationally expensive and slow down performance. This could potentially impact the software&#39;s scalability and responsiveness, especially under heavy load.</p>
+<p><strong>Solution</strong>: It is recommended to avoid using reflection where possible. If the type of <code>r</code> is known at compile time, consider using a type assertion instead of reflection. If the type is not known, consider redesigning the code to avoid the need for reflection. More on this can be found here: <a href="https://go.dev/play/p/5FkNSi3VlR7">https://go.dev/play/p/5FkNSi3VlR7</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 221</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function <code>BindFromRequest</code> is called with the <code>Subject(c)</code> function as a parameter. If <code>Subject(c)</code> is a computationally expensive function, this could slow down performance.</p>
+<p><strong>Solution</strong>: Consider caching the result of <code>Subject(c)</code> if it is expensive to compute and used multiple times. More on this can be found here: <a href="https://go.dev/play/p/8A22r_b0JN2">https://go.dev/play/p/8A22r_b0JN2</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 219</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function <code>actionFunc()</code> is called inside the handler function. If <code>actionFunc()</code> is a computationally expensive function, this could slow down performance.</p>
+<p><strong>Solution</strong>: Consider caching the result of <code>actionFunc()</code> if it is expensive to compute and used multiple times. More on this can be found here: <a href="https://go.dev/play/p/8A22r_b0JN2">https://go.dev/play/p/8A22r_b0JN2</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:31:49 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 220</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: Data from a user request is being processed without explicit checks for user consent. This could lead to processing of personal data without the user&#39;s consent, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Ensure that user consent is obtained before processing personal data. This could be achieved by implementing a consent mechanism in the application, such as a checkbox or agreement that the user must accept before their data is processed.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 222</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: Sensitive health information could be exposed in case of an error. This is a violation of HIPAA, which requires that PHI (Protected Health Information) be secured at all times.</p>
+<p><strong>Solution</strong>: Implement proper error handling to prevent exposure of sensitive information. This could include sanitizing error messages to remove any sensitive data before they are displayed or logged.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 222</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: If the application processes payment information, there is a risk of exposure in case of an error. This could lead to a violation of PCI DSS, which requires that payment card data be secured at all times.</p>
+<p><strong>Solution</strong>: Implement proper error handling to prevent exposure of payment card data. This could include sanitizing error messages to remove any sensitive data before they are displayed or logged.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./api/gin/resourceroutes.go line 123:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-built_in">renderResult</span>(result reflect<span class="hljs-selector-class">.Value</span>, c *gin<span class="hljs-selector-class">.Context</span>, scope string, statusCode int) gomerr<span class="hljs-selector-class">.Gomerr</span> {
+	bytes, ge := <span class="hljs-built_in">BindToResponse</span>(result, c<span class="hljs-selector-class">.Writer</span><span class="hljs-selector-class">.Header</span>(), scope, c<span class="hljs-selector-class">.Request</span><span class="hljs-selector-class">.Header</span><span class="hljs-selector-class">.Get</span>(<span class="hljs-string">&quot;Accept-Language&quot;</span>))
+	<span class="hljs-keyword">if</span> ge != nil {
+		return ge
+	}
+
+	c<span class="hljs-selector-class">.Data</span>(statusCode, c<span class="hljs-selector-class">.Writer</span><span class="hljs-selector-class">.Header</span>()<span class="hljs-selector-class">.Get</span>(ContentTypeHeader), bytes)
+
+	return nil
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:20:14 PM PDT</p>
+<p>The provided code is written in Go, a statically-typed, compiled language that is often used for building server-side applications. This function, <code>renderResult</code>, is likely part of a web server or API, as it uses the <code>gin</code> package, a popular web framework for Go.</p>
+<p>The function <code>renderResult</code> takes four parameters:</p>
+<ol>
+<li><code>result</code>: a <code>reflect.Value</code> type, which is a reflection of some data. The <code>reflect</code> package in Go allows programs to inspect, modify, and abstractly represent the structure and behavior of Go objects.</li>
+<li><code>c</code>: a pointer to a <code>gin.Context</code> object. <code>gin.Context</code> is a struct that contains information about the HTTP request, response, and other context data.</li>
+<li><code>scope</code>: a string that is likely used to determine the scope of the data to be rendered.</li>
+<li><code>statusCode</code>: an integer representing the HTTP status code to be returned in the response.</li>
+</ol>
+<p>The function&#39;s return type is <code>gomerr.Gomerr</code>, which is likely a custom error type from the <code>gomerr</code> package.</p>
+<p>Here&#39;s a step-by-step breakdown of what the function does:</p>
+<ol>
+<li><p>It calls the <code>BindToResponse</code> function with <code>result</code>, the HTTP response header, <code>scope</code>, and the &quot;Accept-Language&quot; header from the HTTP request. <code>BindToResponse</code> is likely a function that serializes or marshals the <code>result</code> into a format suitable for the HTTP response, such as JSON or XML. The function returns a byte array (<code>bytes</code>) and a <code>gomerr</code> error (<code>ge</code>).</p>
+</li>
+<li><p>If <code>ge</code> is not <code>nil</code>, which means an error occurred in <code>BindToResponse</code>, the function immediately returns this error.</p>
+</li>
+<li><p>If no error occurred, the function calls <code>c.Data</code>, a method of <code>gin.Context</code> that writes data into the HTTP response. It sets the HTTP status code, the &quot;Content-Type&quot; header (which it gets from the HTTP response header), and the body (the <code>bytes</code> from <code>BindToResponse</code>).</p>
+</li>
+<li><p>The function returns <code>nil</code>, indicating that no errors occurred.</p>
+</li>
+</ol>
+<p>This function does not appear to use any specific algorithms. It&#39;s primarily about handling HTTP requests and responses in a web server context.</p>
+<p>For more information about the <code>gin</code> package and its <code>Context</code> type, you can refer to the <a href="https://gin-gonic.com/docs/">Gin Web Framework documentation</a>. For more on the <code>reflect</code> package in Go, you can refer to the <a href="https://golang.org/pkg/reflect/">Go Documentation on Reflection</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:22:11 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a simple linear flow. There are no branching or looping constructs present in the code. The primary path is the normal flow of execution, while the error path represents the case where an error occurs.</p>
+<p>The primary path is represented by the green-colored flow, starting from the &quot;Start&quot; node and going through the &quot;ExampleProcess&quot; node to the &quot;End&quot; node.</p>
+<p>The error path is represented by the red-colored flow, starting from the &quot;Start&quot; node and going through the &quot;ExampleErrorPath&quot; node to the &quot;End&quot; node.</p>
+<p>Since there are no external library or non-standard function calls in the code, the flow diagram only includes the main flow of execution.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:23:37 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:28:18 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 250</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in Go can be computationally expensive and slow down performance.</p>
+<p><strong>Solution</strong>: Consider using interfaces or type assertions instead of reflection wherever possible.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 253</p>
+<p><strong>Bug Type</strong>: Network</p>
+<p><strong>Description</strong>: Repeated calls to c.Writer.Header() can potentially slow down network performance.</p>
+<p><strong>Solution</strong>: Consider storing the result of c.Writer.Header() in a variable and use it instead of making repeated calls.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:32:14 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 248</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;renderResult&#39; is using the &#39;Accept-Language&#39; header to determine the user&#39;s language preference, which could be considered personal data under GDPR. The function does not appear to have any checks in place to ensure that this data is being processed in a GDPR-compliant manner.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;Accept-Language&#39; header is only used where necessary, and that users have given their consent for their language preference to be used. Implement checks to ensure that this data is not stored or used for any purposes that the user has not consented to. Consider anonymizing the data if possible.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 246</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;renderResult&#39; is binding to a response without validating or sanitizing the &#39;result&#39; data. If &#39;result&#39; contains cardholder data, this could be a violation of PCI DSS requirements.</p>
+<p><strong>Solution</strong>: Implement input validation and sanitization measures to ensure that no cardholder data is included in the &#39;result&#39; data without proper security measures. If cardholder data must be included, ensure that it is properly encrypted and that all PCI DSS requirements are met.</p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 246</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;renderResult&#39; is binding to a response without validating or sanitizing the &#39;result&#39; data. If &#39;result&#39; contains protected health information (PHI), this could be a violation of HIPAA regulations.</p>
+<p><strong>Solution</strong>: Implement input validation and sanitization measures to ensure that no PHI is included in the &#39;result&#39; data without proper security measures. If PHI must be included, ensure that it is properly encrypted and that all HIPAA requirements are met.</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>

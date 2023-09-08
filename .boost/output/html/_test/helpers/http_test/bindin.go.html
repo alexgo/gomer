@@ -1,0 +1,1769 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./_test/helpers/http_test/bindin.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 5:59:44 PM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:51:08 PM PDT</p>
+<p>Executive Report:</p>
+<ol>
+<li><strong>Architectural Impact</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Risk Analysis</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Potential Customer Impact</strong>: Based on the analysis, there are no severe issues that could potentially impact customers.</li>
+<li><strong>Performance Issues</strong>: Our analysis did not identify any explicit performance issues in the file.</li>
+<li><strong>Risk Assessment</strong>: Based on the current analysis of this file, no severe issues have been found. However, this doesn&#39;t guarantee that the file is risk-free.</li>
+</ol>
+<p>Highlights:</p>
+<ul>
+<li>No severe issues were identified in the current analysis of this file.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:55:17 PM PDT</p>
+<p>Executive Report:</p>
+<ol>
+<li><strong>Architectural Impact</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Risk Analysis</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Potential Customer Impact</strong>: Based on the analysis, there are no severe issues that could potentially impact customers.</li>
+<li><strong>Performance Issues</strong>: Our analysis did not identify any explicit performance issues in the file.</li>
+<li><strong>Risk Assessment</strong>: Based on the current analysis of this file, no severe issues have been found. However, this doesn&#39;t guarantee that the file is risk-free.</li>
+</ol>
+<p>Highlights:</p>
+<ul>
+<li>No severe issues were identified in the current analysis of this file.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:00:13 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The software project appears to be a server-side application, likely a web API, with a focus on data handling, constraints, and error management. It also appears to have authentication and authorization components. The project structure seems consistent with Go server applications. Error handling and data validation appear to be well-structured. However, the presence of issues related to data compliance, data privacy, GDPR, PCI DSS, HIPAA, and data exposure in the file &quot;_test/helpers/http_test/bindin.go&quot; could potentially impact the overall architecture and functionality of the project.</p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The project has a high risk due to the presence of severe issues related to HIPAA in the file &quot;_test/helpers/http_test/bindin.go&quot;. This indicates that the function does not check if the request contains any protected health information (PHI). Under HIPAA, PHI must be protected wherever it is stored, processed, or transmitted. This could potentially lead to legal issues and penalties. </p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The presence of issues related to data compliance, data privacy, GDPR, PCI DSS, HIPAA, and data exposure could potentially impact the customers&#39; trust and confidence in the project. It could also lead to data breaches, resulting in loss of customer data and potential legal issues.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The project has several issues related to data compliance, data privacy, GDPR, PCI DSS, HIPAA, and data exposure. These issues need to be addressed to ensure the overall health and success of the project.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li>The overall health of the project source is concerning due to the presence of severe issues in the file &quot;_test/helpers/http_test/bindin.go&quot;. </li>
+<li>Based on the analysis, 100% of the project files have issues of varying severity. This indicates a high risk and suggests that immediate action is required to address these issues.</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li>The project follows a modular and structured approach, with a focus on data validation and error handling.</li>
+<li>The presence of severe issues related to HIPAA in the file &quot;_test/helpers/http_test/bindin.go&quot; indicates a high risk.</li>
+<li>The issues related to data compliance, data privacy, GDPR, PCI DSS, HIPAA, and data exposure could potentially impact the customers&#39; trust and confidence in the project.</li>
+<li>100% of the project files have issues of varying severity, indicating a high risk and the need for immediate action.</li>
+</ul>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./_test/helpers/http_test/bindin.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>package http_test
+
+import (
+	<span class="hljs-string">&quot;bytes&quot;</span>
+	<span class="hljs-string">&quot;encoding/json&quot;</span>
+	<span class="hljs-string">&quot;fmt&quot;</span>
+	<span class="hljs-string">&quot;io/ioutil&quot;</span>
+	<span class="hljs-string">&quot;net/http&quot;</span>
+	<span class="hljs-string">&quot;net/url&quot;</span>
+	<span class="hljs-string">&quot;strings&quot;</span>
+)
+
+<span class="hljs-comment">// String attribute</span>
+func <span class="hljs-constructor">Attr(<span class="hljs-params">k</span>, <span class="hljs-params">v</span> <span class="hljs-params">string</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> v<span class="hljs-operator"> == </span><span class="hljs-string">&quot;&quot;</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: <span class="hljs-string">&quot;%s&quot;</span>`, <span class="hljs-params">k</span>, <span class="hljs-params">v</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:37:08 PM PDT</p>
+<p>The provided code is written in Go and is part of a test package for HTTP operations. Let&#39;s break it down:</p>
+<ol>
+<li><p><strong>Package Declaration:</strong> <code>package http_test</code>
+The package name ends with <code>_test</code>, which is a Go convention for test packages. These are used to avoid circular dependencies and to make sure the tests use only the public interface of the package under test.</p>
+</li>
+<li><p><strong>Import Statements:</strong> 
+The code imports several standard library packages needed for its operations. </p>
+<ul>
+<li><code>bytes</code>: provides functions for the manipulation of byte slices.</li>
+<li><code>encoding/json</code>: implements encoding and decoding of JSON objects.</li>
+<li><code>fmt</code>: implements formatted I/O functions.</li>
+<li><code>io/ioutil</code>: implements some I/O utility functions.</li>
+<li><code>net/http</code>: provides HTTP client and server implementations.</li>
+<li><code>net/url</code>: parses URLs and implements query escaping.</li>
+<li><code>strings</code>: provides functions to manipulate UTF-8 encoded strings.</li>
+</ul>
+</li>
+<li><p><strong>Function Declaration:</strong> <code>func Attr(k, v string) string</code>
+This function takes two string parameters, <code>k</code> and <code>v</code>, and returns a string. The function checks if the value <code>v</code> is empty and, if it is, it returns an empty string. If <code>v</code> is not empty, it formats a string with <code>k</code> and <code>v</code> in the format <code>&quot;&lt;k&gt;&quot;: &quot;&lt;v&gt;&quot;</code>. This is useful for creating JSON-style attributes.</p>
+</li>
+</ol>
+<p>There are no specific algorithms used in this code snippet. The <code>Attr</code> function uses the <code>Sprintf</code> function from the <code>fmt</code> package to format a string, but this is a standard library function, not an algorithm.</p>
+<p>The code follows standard Go conventions and does not appear to conflict with any architectural guidelines. The use of a <code>_test</code> package indicates that the code is likely part of a larger test suite for an HTTP service or client.</p>
+<p>For more information on Go testing and the packages used, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://go.dev/blog/testing-productive-2017">Go Testing</a></li>
+<li><a href="https://golang.org/pkg/fmt/">Go <code>fmt</code> package</a></li>
+<li><a href="https://golang.org/pkg/net/http/">Go <code>net/http</code> package</a></li>
+<li><a href="https://golang.org/pkg/net/url/">Go <code>net/url</code> package</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:05 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:58 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:51:28 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 15</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The Attr function uses fmt.Sprintf which can be CPU-intensive for large number of calls.</p>
+<p><strong>Solution</strong>: Consider using string concatenation or a strings.Builder for better performance. Refer to this link for more details: <a href="https://stackoverflow.com/questions/1760757/how-to-efficiently-concatenate-strings-in-go">https://stackoverflow.com/questions/1760757/how-to-efficiently-concatenate-strings-in-go</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:55:45 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The data being processed in this code isn&#39;t encrypted, which is a requirement under GDPR, PCI DSS, and HIPAA. This could potentially lead to sensitive data being exposed if it&#39;s intercepted during transmission.</p>
+<p><strong>Solution</strong>: Consider implementing encryption like HTTPS for data transmission and encrypt sensitive data at rest. Also, consider using secure methods for data handling.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 14</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The function <code>Attr</code> may potentially expose sensitive data. If the function is used to handle sensitive data like personal identifiable information (PII) or credit card information, it could lead to privacy violations under GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Ensure that sensitive data is properly masked, anonymized, or encrypted before it&#39;s processed. Also, consider implementing access controls to limit who can access the data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 20:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// String attribute</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AttrJson</span><span class="hljs-params">(k, v <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> {
+	<span class="hljs-keyword">if</span> v == <span class="hljs-string">&quot;&quot;</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>
+	}
+	vb, _ := json.Marshal(v)
+	<span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">`&quot;%s&quot;: %s`</span>, k, <span class="hljs-type">string</span>(vb))
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:37:45 PM PDT</p>
+<p>The code you provided is a simple function in Go programming language. This function is used to convert a key-value pair into a JSON format string. Here is a detailed analysis of the function:</p>
+<p>Function Signature:</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AttrJson</span><span class="hljs-params">(k, v <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span>
+</code></pre><p>The function <code>AttrJson</code> takes two string parameters, <code>k</code> and <code>v</code>, and returns a string. <code>k</code> is intended to be the key in a JSON object, and <code>v</code> is the corresponding value.</p>
+<p>Function Body:</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">if</span> v == <span class="hljs-string">&quot;&quot;</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>
+}
+</code></pre><p>First, the function checks if the value <code>v</code> is an empty string. If <code>v</code> is an empty string, the function immediately returns an empty string. This is a guard clause to prevent unnecessary processing for empty values.</p>
+<pre><code class="hljs language-go">vb, _ := json.Marshal(v)
+</code></pre><p>Next, the function uses the <code>json.Marshal</code> function from the <code>encoding/json</code> package to convert the value <code>v</code> into a JSON formatted byte slice. The <code>json.Marshal</code> function returns two values: the JSON formatted byte slice and an error. In this case, the error is ignored with the blank identifier <code>_</code>. This is generally not recommended practice as it could lead to undetected errors. </p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">return</span> fmt.Sprintf(<span class="hljs-string">`&quot;%s&quot;: %s`</span>, k, <span class="hljs-type">string</span>(vb))
+</code></pre><p>Finally, the function uses the <code>fmt.Sprintf</code> function to format a string. The format string is <code>&quot;%s&quot;: %s</code>, which will create a string in the format of a JSON key-value pair. The key <code>k</code> and the value <code>v</code> (now <code>vb</code> and converted to a string) are inserted into the format string. The resulting string is returned by the function.</p>
+<p>Algorithms used:
+The function uses the JSON marshalling algorithm provided by the <code>encoding/json</code> package in the Go standard library. This algorithm converts Go data into JSON formatted data.</p>
+<p>For more information on JSON handling in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/json">Go by Example: JSON</a></li>
+<li><a href="https://blog.golang.org/json-and-go">JSON and Go</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:11 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a simple linear flow. There are no branching or error paths in the code. The function <code>AttrJson</code> takes two string parameters <code>k</code> and <code>v</code>. It checks if <code>v</code> is an empty string. If <code>v</code> is empty, it returns an empty string. Otherwise, it proceeds to marshal <code>v</code> into JSON format and returns the formatted string <code>&quot;%s&quot;: %s</code>, where <code>%s</code> represents the values of <code>k</code> and the marshaled <code>v</code>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:14 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 42</p>
+<p><strong>Bug Type</strong>: Insecure Error Handling</p>
+<p><strong>Description</strong>: The error returned by json.Marshal(v) is not handled. If the marshaling fails, the error will be silently ignored, which can lead to unexpected behavior and potential security issues.</p>
+<p><strong>Solution</strong>: Always handle errors. In this case, you should handle the error returned by json.Marshal(v). If an error occurs, you should return it to the caller, log it, or handle it in a way that is appropriate for your application. Here is a link to a resource about error handling in Go: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:51:45 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 43</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses json.Marshal and fmt.Sprintf which are CPU intensive operations.</p>
+<p><strong>Solution</strong>: Consider using a more efficient method for string concatenation or formatting. In Go, the strings.Builder or bytes.Buffer are generally faster and more efficient for concatenating or formatting strings.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 44</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function does not handle the error returned by json.Marshal. If the marshaling fails, it could lead to unexpected behavior or memory leaks.</p>
+<p><strong>Solution</strong>: Always handle errors returned by functions. In this case, consider adding error handling for the error returned by json.Marshal.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:55:58 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 41</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function AttrJson does not handle errors during json.Marshal operation. This could lead to unhandled exceptions and incomplete or incorrect data processing, which could potentially result in data integrity issues.</p>
+<p><strong>Solution</strong>: Add error handling after the json.Marshal operation. If an error occurs, the function should return an error to the caller, rather than ignoring it. This will ensure that any issues with data processing are properly handled and reported.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 29:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Pointer to string attribute</span>
+func <span class="hljs-constructor">AttrP(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">v</span> <span class="hljs-operator">*</span><span class="hljs-params">string</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> v<span class="hljs-operator"> == </span>nil {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: <span class="hljs-string">&quot;%s&quot;</span>`, <span class="hljs-params">k</span>, <span class="hljs-operator">*</span><span class="hljs-params">v</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:38:31 PM PDT</p>
+<p>The provided code snippet is a function written in Go programming language. This function, named <code>AttrP</code>, is used to create a string attribute in a specific format from a given key-value pair where the value is a pointer to a string.</p>
+<p>The function takes two parameters:</p>
+<ol>
+<li><code>k string</code>: This parameter is a string that represents the key of the attribute.</li>
+<li><code>v *string</code>: This parameter is a pointer to a string that represents the value of the attribute.</li>
+</ol>
+<p>The function returns a string.</p>
+<p>Here&#39;s a detailed line-by-line explanation of the function:</p>
+<ul>
+<li><p><code>func AttrP(k string, v *string) string {</code>: This line defines the function <code>AttrP</code> with two parameters, <code>k</code> of type <code>string</code> and <code>v</code> of type <code>*string</code> (pointer to string). The function returns a string.</p>
+</li>
+<li><p><code>if v == nil {</code>: This is a conditional statement that checks if the pointer <code>v</code> is <code>nil</code>. This is important because attempting to dereference a <code>nil</code> pointer in Go will result in a runtime panic, which would stop the program execution.</p>
+</li>
+<li><p><code>return &quot;&quot;</code>: If the pointer <code>v</code> is <code>nil</code>, the function returns an empty string. This is a way to handle the possible <code>nil</code> pointer input and prevent potential runtime errors.</p>
+</li>
+<li><p><code>return fmt.Sprintf(</code>&quot;%s&quot;: &quot;%s&quot;<code>, k, *v)</code>: If the pointer <code>v</code> is not <code>nil</code>, the function will use the <code>fmt.Sprintf</code> function to format a string. The <code>Sprintf</code> function works by replacing each formatting verb (like <code>%s</code>) with the corresponding value. Here, it replaces the first <code>%s</code> with the key <code>k</code> and the second <code>%s</code> with the dereferenced value of <code>v</code> (<code>*v</code>). The resulting string will look like this: <code>&quot;key&quot;: &quot;value&quot;</code>. This string is then returned by the function.</p>
+</li>
+<li><p><code>}</code>: This line marks the end of the function.</p>
+</li>
+</ul>
+<p>The algorithm used here is very simple: it checks if the pointer to the string is <code>nil</code>. If it is, it returns an empty string. If it&#39;s not, it formats a string with the key and value and returns it.</p>
+<p>This function could be used, for example, when creating a JSON object as a string. The resulting string is in the format of a JSON attribute.</p>
+<p>You can learn more about Go&#39;s pointers and <code>fmt</code> package from the official Go documentation:</p>
+<ul>
+<li>Pointers: <a href="https://tour.golang.org/moretypes/1">https://tour.golang.org/moretypes/1</a></li>
+<li><code>fmt</code> package: <a href="https://golang.org/pkg/fmt/">https://golang.org/pkg/fmt/</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:15 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:17 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:51:55 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 61</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses fmt.Sprintf which is slower than simple string concatenation.</p>
+<p><strong>Solution</strong>: Replace fmt.Sprintf with string concatenation for better performance. For example: &#39;&quot;&#39; + k + &#39;&quot;: &quot;&#39; + *v + &#39;&quot;&#39;</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:56:10 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 62</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: Sensitive data could be exposed in logs, errors, or messages if the function AttrP is used with sensitive data as parameters. This is a potential violation of GDPR, PCI DSS, and HIPAA which require proper handling and protection of sensitive data.</p>
+<p><strong>Solution</strong>: Ensure that the function AttrP is never used with sensitive data as parameters. If necessary, implement additional checks to prevent this. Consider using a secure logging mechanism that can filter out sensitive data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 37:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Raw string to attribute</span>
+func <span class="hljs-constructor">AttrR(<span class="hljs-params">k</span>, <span class="hljs-params">v</span> <span class="hljs-params">string</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> v<span class="hljs-operator"> == </span><span class="hljs-string">&quot;&quot;</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: %<span class="hljs-params">s</span>`, <span class="hljs-params">k</span>, <span class="hljs-params">v</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:38:45 PM PDT</p>
+<p>The provided code snippet is written in Go language and it defines a function named <code>AttrR</code> which accepts two string parameters <code>k</code> and <code>v</code>. The function&#39;s purpose is to convert a raw string into an attribute. </p>
+<p>The steps of the function are as follows:</p>
+<ol>
+<li><p>The function checks if the value <code>v</code> is an empty string. If it is, the function returns an empty string. This is done to avoid creating attributes with no value.</p>
+</li>
+<li><p>If <code>v</code> is not an empty string, the function uses the <code>fmt.Sprintf</code> function to create a new string. <code>fmt.Sprintf</code> is a function in Go&#39;s standard library that formats according to a format specifier and returns the resulting string. </p>
+</li>
+<li><p>Here, the format string is <code>&quot;%s&quot;: %s</code>, where <code>%s</code> is a placeholder for a string. The first <code>%s</code> is replaced with <code>k</code> and the second <code>%s</code> is replaced with <code>v</code>. The resulting string will be <code>k: v</code> enclosed in double quotes, which is the standard way of representing attributes in many data formats like JSON.</p>
+</li>
+</ol>
+<p>This function does not use any complex algorithms, it is a simple string formatting function. It does not seem to conflict with any architectural guidelines as no specific guidelines were provided. </p>
+<p>For more information on Go&#39;s <code>fmt</code> package and the <code>Sprintf</code> function, you can refer to the official Go documentation here: <a href="https://golang.org/pkg/fmt/">Go Doc: fmt</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:18 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:21 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:52:04 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 75</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: Use of fmt.Sprintf function for string concatenation. This is slower than using the + operator or the strings.Builder.</p>
+<p><strong>Solution</strong>: Replace fmt.Sprintf with + operator or strings.Builder for better performance. Here is an example using the + operator: return <code>&quot;</code> + k + <code>&quot;: </code> + v</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:56:41 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 75</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function AttrR takes in two strings, and returns a formatted string. If the input data includes personal data, it could potentially be misused or mishandled, violating GDPR regulations.</p>
+<p><strong>Solution</strong>: Ensure that the function is not used to process personal data, or if it is, that it includes appropriate safeguards. This could include encryption, anonymization or pseudonymization of data, or implementing access controls to limit who can use the function.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 75</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: If the function AttrR is used to process payment card data, it could potentially violate PCI DSS regulations, as it does not include any safeguards to protect the data.</p>
+<p><strong>Solution</strong>: Ensure that the function is not used to process payment card data, or if it is, that it includes appropriate safeguards. This could include encryption of data, or implementing access controls to limit who can use the function.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 75</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: If the function AttrR is used to process protected health information (PHI), it could potentially violate HIPAA regulations, as it does not include any safeguards to protect the data.</p>
+<p><strong>Solution</strong>: Ensure that the function is not used to process PHI, or if it is, that it includes appropriate safeguards. This could include encryption of data, or implementing access controls to limit who can use the function.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 45:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Int to attribute</span>
+func <span class="hljs-constructor">AttrI(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">i</span> <span class="hljs-params">int</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> i<span class="hljs-operator"> == </span><span class="hljs-number">0</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: %<span class="hljs-params">d</span>`, <span class="hljs-params">k</span>, <span class="hljs-params">i</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:39:08 PM PDT</p>
+<p>This is a simple function written in Go language. The function <code>AttrI</code> takes two arguments: a string <code>k</code> and an integer <code>i</code>. It then returns a string. </p>
+<p>The function works as follows:</p>
+<ol>
+<li><p>It checks if the integer <code>i</code> is equal to zero. If it is, the function returns an empty string. This is done using a simple if condition <code>if i == 0</code>.</p>
+</li>
+<li><p>If the integer <code>i</code> is not zero, the function uses the <code>fmt.Sprintf</code> function to create and return a string that includes the string <code>k</code> and the integer <code>i</code>. The <code>fmt.Sprintf</code> function works similarly to <code>printf</code> in C or Java, where it replaces the <code>%s</code> and <code>%d</code> placeholders with the string <code>k</code> and the integer <code>i</code> respectively. The resulting string is in the format <code>&quot;&lt;k&gt;: &lt;i&gt;&quot;</code>, where <code>&lt;k&gt;</code> and <code>&lt;i&gt;</code> are replaced by the actual values of <code>k</code> and <code>i</code>.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is straightforward and does not involve any complex operations or data structures.</p>
+<p>Based on the provided architectural guidelines, this function appears to be consistent. It&#39;s a simple utility function that converts an integer and a string into a formatted string. It doesn&#39;t appear to conflict with any architectural guidelines or constraints.</p>
+<p>For more information on <code>fmt.Sprintf</code> function, you can refer to the official Go documentation here: <a href="https://pkg.go.dev/fmt#Sprintf">https://pkg.go.dev/fmt#Sprintf</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:22 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:24 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:52:15 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 92</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The fmt.Sprintf function is used to create a string which can be slow and CPU-intensive for large numbers of operations.</p>
+<p><strong>Solution</strong>: Consider using a more efficient string concatenation method such as the &#39;+&#39; operator or strings.Builder for large numbers of operations. However, for small numbers of operations, the impact is minimal and fmt.Sprintf can be more readable.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:56:45 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 53:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Uint to attribute</span>
+func <span class="hljs-constructor">AttrU(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">u</span> <span class="hljs-params">uint</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> u<span class="hljs-operator"> == </span><span class="hljs-number">0</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: %<span class="hljs-params">d</span>`, <span class="hljs-params">k</span>, <span class="hljs-params">u</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:39:40 PM PDT</p>
+<p>The provided code is a simple function written in Go programming language. Here&#39;s a breakdown of what it does:</p>
+<p>Function Name: <code>AttrU</code></p>
+<p>Parameters: This function takes two parameters:</p>
+<ol>
+<li><code>k</code> of type <code>string</code>: This is likely the key of an attribute.</li>
+<li><code>u</code> of type <code>uint</code>: This is the unsigned integer value that corresponds to the key.</li>
+</ol>
+<p>Return Type: This function returns a <code>string</code>.</p>
+<p>Algorithm and Functionality:</p>
+<ol>
+<li><p>The function checks if the value of <code>u</code> is equal to <code>0</code>. If it is, the function returns an empty string. This could be a way to filter out attributes with a value of <code>0</code>, which might be considered as not set or not valid in the context of this software.</p>
+</li>
+<li><p>If <code>u</code> is not equal to <code>0</code>, the function returns a string representation of the attribute using the <code>fmt.Sprintf()</code> function. This function formats according to a format specifier and returns the resulting string. Here, it&#39;s used to create a string in the format of <code>&quot;key&quot;: value</code>.</p>
+</li>
+</ol>
+<p>The <code>%s</code> format specifier is used for the string key, and the <code>%d</code> format specifier is used for the unsigned integer value. The result is a string that represents a JSON attribute, which can be used in JSON objects.</p>
+<p>The function doesn&#39;t seem to conflict with any architectural guidelines, as it&#39;s a simple utility function that can be used in various contexts.</p>
+<p>For more information about Go&#39;s <code>fmt</code> package and the <code>Sprintf</code> function, you can refer to the official Go documentation: <a href="https://pkg.go.dev/fmt#Sprintf">https://pkg.go.dev/fmt#Sprintf</a>. </p>
+<p>For a general understanding of Go functions, this link can be useful: <a href="https://tour.golang.org/moretypes/4">https://tour.golang.org/moretypes/4</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:25 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:27 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:52:34 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 107</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of fmt.Sprintf for string formatting can be CPU-intensive, especially if this function is called frequently.</p>
+<p><strong>Solution</strong>: Consider using a more efficient method for string formatting, such as string concatenation or the strings.Builder type in Go. Here is a link to the Go documentation for strings.Builder: <a href="https://golang.org/pkg/strings/#Builder">https://golang.org/pkg/strings/#Builder</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 104</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function returns a new string for each call, which can lead to increased memory usage if the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider reusing a buffer or using a more memory-efficient data structure if this function is called frequently. Here is a link to the Go documentation for bytes.Buffer, which can be used to efficiently build strings: <a href="https://golang.org/pkg/bytes/#Buffer">https://golang.org/pkg/bytes/#Buffer</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:56:56 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 104</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function AttrU() does not have any data validation or sanitization. This could potentially lead to data exposure or data injection attacks.</p>
+<p><strong>Solution</strong>: Add data validation and sanitization to ensure only valid and safe data is processed. Consider using a library or built-in functions for this purpose.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 61:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Float to attribute</span>
+func <span class="hljs-constructor">AttrF(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">f</span> <span class="hljs-params">float64</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> f<span class="hljs-operator"> == </span><span class="hljs-number">0</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: %<span class="hljs-params">f</span>`, <span class="hljs-params">k</span>, <span class="hljs-params">f</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:40:10 PM PDT</p>
+<p>The code provided is a simple Go function named <code>AttrF</code>. This function is used to convert a floating-point number into a string attribute. The attribute is in JSON format with a key-value pair, where the key is a string and the value is the floating-point number. </p>
+<p>Here&#39;s a breakdown of how the function works:</p>
+<ul>
+<li>The function takes two parameters: a string <code>k</code> and a float64 <code>k</code>.</li>
+<li>It checks if the float <code>f</code> is equal to 0. If it is, the function returns an empty string. This is likely done to avoid including attributes with a value of 0 in the final JSON.</li>
+<li>If <code>f</code> is not equal to 0, the function uses the <code>fmt.Sprintf</code> function to create a string in the format <code>&quot;&lt;key&gt;&quot;: &lt;value&gt;</code>. The <code>%s</code> placeholder is replaced with the string <code>k</code>, and the <code>%f</code> placeholder is replaced with the float <code>f</code>. The resulting string is then returned.</li>
+</ul>
+<p>Here&#39;s an example of how this function might be used:</p>
+<pre><code>fmt.Println(AttrF(&quot;height&quot;, 180.5))
+// Output: &quot;height&quot;: 180.5
+</code></pre><p>This function could be used in the process of manually constructing a JSON string. However, in a larger context, it&#39;s generally more common (and safer) to use Go&#39;s <code>json</code> package to marshal and unmarshal JSON.</p>
+<p>You can learn more about Go&#39;s <code>fmt</code> package and its <code>Sprintf</code> function here: <a href="https://golang.org/pkg/fmt/">https://golang.org/pkg/fmt/</a></p>
+<p>And here&#39;s where you can learn more about working with JSON in Go: <a href="https://blog.golang.org/json-and-go">https://blog.golang.org/json-and-go</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:29 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:30 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:52:44 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 124</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of fmt.Sprintf for string formatting can be CPU intensive, especially if this function is called frequently.</p>
+<p><strong>Solution</strong>: Consider using a more efficient method for string formatting, such as string concatenation or the strconv.FormatFloat function.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:57:09 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 123</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The function <code>AttrF</code> does not perform any form of data validation or sanitization on the input data. This could potentially lead to injection attacks if malicious data is passed to the function.</p>
+<p><strong>Solution</strong>: Implement input validation and sanitization to ensure that the data passed to the function is safe and valid. This could be done using a library or framework that provides these features, or by implementing custom validation and sanitization logic.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 69:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Float to attribute</span>
+func <span class="hljs-constructor">AttrPF(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">f</span> <span class="hljs-operator">*</span><span class="hljs-params">float64</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> f<span class="hljs-operator"> == </span>nil<span class="hljs-operator"> || </span>*f<span class="hljs-operator"> == </span><span class="hljs-number">0</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: %<span class="hljs-params">f</span>`, <span class="hljs-params">k</span>, <span class="hljs-operator">*</span><span class="hljs-params">f</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:40:45 PM PDT</p>
+<p>This is a simple function written in the Go programming language. The function, <code>AttrPF</code>, converts a float64 pointer to a string attribute. </p>
+<p>Here&#39;s a detailed breakdown of the function:</p>
+<ol>
+<li><p>The function <code>AttrPF</code> takes two arguments. The first argument <code>k</code> is a string which is presumably the key for the attribute. The second argument <code>f</code> is a pointer to a float64 value. This value is presumably the value for the attribute.</p>
+</li>
+<li><p>The function first checks whether the float64 pointer <code>f</code> is <code>nil</code> or points to a value of <code>0</code>. If either of these conditions is true, the function returns an empty string. This is because in the context of this function, a <code>nil</code> or <code>0</code> value is considered to be non-existent or invalid. </p>
+</li>
+<li><p>If the float64 pointer <code>f</code> is not <code>nil</code> and does not point to a value of <code>0</code>, the function uses the <code>fmt.Sprintf</code> function to create a string. The <code>fmt.Sprintf</code> function formats according to a format specifier and returns the resulting string. In this case, the format specifier is <code>&quot;%s&quot;: %f</code>, which means the function is creating a string in the format of a JSON attribute. The <code>%s</code> is replaced by the string <code>k</code> and the <code>%f</code> is replaced by the float64 value that <code>f</code> points to.</p>
+</li>
+<li><p>The resulting string is then returned by the function.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is straightforward and doesn&#39;t fall under a specific named algorithm. It&#39;s a simple conditional check followed by string formatting and return.</p>
+<p>For more information on Go&#39;s <code>fmt</code> package and the <code>Sprintf</code> function, you can refer to the official Go documentation: <a href="https://golang.org/pkg/fmt/">https://golang.org/pkg/fmt/</a></p>
+<p>For understanding pointers in Go, this is a good resource: <a href="https://tour.golang.org/moretypes/1">https://tour.golang.org/moretypes/1</a></p>
+<p>In terms of architectural guidelines, this function appears to be a utility function for handling data formatting. It is consistent with general Go best practices such as error checking (in this case, checking for <code>nil</code> or <code>0</code> values) and using standard library functions for common tasks (in this case, string formatting). It&#39;s hard to say more without additional context or guidelines, but nothing stands out as conflicting with typical software architecture principles.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:32 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:34 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:52:55 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 140</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The fmt.Sprintf function is being used to convert a float to a string. This function is known to be slower than other methods of converting floats to strings.</p>
+<p><strong>Solution</strong>: Consider using strconv.FormatFloat function for converting floats to strings. It is faster and more efficient than fmt.Sprintf. Reference: <a href="https://golang.org/pkg/strconv/#FormatFloat">https://golang.org/pkg/strconv/#FormatFloat</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:57:22 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 136</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: This function doesn&#39;t have any explicit data compliance issues. It&#39;s a simple function that converts a float to a string. However, the use of this function could potentially lead to compliance issues depending on the nature of the data being processed. If this function is used to process sensitive data, it could lead to data leakage if the data is not properly encrypted or secured.</p>
+<p><strong>Solution</strong>: Ensure that this function is not used to process sensitive data. If it is necessary to process sensitive data, ensure that the data is properly encrypted and secured. Consider implementing additional checks to prevent the processing of sensitive data without proper safeguards.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 77:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Float to attribute</span>
+func <span class="hljs-constructor">AttrPF32(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">f</span> <span class="hljs-operator">*</span><span class="hljs-params">float32</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> f<span class="hljs-operator"> == </span>nil<span class="hljs-operator"> || </span>*f<span class="hljs-operator"> == </span><span class="hljs-number">0</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(`<span class="hljs-string">&quot;%s&quot;</span>: %<span class="hljs-params">f</span>`, <span class="hljs-params">k</span>, <span class="hljs-operator">*</span><span class="hljs-params">f</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:41:13 PM PDT</p>
+<p>This function, <code>AttrPF32</code>, is written in Go language. Its purpose is to convert a float32 pointer to a string attribute. It takes two parameters: a string <code>k</code> and a pointer to a float32 <code>f</code>.</p>
+<p>Here is a step-by-step explanation:</p>
+<ol>
+<li><p>The function checks if the float32 pointer <code>f</code> is <code>nil</code> or if it points to <code>0</code>. If either condition is true, it returns an empty string. This is to prevent any null pointer exception and to handle a scenario where the float value is zero, which might not be meaningful in the context of this function.</p>
+</li>
+<li><p>If <code>f</code> is not <code>nil</code> and it doesn&#39;t point to <code>0</code>, it uses the <code>fmt.Sprintf</code> function to format a string. The <code>%f</code> verb is used to format the float value that <code>f</code> points to. The resulting string is a key-value pair in the format <code>&quot;key&quot;: value</code>, where the <code>key</code> is the string <code>k</code> and the <code>value</code> is the float value that <code>f</code> points to.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is straightforward. It&#39;s a simple conditional check followed by string formatting.</p>
+<p>For more information on Go&#39;s <code>fmt</code> package, you can refer to the official Go documentation: <a href="https://golang.org/pkg/fmt/">https://golang.org/pkg/fmt/</a></p>
+<p>For more information on pointers in Go, you can refer to the Go documentation or this tutorial: <a href="https://www.golang-book.com/books/intro/8">https://www.golang-book.com/books/intro/8</a></p>
+<p>This function seems to follow Go best practices. It checks for <code>nil</code> before dereferencing a pointer, and it uses the <code>fmt</code> package for string formatting. Without additional context, it&#39;s hard to say whether it aligns with the overall architecture of the software project, but it doesn&#39;t seem to conflict with the general guidelines provided.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:49 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+    Start-->A;
+    A-->B;
+    B-->C;
+    C-->D;
+    D-->E;
+    E-->F;
+    F-->G;
+    G-->H;
+    H-->I;
+    I-->J;
+    J-->K;
+    K-->L;
+    L-->M;
+    M-->N;
+    N-->O;
+    O-->P;
+    P-->Q;
+    Q-->R;
+    R-->S;
+    S-->T;
+    T-->U;
+    U-->V;
+    V-->W;
+    W-->X;
+    X-->Y;
+    Y-->Z;
+    Z-->End;
+
+    style A fill:#228B22, stroke:#000000, stroke-width:4px;
+    style B fill:#228B22, stroke:#000000, stroke-width:4px;
+    style C fill:#228B22, stroke:#000000, stroke-width:4px;
+    style D fill:#228B22, stroke:#000000, stroke-width:4px;
+    style E fill:#228B22, stroke:#000000, stroke-width:4px;
+    style F fill:#228B22, stroke:#000000, stroke-width:4px;
+    style G fill:#228B22, stroke:#000000, stroke-width:4px;
+    style H fill:#228B22, stroke:#000000, stroke-width:4px;
+    style I fill:#228B22, stroke:#000000, stroke-width:4px;
+    style J fill:#228B22, stroke:#000000, stroke-width:4px;
+    style K fill:#228B22, stroke:#000000, stroke-width:4px;
+    style L fill:#228B22, stroke:#000000, stroke-width:4px;
+    style M fill:#228B22, stroke:#000000, stroke-width:4px;
+    style N fill:#228B22, stroke:#000000, stroke-width:4px;
+    style O fill:#228B22, stroke:#000000, stroke-width:4px;
+    style P fill:#228B22, stroke:#000000, stroke-width:4px;
+    style Q fill:#228B22, stroke:#000000, stroke-width:4px;
+    style R fill:#228B22, stroke:#000000, stroke-width:4px;
+    style S fill:#228B22, stroke:#000000, stroke-width:4px;
+    style T fill:#228B22, stroke:#000000, stroke-width:4px;
+    style U fill:#228B22, stroke:#000000, stroke-width:4px;
+    style V fill:#228B22, stroke:#000000, stroke-width:4px;
+    style W fill:#228B22, stroke:#000000, stroke-width:4px;
+    style X fill:#228B22, stroke:#000000, stroke-width:4px;
+    style Y fill:#228B22, stroke:#000000, stroke-width:4px;
+    style Z fill:#228B22, stroke:#000000, stroke-width:4px;
+    style End fill:#228B22, stroke:#000000, stroke-width:2px;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:37 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:53:06 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 154</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses fmt.Sprintf which can be CPU-intensive if called frequently.</p>
+<p><strong>Solution</strong>: Consider using a more efficient string formatting method or caching the result if the input does not change often.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 156</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses fmt.Sprintf which can be CPU-intensive if called frequently.</p>
+<p><strong>Solution</strong>: Consider using more efficient string formatting methods or caching the result if the input does not change often.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:57:29 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 154</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function AttrPF32 might be used in a context where sensitive data is being converted to string format. If this string is logged, printed, or otherwise exposed, it could lead to sensitive data being leaked.</p>
+<p><strong>Solution</strong>: Ensure that this function is not used to process sensitive data, or that any data processed by this function is properly sanitized and/or redacted before being exposed. Implement logging policies that prevent the logging of sensitive data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 85:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Object from processed attributes</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Obj</span><span class="hljs-params">(attrs ...<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> {
+	<span class="hljs-keyword">return</span> wrap(<span class="hljs-string">&#x27;{&#x27;</span>, attrs, <span class="hljs-string">&#x27;}&#x27;</span>)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:41:45 PM PDT</p>
+<p>The code you provided is a simple function in GoLang named <code>Obj</code>, which takes in a variadic parameter of strings and returns a string. The function wraps the input strings with curly braces <code>{}</code>. </p>
+<p>Let&#39;s break down the code:</p>
+<ul>
+<li><p><code>func Obj(attrs ...string) string {</code>: This is the function declaration. <code>Obj</code> is the function name. <code>attrs ...string</code> is a variadic parameter, meaning this function can take any number of <code>string</code> arguments. The function returns a <code>string</code>.</p>
+</li>
+<li><p><code>return wrap(&#39;{&#39;, attrs, &#39;}&#39;)</code>: This is the function body. It calls another function <code>wrap</code>, passing three arguments: the opening curly brace <code>{</code>, the <code>attrs</code> (the input strings), and the closing curly brace <code>}</code>. The <code>wrap</code> function is not defined in this code snippet, but it likely concatenates the input strings and wraps them with the provided braces. The result is then returned.</p>
+</li>
+</ul>
+<p>This function uses no specific algorithms. It&#39;s a simple utility function that likely formats the input strings by wrapping them with curly braces <code>{}</code>.</p>
+<p>It&#39;s important to note that the function <code>wrap</code> is not provided in this code snippet. This function is likely defined elsewhere in the code base. Without this function, it&#39;s difficult to provide a complete analysis of the <code>Obj</code> function. </p>
+<p>The code appears to be consistent with general GoLang best practices, which favor simple, readable code. There are no apparent conflicts with the architectural guidelines provided. The function is simple and modular, which is a common practice in GoLang.</p>
+<p>For more information on GoLang functions and variadic parameters, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/moretypes/15">A Tour of Go - Functions</a></li>
+<li><a href="https://gobyexample.com/variadic-functions">Go by Example: Variadic Functions</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:52 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:40 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:53:09 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:57:41 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: Data and Privacy Compliance</p>
+<p><strong>Description</strong>: This function takes in attributes and returns a string without proper sanitization or validation. This could potentially lead to data leakage or injection attacks compromising GDPR, PCI DSS, and HIPAA compliance.</p>
+<p><strong>Solution</strong>: Implement proper input validation and sanitization for the attributes. Consider using a whitelist of allowed attributes and reject any input not on the list. Also, consider encrypting sensitive data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 90:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Slice from processed attributes</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Slice</span><span class="hljs-params">(attrs ...<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> {
+	<span class="hljs-keyword">return</span> wrap(<span class="hljs-string">&#x27;[&#x27;</span>, attrs, <span class="hljs-string">&#x27;]&#x27;</span>)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:42:08 PM PDT</p>
+<p>The provided code snippet is a function written in the Go programming language. The function is named <code>Slice</code> and it takes a variadic parameter of strings. A variadic parameter is a function parameter that accepts an arbitrary number of arguments, which in this case are strings.</p>
+<p>The function signature is as follows:</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Slice</span><span class="hljs-params">(attrs ...<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span>
+</code></pre><p>The <code>Slice</code> function uses the <code>wrap</code> function to surround a slice of strings with square brackets <code>[]</code>. The <code>wrap</code> function is not defined in the provided code, but based on its usage, it likely concatenates the strings, adding the first parameter at the beginning and the third parameter at the end of the concatenated string.</p>
+<p>The algorithm used in this function is quite simple:</p>
+<ol>
+<li>The function takes an arbitrary number of string arguments (attrs).</li>
+<li>These string arguments are passed to the <code>wrap</code> function along with two additional string arguments: <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>.</li>
+<li>The <code>wrap</code> function presumably concatenates the strings, adding the first and third arguments at the beginning and end of the resulting string, respectively.</li>
+<li>The resulting string, now wrapped in square brackets, is returned by the <code>Slice</code> function.</li>
+</ol>
+<p>This function seems to be a utility function used for formatting or preparing data. It does not appear to conflict with any architectural guidelines, as it is a simple, standalone function that could be used in various contexts.</p>
+<p>For more information on variadic functions in Go, you can refer to the official Go documentation: <a href="https://gobyexample.com/variadic-functions">https://gobyexample.com/variadic-functions</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:56 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Slice fill:#228B22, stroke:#000000, stroke-width:2px;
+    style Return fill:#228B22, stroke:#000000, stroke-width:2px;
+
+    Slice-->Return;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:43 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:53:24 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 181</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function &#39;Slice&#39; is not efficient when dealing with a large number of attributes. It uses the variadic function parameter &#39;attrs&#39; which can lead to unnecessary memory allocation and CPU usage when the function is called with a large number of arguments.</p>
+<p><strong>Solution</strong>: Instead of using a variadic function parameter, consider using a slice of strings as an argument. This would allow you to pass a reference to the slice instead of copying the entire slice. Also, consider using a StringBuilder for concatenation as it is more efficient than the &#39;+&#39; operator for string concatenation in Go.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:57:47 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 181</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;Slice&#39; processes attributes without checking for personal data. This could potentially lead to uncontrolled processing of personal data, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement a mechanism to check if the attributes contain personal data before processing. If they do, ensure that the necessary consent has been obtained and that the processing is necessary and proportionate. Consider using data pseudonymization or anonymization techniques where appropriate.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 95:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-built_in">Path</span>(parts ...string) string {
+	<span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">b</span> bytes<span class="hljs-selector-class">.Buffer</span>
+	<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.Grow</span>(<span class="hljs-number">32</span>)
+
+	<span class="hljs-keyword">for</span> _, <span class="hljs-selector-tag">p</span> := range parts {
+		<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.WriteByte</span>(<span class="hljs-string">&#x27;/&#x27;</span>)
+		<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.WriteString</span>(p)
+	}
+
+	return <span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.String</span>()
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:42:45 PM PDT</p>
+<p>This is a simple function written in the Go programming language. The function is named <code>Path</code> and its purpose is to concatenate a series of strings into a path-like string, with each part separated by a forward slash (<code>/</code>). </p>
+<p>The function accepts a variable number of string arguments (<code>parts ...string</code>). This is achieved using the variadic function parameter feature in Go, represented by <code>...</code> before the type of the last parameter. This means you can pass any number of string arguments to the function.</p>
+<p>Here&#39;s a breakdown of the code:</p>
+<ol>
+<li><p><code>var b bytes.Buffer</code> declares a variable <code>b</code> of type <code>bytes.Buffer</code>. <code>bytes.Buffer</code> is a type in Go that implements methods to manipulate byte slices. It&#39;s a flexible and efficient way to handle bytes.</p>
+</li>
+<li><p><code>b.Grow(32)</code> pre-allocates enough memory for 32 bytes. This is an optimization step to prevent multiple memory allocations when the buffer grows as data is written to it.</p>
+</li>
+<li><p>The <code>for</code> loop <code>for _, p := range parts</code> iterates over each string in the <code>parts</code> slice. The <code>_</code> character is a blank identifier, used when the syntax requires a variable but the program logic does not. Here, it&#39;s used because the <code>range</code> keyword returns two values - the index and the value for each iteration - but we only care about the value (<code>p</code>), not the index.</p>
+</li>
+<li><p>Inside the loop, <code>b.WriteByte(&#39;/&#39;)</code> writes a byte representing the <code>/</code> character to the buffer, and <code>b.WriteString(p)</code> writes the string <code>p</code> to the buffer. This effectively constructs the path string, with each part separated by a <code>/</code>.</p>
+</li>
+<li><p>Finally, <code>return b.String()</code> converts the buffer to a string and returns it.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is straightforward and doesn&#39;t correspond to a specific named algorithm. It&#39;s a simple iteration over a collection of strings, appending each to a buffer with a separator.</p>
+<p>For more information on the Go language and its features used in this code, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/welcome/1">A Tour of Go</a> for a hands-on introduction to Go.</li>
+<li><a href="https://golang.org/pkg/bytes/#Buffer">bytes.Buffer documentation</a> for details on the <code>bytes.Buffer</code> type and its methods.</li>
+<li><a href="https://gobyexample.com/variadic-functions">Go by Example: Variadic Functions</a> for more on variadic functions in Go.</li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:47:59 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:47 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:53:43 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 1/10</p>
+<p><strong>Line Number</strong>: 188</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function pre-allocates a buffer of 32 bytes, which might be larger than necessary for smaller inputs, leading to potential wasted memory.</p>
+<p><strong>Solution</strong>: Consider dynamically sizing the buffer based on the input, or using a smaller default size if the typical input size is known to be small.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 190</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function iterates over the input parts and writes each part to the buffer one by one. This could be less efficient than concatenating the parts first and writing the result to the buffer in one operation, especially for larger inputs.</p>
+<p><strong>Solution</strong>: Consider concatenating the parts first using the built-in <code>strings.Join</code> function, and then writing the result to the buffer in one operation. This could potentially be more efficient for larger inputs. Refer to <a href="https://golang.org/pkg/strings/#Join">https://golang.org/pkg/strings/#Join</a> for more details.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:57:50 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 107:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-constructor">QAttr(<span class="hljs-params">k</span>, <span class="hljs-params">v</span> <span class="hljs-params">string</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> v<span class="hljs-operator"> == </span><span class="hljs-string">&quot;&quot;</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(<span class="hljs-string">&quot;%s=%s&quot;</span>, <span class="hljs-params">k</span>, <span class="hljs-params">v</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:43:13 PM PDT</p>
+<p>The function <code>QAttr</code> is a simple function written in Go language. It takes two string parameters, <code>k</code> and <code>v</code>, and returns a string. The function is likely used to generate a query attribute, which is a key-value pair used in database queries, URLs, or other similar structures.</p>
+<p>Here is a detailed breakdown of the function:</p>
+<ol>
+<li><p>The function signature <code>func QAttr(k, v string) string</code> defines a function named <code>QAttr</code> that takes two arguments <code>k</code> and <code>v</code> of type string and returns a string.</p>
+</li>
+<li><p>The first line of the function <code>if v == &quot;&quot; {</code> checks if the second argument <code>v</code> is an empty string. If it is, the function returns an empty string <code>return &quot;&quot;</code>. This might be a way to ensure that the function doesn&#39;t generate a query attribute with an empty value.</p>
+</li>
+<li><p>If <code>v</code> is not an empty string, the function uses the <code>fmt.Sprintf</code> function to generate a string that combines <code>k</code> and <code>v</code> with an equals sign <code>=</code> between them <code>return fmt.Sprintf(&quot;%s=%s&quot;, k, v)</code>. The <code>%s</code> placeholders in the string are replaced by the values of <code>k</code> and <code>v</code> respectively.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is straightforward: check if the value is empty, and if it is, return an empty string; otherwise, return a string that combines the key and value with an equals sign.</p>
+<p>This function follows the basic principles of Go programming, and it doesn&#39;t seem to conflict with any common architectural guidelines.</p>
+<p>For more information on Go programming, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/welcome/1">A Tour of Go</a></li>
+<li><a href="https://gobyexample.com/string-formatting">Go by Example: String Formatting</a></li>
+<li><a href="https://golang.org/doc/effective_go">Effective Go</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:03 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:49 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:53:47 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:58:02 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 212</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function QAttr(k, v string) does not sanitize or validate the input parameters. This could lead to potential data exposure or injection attacks.</p>
+<p><strong>Solution</strong>: Implement input validation and sanitization to prevent data exposure and injection attacks. Consider using a library or built-in functions to safely handle and sanitize user input.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 114:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-constructor">QAttrP(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">v</span> <span class="hljs-operator">*</span><span class="hljs-params">string</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> v<span class="hljs-operator"> == </span>nil {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return <span class="hljs-constructor">QAttr(<span class="hljs-params">k</span>, <span class="hljs-operator">*</span><span class="hljs-params">v</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:43:48 PM PDT</p>
+<p>The function <code>QAttrP</code> in the provided code is written in Go programming language. It takes two parameters: a string <code>k</code> and a pointer to a string <code>v</code>. The function checks if the pointer <code>v</code> is nil. If it is, the function returns an empty string. If <code>v</code> is not nil, it dereferences the pointer <code>v</code> to get the string it points to and passes it along with <code>k</code> to another function <code>QAttr</code> and returns the result. </p>
+<p>Here&#39;s a breakdown of the function:</p>
+<ul>
+<li><p><code>func QAttrP(k string, v *string) string {</code>: This line declares a function named <code>QAttrP</code> that takes two parameters: a string <code>k</code> and a pointer to a string <code>v</code>. The function returns a string.</p>
+</li>
+<li><p><code>if v == nil {</code>: This line checks if the pointer <code>v</code> is nil. In Go, <code>nil</code> is the zero value for pointers, interfaces, maps, slices, channels and function types, representing an uninitialized value.</p>
+</li>
+<li><p><code>return &quot;&quot;</code>: If <code>v</code> is nil, the function returns an empty string.</p>
+</li>
+<li><p><code>}</code>: This line closes the <code>if</code> statement.</p>
+</li>
+<li><p><code>return QAttr(k, *v)</code>: If <code>v</code> is not nil, the function dereferences the pointer <code>v</code> to get the string it points to and passes it along with <code>k</code> to another function <code>QAttr</code>. The result of <code>QAttr</code> is returned by <code>QAttrP</code>.</p>
+</li>
+<li><p><code>}</code>: This line closes the function.</p>
+</li>
+</ul>
+<p>The function <code>QAttrP</code> does not use any specific algorithm and is straightforward in its operation. However, it does make use of pointers in Go, which are a fundamental part of many programming languages.</p>
+<p>For more information on pointers in Go, you can refer to this link: <a href="https://gobyexample.com/pointers">Go by Example: Pointers</a></p>
+<p>As for the architectural guidelines, the function seems to be consistent with the general Go programming practices. There are no apparent conflicts between the code and the guidelines provided. However, without the context of the rest of the codebase, it is hard to make definitive conclusions about its architectural consistency.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:12 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->CheckIfVIsNull;
+CheckIfVIsNull-->ReturnEmptyString;
+CheckIfVIsNull-->CheckIfVIsNotNull;
+CheckIfVIsNotNull-->ReturnQAttr;
+ReturnEmptyString-->End;
+ReturnQAttr-->End;
+CheckIfVIsNotNull-->End;</pre>
+</code></pre><p>The control flow graph for the provided code is as follows:</p>
+<ol>
+<li>The flow starts at the function <code>QAttrP</code>.</li>
+<li>The flow then goes to the decision point <code>CheckIfVIsNull</code> to check if the value <code>v</code> is null.</li>
+<li>If <code>v</code> is null, the flow goes to the <code>ReturnEmptyString</code> block and returns an empty string.</li>
+<li>If <code>v</code> is not null, the flow goes to the decision point <code>CheckIfVIsNotNull</code>.</li>
+<li>If <code>v</code> is not null, the flow goes to the <code>ReturnQAttr</code> block and returns the result of the <code>QAttr</code> function with the key <code>k</code> and the value <code>*v</code>.</li>
+<li>The flow then goes to the <code>End</code> block, indicating the end of the function.</li>
+</ol>
+<p>The primary path through the code is shown in the default non-colored style, while the error path (when <code>v</code> is null) is shown in the error path style.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:52 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:53:50 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:58:29 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 226</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function QAttrP does not validate the input data. This could lead to processing of personal data without consent, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement input validation to ensure that only data with explicit consent is processed. This could be done by adding a consent parameter to the function and checking it before processing the data.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 226</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function QAttrP does not encrypt or otherwise secure the input data. This could lead to exposure of sensitive cardholder data, which is a violation of PCI DSS.</p>
+<p><strong>Solution</strong>: Implement data encryption to ensure that sensitive data is secure. This could be done by adding an encryption step before processing the data.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 226</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function QAttrP does not ensure the confidentiality, integrity, and availability of all ePHI it creates, receives, maintains or transmits. This could lead to unauthorized access to or disclosure of ePHI, which is a violation of HIPAA.</p>
+<p><strong>Solution</strong>: Implement data encryption and access controls to ensure the confidentiality, integrity, and availability of ePHI. This could be done by adding an encryption step and access controls before processing the data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 121:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-constructor">QAttrI(<span class="hljs-params">k</span> <span class="hljs-params">string</span>, <span class="hljs-params">i</span> <span class="hljs-params">int</span>)</span> <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">if</span> i<span class="hljs-operator"> == </span><span class="hljs-number">0</span> {
+		return <span class="hljs-string">&quot;&quot;</span>
+	}
+	return fmt.<span class="hljs-constructor">Sprintf(<span class="hljs-string">&quot;%s=%d&quot;</span>, <span class="hljs-params">k</span>, <span class="hljs-params">i</span>)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:44:07 PM PDT</p>
+<p>The code you provided is a simple function in Go language. This function is named <code>QAttrI</code> and it takes two parameters: a string <code>k</code> and an integer <code>i</code>. The function returns a string.</p>
+<p>Here&#39;s a step-by-step explanation of what the function does:</p>
+<ol>
+<li><p>The function checks if the integer <code>i</code> is equal to 0. If <code>i</code> is 0, it immediately returns an empty string. This is done using an if statement, which is a basic control flow mechanism in programming.</p>
+</li>
+<li><p>If <code>i</code> is not 0, the function proceeds to the next line of code. It uses the <code>fmt.Sprintf</code> function to format a string. This function works similarly to <code>printf</code> in C or other languages: it substitutes each format specifier (like <code>%s</code> or <code>%d</code>) in the format string with the value of the corresponding argument. In this case, <code>%s</code> is replaced with the value of <code>k</code> and <code>%d</code> is replaced with the value of <code>i</code>. The <code>=</code> sign is used as a separator between <code>k</code> and <code>i</code>.</p>
+</li>
+<li><p>The resulting string is then returned by the function.</p>
+</li>
+</ol>
+<p>In essence, this function is a helper function that creates a string representation of a key-value pair, where the key is a string and the value is an integer. If the value is 0, it assumes that the key-value pair doesn&#39;t exist or is not meaningful, and it returns an empty string instead.</p>
+<p>The function itself doesn&#39;t use any complex algorithms; it&#39;s a straightforward application of control flow (the if statement) and string formatting.</p>
+<p>For more information on Go&#39;s <code>fmt</code> package and its string formatting functions, you can refer to the official Go documentation: <a href="https://golang.org/pkg/fmt/">https://golang.org/pkg/fmt/</a></p>
+<p>For more information on control flow in Go, you can refer to this tutorial: <a href="https://tour.golang.org/flowcontrol/1">https://tour.golang.org/flowcontrol/1</a></p>
+<p>In terms of architectural guidelines, this function is quite generic and could fit into a variety of software architectures. It&#39;s a utility function that could be useful in many contexts where key-value pairs need to be represented as strings. It doesn&#39;t impose any particular architectural constraints or requirements.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:18 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a linear flow from the start to the end, with no branching or error paths.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:49:55 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:53:59 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 240</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function QAttrI uses the fmt.Sprintf function, which is known to be slower than simple string concatenation.</p>
+<p><strong>Solution</strong>: Consider replacing fmt.Sprintf with string concatenation for better performance. For example: return k + &quot;=&quot; + strconv.Itoa(i)</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:58:31 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 128:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-built_in">Query</span>(attrs ...string) string {
+	<span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">b</span> bytes<span class="hljs-selector-class">.Buffer</span>
+	<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.Grow</span>(<span class="hljs-number">32</span>)
+
+	<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.WriteByte</span>(<span class="hljs-string">&#x27;?&#x27;</span>)
+	<span class="hljs-keyword">for</span> _, <span class="hljs-selector-tag">a</span> := range attrs {
+		<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.WriteString</span>(<span class="hljs-built_in">omitempty</span>(<span class="hljs-selector-tag">a</span>, <span class="hljs-string">&quot;&amp;&quot;</span>))
+	}
+	<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.Truncate</span>(<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.Len</span>() - <span class="hljs-number">1</span>) <span class="hljs-comment">// either trims the trailing &amp; or initial ?</span>
+
+	return <span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.String</span>()
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:44:41 PM PDT</p>
+<p>This function is written in Go and it&#39;s responsible for creating a query string from a list of attributes. The list of attributes is passed as a variadic parameter <code>attrs</code>. </p>
+<p>Here&#39;s a detailed explanation of the function:</p>
+<ul>
+<li>It first creates a buffer of bytes using <code>var b bytes.Buffer</code>. This buffer is used to efficiently concatenate strings.</li>
+<li><code>b.Grow(32)</code> is used to preallocate 32 bytes of capacity for the buffer. This can help improve performance by reducing the number of memory allocations.</li>
+<li><code>b.WriteByte(&#39;?&#39;)</code> writes a byte to the buffer, in this case, the character &#39;?&#39;. This character is typically used at the beginning of a query string.</li>
+<li>The function then iterates over the list of attributes using a <code>for</code> loop. For each attribute, it calls the <code>omitempty</code> function with the attribute and the string &quot;&amp;&quot; as parameters. The <code>omitempty</code> function is not defined in this code snippet, but it&#39;s likely that this function returns the attribute if it&#39;s not empty, and otherwise returns the &quot;&amp;&quot; string. The result is then written to the buffer using <code>b.WriteString</code>.</li>
+<li>After all attributes have been processed, <code>b.Truncate(b.Len() - 1)</code> is called to remove the last character from the buffer. This could be either a trailing &quot;&amp;&quot; or the initial &quot;?&quot; if there were no attributes.</li>
+<li>Finally, the function returns the query string by calling <code>b.String()</code> on the buffer. This converts the buffer to a string.</li>
+</ul>
+<p>As for algorithms, this function uses a simple linear iteration over the input attributes. The time complexity is O(n), where n is the number of attributes.</p>
+<p>The function follows the idiomatic Go practices for string concatenation using a bytes.Buffer when dealing with multiple strings. The buffer is more efficient than string concatenation using &#39;+&#39;, which can result in many memory allocations.</p>
+<p>For more information about bytes.Buffer in Go, you can refer to the official Go documentation: <a href="https://golang.org/pkg/bytes/">bytes - The Go Programming Language</a></p>
+<p>For more information about variadic functions in Go, you can refer to: <a href="https://gobyexample.com/variadic-functions">Variadic Functions in Go</a></p>
+<p>For more information about HTTP query strings, you can refer to: <a href="https://en.wikipedia.org/wiki/Query_string">Query string - Wikipedia</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:21 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:50:08 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 259</p>
+<p><strong>Bug Type</strong>: Information Disclosure</p>
+<p><strong>Description</strong>: The function omitempty(a, &quot;&amp;&quot;) could potentially leak sensitive information if &#39;a&#39; contains such information. This is because the function is adding the attributes directly to the string without any form of sanitization or encoding.</p>
+<p><strong>Solution</strong>: Consider sanitizing or encoding the attributes before adding them to the string. Go&#39;s &#39;net/url&#39; package provides functions to URL encode strings, which could help prevent information disclosure. More information can be found here: <a href="https://golang.org/pkg/net/url/#QueryEscape">https://golang.org/pkg/net/url/#QueryEscape</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:54:28 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 256</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The bytes.Buffer is grown by a constant size of 32, regardless of the size of the input. This could lead to unnecessary memory allocation if the input is smaller than 32 bytes, or insufficient pre-allocation if the input is larger, leading to multiple memory reallocations.</p>
+<p><strong>Solution</strong>: Consider dynamically sizing the buffer based on the expected size of the input. This could be calculated based on the length of the attrs array and the average size of the strings within it.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 260</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of WriteString inside a loop can be inefficient as it requires a system call for each iteration. This can lead to increased CPU usage.</p>
+<p><strong>Solution</strong>: Consider concatenating the strings first and then writing the result to the buffer in a single operation. This would reduce the number of system calls and potentially improve performance.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 261</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of Truncate at the end of the function to remove the trailing or initial character can be CPU-intensive, especially for larger strings. This operation requires shifting all subsequent bytes down by one, which can be expensive.</p>
+<p><strong>Solution</strong>: Consider checking if the string ends with &#39;&amp;&#39; or starts with &#39;?&#39; before adding them, to avoid the need for Truncate. Alternatively, consider building the string without the trailing &#39;&amp;&#39; or initial &#39;?&#39; in the first place.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:58:45 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 258</p>
+<p><strong>Bug Type</strong>: Privacy Issue</p>
+<p><strong>Description</strong>: The &#39;Query&#39; function builds a query string from the &#39;attrs&#39; arguments. If these arguments contain sensitive data such as Personal Identifiable Information (PII) or Payment Card Information (PCI), they could be exposed in logs, error messages or over the network if the query string is used in an insecure context.</p>
+<p><strong>Solution</strong>: Ensure that sensitive data is not included in the &#39;attrs&#39; arguments. If it&#39;s necessary, make sure that the data is properly anonymized or encrypted before being used in a query string. Also, ensure that query strings are not logged or exposed in error messages.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 141:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">const</span> NoBody = <span class="hljs-string">&quot;&quot;</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Request</span><span class="hljs-params">(pathAndQueryParams <span class="hljs-type">string</span>, body <span class="hljs-type">string</span>)</span></span> *http.Request {
+	parsed, err := url.Parse(pathAndQueryParams)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Print(<span class="hljs-string">&quot;Failed to parse url:&quot;</span>, pathAndQueryParams, <span class="hljs-string">&quot; Error:&quot;</span>, err.Error())
+	}
+	<span class="hljs-keyword">return</span> &amp;http.Request{URL: parsed, Body: ioutil.NopCloser(strings.NewReader(body))}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:45:02 PM PDT</p>
+<p>This is a simple function written in Go language that creates and returns an HTTP request. The function takes two parameters: <code>pathAndQueryParams</code> and <code>body</code>. <code>pathAndQueryParams</code> is a string that represents the URL path and any query parameters, while <code>body</code> is a string that represents the body of the HTTP request.</p>
+<p>Let&#39;s break down the code:</p>
+<ul>
+<li><p><code>const NoBody = &quot;&quot;</code>: This line declares a constant <code>NoBody</code> which is an empty string. It can be used to indicate that an HTTP request does not have a body.</p>
+</li>
+<li><p><code>func Request(pathAndQueryParams string, body string) *http.Request {...}</code>: This is the declaration of the function <code>Request</code>. It takes two string parameters and returns a pointer to an <code>http.Request</code> object.</p>
+</li>
+<li><p><code>parsed, err := url.Parse(pathAndQueryParams)</code>: This line uses the <code>Parse</code> function from Go&#39;s <code>net/url</code> package to parse the <code>pathAndQueryParams</code> string into a <code>url.URL</code> object. The <code>Parse</code> function returns two values: the parsed URL and an error. If the URL cannot be parsed, the error will be non-nil.</p>
+</li>
+<li><p><code>if err != nil {...}</code>: This <code>if</code> statement checks if there was an error parsing the URL. If there was an error (i.e., <code>err</code> is not <code>nil</code>), it prints a message to the console with the error details.</p>
+</li>
+<li><p><code>return &amp;http.Request{URL: parsed, Body: ioutil.NopCloser(strings.NewReader(body))}</code>: This line creates a new <code>http.Request</code> object. It sets the <code>URL</code> field to the parsed URL and the <code>Body</code> field to an <code>io.ReadCloser</code> that reads from the <code>body</code> string. The <code>ioutil.NopCloser</code> function is used to wrap the <code>io.Reader</code> returned by <code>strings.NewReader(body)</code>, creating an <code>io.ReadCloser</code> that does nothing when its <code>Close</code> method is called. This is useful when the body of the HTTP request is a string that does not need to be closed.</p>
+</li>
+</ul>
+<p>As for architectural guidelines, this function seems to be well-structured and follows Go&#39;s idiomatic error handling practices. It also makes good use of Go&#39;s standard library for parsing URLs and creating HTTP requests.</p>
+<p>For more information on Go&#39;s <code>net/url</code> and <code>net/http</code> packages, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/net/url/">net/url package</a></li>
+<li><a href="https://golang.org/pkg/net/http/">net/http package</a></li>
+<li><a href="https://blog.golang.org/go1.13-errors">Go error handling</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:29 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+</pre>
+</code></pre><p>In the provided code, the control flow starts at the function <code>Request</code>. The function first parses the <code>pathAndQueryParams</code> string into a URL using <code>url.Parse</code>. If there is an error during parsing, the control flow goes to the error path, where an error message is printed. Otherwise, the control flow continues to create an <code>http.Request</code> object with the parsed URL and the <code>body</code> string as the request body. Finally, the control flow reaches the end of the function.</p>
+<p>Note: The code snippet provided does not contain any external library or non-standard function calls.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:50:42 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 285</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The function &#39;Request&#39; does not handle the error returned by &#39;url.Parse&#39;. If the URL parsing fails, the function will still return an http.Request with a nil URL, which can lead to runtime panics when the request is used later on. This could potentially lead to Denial of Service (DoS) if an attacker can control the &#39;pathAndQueryParams&#39; parameter.</p>
+<p><strong>Solution</strong>: Instead of just printing the error, you should handle it properly. One way to do this is to return an error from the &#39;Request&#39; function when URL parsing fails. Here is an example:</p>
+</li>
+</ol>
+<p>func Request(pathAndQueryParams string, body string) (*http.Request, error) {
+    parsed, err := url.Parse(pathAndQueryParams)
+    if err != nil {
+        return nil, err
+    }
+    return &amp;http.Request{URL: parsed, Body: ioutil.NopCloser(strings.NewReader(body))}, nil
+}</p>
+<p>For more information about error handling in Go, you can refer to this link: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+<ol start="2">
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 288</p>
+<p><strong>Bug Type</strong>: Information Disclosure</p>
+<p><strong>Description</strong>: The function &#39;Request&#39; prints the failed URL when URL parsing fails. If the URL contains sensitive information, such as tokens or credentials, they might be logged and potentially exposed.</p>
+<p><strong>Solution</strong>: Avoid logging sensitive information. If you need to log the error, you can log the fact that URL parsing failed without logging the actual URL. For more information about secure logging, you can refer to this link: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:54:43 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 282</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: Potential inefficient use of CPU resources due to error handling. The process of parsing a URL and handling an error is CPU-intensive.</p>
+<p><strong>Solution</strong>: Consider using a URL validation function before attempting to parse the URL. This would reduce unnecessary CPU usage when parsing invalid URLs.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 286</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Potential inefficient use of memory resources due to the creation of a new reader for every request.</p>
+<p><strong>Solution</strong>: Consider reusing readers or using a buffer pool to reduce memory usage. Buffer pools can significantly reduce the overhead of constantly creating and destroying readers.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:59:20 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 282</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function does not check if the request contains any personal data. Under GDPR, personal data must be processed lawfully, fairly, and in a transparent manner.</p>
+<p><strong>Solution</strong>: Implement a mechanism to check if the request contains personal data and if so, ensure it is handled according to GDPR requirements. This could include obtaining user consent, anonymizing data, or encrypting data.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 285</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function does not check if the request contains any cardholder data. Under PCI DSS, cardholder data must be protected wherever it is stored, processed, or transmitted.</p>
+<p><strong>Solution</strong>: Implement a mechanism to check if the request contains cardholder data and if so, ensure it is handled according to PCI DSS requirements. This could include encrypting the data, using secure transmission protocols, or not storing cardholder data unless absolutely necessary.</p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 285</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function does not check if the request contains any protected health information (PHI). Under HIPAA, PHI must be protected wherever it is stored, processed, or transmitted.</p>
+<p><strong>Solution</strong>: Implement a mechanism to check if the request contains PHI and if so, ensure it is handled according to HIPAA requirements. This could include encrypting the data, using secure transmission protocols, or not storing PHI unless absolutely necessary.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 283</p>
+<p><strong>Bug Type</strong>: Logging Sensitive Data</p>
+<p><strong>Description</strong>: The error message could potentially log sensitive data. This could violate data protection regulations and lead to data leaks.</p>
+<p><strong>Solution</strong>: Ensure that error messages do not contain any sensitive data. If necessary, sanitize or redact sensitive data before logging.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 151:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-constructor">AddHeaders(<span class="hljs-params">req</span> <span class="hljs-operator">*</span><span class="hljs-params">http</span>.Request, <span class="hljs-params">attrs</span> <span class="hljs-operator">...</span><span class="hljs-params">string</span>)</span> {
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:45:38 PM PDT</p>
+<p>The function <code>AddHeaders</code> is written in Go, which is a statically typed, compiled language developed at Google. It&#39;s often used for developing backend systems due to its simplicity and efficiency.</p>
+<p>Let&#39;s break down the code:</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AddHeaders</span><span class="hljs-params">(req *http.Request, attrs ...<span class="hljs-type">string</span>)</span></span> {
+}
+</code></pre><ol>
+<li><p><code>func</code>: This keyword is used to declare a function in Go.</p>
+</li>
+<li><p><code>AddHeaders</code>: This is the name of the function. The name suggests that this function is used to add headers to an HTTP request.</p>
+</li>
+<li><p><code>(req *http.Request, attrs ...string)</code>: These are the parameters of the function.</p>
+<ul>
+<li><code>req *http.Request</code>: The first parameter is a pointer to an <code>http.Request</code> object. This object represents an HTTP request message received by a server or to be sent by a client. By passing a pointer, the function is able to modify the original <code>http.Request</code> object.</li>
+<li><code>attrs ...string</code>: The second parameter is a variadic parameter of type string. This means the function can accept any number of string arguments. These are likely the headers to be added to the HTTP request.</li>
+</ul>
+</li>
+<li><p><code>{}</code>: This is the body of the function. Currently, it&#39;s empty. The actual implementation of adding headers to the <code>http.Request</code> object would go here.</p>
+</li>
+</ol>
+<p>A typical implementation might look like this:</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AddHeaders</span><span class="hljs-params">(req *http.Request, attrs ...<span class="hljs-type">string</span>)</span></span> {
+    <span class="hljs-keyword">for</span> _, attr := <span class="hljs-keyword">range</span> attrs {
+        keyVal := strings.SplitN(attr, <span class="hljs-string">&quot;:&quot;</span>, <span class="hljs-number">2</span>)
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(keyVal) == <span class="hljs-number">2</span> {
+            req.Header.Add(keyVal[<span class="hljs-number">0</span>], keyVal[<span class="hljs-number">1</span>])
+        }
+    }
+}
+</code></pre><p>This implementation loops over the <code>attrs</code> slice, splits each string into a key-value pair, and adds it to the request&#39;s headers.</p>
+<p>As this function is not implemented, it&#39;s hard to say if it follows the architectural guidelines. But, a function to add headers to an HTTP request is a common pattern in web development and can be considered good practice.</p>
+<p>For more information on Go functions, you can refer to <a href="https://tour.golang.org/moretypes/24">A Tour of Go</a>. For more on HTTP requests in Go, see the <a href="https://golang.org/pkg/net/http/">net/http package documentation</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:32 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:50:59 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 300</p>
+<p><strong>Bug Type</strong>: Insufficient Security Configurability (STRIDE)</p>
+<p><strong>Description</strong>: The function AddHeaders does not actually add any headers to the HTTP request. This could lead to potential security issues as certain security headers might be missing, which could expose the application to attacks such as Cross-Site Scripting (XSS), Clickjacking, and other code injection attacks.</p>
+<p><strong>Solution</strong>: Implement the function to add necessary security headers to the HTTP request. For example, you could add the Content-Security-Policy header to help prevent XSS attacks, the X-Frame-Options header to help prevent Clickjacking attacks, and the Strict-Transport-Security header to enforce the use of HTTPS. Refer to OWASP Secure Headers Project for more details on securing headers (<a href="https://owasp.org/www-project-secure-headers/">https://owasp.org/www-project-secure-headers/</a>).</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:54:46 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:59:33 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 300</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;AddHeaders&#39; does not appear to enforce any specific headers related to data security or privacy, which could lead to data breaches and non-compliance with GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Add specific security headers like &#39;Content-Security-Policy&#39;, &#39;Strict-Transport-Security&#39;, &#39;X-Content-Type-Options&#39;, &#39;X-Frame-Options&#39;, and &#39;X-XSS-Protection&#39;. Also, consider adding headers for data privacy like &#39;P3P&#39; (Platform for Privacy Preferences Project).</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 154:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">wrap</span><span class="hljs-params">(open <span class="hljs-type">byte</span>, attrs []<span class="hljs-type">string</span>, <span class="hljs-built_in">close</span> <span class="hljs-type">byte</span>)</span></span> <span class="hljs-type">string</span> {
+	<span class="hljs-keyword">var</span> b bytes.Buffer
+	b.Grow(<span class="hljs-number">64</span>)
+
+	b.WriteByte(open)
+	<span class="hljs-keyword">for</span> _, a := <span class="hljs-keyword">range</span> attrs {
+		b.WriteString(omitempty(a, <span class="hljs-string">&quot;, &quot;</span>)) <span class="hljs-comment">// adds &quot;, &quot; to all non-empty values</span>
+	}
+	<span class="hljs-keyword">if</span> bLen := b.Len(); bLen &gt; <span class="hljs-number">1</span> {
+		b.Truncate(bLen - <span class="hljs-number">2</span>) <span class="hljs-comment">// trims trailing &quot;, &quot;</span>
+	}
+	b.WriteByte(<span class="hljs-built_in">close</span>)
+
+	<span class="hljs-keyword">return</span> b.String()
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:46:12 PM PDT</p>
+<p>The provided code is a function in Go programming language named <code>wrap</code>. This function takes as input an opening byte, a slice of strings, and a closing byte, and returns a string. </p>
+<p>The function is used to concatenate the input strings, separated by a comma and a space, and wrapped by the opening and closing bytes. If any of the input strings is empty, it will be omitted from the final string.</p>
+<p>Let&#39;s go over the code in detail:</p>
+<ol>
+<li><p><code>var b bytes.Buffer</code>: This line declares a variable <code>b</code> of type <code>Buffer</code> from the <code>bytes</code> package. A Buffer is a variable-sized bytes buffer with Read and Write methods.</p>
+</li>
+<li><p><code>b.Grow(64)</code>: This line grows the buffer&#39;s capacity, if necessary, to guarantee space for another 64 bytes. This is done to optimize memory allocation for the buffer.</p>
+</li>
+<li><p><code>b.WriteByte(open)</code>: This line writes the opening byte to the buffer.</p>
+</li>
+<li><p><code>for _, a := range attrs {...}</code>: This is a for loop that iterates over each string in the <code>attrs</code> slice. For each string, it calls the <code>omitempty</code> function with the string and &quot;, &quot; as arguments, and writes the resulting string to the buffer. The <code>omitempty</code> function, which is not shown in the provided code, presumably returns the input string followed by &quot;, &quot; if the string is not empty, and an empty string otherwise.</p>
+</li>
+<li><p><code>if bLen := b.Len(); bLen &gt; 1 {...}</code>: This if statement checks if the length of the buffer is greater than 1. If it is, it truncates the buffer by 2 bytes, effectively removing the trailing &quot;, &quot;.</p>
+</li>
+<li><p><code>b.WriteByte(close)</code>: This line writes the closing byte to the buffer.</p>
+</li>
+<li><p><code>return b.String()</code>: This line converts the buffer to a string and returns it.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is a simple iteration over the input slice of strings, with a string concatenation operation for each string. The overall time complexity of the function is O(n), where n is the total length of the input strings.</p>
+<p>For more information on bytes.Buffer in Go, you can check out the official Go documentation: <a href="https://golang.org/pkg/bytes/#Buffer">https://golang.org/pkg/bytes/#Buffer</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:38 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>In the provided code snippet, there is no control flow present. The code consists of a single function definition without any branching or conditional statements. Therefore, the control flow graph is simply a straight line from the start to the end of the function.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:51:02 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:55:10 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 307</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The buffer is being grown by a fixed size of 64 bytes regardless of the size of the input. This could result in wasted memory if the input is smaller than 64 bytes.</p>
+<p><strong>Solution</strong>: Consider growing the buffer based on the size of the input for more efficient memory usage. For example, you could use something like <code>b.Grow(len(attrs) * averageAttrSize)</code>, where <code>averageAttrSize</code> is an estimate of the average size of your attributes.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 310</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function omitempty is being called for every attribute in the range, which could be inefficient if there are many attributes. This is because string concatenation in Go creates a new string and can be costly in terms of CPU usage.</p>
+<p><strong>Solution</strong>: Consider using a more efficient approach for string concatenation, such as using the <code>strings.Builder</code> or <code>bytes.Buffer</code> methods. You could also consider using a <code>strings.Join</code> function if the separator is the same for all elements.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 313</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The buffer length is being checked and potentially truncated after every attribute is added. This could be inefficient if there are many attributes, as it involves unnecessary CPU cycles.</p>
+<p><strong>Solution</strong>: Consider checking and truncating the buffer only once, after all attributes have been added. This would involve moving the if statement outside of the for loop.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:59:36 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./_test/helpers/http_test/bindin.go line 170:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">omitempty</span><span class="hljs-params">(s, nonEmptySuffix <span class="hljs-type">string</span>)</span></span> <span class="hljs-type">string</span> {
+	<span class="hljs-keyword">if</span> s == <span class="hljs-string">&quot;&quot;</span> || s == <span class="hljs-string">&quot;{}&quot;</span> || s == <span class="hljs-string">&quot;[]&quot;</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>
+	}
+
+	<span class="hljs-keyword">return</span> s + nonEmptySuffix
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:46:45 PM PDT</p>
+<p>This is a simple function written in Go language. The function name is <code>omitempty</code> and it takes two arguments, both of which are strings. The first argument is <code>s</code> and the second argument is <code>nonEmptySuffix</code>.</p>
+<p>The purpose of this function is to check if the string <code>s</code> is empty or if it contains only specific characters which are considered as empty in certain contexts, such as <code>{}</code>, and <code>[]</code>. </p>
+<p>Here is a step-by-step breakdown of the function:</p>
+<ol>
+<li><p>The function checks if the string <code>s</code> is equal to an empty string <code>&quot;&quot;</code>, or if it&#39;s equal to <code>{}</code> (an empty JSON object), or if it&#39;s equal to <code>[]</code> (an empty JSON array). This is done using the <code>||</code> (logical OR) operator, which returns true if any of the conditions are true.</p>
+</li>
+<li><p>If the string <code>s</code> meets any of these conditions, the function returns an empty string <code>&quot;&quot;</code>. This is done using the <code>return</code> statement, which ends the function and specifies its return value.</p>
+</li>
+<li><p>If the string <code>s</code> doesn&#39;t meet any of these conditions, the function returns the string <code>s</code> concatenated with the string <code>nonEmptySuffix</code>. This is done using the <code>+</code> operator, which concatenates two strings in Go.</p>
+</li>
+</ol>
+<p>This function can be useful in scenarios where you want to remove or ignore empty values in JSON data. For example, if you&#39;re serializing a struct to JSON, you might want to omit fields that have their zero value (like an empty string or an empty array).</p>
+<p>The algorithm used in this function is a simple conditional check (if-else). There are no complex algorithms involved.</p>
+<p>For more information on Go functions and conditional statements, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/moretypes/1">A Tour of Go - Functions</a></li>
+<li><a href="https://tour.golang.org/flowcontrol/1">A Tour of Go - Flow control statements: if, for, switch, defer</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:48:44 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+</pre>
+</code></pre><p>The control flow graph for the provided code is a linear path from start to end, with no branching or error paths. Therefore, the primary path is the only path through the code.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:51:05 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:55:13 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:59:44 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 340</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The function &#39;omitempty&#39; does not perform any data validation or sanitization on the input strings &#39;s&#39; and &#39;nonEmptySuffix&#39;. This could potentially lead to data leakage or injection attacks if untrusted data is passed into this function.</p>
+<p><strong>Solution</strong>: Implement input validation and sanitization to ensure that only trusted data is processed. This could involve checking for known good data formats, escaping special characters, or using prepared statements if these strings are used in a database query.</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>

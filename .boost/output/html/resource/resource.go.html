@@ -1,0 +1,953 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./resource/resource.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 12:23:29 PM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:59 PM PDT</p>
+<p>Executive Report:</p>
+<ol>
+<li><strong>Architectural Impact</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Risk Analysis</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Potential Customer Impact</strong>: Based on the analysis, there are no severe issues that could potentially impact customers.</li>
+<li><strong>Performance Issues</strong>: Our analysis did not identify any explicit performance issues in the file.</li>
+<li><strong>Risk Assessment</strong>: Based on the current analysis of this file, no severe issues have been found. However, this doesn&#39;t guarantee that the file is risk-free.</li>
+</ol>
+<p>Highlights:</p>
+<ul>
+<li>No severe issues were identified in the current analysis of this file.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:19:53 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a server-side application written in Go, with a focus on data handling, constraints, and error management. The project appears to follow a modular and structured approach, with a focus on data validation and error handling. </p>
+<p>However, there are some areas of concern that could potentially impact the overall architecture and health of the project:</p>
+<ol>
+<li><p><strong>Memory Management Issues</strong>: The most severe issue identified is related to memory management in the <code>resource/resource.go</code> file. The function <code>New</code> creates a new instance of <code>Resource</code> every time it is called, which can lead to high memory consumption if called frequently. This could potentially impact the performance and scalability of the application, especially under high load. </p>
+</li>
+<li><p><strong>CPU Usage</strong>: There are also issues related to CPU usage in the <code>resource/resource.go</code> file. While the specifics of these issues are not detailed, they could potentially impact the performance and responsiveness of the application.</p>
+</li>
+<li><p><strong>Risk Assessment</strong>: Based on the analysis, only one file was reviewed and it has issues of varying severity. This suggests that there may be a risk of similar issues in other parts of the project that were not included in the analysis. </p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The issues identified could potentially impact the performance and reliability of the application, leading to a poor user experience. In the worst case, it could lead to application crashes or data loss.</p>
+</li>
+<li><p><strong>Overall Health of the Project</strong>: The project seems to follow best practices for structuring a Go server application, with a focus on data validation and error handling. However, the issues identified suggest that there may be areas for improvement in terms of performance optimization and resource management.</p>
+</li>
+</ol>
+<p>In conclusion, while the project appears to be well-structured and follows best practices in many areas, the issues identified suggest that there may be potential risks related to performance and resource management. These should be addressed to ensure the reliability and scalability of the application.</p>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:24:22 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The software project appears to be a server-side application with a focus on data handling, constraints, and error management. It follows a modular and structured approach, which is consistent with Go server applications. However, the presence of high-severity issues in the <code>resource/resource.go</code> file could potentially impact the overall architecture, particularly in the areas of data security and compliance.</p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The <code>resource/resource.go</code> file has been flagged with multiple high-severity issues related to GDPR, HIPAA, and PCI DSS compliance. This presents a significant risk, as non-compliance with these regulations could lead to legal penalties and reputational damage. The risk is further heightened by the fact that this file appears to play a crucial role in the project, handling resources and possibly containing authentication and authorization components.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The identified issues could potentially impact customers in terms of data privacy and security. If the issues are not addressed, customers&#39; personal and health information could be at risk, which could lead to loss of trust and potential legal implications.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The project has a total of 5 GDPR warnings, 3 HIPAA errors, and 5 PCI DSS warnings in the <code>resource/resource.go</code> file. This indicates a need for immediate attention to data compliance issues. However, it&#39;s worth noting that no issues were detected in other files, suggesting that the issues are localized and not systemic.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li><strong>Health of the Project Source</strong>: The fact that only one file (<code>resource/resource.go</code>) has been flagged with issues suggests that the majority of the project source is healthy. However, the severity of the issues in this file warrants immediate attention.</li>
+<li><strong>Percentage of Project Files with Issues</strong>: Given that only one file out of the entire project has been flagged with issues, the percentage of project files with issues is relatively low. However, the impact of these issues is potentially high due to their severity and the critical role of the <code>resource/resource.go</code> file.</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li>The project follows a modular and structured approach, consistent with Go server applications.</li>
+<li>High-severity issues related to GDPR, HIPAA, and PCI DSS compliance have been identified in the <code>resource/resource.go</code> file.</li>
+<li>These issues present a significant risk in terms of legal penalties and reputational damage.</li>
+<li>The potential customer impact is high, with risks to data privacy and security.</li>
+<li>Despite the issues in the <code>resource/resource.go</code> file, the majority of the project source appears to be healthy.</li>
+</ul>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./resource/resource.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>package resource
+
+import (
+	&quot;reflect&quot;
+
+	&quot;github.com/jt0/gomer/auth&quot;
+	&quot;github.com/jt0/gomer/gomerr&quot;
+)
+
+type Resource interface {
+	<span class="hljs-built_in">Metadata</span>() Metadata
+	<span class="hljs-built_in">Subject</span>() auth<span class="hljs-selector-class">.Subject</span>
+	<span class="hljs-built_in">DoAction</span>(Action) (Resource, gomerr.Gomerr)
+
+	<span class="hljs-built_in">setSelf</span>(Resource)
+	<span class="hljs-built_in">metadata</span>() *metadata
+	<span class="hljs-built_in">setMetadata</span>(*metadata)
+	<span class="hljs-built_in">setSubject</span>(auth.Subject)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:09:01 PM PDT</p>
+<p>This code is written in Go and it defines an interface called <code>Resource</code>. Interfaces in Go are a way to define and group sets of method signatures. They are used to express conceptual similarities between types, without expressing their implementation. </p>
+<p>The <code>Resource</code> interface in this code has eight methods:</p>
+<ol>
+<li><p><code>Metadata() Metadata</code>: This method returns a <code>Metadata</code> type. The <code>Metadata</code> type is not defined in this code snippet, but it is likely a struct or another interface that holds metadata information about the resource.</p>
+</li>
+<li><p><code>Subject() auth.Subject</code>: This method returns an <code>auth.Subject</code>. This suggests that each <code>Resource</code> has a subject associated with it, likely for authentication purposes. The <code>auth.Subject</code> type is defined in the <code>auth</code> package.</p>
+</li>
+<li><p><code>DoAction(Action) (Resource, gomerr.Gomerr)</code>: This method takes an <code>Action</code> as an argument and returns a new <code>Resource</code> and a <code>gomerr.Gomerr</code>. This suggests that a <code>Resource</code> can perform actions that may change its state and potentially cause errors.</p>
+</li>
+<li><p><code>setSelf(Resource)</code>: This method takes a <code>Resource</code> as an argument. It&#39;s likely used to set the <code>Resource</code> on which it&#39;s called to the <code>Resource</code> passed as an argument.</p>
+</li>
+<li><p><code>metadata() *metadata</code>: This method returns a pointer to a <code>metadata</code> type. This is likely a helper method used internally to access the <code>Resource</code>&#39;s metadata.</p>
+</li>
+<li><p><code>setMetadata(*metadata)</code>: This method takes a pointer to a <code>metadata</code> type as an argument. It&#39;s likely used to set the <code>Resource</code>&#39;s metadata.</p>
+</li>
+<li><p><code>setSubject(auth.Subject)</code>: This method takes an <code>auth.Subject</code> as an argument. It&#39;s likely used to set the <code>Resource</code>&#39;s subject.</p>
+</li>
+<li><p><code>DoAction(Action) (Resource, gomerr.Gomerr)</code>: This method takes an <code>Action</code> as an argument and returns a new <code>Resource</code> and a <code>gomerr.Gomerr</code>. This suggests that a <code>Resource</code> can perform actions that may change its state and potentially cause errors.</p>
+</li>
+</ol>
+<p>The <code>Resource</code> interface is imported and used in other parts of the program wherever a <code>Resource</code> type is needed. Any type that implements all the methods of the <code>Resource</code> interface can be used as a <code>Resource</code>.</p>
+<p>This code doesn&#39;t contain any specific algorithms, but it does use the concept of interfaces, which is fundamental to Go&#39;s type system.</p>
+<p>For more information on interfaces in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://go.dev/tour/methods/9">Interfaces in Go</a></li>
+<li><a href="https://golang.org/doc/effective_go#interfaces">Effective Go - Interfaces</a></li>
+<li><a href="https://gobyexample.com/interfaces">Go by Example: Interfaces</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:12 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start  ;
+Start  ;
+Start  ;
+Start  ;
+Start  ;
+Start  ;
+Start  ;
+
+Metadata  -->End;
+Subject  -->End;
+DoAction  -->End;
+setSelf  -->End;
+metadata  -->End;
+setMetadata  -->End;
+setSubject  -->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a simple linear flow. The <code>Resource</code> interface has several methods, including <code>Metadata()</code>, <code>Subject()</code>, <code>DoAction(Action)</code>, <code>setSelf(Resource)</code>, <code>metadata()</code>, <code>setMetadata(*metadata)</code>, and <code>setSubject(auth.Subject)</code>. Each of these methods is called from the start of the graph and flows directly to the end. There are no error paths or external library calls in this code snippet.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:21 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:18:13 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:20:38 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 6</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The &#39;auth.Subject&#39; may contain personal data that could be a GDPR concern if not properly handled. Personal data should be processed in a way that ensures appropriate security, including protection against unauthorized or unlawful processing and against accidental loss, destruction or damage.</p>
+<p><strong>Solution</strong>: Ensure that any personal data contained within &#39;auth.Subject&#39; is processed in a secure manner, including encryption and access controls. Consider using pseudonymization or anonymization techniques where possible.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 7</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The &#39;DoAction&#39; function could potentially result in the exposure of Protected Health Information (PHI) if errors are not properly handled. Under HIPAA, PHI must be protected and not disclosed without the patient&#39;s consent.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;DoAction&#39; function has robust error handling in place to prevent the exposure of PHI. Consider implementing a centralized error handling system that can sanitize errors before they are returned to the client.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 14</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The &#39;setSubject&#39; function could potentially be handling cardholder data, which would be a PCI DSS concern if not properly secured. Cardholder data must be protected wherever it is stored, processed or transmitted.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;setSubject&#39; function is handling cardholder data in a secure manner, including encryption and access controls. Consider implementing tokenization or other data protection methods.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 20:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> <span class="hljs-type">Action</span> interface {
+	<span class="hljs-type">Name</span>() string
+	<span class="hljs-type">AppliesToCategory</span>() <span class="hljs-type">Category</span>
+	<span class="hljs-type">FieldAccessPermissions</span>() auth.<span class="hljs-type">AccessPermissions</span>
+	<span class="hljs-type">Pre(Resource)</span> gomerr.<span class="hljs-type">Gomerr</span>
+	<span class="hljs-type">Do(Resource)</span> gomerr.<span class="hljs-type">Gomerr</span>
+	<span class="hljs-type">OnDoSuccess(Resource)</span> (<span class="hljs-type">Resource</span>, gomerr.<span class="hljs-type">Gomerr</span>)
+	<span class="hljs-type">OnDoFailure</span>(<span class="hljs-type">Resource</span>, gomerr.<span class="hljs-type">Gomerr</span>) gomerr.<span class="hljs-type">Gomerr</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:09:55 PM PDT</p>
+<p>The provided code snippet is written in Go and it defines an interface called <code>Action</code>. An interface in Go is a collection of method signatures. It provides a way to specify the behavior of an object. If a type provides definitions for all the methods in the interface, it is said to implement that interface.</p>
+<p>The <code>Action</code> interface in this code snippet defines eight methods:</p>
+<ol>
+<li><p><code>Name() string</code>: This method is expected to return the name of the action as a string.</p>
+</li>
+<li><p><code>AppliesToCategory() Category</code>: This method is expected to return a <code>Category</code> object. The <code>Category</code> type is not defined in this code snippet, but it probably represents a category to which the action applies.</p>
+</li>
+<li><p><code>FieldAccessPermissions() auth.AccessPermissions</code>: This method is expected to return an <code>auth.AccessPermissions</code> object. The <code>auth</code> package and <code>AccessPermissions</code> type are not defined in this code snippet, but they likely relate to the permissions required to access certain fields in the context of this action.</p>
+</li>
+<li><p><code>Pre(Resource) gomerr.Gomerr</code>: This method is expected to perform some pre-action checks or setup on a <code>Resource</code> object and return any errors as a <code>gomerr.Gomerr</code> object. <code>gomerr</code> is a package for handling errors in Go.</p>
+</li>
+<li><p><code>Do(Resource) gomerr.Gomerr</code>: This method is expected to perform the action on a <code>Resource</code> object and return any errors as a <code>gomerr.Gomerr</code> object.</p>
+</li>
+<li><p><code>OnDoSuccess(Resource) (Resource, gomerr.Gomerr)</code>: This method is expected to handle the successful completion of the action on a <code>Resource</code> object. It returns the possibly updated <code>Resource</code> object and any errors as a <code>gomerr.Gomerr</code> object.</p>
+</li>
+<li><p><code>OnDoFailure(Resource, gomerr.Gomerr) gomerr.Gomerr</code>: This method is expected to handle the failure of the action on a <code>Resource</code> object. It takes the <code>Resource</code> object and the error that occurred as arguments and returns any further errors as a <code>gomerr.Gomerr</code> object.</p>
+</li>
+</ol>
+<p>This interface provides a structured way to define actions in the codebase. Any type that implements all these methods is considered an <code>Action</code> and can be used interchangeably in the code. This promotes code reuse and separation of concerns.</p>
+<p>As for algorithms, this code doesn&#39;t implement any specific algorithm. Instead, it defines a contract for types to implement. The actual algorithms would be in the implementations of these methods.</p>
+<p>For more information on Go interfaces, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/interfaces">Go by Example: Interfaces</a></li>
+<li><a href="https://tour.golang.org/methods/9">A Tour of Go: Interfaces</a></li>
+<li><a href="https://golang.org/doc/effective_go#interfaces">Effective Go: Interfaces</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:22 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->AppliesToCategory;
+AppliesToCategory-->FieldAccessPermissions;
+FieldAccessPermissions-->Pre;
+Pre-->Do;
+Do-->OnDoSuccess;
+OnDoSuccess-->End;
+Do-->OnDoFailure;
+OnDoFailure-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is shown in green, while the error path is shown in red. The flow starts at the &quot;Start&quot; node and goes through the following steps:</p>
+<ol>
+<li>AppliesToCategory: This step determines the category to which the action applies.</li>
+<li>FieldAccessPermissions: This step determines the access permissions for the fields.</li>
+<li>Pre: This step performs any pre-processing or validation on the resource.</li>
+<li>Do: This step performs the main action on the resource.</li>
+<li>OnDoSuccess: This step is executed if the main action is successful.</li>
+<li>OnDoFailure: This step is executed if the main action fails.</li>
+<li>End: This is the end of the control flow.</li>
+</ol>
+<p>Please note that this control flow graph assumes that the functions and types used in the code are defined elsewhere in the project.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:25 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:18:17 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:20:42 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 30:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> Category <span class="hljs-type">string</span>
+
+<span class="hljs-keyword">const</span> (
+	InstanceCategory   Category = <span class="hljs-string">&quot;Instance&quot;</span>
+	CollectionCategory Category = <span class="hljs-string">&quot;Collection&quot;</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">New</span><span class="hljs-params">(resourceType reflect.Type, subject auth.Subject)</span></span> (Resource, gomerr.Gomerr) {
+	md, ok := resourceTypeToMetadata[resourceType]
+	<span class="hljs-keyword">if</span> !ok {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Unprocessable(<span class="hljs-string">&quot;Unknown Resource type. Was resource.Register() called for it?&quot;</span>, resourceType)
+	}
+
+	resource := reflect.New(resourceType.Elem()).Interface().(Resource)
+	resource.setSelf(resource)
+	resource.setMetadata(md)
+	resource.setSubject(subject)
+
+	<span class="hljs-keyword">return</span> resource, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:10:45 PM PDT</p>
+<p>This code is written in Go, a statically typed, compiled language developed by Google. It appears to be part of a larger system that deals with resources, possibly in a RESTful API or similar context, given the use of terms like &quot;Resource&quot;, &quot;Instance&quot;, and &quot;Collection&quot;.</p>
+<p>Firstly, the code defines a new type <code>Category</code> as a string. It then declares two constants of this type: <code>InstanceCategory</code> and <code>CollectionCategory</code>. These constants could be used elsewhere in the code to categorize resources.</p>
+<p>The <code>New</code> function is used to create a new instance of a <code>Resource</code>. The function takes two parameters: <code>resourceType</code>, which is of type <code>reflect.Type</code>, and <code>subject</code>, which is of type <code>auth.Subject</code>. <code>reflect.Type</code> is a built-in interface in Go&#39;s <code>reflect</code> package, which represents the type of a Go object. <code>auth.Subject</code> is likely a custom type defined elsewhere in the code, possibly representing a user or client making a request.</p>
+<p>The function returns two values: an instance of <code>Resource</code> and an error of type <code>gomerr.Gomerr</code>.</p>
+<p>The <code>New</code> function begins by checking if the <code>resourceType</code> is present in the <code>resourceTypeToMetadata</code> map. If it&#39;s not, it returns <code>nil</code> and an error stating that the resource type is unknown and asking if <code>resource.Register()</code> was called for it. This suggests that there is a <code>resource.Register()</code> function elsewhere in the code that is responsible for registering new resource types.</p>
+<p>If the <code>resourceType</code> is found in the map, the function proceeds to create a new instance of the resource. It does this by calling <code>reflect.New(resourceType.Elem())</code>, which creates a new value of the specified type. It then calls <code>Interface()</code> on the result to obtain an <code>interface{}</code> value, and type asserts it to <code>Resource</code>.</p>
+<p>The function then calls three methods on the <code>Resource</code> instance: <code>setSelf()</code>, <code>setMetadata()</code>, and <code>setSubject()</code>, passing it <code>resource</code>, <code>md</code>, and <code>subject</code> respectively. These methods are likely defined on the <code>Resource</code> type and are used to initialize the new resource instance.</p>
+<p>Finally, the function returns the new resource instance and <code>nil</code> for the error.</p>
+<p>This code doesn&#39;t seem to use any complex algorithms. Its main purpose is to create and initialize a new resource instance. The use of reflection (<code>reflect.New()</code>, <code>Interface()</code>) is a common technique in Go for creating new instances of a type at runtime.</p>
+<p>For more information on Go&#39;s <code>reflect</code> package, you can refer to the official Go documentation: <a href="https://golang.org/pkg/reflect/">https://golang.org/pkg/reflect/</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:28 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a simple linear flow. There are no branching or looping constructs in the code. The primary path is the normal flow of execution, while the error path is taken when an unknown resource type is encountered.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:29 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:18:32 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 67</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function New creates a new instance of Resource every time it is called, which can lead to high memory consumption if called frequently.</p>
+<p><strong>Solution</strong>: Consider using a pool of Resource objects that can be reused, rather than creating a new one each time. Here is a useful link on how to implement object pooling in Go: <a href="https://golangbyexample.com/object-pool-design-pattern-go/">https://golangbyexample.com/object-pool-design-pattern-go/</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 67</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflect.New and Interface calls can be CPU intensive as they involve runtime reflection.</p>
+<p><strong>Solution</strong>: If the types are known at compile time, consider using type assertions or type switches instead of reflection. More details can be found here: <a href="https://golang.org/doc/effective_go#interface_conversions">https://golang.org/doc/effective_go#interface_conversions</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 70</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function gomerr.Unprocessable creates a new error object every time it is called. This can lead to high memory consumption if errors occur frequently.</p>
+<p><strong>Solution</strong>: Consider using error constants or a pool of error objects that can be reused, rather than creating a new one each time. Here is a useful link on error handling in Go: <a href="https://blog.golang.org/go1.13-errors">https://blog.golang.org/go1.13-errors</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:21:19 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 66</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function <code>New</code> creates a new resource with a given type and subject. However, it does not seem to validate or sanitize the inputs. This could potentially lead to the processing of invalid or sensitive data.</p>
+<p><strong>Solution</strong>: Implement input validation and sanitization to ensure that only valid, non-sensitive data is processed. This could be achieved by checking the input against a set of predefined rules or by using a library designed for this purpose.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 66</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function <code>New</code> uses <code>reflect.New</code> to create a new instance of a type. This could potentially lead to the creation of instances of types that contain sensitive health information, without any checks or safeguards in place.</p>
+<p><strong>Solution</strong>: Add checks to ensure that instances of types that contain sensitive health information can only be created in a secure, compliant manner. This could involve checking the <code>resourceType</code> against a list of allowed types, or implementing a secure factory method for creating instances of these types.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 66</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function <code>New</code> does not seem to have any measures in place to protect against the creation of instances of types that contain sensitive payment card information.</p>
+<p><strong>Solution</strong>: Implement measures to ensure that instances of types that contain sensitive payment card information can only be created in a secure, compliant manner. This could involve checking the <code>resourceType</code> against a list of allowed types, or implementing a secure factory method for creating instances of these types.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 51:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> <span class="hljs-type">BaseResource</span> struct {
+	self <span class="hljs-type">Resource</span>
+	md   *metadata
+	sub  auth.<span class="hljs-type">Subject</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:11:27 PM PDT</p>
+<p>The provided code snippet is written in Go, a statically typed, compiled programming language developed by Google. This code defines a struct called <code>BaseResource</code>.</p>
+<p>A struct in Go is a collection of fields, grouped together to form a single entity. Each field in a struct is declared with a specific type, which can be a built-in type or another struct type. </p>
+<p>In the <code>BaseResource</code> struct, there are three fields: <code>self</code>, <code>md</code>, and <code>sub</code>. Let&#39;s break down each of these:</p>
+<ol>
+<li><p><code>self</code>: This field is of type <code>Resource</code>. The <code>Resource</code> type is not defined in the provided code snippet, but it is likely another struct or interface that represents a resource in the application. </p>
+</li>
+<li><p><code>md</code>: This field is of type <code>*metadata</code>. The <code>*</code> indicates that <code>md</code> is a pointer to a <code>metadata</code> type. Again, the <code>metadata</code> type is not defined in the provided code snippet, but it is likely another struct or interface that holds metadata information about the <code>BaseResource</code>.</p>
+</li>
+<li><p><code>sub</code>: This field is of type <code>auth.Subject</code>. This suggests that the <code>BaseResource</code> struct is related to some form of authentication or authorization in the application. The <code>auth.Subject</code> type is likely another struct or interface that represents a subject in the context of authentication or authorization. This could be a user or another entity that can perform actions in the application.</p>
+</li>
+</ol>
+<p>Without additional context or code, it&#39;s hard to provide more specific details about the algorithms or architectural patterns used in this code. However, this struct seems to be a foundational building block in the application&#39;s architecture, likely used to represent resources that are subject to authentication or authorization checks.</p>
+<p>For more information on structs in Go, you can refer to the official Go documentation: <a href="https://tour.golang.org/moretypes/2">A Tour of Go - Structs</a>. For more information on pointers in Go, you can refer to the official Go documentation: <a href="https://tour.golang.org/moretypes/1">A Tour of Go - Pointers</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:32 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style BaseResource fill:#228B22, stroke:#000000, stroke-width:2px;
+
+    BaseResource-->self;
+    BaseResource-->md;
+    BaseResource-->sub;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:32 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:18:36 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:21:50 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 100</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The BaseResource struct is potentially storing user data (auth.Subject) without explicit consent or encryption. This may violate GDPR regulations.</p>
+<p><strong>Solution</strong>: Ensure that all user data is stored with explicit user consent and is encrypted at rest. Implement a mechanism to delete user data when it is no longer necessary.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 100</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: If auth.Subject contains any cardholder data (like credit card numbers), this could be a violation of PCI DSS standards as it&#39;s not clear if this data is being stored securely.</p>
+<p><strong>Solution</strong>: Ensure that any cardholder data is stored in a PCI DSS compliant manner. This typically involves encryption, access controls, and regular audits.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 100</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: If the auth.Subject includes any Protected Health Information (PHI), this could be a violation of HIPAA regulations. It&#39;s not clear if this data is being stored, transmitted, and disposed of in a manner that complies with HIPAA.</p>
+<p><strong>Solution</strong>: Ensure that any PHI is handled in a manner that complies with HIPAA. This typically involves encryption, access controls, auditing, and a mechanism for secure disposal of the data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 57:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(b *BaseResource)</span> <span class="hljs-title function_">Metadata</span><span class="hljs-params">()</span> <span class="hljs-title function_">Metadata</span> {
+	<span class="hljs-keyword">return</span> b.md
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:11:58 PM PDT</p>
+<p>The provided code snippet is written in Go, a statically typed, compiled programming language developed by Google. This snippet is relatively straightforward and does not seem to involve any complex algorithms.</p>
+<p>The function <code>Metadata</code> is a method associated with the <code>BaseResource</code> struct. It doesn&#39;t take any parameters other than its receiver, <code>b</code>, which is a pointer to an instance of <code>BaseResource</code>. </p>
+<p>This method returns a value of type <code>Metadata</code>. The <code>Metadata</code> type is not defined in the provided code, but it&#39;s likely to be a struct or an interface that holds metadata information about the <code>BaseResource</code>.</p>
+<p>Inside the <code>Metadata</code> method, <code>b.md</code> is returned. <code>md</code> is presumably a field of the <code>BaseResource</code> struct and its type is <code>Metadata</code>. </p>
+<p>As for architectural guidelines, this code snippet is consistent with good practices in Go. It uses a method to provide controlled access to the <code>md</code> field of <code>BaseResource</code>, which encapsulates the internal representation of <code>BaseResource</code> and keeps it hidden from other parts of the program. This is an example of the encapsulation principle in object-oriented programming.</p>
+<p>Here are some resources for further reading and learning about Go:</p>
+<ol>
+<li><a href="https://tour.golang.org/welcome/1">A Tour of Go</a>: An interactive introduction to Go.</li>
+<li><a href="https://golang.org/doc/effective_go">Effective Go</a>: A document that gives tips for writing clear, idiomatic Go code.</li>
+<li><a href="https://gobyexample.com/">Go by Example</a>: A hands-on introduction to Go using annotated example programs.</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:36 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:35 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:18:40 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:21:54 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 61:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (<span class="hljs-keyword">b </span>*<span class="hljs-keyword">BaseResource) </span><span class="hljs-keyword">Subject() </span>auth.<span class="hljs-keyword">Subject </span>{
+	return <span class="hljs-keyword">b.sub
+</span>}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:12:25 PM PDT</p>
+<p>The provided code snippet is a method in Go programming language. This method is named <code>Subject</code> and is associated with the <code>BaseResource</code> struct. The <code>BaseResource</code> struct is likely a part of an authentication or authorization module in a larger software project, as suggested by the usage of <code>auth.Subject</code>.</p>
+<p>The method <code>Subject</code> does not take any parameters and it returns a value of type <code>auth.Subject</code>. The <code>auth.Subject</code> is likely a custom type defined somewhere else in the codebase, probably representing the subject of an authentication or authorization process, such as a user or a service.</p>
+<p>The method <code>Subject</code> simply returns the <code>sub</code> field of the <code>BaseResource</code> instance. This field is presumably of type <code>auth.Subject</code>.</p>
+<p>The algorithm used in this method is straightforward - it&#39;s a getter method that retrieves the value of a particular field in a struct.</p>
+<p>The code is consistent with Go best practices, which advocate for keeping getter methods simple and concise. There are no conflicts with the provided architectural guidelines.</p>
+<p>For more information on Go methods and structs, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/methods/1">A Tour of Go - Methods</a></li>
+<li><a href="https://gobyexample.com/methods">Go by Example: Methods</a></li>
+<li><a href="https://golang.org/doc/effective_go#methods">Effective Go - Methods</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:41 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:39 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:18:44 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:21:57 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 65:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> (b <span class="hljs-operator">*</span><span class="hljs-type">BaseResource</span>) <span class="hljs-type">DoAction</span>(action <span class="hljs-type">Action</span>) (<span class="hljs-type">Resource</span>, gomerr.<span class="hljs-type">Gomerr</span>) {
+	<span class="hljs-keyword">if</span> ge :<span class="hljs-operator">=</span> action.<span class="hljs-type">Pre</span>(b.<span class="hljs-keyword">self</span>); ge <span class="hljs-operator">!=</span> <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ge
+	}
+
+	<span class="hljs-keyword">if</span> ge :<span class="hljs-operator">=</span> action.<span class="hljs-type">Do</span>(b.<span class="hljs-keyword">self</span>); ge <span class="hljs-operator">!=</span> <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, action.<span class="hljs-type">OnDoFailure</span>(b.<span class="hljs-keyword">self</span>, ge)
+	}
+
+	<span class="hljs-keyword">return</span> action.<span class="hljs-type">OnDoSuccess</span>(b.<span class="hljs-keyword">self</span>)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:13:19 PM PDT</p>
+<p>This is a Go function named <code>DoAction</code> defined on the <code>BaseResource</code> struct. The function receives an <code>Action</code> interface as an argument and returns two values: a <code>Resource</code> interface and a <code>Gomerr</code> interface. </p>
+<p>The <code>Action</code> interface is expected to have three methods: <code>Pre</code>, <code>Do</code>, <code>OnDoFailure</code>, and <code>OnDoSuccess</code>.</p>
+<p>Here&#39;s a detailed breakdown of the function:</p>
+<ol>
+<li><p>The function starts by calling the <code>Pre</code> method of the <code>Action</code> interface with <code>b.self</code> as an argument. The <code>Pre</code> method is expected to perform any necessary setup or precondition checks required before the action is executed. If the <code>Pre</code> method returns a non-nil <code>Gomerr</code>, the function immediately returns with a nil <code>Resource</code> and the returned <code>Gomerr</code> as an error.</p>
+</li>
+<li><p>If the <code>Pre</code> method succeeds (i.e., returns a nil <code>Gomerr</code>), the function proceeds to call the <code>Do</code> method of the <code>Action</code> interface with <code>b.self</code> as an argument. The <code>Do</code> method is expected to perform the main logic of the action. If the <code>Do</code> method returns a non-nil <code>Gomerr</code>, the function immediately returns with a nil <code>Resource</code> and the result of calling the <code>OnDoFailure</code> method of the <code>Action</code> interface with <code>b.self</code> and the returned <code>Gomerr</code> as arguments.</p>
+</li>
+<li><p>If the <code>Do</code> method succeeds (i.e., returns a nil <code>Gomerr</code>), the function proceeds to call the <code>OnDoSuccess</code> method of the <code>Action</code> interface with <code>b.self</code> as an argument. The function then returns the <code>Resource</code> returned by the <code>OnDoSuccess</code> method and a nil <code>Gomerr</code>.</p>
+</li>
+</ol>
+<p>This function essentially provides a template for performing actions with preconditions, main logic, and handling of both success and failure outcomes. This design pattern is known as the Template Method pattern, where a method defines the skeleton of an algorithm and defers some steps to subclasses or interfaces.</p>
+<p>The <code>Gomerr</code> interface is a custom error handling mechanism used in this project. It is a common practice in Go to return errors as the last return value of functions.</p>
+<p>This function is consistent with Go&#39;s idiomatic error handling, where errors are returned as values and can be checked by the caller. It also follows the principle of single responsibility, as each method in the <code>Action</code> interface is responsible for a specific part of the action execution.</p>
+<p>For more information on Go error handling, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/errors">Go by Example: Errors</a></li>
+<li><a href="https://blog.golang.org/error-handling-and-go">Error handling in Go</a></li>
+</ul>
+<p>For more information on the Template Method pattern, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">Template Method Design Pattern</a></li>
+<li><a href="https://refactoring.guru/design-patterns/template-method/go/example">Template Method in Go: Before and after</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:53 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ActionPre fill:#228B22, stroke:#000000, stroke-width:2px;
+style ActionDo fill:#228B22, stroke:#000000, stroke-width:2px;
+style ActionOnDoFailure fill:#B22222, stroke:#000000, stroke-width:2px;
+style ActionOnDoSuccess fill:#228B22, stroke:#000000, stroke-width:2px;
+style Return fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start-->ActionPre;
+ActionPre-->|ge != nil|Return;
+ActionPre-->ActionDo;
+ActionDo-->|ge != nil|ActionOnDoFailure;
+ActionDo-->ActionOnDoSuccess;
+ActionOnDoFailure-->Return;
+ActionOnDoSuccess-->Return;</pre>
+</code></pre><p>The control flow graph for the provided code is as follows:</p>
+<ol>
+<li>The flow starts at the &quot;Start&quot; node.</li>
+<li>From the &quot;Start&quot; node, the flow goes to the &quot;ActionPre&quot; node.</li>
+<li>If the condition &quot;ge != nil&quot; is true at the &quot;ActionPre&quot; node, the flow goes to the &quot;Return&quot; node.</li>
+<li>If the condition &quot;ge != nil&quot; is false at the &quot;ActionPre&quot; node, the flow goes to the &quot;ActionDo&quot; node.</li>
+<li>If the condition &quot;ge != nil&quot; is true at the &quot;ActionDo&quot; node, the flow goes to the &quot;ActionOnDoFailure&quot; node.</li>
+<li>If the condition &quot;ge != nil&quot; is false at the &quot;ActionDo&quot; node, the flow goes to the &quot;ActionOnDoSuccess&quot; node.</li>
+<li>From the &quot;ActionOnDoFailure&quot; node and the &quot;ActionOnDoSuccess&quot; node, the flow goes to the &quot;Return&quot; node.</li>
+</ol>
+<p>The primary path through the code is from the &quot;Start&quot; node to the &quot;ActionDo&quot; node, and then to the &quot;ActionOnDoSuccess&quot; node, and finally to the &quot;Return&quot; node.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:43 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:19:11 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 132</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The <code>DoAction</code> function is calling the <code>Do</code> method of the <code>Action</code> interface. If the <code>Do</code> method is computationally expensive, it could lead to high CPU usage.</p>
+<p><strong>Solution</strong>: Consider offloading the computationally intensive tasks to a worker thread or using a more efficient algorithm if possible. You could also consider using a profiler to identify the hotspots in the <code>Do</code> method.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 134</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The <code>OnDoFailure</code> method is called when the <code>Do</code> method fails. If this method is computationally expensive, it could lead to high CPU usage.</p>
+<p><strong>Solution</strong>: Consider optimizing the <code>OnDoFailure</code> method to reduce its computational complexity. You could also use a profiler to identify the hotspots in this method.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 137</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The <code>OnDoSuccess</code> method is called when the <code>Do</code> method is successful. If this method is computationally expensive, it could lead to high CPU usage.</p>
+<p><strong>Solution</strong>: Consider optimizing the <code>OnDoSuccess</code> method to reduce its computational complexity. You could also use a profiler to identify the hotspots in this method.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:22:14 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 132</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;DoAction&#39; does not have any explicit data handling or privacy controls. It is unclear how the function handles personal data, which may result in non-compliance with GDPR.</p>
+<p><strong>Solution</strong>: Ensure that the function &#39;DoAction&#39; handles personal data in a GDPR-compliant manner. This may involve implementing explicit data handling and privacy controls, such as data anonymization, pseudonymization, and encryption. Also, consider implementing a mechanism to log data processing activities, as required by GDPR.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 134</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;DoAction&#39; may be handling health-related data without sufficient safeguards. This could result in non-compliance with HIPAA.</p>
+<p><strong>Solution</strong>: Ensure that the function &#39;DoAction&#39; handles health-related data in a HIPAA-compliant manner. This may involve implementing safeguards such as data encryption, access controls, and audit controls. Also, consider implementing a mechanism to log data processing activities, as required by HIPAA.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 136</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;DoAction&#39; may be handling payment card information without sufficient safeguards. This could result in non-compliance with PCI DSS.</p>
+<p><strong>Solution</strong>: Ensure that the function &#39;DoAction&#39; handles payment card information in a PCI DSS-compliant manner. This may involve implementing safeguards such as data encryption, access controls, and audit controls. Also, consider implementing a mechanism to log data processing activities, as required by PCI DSS.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 77:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(b *BaseResource)</span> <span class="hljs-title function_">metadata</span><span class="hljs-params">()</span> *<span class="hljs-title function_">metadata</span> {
+	<span class="hljs-keyword">return</span> b.md
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:13:58 PM PDT</p>
+<p>The provided code snippet is a method in Go language. The method is named <code>metadata</code> and it is associated with the <code>BaseResource</code> type. This method doesn&#39;t accept any arguments and returns a pointer to a <code>metadata</code> type.</p>
+<p>Here is a detailed breakdown of the code:</p>
+<ol>
+<li><p><code>func</code>: This keyword is used to declare a function in Go.</p>
+</li>
+<li><p><code>(b *BaseResource)</code>: This is called a receiver and it&#39;s used to associate the function with the <code>BaseResource</code> type. Here, <code>b</code> is an instance of <code>BaseResource</code>. The <code>*</code> indicates that <code>BaseResource</code> is a pointer type, which means that changes made to <code>b</code> inside this function will affect the original <code>BaseResource</code> object.</p>
+</li>
+<li><p><code>metadata()</code>: This is the name of the function. The parentheses <code>()</code> indicate that this function does not accept any parameters.</p>
+</li>
+<li><p><code>*metadata</code>: This is the return type of the function. The <code>*</code> indicates that the function returns a pointer to a <code>metadata</code> object.</p>
+</li>
+<li><p><code>return b.md</code>: This line returns the <code>md</code> field of the <code>BaseResource</code> instance <code>b</code>. The <code>.</code> operator is used to access the field of an object.</p>
+</li>
+</ol>
+<p>The function <code>metadata</code> is likely a getter method used to retrieve the <code>metadata</code> object associated with a <code>BaseResource</code> instance. </p>
+<p>The algorithm used here is very straightforward: it directly returns the <code>metadata</code> of the <code>BaseResource</code>. There are no conditional statements or loops, so the time complexity of the function is O(1), which means it executes in constant time, regardless of the size of the input.</p>
+<p>Unfortunately, without more context about the <code>BaseResource</code> and <code>metadata</code> types, it&#39;s difficult to provide more specific details about this function.</p>
+<p>For more information on methods in Go, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:16:56 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->metadata;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:46 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:19:16 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:22:18 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 81:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (b *BaseResource) <span class="hljs-built_in">set</span>Self(<span class="hljs-literal">self</span> Resource) {
+	b.<span class="hljs-literal">self</span> = <span class="hljs-literal">self</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:14:33 PM PDT</p>
+<p>The given code snippet is a method definition in Go language. The method is named <code>setSelf</code> and it is associated with the <code>BaseResource</code> struct. The method sets the <code>self</code> field of the <code>BaseResource</code> struct to the value passed in as an argument.</p>
+<p>Let&#39;s break it down:</p>
+<ul>
+<li><p><code>func</code>: This keyword is used to define a function in Go.</p>
+</li>
+<li><p><code>(b *BaseResource)</code>: This is the receiver of the <code>setSelf</code> method. In Go, methods are defined on types. Here, <code>*BaseResource</code> is a pointer to a <code>BaseResource</code> struct. The receiver is named <code>b</code> in this method definition.</p>
+</li>
+<li><p><code>setSelf(self Resource)</code>: <code>setSelf</code> is the name of the method. It takes one argument, <code>self</code>, which is of type <code>Resource</code>.</p>
+</li>
+<li><p><code>b.self = self</code>: This is the body of the method. It assigns the value of the <code>self</code> argument to the <code>self</code> field of the <code>BaseResource</code> struct.</p>
+</li>
+</ul>
+<p>This method is likely used to initialize or update the <code>self</code> field of a <code>BaseResource</code> instance. The <code>self</code> field typically holds a reference to the object itself. This can be useful in scenarios where the object needs to be passed around or used within its own methods.</p>
+<p>The algorithm used here is a simple assignment operation, which is a fundamental operation in almost all programming languages.</p>
+<p>This code is consistent with Go&#39;s idiomatic way of defining methods on structs. It uses a pointer receiver, which means changes made inside the method will affect the original <code>BaseResource</code> instance.</p>
+<p>For more information on Go methods and receivers, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:00 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start-->setSelf;
+</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:50 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:19:19 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:22:21 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 85:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (<span class="hljs-selector-tag">b</span> *BaseResource) <span class="hljs-built_in">setMetadata</span>(metadata *metadata) {
+	<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.md</span> = metadata
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:15:16 PM PDT</p>
+<p>The code you&#39;ve provided is a method in Go programming language, defined on a struct named <code>BaseResource</code>. </p>
+<p>The method is named <code>setMetadata</code> and it takes one parameter, <code>metadata</code>, which is a pointer to an instance of a <code>metadata</code> struct. </p>
+<p>The purpose of this method is to set the <code>md</code> field of the <code>BaseResource</code> instance to the <code>metadata</code> passed in as an argument. </p>
+<p>Here are the details:</p>
+<ul>
+<li><p><code>func</code>: This keyword is used to declare a function in Go.</p>
+</li>
+<li><p><code>(b *BaseResource)</code>: This is a receiver argument. In Go, you can attach a function to a type, and it becomes a method of that type. Here, <code>*BaseResource</code> is the type and <code>b</code> is the instance of the type that the method is being called on. The <code>*</code> before <code>BaseResource</code> indicates that this is a pointer receiver, which means changes made inside this method will affect the original <code>BaseResource</code> object it was called on.</p>
+</li>
+<li><p><code>setMetadata</code>: This is the name of the method. By convention in Go, methods starting with a lowercase letter are private to the package they&#39;re declared in.</p>
+</li>
+<li><p><code>(metadata *metadata)</code>: This is the input parameter to the method. It&#39;s a pointer to an instance of a <code>metadata</code> struct.</p>
+</li>
+<li><p><code>b.md = metadata</code>: This is the body of the function. It sets the <code>md</code> field of the <code>BaseResource</code> instance (represented by <code>b</code>) to the <code>metadata</code> passed in.</p>
+</li>
+</ul>
+<p>In terms of algorithms, this is a straightforward assignment operation, so there&#39;s no specific algorithm involved.</p>
+<p>This method is likely part of a larger codebase where metadata about a resource is being managed. The <code>setMetadata</code> method provides a way to update the metadata associated with a <code>BaseResource</code> instance.</p>
+<p>For more information about methods in Go, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:04 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:53 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:19:22 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:23:00 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;setMetadata&#39; assigns the &#39;metadata&#39; directly to &#39;b.md&#39; without any form of validation or sanitization. This could lead to potential data leakage and non-compliance with GDPR, as sensitive user data might be in the metadata.</p>
+<p><strong>Solution</strong>: Perform data validation and sanitization before assigning the metadata to &#39;b.md&#39;. Also, ensure that any sensitive data is properly encrypted and anonymized to comply with GDPR regulations.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: If the metadata contains cardholder data, the direct assignment of it to &#39;b.md&#39; could violate PCI DSS compliance. PCI DSS requires that cardholder data be securely stored and transmitted.</p>
+<p><strong>Solution</strong>: If the metadata contains cardholder data, it should be encrypted before being stored in &#39;b.md&#39;. Also, use secure methods for transmitting this data.</p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: If the metadata includes protected health information (PHI), the direct assignment of it to &#39;b.md&#39; could violate HIPAA compliance. HIPAA requires that PHI be securely stored and transmitted.</p>
+<p><strong>Solution</strong>: If the metadata includes PHI, it should be encrypted before being stored in &#39;b.md&#39;. Also, use secure methods for transmitting this data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./resource/resource.go line 89:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (<span class="hljs-keyword">b </span>*<span class="hljs-keyword">BaseResource) </span>setSubject(<span class="hljs-keyword">subject </span>auth.<span class="hljs-keyword">Subject) </span>{
+	<span class="hljs-keyword">b.sub </span>= <span class="hljs-keyword">subject
+</span>}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:15:52 PM PDT</p>
+<p>This is a very simple function in the Go programming language. It is a method on the <code>BaseResource</code> struct that sets the <code>sub</code> field to the <code>subject</code> argument passed in. </p>
+<p>Let&#39;s break it down:</p>
+<ul>
+<li><p><code>func (b *BaseResource) setSubject(subject auth.Subject)</code>: This defines a function named <code>setSubject</code> that is a method of the <code>BaseResource</code> struct. In Go, methods are defined by attaching a function to a type. Here, the function <code>setSubject</code> is attached to the type <code>*BaseResource</code> (a pointer to a <code>BaseResource</code> object). The function takes one argument, <code>subject</code>, of type <code>auth.Subject</code>.</p>
+</li>
+<li><p><code>b.sub = subject</code>: This line sets the <code>sub</code> field of the <code>BaseResource</code> object to the <code>subject</code> passed into the function. The <code>.</code> operator is used to access the fields of a struct in Go.</p>
+</li>
+</ul>
+<p>This function does not seem to use any specific algorithm, but it is a common pattern in Go (and other object-oriented languages) to have setter methods that update the fields of an object. </p>
+<p>This function appears to be related to authentication, as it&#39;s setting a field presumably related to the authenticated subject (user or system). The <code>auth.Subject</code> type isn&#39;t defined in this code snippet, but it&#39;s likely defined elsewhere in the <code>auth</code> package. </p>
+<p>The code seems to follow common Go practices and doesn&#39;t appear to conflict with any architectural guidelines based on the provided information.</p>
+<p>For more information on methods in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/methods/1">A Tour of Go - Methods</a></li>
+<li><a href="https://gobyexample.com/methods">Go by Example: Methods</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:08 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:17:56 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:19:26 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 12:23:29 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 179</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: Storing user&#39;s authentication subject directly could lead to potential privacy issues.</p>
+<p><strong>Solution</strong>: Consider anonymizing or encrypting the subject before storing it. Also, ensure that this data is used only when necessary and is properly protected.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 179</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: If the authentication subject contains sensitive cardholder data, it could lead to non-compliance with PCI DSS.</p>
+<p><strong>Solution</strong>: Ensure that no cardholder data is stored in the authentication subject, or if it is necessary, it should be properly encrypted and protected.</p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 179</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: If the authentication subject contains Protected Health Information (PHI), it could lead to non-compliance with HIPAA.</p>
+<p><strong>Solution</strong>: Ensure that no PHI is stored in the authentication subject, or if it is necessary, it should be properly encrypted and protected.</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>

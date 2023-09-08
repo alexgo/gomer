@@ -1,0 +1,1435 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./constraint/comparison.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 10:17:19 AM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:37:26 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a Go library that provides functionality for handling constraints and validations. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>However, the analysis has identified several issues of varying severity in the project&#39;s source code. These issues, if left unaddressed, could potentially impact the project&#39;s overall architecture, risk profile, and customer experience.</p>
+<h4 id="highlights-of-the-analysis">Highlights of the Analysis</h4>
+<ol>
+<li><p><strong>Improper Error Handling:</strong> The most severe issue identified is improper error handling in the <code>constraint/comparison.go</code> file. This issue can make it difficult to debug problems and could potentially hide more serious issues. This could lead to increased development time and potential delays in delivering the project.</p>
+</li>
+<li><p><strong>Improper Input Validation:</strong> The <code>constraint/comparison.go</code> file also has issues with improper input validation. This could potentially lead to unexpected behavior or errors when the library is used with invalid input data. This could impact the reliability of the library and could lead to customer dissatisfaction.</p>
+</li>
+<li><p><strong>Information Disclosure:</strong> There is a potential risk of information disclosure in the <code>constraint/comparison.go</code> file. This could potentially lead to sensitive information being exposed, which could have serious security implications.</p>
+</li>
+<li><p><strong>Overall Project Health:</strong> The analysis only identified issues in one file (<code>constraint/comparison.go</code>). This suggests that the overall health of the project is good, with the majority of the project files having no detected issues. However, the issues identified in the <code>constraint/comparison.go</code> file are severe and should be addressed promptly to prevent potential negative impacts on the project.</p>
+</li>
+<li><p><strong>Risk Assessment:</strong> Based on the severity of the issues identified and the potential impact on the project, the risk level for this project is moderate. While the majority of the project files have no detected issues, the issues in the <code>constraint/comparison.go</code> file are severe and could potentially have a significant impact on the project.</p>
+</li>
+</ol>
+<p>In conclusion, while the project follows good architectural practices and the majority of the project files have no detected issues, the issues identified in the <code>constraint/comparison.go</code> file are severe and could potentially impact the project&#39;s overall architecture, risk profile, and customer experience. These issues should be addressed promptly to ensure the project&#39;s success.</p>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:38:18 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The software project is a Go library that focuses on constraint handling and validation. It follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. However, the use of reflection in the <code>constraint/comparison.go</code> file could potentially impact the CPU performance, especially if used frequently. This could affect the overall performance of the library and any software that uses it.</p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The <code>constraint/comparison.go</code> file has been flagged with 4 CPU-related warnings and 1 memory-related warning. This represents a potential risk to the performance and efficiency of the software. The use of reflection, in particular, can be CPU-intensive and could slow down the software, especially in high-load scenarios. The memory-related warning could also indicate potential inefficiencies in memory usage.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: Customers using this library in their software could potentially experience performance issues due to the CPU and memory warnings identified. This could lead to slower response times and increased resource usage, which could impact the user experience and overall satisfaction with the software.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The <code>constraint/comparison.go</code> file has the most severe issues, with 4 CPU-related warnings and 1 memory-related warning. However, it is also the only file in the project, so it represents 100% of the project&#39;s issues. This suggests that the project may benefit from a review and refactoring of this file to address the identified issues.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li><strong>Health of the Project Source</strong>: The project consists of a single file, <code>constraint/comparison.go</code>, which has been flagged with several issues. This suggests that the project may have some areas for improvement in terms of performance and efficiency. However, without additional files or context, it&#39;s difficult to assess the overall health of the project.</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li>The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns.</li>
+<li>The <code>constraint/comparison.go</code> file has been flagged with 4 CPU-related warnings and 1 memory-related warning, indicating potential performance and efficiency issues.</li>
+<li>The use of reflection in the <code>constraint/comparison.go</code> file could potentially impact the CPU performance of the library and any software that uses it.</li>
+<li>Customers using this library could potentially experience performance issues due to the identified warnings.</li>
+<li>The project consists of a single file, which has been flagged with several issues, suggesting areas for improvement.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:38:44 PM PDT</p>
+<h2 id="executive-level-report">Executive Level Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a Go library that provides functionality for handling constraints and validations. The project appears to be well-structured and follows Go&#39;s idiomatic style for a library. However, there are several issues of varying severity that have been identified in the project&#39;s source code.</p>
+<h4 id="highlights-of-the-analysis">Highlights of the Analysis</h4>
+<ol>
+<li><p><strong>Data Compliance and Privacy Issues</strong>: The file <code>constraint/comparison.go</code> has been flagged for data compliance and privacy issues. This could potentially lead to non-compliance with regulations such as GDPR, PCI DSS, and HIPAA. The severity of these issues is classified as &#39;Information&#39;, indicating that they are not critical but should be addressed to ensure regulatory compliance.</p>
+</li>
+<li><p><strong>Error Handling and Data Validation</strong>: The same file, <code>constraint/comparison.go</code>, has also been flagged for issues related to error handling and data validation. These issues are of &#39;Warning&#39; severity, indicating that they could potentially lead to more serious problems such as application crashes or data corruption.</p>
+</li>
+<li><p><strong>Risk Assessment</strong>: Only one file has been analyzed in this project, and it has been flagged for multiple issues. This suggests that there may be a high risk associated with the overall health of the project source. However, without analyzing the remaining files in the project, it is difficult to provide a comprehensive risk assessment.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The issues identified could potentially impact customers in several ways. Non-compliance with data regulations could lead to legal issues and loss of customer trust. Issues with error handling and data validation could lead to application instability and data corruption, negatively impacting the user experience.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The overall issues identified in the project are related to data compliance, data privacy, error handling, and data validation. These issues need to be addressed to ensure the stability, security, and regulatory compliance of the software project.</p>
+</li>
+</ol>
+<p>In conclusion, while the project appears to be well-structured and follows good practices for a Go library, the issues identified in the source code could potentially have a significant impact on the project&#39;s overall health and its users. It is recommended that these issues be addressed promptly to mitigate any potential risks.</p>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./constraint/comparison.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>package constraint
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;reflect&quot;</span>
+	<span class="hljs-string">&quot;strings&quot;</span>
+	<span class="hljs-string">&quot;time&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/jt0/gomer/flect&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/gomerr&quot;</span>
+)
+
+<span class="hljs-keyword">type</span> ComparisonType = <span class="hljs-built_in">string</span>
+
+const (
+	<span class="hljs-literal">EQ</span>  ComparisonType = <span class="hljs-string">&quot;EQ&quot;</span>
+	<span class="hljs-literal">NEQ</span>                = <span class="hljs-string">&quot;NEQ&quot;</span>
+	<span class="hljs-literal">GT</span>                 = <span class="hljs-string">&quot;GT&quot;</span>
+	<span class="hljs-literal">GTE</span>                = <span class="hljs-string">&quot;GTE&quot;</span>
+	<span class="hljs-literal">LT</span>                 = <span class="hljs-string">&quot;LT&quot;</span>
+	<span class="hljs-literal">LTE</span>                = <span class="hljs-string">&quot;LTE&quot;</span>
+)
+
+func <span class="hljs-literal">Gte</span>(<span class="hljs-literal">ft</span> reflect.<span class="hljs-keyword">Type</span>, compareTo *interface{}) {
+
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:53:03 AM PDT</p>
+<p>The provided code snippet is written in Go language and is part of a package named <code>constraint</code>. </p>
+<p>The <code>constraint</code> package is typically used for defining and enforcing rules or limitations in a system. In this case, it appears to be used for defining comparison constraints, which are often used in data validation.</p>
+<p>The code imports three packages: <code>reflect</code>, <code>strings</code>, and <code>time</code> from the standard Go library, and two packages <code>flect</code> and <code>gomerr</code> from the project&#39;s dependencies. </p>
+<ul>
+<li><code>reflect</code> is used for accessing type metadata and manipulating values at runtime.</li>
+<li><code>strings</code> is used for string manipulation.</li>
+<li><code>time</code> is used for time-related functionality.</li>
+<li><code>flect</code> is assumed to be a package that provides utilities for inflection of strings, which is a common requirement in Go projects.</li>
+<li><code>gomerr</code> is assumed to be a package that provides utilities for handling errors in a Go project.</li>
+</ul>
+<p>Next, it defines a type alias <code>ComparisonType</code> for <code>string</code>. </p>
+<p>Following that, it declares several constants of type <code>ComparisonType</code>, representing different types of comparisons: Equal (EQ), Not Equal (NEQ), Greater Than (GT), Greater Than or Equal (GTE), Less Than (LT), and Less Than or Equal (LTE). </p>
+<p>Finally, the code defines an empty function <code>Gte</code> which takes two parameters: <code>ft</code> of type <code>reflect.Type</code> and <code>compareTo</code> which is a pointer to an <code>interface{}</code>. The function is currently empty and doesn&#39;t perform any action.</p>
+<p>The function <code>Gte</code> is apparently intended to implement a &#39;greater than or equal to&#39; comparison, but the implementation is not provided in the code snippet.</p>
+<p>This code is consistent with Go&#39;s idiomatic style and follows best practices for defining constants and type aliases. However, the <code>Gte</code> function is not implemented, so it&#39;s hard to judge if it would follow the best practices or not.</p>
+<p>For more information on Go packages, you can refer to the official Go documentation: <a href="https://golang.org/doc/code.html#PackageNames">https://golang.org/doc/code.html#PackageNames</a></p>
+<p>For more information on the <code>reflect</code> package, you can refer to: <a href="https://golang.org/pkg/reflect/">https://golang.org/pkg/reflect/</a></p>
+<p>For more information on Go&#39;s constants and types, you can refer to: <a href="https://golang.org/ref/spec#Constants">https://golang.org/ref/spec#Constants</a> and <a href="https://golang.org/ref/spec#Types">https://golang.org/ref/spec#Types</a> respectively.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:02:59 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:04:47 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:09:10 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 13</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in Go can be CPU-intensive, especially when used in frequently called code. The &#39;reflect&#39; package is imported and a &#39;reflect.Type&#39; is used as a parameter in the &#39;Gte&#39; function.</p>
+<p><strong>Solution</strong>: If possible, avoid using reflection or limit its use. Consider using interfaces or type assertions instead. More on this can be found here: <a href="https://go.dev/blog/laws-of-reflection">https://go.dev/blog/laws-of-reflection</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 21</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of pointer to interface &#39;*interface{}&#39; in the function &#39;Gte&#39; can lead to potential memory leaks if not handled properly, as it can hold a reference to a large amount of data.</p>
+<p><strong>Solution</strong>: Consider using value semantics, i.e., passing values instead of pointers, where it makes sense. This can help in managing memory more efficiently. More information can be found here: <a href="https://go101.org/article/value-part.html">https://go101.org/article/value-part.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 21</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function &#39;Gte&#39; is declared but does not contain any code. This is not a direct performance issue but it&#39;s a waste of CPU cycles if this function is being called.</p>
+<p><strong>Solution</strong>: Remove the function if it&#39;s not used or implement the required functionality. Unused code can lead to unnecessary complexity and potential performance issues. More on this can be found here: <a href="https://dave.cheney.net/practical-go/presentations/qcon-china.html#_remove_unused_code">https://dave.cheney.net/practical-go/presentations/qcon-china.html#_remove_unused_code</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:14:00 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The code does not have any explicit data protection measures, such as encryption or anonymization, which could potentially lead to non-compliance with GDPR, PCI DSS, and HIPAA if sensitive data is handled.</p>
+<p><strong>Solution</strong>: Implement data protection measures such as encryption, anonymization, or pseudonymization when handling sensitive data. This can be done using Go&#39;s standard library or third-party libraries.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 27</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;Gte&#39; does not validate the input data type, which could lead to data integrity issues and potentially non-compliance with GDPR, PCI DSS, and HIPAA if sensitive data is handled.</p>
+<p><strong>Solution</strong>: Add input data type validation to the &#39;Gte&#39; function to ensure that the data being processed is of the expected type. This can be done using Go&#39;s &#39;reflect&#39; package.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 26:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// IntCompare compares the tested value to compareTo. While compareTo is an int64, the tested value can be any of the</span>
+<span class="hljs-comment">// integer types (e.g. int, int16, etc). If the tested value is not an integer type, the constraint will fail.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">IntCompare</span><span class="hljs-params">(comparisonType ComparisonType, compareTo *<span class="hljs-type">int64</span>)</span></span> Constraint {
+	comparisonType = strings.ToUpper(comparisonType)
+	comparator, ok := intComparators[comparisonType]
+	<span class="hljs-keyword">if</span> !ok {
+		<span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;Unrecognized comparison type: &quot;</span> + comparisonType)
+	}
+
+	<span class="hljs-keyword">return</span> New(<span class="hljs-string">&quot;Int&quot;</span>+comparisonType, compareTo, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(toTest <span class="hljs-keyword">interface</span>{})</span></span> (ge gomerr.Gomerr) {
+		<span class="hljs-keyword">if</span> compareTo == <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+
+		ttv, ok := flect.ReadableIndirectValue(toTest)
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span> <span class="hljs-comment">// should be NotSatisfied?</span>
+		}
+
+		<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+			<span class="hljs-keyword">if</span> r := <span class="hljs-built_in">recover</span>(); r != <span class="hljs-literal">nil</span> {
+				ge = gomerr.Unprocessable(<span class="hljs-string">&quot;toTest is not an int (or *int)&quot;</span>, toTest)
+			}
+		}()
+
+		<span class="hljs-keyword">if</span> !comparator(ttv.Int(), *compareTo) {
+			<span class="hljs-keyword">return</span> NotSatisfied(toTest)
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	})
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:54:04 AM PDT</p>
+<p>The provided code is a function written in Go language. The function, <code>IntCompare</code>, is designed to compare an integer value with another integer value. The comparison is not limited to a specific integer type and can handle any integer types such as int, int16, etc.</p>
+<p>Here is a detailed explanation:</p>
+<ol>
+<li><p>The function <code>IntCompare</code> takes two parameters: <code>comparisonType</code> and <code>compareTo</code>. <code>comparisonType</code> is a type of comparison to be performed like greater than, less than, equal to etc. <code>compareTo</code> is the integer value to which the tested value will be compared.</p>
+</li>
+<li><p>The function <code>IntCompare</code> returns a <code>Constraint</code> which is likely a custom type defined elsewhere in the code.</p>
+</li>
+<li><p>The first line of the function converts the <code>comparisonType</code> to uppercase. This is to ensure that the comparison type is case-insensitive.</p>
+</li>
+<li><p>The function then looks up the <code>comparisonType</code> in the <code>intComparators</code> map. If the <code>comparisonType</code> is not found in the map, the function panics with an error message.</p>
+</li>
+<li><p>The function then returns a new <code>Constraint</code> created by the <code>New</code> function. The <code>New</code> function takes three arguments: a string created by concatenating &quot;Int&quot; with the <code>comparisonType</code>, the <code>compareTo</code> value, and a function that takes an <code>interface{}</code> and returns a <code>gomerr.Gomerr</code>.</p>
+</li>
+<li><p>The function passed to <code>New</code> first checks if <code>compareTo</code> is <code>nil</code>. If it is, the function returns <code>nil</code>.</p>
+</li>
+<li><p>The function then calls <code>flect.ReadableIndirectValue(toTest)</code> to get a readable indirect value of <code>toTest</code>. <code>toTest</code> is the value that will be compared to <code>compareTo</code>.</p>
+</li>
+<li><p>If <code>flect.ReadableIndirectValue(toTest)</code> returns <code>false</code>, the function returns <code>nil</code>.</p>
+</li>
+<li><p>The function then sets up a <code>defer</code> statement. This statement will execute after the surrounding function returns. The deferred function checks if a panic occurred. If it did, it sets <code>ge</code> to a <code>gomerr.Unprocessable</code> error.</p>
+</li>
+<li><p>The function then calls the <code>comparator</code> function with the integer value of <code>ttv</code> and the dereferenced <code>compareTo</code> value. If the <code>comparator</code> function returns <code>false</code>, the function returns a <code>NotSatisfied</code> error.</p>
+</li>
+<li><p>If the <code>comparator</code> function returns <code>true</code>, the function returns <code>nil</code>.</p>
+</li>
+</ol>
+<p>This code follows the Go best practices in error handling, function naming, and usage of interfaces. It also uses the <code>defer</code> statement to catch any panic that might occur, which is a good practice in Go to handle runtime errors.</p>
+<p>For more information on Go best practices and error handling, you can refer to:</p>
+<ul>
+<li><a href="https://golang.org/doc/effective_go">Effective Go</a></li>
+<li><a href="https://blog.golang.org/go1.13-errors">Go error handling best practices</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:03:19 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style PrimaryPath fill:#228B22, stroke:#000000, stroke-width:4px;
+style ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+
+style A fill:#228B22, stroke:#000000, stroke-width:4px;
+style B fill:#228B22, stroke:#000000, stroke-width:4px;
+style C fill:#228B22, stroke:#000000, stroke-width:4px;
+style D fill:#228B22, stroke:#000000, stroke-width:4px;
+style E fill:#228B22, stroke:#000000, stroke-width:4px;
+style F fill:#228B22, stroke:#000000, stroke-width:4px;
+style G fill:#228B22, stroke:#000000, stroke-width:4px;
+style H fill:#228B22, stroke:#000000, stroke-width:4px;
+style I fill:#228B22, stroke:#000000, stroke-width:4px;
+style J fill:#228B22, stroke:#000000, stroke-width:4px;
+style K fill:#228B22, stroke:#000000, stroke-width:4px;
+style L fill:#228B22, stroke:#000000, stroke-width:4px;
+style M fill:#228B22, stroke:#000000, stroke-width:4px;
+style N fill:#228B22, stroke:#000000, stroke-width:4px;
+style O fill:#228B22, stroke:#000000, stroke-width:4px;
+style P fill:#228B22, stroke:#000000, stroke-width:4px;
+style Q fill:#228B22, stroke:#000000, stroke-width:4px;
+style R fill:#228B22, stroke:#000000, stroke-width:4px;
+style S fill:#228B22, stroke:#000000, stroke-width:4px;
+style T fill:#228B22, stroke:#000000, stroke-width:4px;
+style U fill:#228B22, stroke:#000000, stroke-width:4px;
+style V fill:#228B22, stroke:#000000, stroke-width:4px;
+style W fill:#228B22, stroke:#000000, stroke-width:4px;
+style X fill:#228B22, stroke:#000000, stroke-width:4px;
+style Y fill:#228B22, stroke:#000000, stroke-width:4px;
+style Z fill:#228B22, stroke:#000000, stroke-width:4px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:05:26 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 54</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The function IntCompare has a defer-recover block that catches any panic that occurs during the function execution. However, it only returns a generic error message &#39;toTest is not an int (or *int)&#39; without any specific details about the actual error that caused the panic. This can make it difficult to debug issues and can potentially hide more serious problems.</p>
+<p><strong>Solution</strong>: Improve error handling by including more specific details about the error in the returned error message. For example, you could include the actual error message from the panic in the returned error message. Also, consider whether it&#39;s appropriate to recover from the panic at all - in many cases, it&#39;s better to let the panic propagate up the stack and handle it at a higher level. Refer to this link for more details: <a href="https://blog.golang.org/go1.13-errors">https://blog.golang.org/go1.13-errors</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 52</p>
+<p><strong>Bug Type</strong>: Information Disclosure</p>
+<p><strong>Description</strong>: The function IntCompare returns nil if the tested value is not readable or not an integer type. This could potentially leak information about the internal state of the application, as an attacker could use this behavior to infer whether a value is readable or not.</p>
+<p><strong>Solution</strong>: Instead of returning nil, return an error that does not reveal any information about the internal state of the application. For example, you could return a generic &#39;Invalid input&#39; error. Refer to this link for more details: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:09:28 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 55</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: Use of reflection in the flect.ReadableIndirectValue(toTest) function call. Reflection in Go is known to be slower and more CPU-intensive than other methods.</p>
+<p><strong>Solution</strong>: If possible, avoid using reflection. Consider redesigning the function to accept a specific type or a set of known types, and handle the type conversion outside of this function. More on reflection performance in Go can be found here: <a href="https://go.dev/play/p/8ByVn2K2xZ7">https://go.dev/play/p/8ByVn2K2xZ7</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 60</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses a deferred recover() function to catch panics, which adds overhead to the function call.</p>
+<p><strong>Solution</strong>: Instead of relying on panics and recover, validate the input types before calling the function. This will improve performance and make the function easier to use correctly.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 58</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function creates a new error object with gomerr.Unprocessable every time it recovers from a panic. This could lead to high memory usage if the function is called frequently with incorrect types.</p>
+<p><strong>Solution</strong>: Validate the input types before calling the function to avoid unnecessary error object creation. If validation is not possible, consider reusing a single error object for this case.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:14:39 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 53</p>
+<p><strong>Bug Type</strong>: Data Validation</p>
+<p><strong>Description</strong>: The function IntCompare does not validate the input data type before processing it. This could lead to potential security vulnerabilities and data corruption issues.</p>
+<p><strong>Solution</strong>: Implement data type validation before processing the input data. This could be achieved by using Go&#39;s type assertion feature to ensure the input data is of the correct type before processing it.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 59</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The function uses a panic statement to handle unrecognized comparison types. This could potentially cause the application to crash, leading to a denial of service.</p>
+<p><strong>Solution</strong>: Replace the panic statement with error handling logic that returns an error to the caller, allowing them to handle the error gracefully.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 65</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The function does not check if the &#39;toTest&#39; value is null before using it. This could potentially lead to null pointer dereference errors, which could expose sensitive data.</p>
+<p><strong>Solution</strong>: Implement a null check for the &#39;toTest&#39; value before using it.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 59:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// IntBetween determines whether the provided value is (inclusively) between the lower and upper values provided.</span>
+<span class="hljs-comment">// Stated explicitly, this tests for lower &lt;= value &lt;= upper.</span>
+func IntBetween(<span class="hljs-built_in">lower</span>, <span class="hljs-built_in">upper</span> *int64) Constraint {
+	<span class="hljs-attr">c</span> := And(IntCompare(GTE, <span class="hljs-built_in">lower</span>), IntCompare(LTE, <span class="hljs-built_in">upper</span>))
+	c.(*constraint).type_ = <span class="hljs-string">&quot;IntBetween&quot;</span>
+	<span class="hljs-keyword">return</span> c
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:54:59 AM PDT</p>
+<p>The provided code is a function in the Go programming language named <code>IntBetween</code>. It&#39;s part of a validation system, and its role is to ensure that a given integer value is within a specified range, inclusively. </p>
+<p>The <code>IntBetween</code> function takes two arguments, <code>lower</code> and <code>upper</code>, both of which are pointers to <code>int64</code> values. It returns a <code>Constraint</code> type, which is likely an interface or a type alias for a function type used for validation.</p>
+<p>Inside the function, the <code>And</code> function is called with two arguments: <code>IntCompare(GTE, lower)</code> and <code>IntCompare(LTE, upper)</code>. </p>
+<p><code>IntCompare</code> is another function that likely returns a <code>Constraint</code>. <code>GTE</code> and <code>LTE</code> are likely constants or variables representing the &quot;greater than or equal to&quot; and &quot;less than or equal to&quot; comparison operators, respectively.</p>
+<p>The <code>And</code> function probably combines the two constraints into one. This would mean that for the returned constraint to pass, both the <code>IntCompare(GTE, lower)</code> and <code>IntCompare(LTE, upper)</code> constraints must pass. In other words, the value to be validated must be greater than or equal to <code>lower</code> and less than or equal to <code>upper</code>.</p>
+<p>After the <code>And</code> function is called, the result (which is a <code>Constraint</code>) is type-asserted to <code>*constraint</code> (a pointer to a <code>constraint</code> type), and its <code>type_</code> field is set to the string <code>&quot;IntBetween&quot;</code>. This is likely for debugging or logging purposes, or possibly for use in error messages.</p>
+<p>In terms of algorithms, the code is straightforward and doesn&#39;t involve any complex computation. It&#39;s primarily about composing validation functions.</p>
+<p>The architectural analysis of this code snippet is as follows:</p>
+<ul>
+<li>The code follows the common Go idiom of small, composable functions. The <code>IntBetween</code> function is built on top of the <code>And</code> and <code>IntCompare</code> functions. This makes the code modular and easy to test and maintain.</li>
+<li>The use of pointers for the <code>lower</code> and <code>upper</code> arguments might suggest that the function can handle <code>nil</code> values as a way to specify &quot;no limit&quot;. However, without more context, this is just speculation.</li>
+<li>The code appears to follow the guideline of separating concerns: <code>IntBetween</code> is only responsible for creating a constraint, and the actual validation is presumably done elsewhere.</li>
+</ul>
+<p>For more education and background on Go programming, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/welcome/1">A Tour of Go</a></li>
+<li><a href="https://golang.org/doc/effective_go">Effective Go</a></li>
+<li><a href="https://gobyexample.com/">Go by Example</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:03:25 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>In this code snippet, there is no control flow or external library calls. The code simply defines a function <code>IntBetween</code> that returns a <code>Constraint</code> object.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:05:30 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:09:32 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:14:43 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 67:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">var</span> intComparators = <span class="hljs-keyword">map</span>[ComparisonType]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">int64</span>, <span class="hljs-type">int64</span>)</span></span> <span class="hljs-type">bool</span>{
+	EQ:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">int64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value == compareTo },
+	NEQ: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">int64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value != compareTo },
+	GT:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">int64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &gt; compareTo },
+	GTE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">int64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &gt;= compareTo },
+	LT:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">int64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &lt; compareTo },
+	LTE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">int64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &lt;= compareTo },
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:55:46 AM PDT</p>
+<p>This code snippet is written in Go programming language. It defines a map named <code>intComparators</code> where keys are of type <code>ComparisonType</code> and values are functions that take two <code>int64</code> parameters and return a <code>bool</code>. </p>
+<p>The <code>ComparisonType</code> is likely an enumerated type (enum) that represents different types of comparisons. From the given code, we can infer that it probably includes the following values: <code>EQ</code> (Equal), <code>NEQ</code> (Not Equal), <code>GT</code> (Greater Than), <code>GTE</code> (Greater Than or Equal to), <code>LT</code> (Less Than), and <code>LTE</code> (Less Than or Equal to).</p>
+<p>Each key in the map is associated with a function that performs the corresponding comparison between two <code>int64</code> values:</p>
+<ul>
+<li><code>EQ</code> function returns true if the two <code>int64</code> values are equal.</li>
+<li><code>NEQ</code> function returns true if the two <code>int64</code> values are not equal.</li>
+<li><code>GT</code> function returns true if the first <code>int64</code> value is greater than the second one.</li>
+<li><code>GTE</code> function returns true if the first <code>int64</code> value is greater than or equal to the second one.</li>
+<li><code>LT</code> function returns true if the first <code>int64</code> value is less than the second one.</li>
+<li><code>LTE</code> function returns true if the first <code>int64</code> value is less than or equal to the second one.</li>
+</ul>
+<p>This map provides a way to dynamically choose the comparison operation to be performed based on the <code>ComparisonType</code>. This is a form of the Strategy pattern, where the strategy (comparison operation) is selected at runtime.</p>
+<p>This code snippet does not seem to conflict with any general architectural guidelines. It is a good example of using Go&#39;s first-class functions and maps to implement a flexible and extensible comparison mechanism.</p>
+<p>For more information about Go maps, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#maps">https://golang.org/doc/effective_go#maps</a>. </p>
+<p>For more information about the Strategy pattern, you can refer to: <a href="https://refactoring.guru/design-patterns/strategy">https://refactoring.guru/design-patterns/strategy</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:03:30 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The code snippet provided does not have any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:05:34 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:09:35 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:14:47 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 76:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// UintCompare compares a tested value to compareTo. While compareTo is an uint64, the tested value can be any of the</span>
+<span class="hljs-comment">// unsigned integer types (e.g. uint, uint16, etc). If the tested value is not an unsigned integer type, the constraint</span>
+<span class="hljs-comment">// will fail.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">UintCompare</span><span class="hljs-params">(comparisonType ComparisonType, compareTo *<span class="hljs-type">uint64</span>)</span></span> Constraint {
+	comparisonType = strings.ToUpper(comparisonType)
+	comparator, ok := uintComparators[comparisonType]
+	<span class="hljs-keyword">if</span> !ok {
+		<span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;Unrecognized comparison type: &quot;</span> + comparisonType)
+	}
+
+	<span class="hljs-keyword">return</span> New(<span class="hljs-string">&quot;Uint&quot;</span>+comparisonType, compareTo, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(toTest <span class="hljs-keyword">interface</span>{})</span></span> (ge gomerr.Gomerr) {
+		<span class="hljs-keyword">if</span> compareTo == <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+
+		ttv, ok := flect.ReadableIndirectValue(toTest)
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span> <span class="hljs-comment">// should be NotSatisfied?</span>
+		}
+
+		<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+			<span class="hljs-keyword">if</span> r := <span class="hljs-built_in">recover</span>(); r != <span class="hljs-literal">nil</span> {
+				ge = gomerr.Unprocessable(<span class="hljs-string">&quot;toTest is not a uint (or *uint)&quot;</span>, toTest)
+			}
+		}()
+
+		<span class="hljs-keyword">if</span> !comparator(ttv.Uint(), *compareTo) {
+			<span class="hljs-keyword">return</span> NotSatisfied(toTest)
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	})
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:56:49 AM PDT</p>
+<p>This function, <code>UintCompare</code>, is a constraint function that compares an unsigned integer (<code>uint64</code>) to a tested value. This tested value can be any of the unsigned integer types (e.g. <code>uint</code>, <code>uint16</code>, etc). If the tested value is not an unsigned integer type, the constraint will fail.</p>
+<p>The function takes two parameters: </p>
+<ul>
+<li><code>comparisonType</code> which is a string that represents the type of comparison to be performed (e.g. &quot;EQUAL&quot;, &quot;LESS&quot;, &quot;GREATER&quot;).</li>
+<li><code>compareTo</code> which is the unsigned integer (<code>uint64</code>) value to compare against.</li>
+</ul>
+<p>The function returns a <code>Constraint</code> which is a function that takes an <code>interface{}</code> parameter (the value to test) and returns a <code>Gomerr</code> error if the constraint is not satisfied.</p>
+<p>The function works as follows:</p>
+<ol>
+<li><p>The <code>comparisonType</code> is converted to uppercase using <code>strings.ToUpper(comparisonType)</code>.</p>
+</li>
+<li><p>The function then looks up the comparator function for the <code>comparisonType</code> from the <code>uintComparators</code> map. If the <code>comparisonType</code> is not recognized, the function panics with an error message.</p>
+</li>
+<li><p>The function then returns a new constraint (<code>New(&quot;Uint&quot;+comparisonType, compareTo, func(toTest interface{}) (ge gomerr.Gomerr) {...}</code>) which is a function that takes a value to test and returns a <code>Gomerr</code> error if the constraint is not satisfied.</p>
+</li>
+<li><p>Inside the constraint function, it first checks if <code>compareTo</code> is <code>nil</code>. If it is, the function returns <code>nil</code> indicating no error.</p>
+</li>
+<li><p>Then it uses the <code>flect.ReadableIndirectValue(toTest)</code> function to get the reflect.Value of <code>toTest</code> and checks if it is valid. If it is not valid, the function returns <code>nil</code>.</p>
+</li>
+<li><p>The function then sets up a <code>defer</code> function to catch any panics that may occur when trying to call <code>ttv.Uint()</code>. If a panic occurs, the function returns an <code>Unprocessable</code> error with a message indicating that <code>toTest</code> is not a <code>uint</code> or <code>*uint</code>.</p>
+</li>
+<li><p>The function then calls the comparator function with <code>ttv.Uint()</code> and <code>*compareTo</code>. If the comparator function returns <code>false</code>, the function returns a <code>NotSatisfied</code> error.</p>
+</li>
+<li><p>If all checks pass, the function returns <code>nil</code> indicating no error.</p>
+</li>
+</ol>
+<p>This function is an example of a constraint function used in data validation. It uses the Go reflection package (<code>reflect</code>) to handle different types of unsigned integers and the Go error handling pattern with the <code>Gomerr</code> package.</p>
+<p>For more information on Go reflection, you can refer to this article: <a href="https://blog.golang.org/laws-of-reflection">The Laws of Reflection</a></p>
+<p>For more information on Go error handling, you can refer to this article: <a href="https://blog.golang.org/error-handling-and-go">Error handling and Go</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:03:38 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style PrimaryPath fill:#228B22, stroke:#000000, stroke-width:4px;
+style ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is shown in the <code>PrimaryPath</code> style, while the error path is shown in the <code>ErrorPath</code> style. The start of the graph is the function <code>UintCompare</code>. The graph represents the control flow of the provided source code.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:06:05 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 161</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The function UintCompare does not properly handle errors when the tested value is not an unsigned integer. It simply returns nil without providing any indication of the error. This can lead to silent failures, which are difficult to debug and can potentially lead to other issues down the line.</p>
+<p><strong>Solution</strong>: Instead of returning nil, the function should return an appropriate error message to the caller. This way, the caller can handle the error appropriately. Here&#39;s a resource on error handling in Go: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 156</p>
+<p><strong>Bug Type</strong>: Improper Input Validation</p>
+<p><strong>Description</strong>: The function UintCompare does not validate the comparisonType input. If an unrecognized comparisonType is passed, the function will panic. This can lead to a Denial of Service (DoS) if an attacker is able to trigger this panic.</p>
+<p><strong>Solution</strong>: Instead of panicking, the function should return an error when an unrecognized comparisonType is passed. This way, the caller can handle the error appropriately. Here&#39;s a resource on input validation in Go: <a href="https://www.alexedwards.net/blog/validation-snippets-for-golang">https://www.alexedwards.net/blog/validation-snippets-for-golang</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:10:10 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 153</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of strings.ToUpper function which is not necessary and can be costly in terms of CPU usage.</p>
+<p><strong>Solution</strong>: Remove the use of strings.ToUpper function if comparisonType is already ensured to be in upper case. If not, consider changing the architecture to ensure that comparisonType is always in upper case. This will save CPU cycles.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 157</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function flect.ReadableIndirectValue is used which uses reflection. Reflection in Go is known to be slower and consume more memory than most operations.</p>
+<p><strong>Solution</strong>: Avoid the use of reflection if possible. If the type of toTest is known, use a type assertion instead of reflection. This will improve performance and reduce memory usage.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 163</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of a deferred function to handle panics. This introduces additional overhead as deferred functions are slower than normal function calls.</p>
+<p><strong>Solution</strong>: Instead of using a deferred function to handle panics, consider using a try-catch pattern with error handling. This will reduce the overhead of deferred functions and improve performance.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:15:27 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 152</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function UintCompare could potentially handle personal data, and it does not have any mechanism for data anonymization or pseudonymization. This is a requirement under GDPR.</p>
+<p><strong>Solution</strong>: Consider implementing a mechanism for data anonymization or pseudonymization when handling personal data. This could be done by using hashing or encryption techniques.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 161</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function UintCompare could potentially handle personal health information (PHI), and it does not have any mechanism for data encryption. This is a requirement under HIPAA.</p>
+<p><strong>Solution</strong>: Consider implementing a mechanism for data encryption when handling PHI. This could be done by using standard encryption algorithms such as AES.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 158</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function UintCompare could potentially handle credit card data, and it does not have any mechanism for data protection. This is a requirement under PCI DSS.</p>
+<p><strong>Solution</strong>: Consider implementing a mechanism for data protection when handling credit card data. This could be done by using tokenization or encryption techniques.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 110:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// UintBetween determines whether the provided value is (inclusively) between the lower and upper values provided.</span>
+<span class="hljs-comment">// Stated explicitly, this tests for lower &lt;= value &lt;= upper.</span>
+func UintBetween(<span class="hljs-built_in">lower</span>, <span class="hljs-built_in">upper</span> *uint64) Constraint {
+	<span class="hljs-attr">c</span> := And(UintCompare(GTE, <span class="hljs-built_in">lower</span>), UintCompare(LTE, <span class="hljs-built_in">upper</span>))
+	c.(*constraint).type_ = <span class="hljs-string">&quot;UintBetween&quot;</span>
+	<span class="hljs-keyword">return</span> c
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:57:10 AM PDT</p>
+<p>This is a Go function named <code>UintBetween</code> that checks if a given unsigned integer (uint) is within a specified range. The function accepts two parameters, <code>lower</code> and <code>upper</code>, which are pointers to uint64 values representing the lower and upper boundaries of the range. The function returns a <code>Constraint</code>, which is likely a custom type or interface defined elsewhere in the code.</p>
+<p>The function uses another function named <code>And</code>, which takes two constraints and returns a combined constraint. In this case, the two constraints are created using the <code>UintCompare</code> function with the <code>GTE</code> (Greater Than or Equal to) and <code>LTE</code> (Less Than or Equal to) comparison types.</p>
+<p>Here is the breakdown of the function:</p>
+<ol>
+<li><p><code>UintCompare(GTE, lower)</code>: This function call checks that the value is greater than or equal to the <code>lower</code> boundary. <code>GTE</code> is a constant that likely stands for &quot;Greater Than or Equal&quot;.</p>
+</li>
+<li><p><code>UintCompare(LTE, upper)</code>: This function call checks that the value is less than or equal to the <code>upper</code> boundary. <code>LTE</code> is a constant that likely stands for &quot;Less Than or Equal&quot;.</p>
+</li>
+<li><p><code>And(UintCompare(GTE, lower), UintCompare(LTE, upper))</code>: This function call combines the two constraints from steps 1 and 2 using a logical AND operation. This means that for the combined constraint to be satisfied, both the <code>GTE</code> and <code>LTE</code> constraints must be satisfied.</p>
+</li>
+<li><p><code>c.(*constraint).type_ = &quot;UintBetween&quot;</code>: This line of code sets the type of the constraint to &quot;UintBetween&quot;. The syntax <code>c.(*constraint)</code> is a type assertion in Go, which asserts that the interface value <code>c</code> holds a value of the underlying concrete type <code>constraint</code>.</p>
+</li>
+<li><p><code>return c</code>: Finally, the function returns the combined constraint <code>c</code>.</p>
+</li>
+</ol>
+<p>The algorithm used here is a basic range checking algorithm. The function checks if a given value is within a specified range by checking that it is greater than or equal to the lower boundary and less than or equal to the upper boundary.</p>
+<p>For more information on Go programming, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/ref/spec">Go Programming Language Specification</a></li>
+<li><a href="https://golang.org/doc/effective_go.html">Effective Go</a></li>
+<li><a href="https://gobyexample.com/interfaces">Go by Example: Interfaces</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:03:44 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>In this code snippet, there is no control flow present. The function <code>UintBetween</code> simply returns a constraint without any conditional statements or branching. Therefore, the control flow graph is not applicable in this case.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:06:09 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:10:39 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 223</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function UintBetween uses two separate comparison functions (UintCompare(GTE, lower) and UintCompare(LTE, upper)) inside an And function. This might lead to unnecessary CPU cycles if the first comparison fails.</p>
+<p><strong>Solution</strong>: A more efficient approach would be to perform the first comparison and if it fails, immediately return false without performing the second comparison. This can be achieved by restructuring the function to perform each comparison separately and returning early if any comparison fails. This would reduce unnecessary CPU cycles and improve performance. Here is an example of how this can be implemented:</p>
+</li>
+</ol>
+<pre><code>func UintBetween(lower, upper *uint64) Constraint {
+  if !UintCompare(GTE, lower) {
+    return false
+  }
+  if !UintCompare(LTE, upper) {
+    return false
+  }
+  c := And(UintCompare(GTE, lower), UintCompare(LTE, upper))
+  c.(*constraint).type_ = &quot;UintBetween&quot;
+  return c
+}
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:15:31 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 118:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">var</span> uintComparators = <span class="hljs-keyword">map</span>[ComparisonType]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">uint64</span>, <span class="hljs-type">uint64</span>)</span></span> <span class="hljs-type">bool</span>{
+	EQ:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">uint64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value == compareTo },
+	NEQ: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">uint64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value != compareTo },
+	GT:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">uint64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &gt; compareTo },
+	GTE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">uint64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &gt;= compareTo },
+	LT:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">uint64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &lt; compareTo },
+	LTE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">uint64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &lt;= compareTo },
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:58:09 AM PDT</p>
+<p>This code snippet is written in Go language. It defines a map named <code>uintComparators</code> that links comparison types to functions that perform the corresponding comparison operation on two <code>uint64</code> values.</p>
+<p>Here&#39;s a detailed breakdown of the code:</p>
+<ul>
+<li><p><code>var uintComparators = map[ComparisonType]func(uint64, uint64) bool{...}</code>: This line declares a map called <code>uintComparators</code>. The map key is of type <code>ComparisonType</code>, and the value is a function that takes two <code>uint64</code> parameters and returns a <code>bool</code>.</p>
+</li>
+<li><p><code>ComparisonType</code> is a custom type not defined in this snippet. It could be an <code>enum</code> or a <code>string</code> type, representing different types of comparisons (equal, not equal, greater than, etc.).</p>
+</li>
+<li><p><code>func(uint64, uint64) bool {...}</code>: This is the function type stored in the map. Each function takes two <code>uint64</code> values (<code>value</code> and <code>compareTo</code>) and returns a <code>bool</code> indicating the result of the comparison.</p>
+</li>
+<li><p><code>EQ:  func(value, compareTo uint64) bool { return value == compareTo },</code>: This line maps the <code>EQ</code> (equal) comparison type to a function that checks if <code>value</code> is equal to <code>compareTo</code>.</p>
+</li>
+<li><p><code>NEQ: func(value, compareTo uint64) bool { return value != compareTo },</code>: This line maps the <code>NEQ</code> (not equal) comparison type to a function that checks if <code>value</code> is not equal to <code>compareTo</code>.</p>
+</li>
+<li><p><code>GT:  func(value, compareTo uint64) bool { return value &gt; compareTo },</code>: This line maps the <code>GT</code> (greater than) comparison type to a function that checks if <code>value</code> is greater than <code>compareTo</code>.</p>
+</li>
+<li><p><code>GTE: func(value, compareTo uint64) bool { return value &gt;= compareTo },</code>: This line maps the <code>GTE</code> (greater than or equal) comparison type to a function that checks if <code>value</code> is greater than or equal to <code>compareTo</code>.</p>
+</li>
+<li><p><code>LT:  func(value, compareTo uint64) bool { return value &lt; compareTo },</code>: This line maps the <code>LT</code> (less than) comparison type to a function that checks if <code>value</code> is less than <code>compareTo</code>.</p>
+</li>
+<li><p><code>LTE: func(value, compareTo uint64) bool { return value &lt;= compareTo },</code>: This line maps the <code>LTE</code> (less than or equal) comparison type to a function that checks if <code>value</code> is less than or equal to <code>compareTo</code>.</p>
+</li>
+</ul>
+<p>This code is a good example of the Strategy design pattern, where a family of algorithms (in this case, comparison operations) are encapsulated in separate functions that can be selected and used interchangeably at runtime.</p>
+<p>For more information on Go maps, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#maps">https://golang.org/doc/effective_go#maps</a>. For more information on the Strategy design pattern, you can refer to: <a href="https://refactoring.guru/design-patterns/strategy">https://refactoring.guru/design-patterns/strategy</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:03:50 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+    Start-->ExampleProcess;
+    Start-->ExampleErrorPath;
+    ExampleProcess-->End;
+    ExampleErrorPath-->End;</pre>
+</code></pre><p>The code snippet provided does not have any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:06:13 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:10:42 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:15:35 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 127:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// FloatCompare compares a tested value to compareTo. While compareTo is an float64, the tested value can be either</span>
+<span class="hljs-comment">// float32/float64. If the value is not a float type, the constraint will fail.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">FloatCompare</span><span class="hljs-params">(comparisonType ComparisonType, compareTo *<span class="hljs-type">float64</span>)</span></span> Constraint {
+	comparisonType = strings.ToUpper(comparisonType)
+	comparator, exists := floatComparators[comparisonType]
+	<span class="hljs-keyword">if</span> !exists {
+		<span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;Unrecognized comparison type: &quot;</span> + comparisonType)
+	}
+
+	<span class="hljs-keyword">return</span> New(<span class="hljs-string">&quot;Float&quot;</span>+comparisonType, compareTo, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(toTest <span class="hljs-keyword">interface</span>{})</span></span> (ge gomerr.Gomerr) {
+		<span class="hljs-keyword">if</span> compareTo == <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+
+		ttv, ok := flect.ReadableIndirectValue(toTest)
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span> <span class="hljs-comment">// should be NotSatisfied?</span>
+		}
+
+		<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+			<span class="hljs-keyword">if</span> r := <span class="hljs-built_in">recover</span>(); r != <span class="hljs-literal">nil</span> {
+				ge = gomerr.Unprocessable(<span class="hljs-string">&quot;toTest is not a float (or *float)&quot;</span>, toTest)
+			}
+		}()
+
+		<span class="hljs-keyword">if</span> !comparator(ttv.Float(), *compareTo) {
+			<span class="hljs-keyword">return</span> NotSatisfied(toTest)
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	})
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:58:31 AM PDT</p>
+<p>This function <code>FloatCompare</code> is a Go function that compares a tested value to a comparison value. The comparison value is a float64, while the tested value can be either a float32 or float64. If the tested value is not a float type, the constraint will fail.</p>
+<p>The function takes two arguments: a <code>comparisonType</code> and a <code>compareTo</code> value. The <code>comparisonType</code> is an enumeration (enum) of the different types of comparisons that can be performed (such as &quot;EQUAL&quot;, &quot;GREATER THAN&quot;, &quot;LESS THAN&quot;, etc.). The <code>compareTo</code> value is the value that the tested value will be compared against.</p>
+<p>The function begins by converting the <code>comparisonType</code> to uppercase and checking if there exists a comparator for the given comparison type in the <code>floatComparators</code> map. If there&#39;s no such comparator, it panics with an error message.</p>
+<p>If the <code>compareTo</code> value is nil, the function returns nil immediately, meaning there is no error.</p>
+<p>Next, it uses the <code>flect.ReadableIndirectValue(toTest)</code> function to get a readable, indirect value of the tested value. If it&#39;s not successful, it returns nil, indicating that the constraint is not satisfied.</p>
+<p>A defer function is set up to recover from any panics that may occur when trying to read the float value from the tested value. If a panic occurs, it returns an <code>Unprocessable</code> error from the <code>gomerr</code> package, indicating that the tested value is not a float or a pointer to a float.</p>
+<p>If the comparator function returns false when comparing the float value of the tested value and the <code>compareTo</code> value, it returns a <code>NotSatisfied</code> error, indicating that the constraint is not satisfied.</p>
+<p>If all the checks pass, it returns nil, indicating that there is no error.</p>
+<p>The <code>FloatCompare</code> function is a good example of defensive programming, where potential errors are anticipated and handled gracefully.</p>
+<p>For more information about Go programming, you can refer to the official Go documentation: <a href="https://golang.org/doc/">https://golang.org/doc/</a></p>
+<p>For more information about error handling in Go, you can refer to the blog post by the Go team: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+<p>For more information about reflection (used in <code>flect.ReadableIndirectValue(toTest)</code>) in Go, you can refer to this article: <a href="https://medium.com/swlh/understanding-go-reflection-9e81dbbefb7c">https://medium.com/swlh/understanding-go-reflection-9e81dbbefb7c</a></p>
+<p>For more information about defer, panic, and recover in Go, you can refer to this article: <a href="https://blog.golang.org/defer-panic-and-recover">https://blog.golang.org/defer-panic-and-recover</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:04:00 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ComparisonType fill:#228B22, stroke:#000000, stroke-width:2px;
+style FloatCompare fill:#228B22, stroke:#000000, stroke-width:2px;
+style New fill:#228B22, stroke:#000000, stroke-width:2px;
+style ReadableIndirectValue fill:#228B22, stroke:#000000, stroke-width:2px;
+style NotSatisfied fill:#228B22, stroke:#000000, stroke-width:2px;
+style Unprocessable fill:#228B22, stroke:#000000, stroke-width:2px;
+style Float fill:#228B22, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;
+style Recover fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start-->ComparisonType;
+ComparisonType-->FloatCompare;
+FloatCompare-->New;
+New-->ReadableIndirectValue;
+ReadableIndirectValue-->FloatCompare;
+FloatCompare-->NotSatisfied;
+NotSatisfied-->End;
+FloatCompare-->Unprocessable;
+Unprocessable-->End;
+FloatCompare-->Float;
+Float-->End;
+FloatCompare-->Recover;
+Recover-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:06:39 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 254</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The function uses panic for error handling. This is a poor practice as it abruptly stops the execution flow and can lead to denial of service if not properly recovered.</p>
+<p><strong>Solution</strong>: Replace panic with error return and handle it gracefully in the calling function. Refer to this guide on error handling in Go: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 263</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The function uses recover to handle panics. This could be a potential security risk as it can lead to information disclosure if the panic message contains sensitive information. It also could lead to unexpected behavior if the panic is not properly handled.</p>
+<p><strong>Solution</strong>: Avoid using recover and instead handle errors gracefully using error returns. If using recover, ensure that the panic message does not contain sensitive information. Refer to this guide on error handling in Go: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:11:27 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 256</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of panic and recover can be expensive in terms of CPU usage. This is because panic unwinds the stack which is a CPU intensive operation.</p>
+<p><strong>Solution</strong>: Try to avoid using panic for normal error handling. Use error return values instead. Here is a link to a good resource on error handling in Go: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 260</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection (flect.ReadableIndirectValue) can be expensive in terms of CPU usage. Reflection in Go involves a certain amount of dynamic typing, which can add overhead.</p>
+<p><strong>Solution</strong>: Try to avoid using reflection where possible. Consider using type assertions or interfaces instead. Here is a link to a good resource on reflection in Go: <a href="https://blog.golang.org/laws-of-reflection">https://blog.golang.org/laws-of-reflection</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 262</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of defer within a function that could be called in a loop can lead to increased memory usage, as defer statements are only executed when the surrounding function returns.</p>
+<p><strong>Solution</strong>: Avoid using defer in performance-critical code or in functions that could be called in a tight loop. Instead, explicitly handle cleanup at the end of the function. Here is a link to a good resource on defer in Go: <a href="https://blog.golang.org/defer-panic-and-recover">https://blog.golang.org/defer-panic-and-recover</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 270</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of a function stored in a map (comparator) adds a level of indirection which can slightly increase CPU usage.</p>
+<p><strong>Solution</strong>: Consider using a switch statement to handle different comparison types, rather than storing functions in a map. This can improve performance by reducing indirection.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:16:18 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 252</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function <code>FloatCompare</code> may violate GDPR compliance if it is used to compare or process personal data. GDPR requires explicit consent for data processing, and this function does not appear to check for such consent.</p>
+<p><strong>Solution</strong>: Ensure that user consent is obtained before processing personal data. This could be done by adding a consent check before the <code>FloatCompare</code> function is called. Alternatively, you could modify the function to include a consent parameter, and only process data if consent has been given.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 264</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function <code>FloatCompare</code> could potentially be used to process sensitive cardholder data, such as a credit card number. If this data is not handled securely, it could violate PCI DSS regulations.</p>
+<p><strong>Solution</strong>: Ensure that all cardholder data is encrypted and securely stored. This function should not be used to process cardholder data unless it is properly secured. Consider implementing a separate, secure function for handling sensitive cardholder data.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 264</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function <code>FloatCompare</code> could potentially be used to process protected health information (PHI), which could violate HIPAA regulations if not handled correctly.</p>
+<p><strong>Solution</strong>: Ensure that all PHI is encrypted and securely stored. This function should not be used to process PHI unless it is properly secured. Consider implementing a separate, secure function for handling PHI.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 160:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// FloatBetween determines whether the provided value is (inclusively) between the lower and upper values provided.</span>
+<span class="hljs-comment">// Stated explicitly, this tests for lower &lt;= value &lt;= upper.</span>
+func FloatBetween(<span class="hljs-built_in">lower</span>, <span class="hljs-built_in">upper</span> *float64) Constraint {
+	<span class="hljs-attr">c</span> := And(FloatCompare(GTE, <span class="hljs-built_in">lower</span>), FloatCompare(LTE, <span class="hljs-built_in">upper</span>))
+	c.(*constraint).type_ = <span class="hljs-string">&quot;FloatBetween&quot;</span>
+	<span class="hljs-keyword">return</span> c
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:59:10 AM PDT</p>
+<p>This Go code defines a function named <code>FloatBetween</code> that checks if a given float value is inclusively between two other float values - the lower and upper bounds. The function takes two pointers to float64 values as arguments, which represent the lower and upper boundaries for the comparison.</p>
+<p>The function <code>FloatBetween</code> uses the <code>And</code> function to combine two constraints, which are created by the <code>FloatCompare</code> function. The <code>FloatCompare</code> function is used twice with different arguments: once with <code>GTE</code> (Greater Than or Equal to) and the lower boundary, and once with <code>LTE</code> (Less Than or Equal to) and the upper boundary. This combination of constraints effectively checks that a value is greater than or equal to the lower boundary and less than or equal to the upper boundary.</p>
+<p>The <code>And</code> function presumably takes two constraints and returns a new constraint that is satisfied if and only if both input constraints are satisfied. This is a common pattern in functional programming and is often used in validation or filtering tasks.</p>
+<p>After creating the combined constraint, the function sets its type to &quot;FloatBetween&quot; and returns it. The type information could be used later for error reporting or debugging.</p>
+<p>The <code>FloatBetween</code> function itself does not contain any complex algorithms - it simply combines two constraints using logical conjunction (AND operation). The complexity of the operation depends on the implementation of the <code>And</code> and <code>FloatCompare</code> functions, which are not provided in the code snippet.</p>
+<p>The code appears to follow good Go practices. It&#39;s modular, reusable, and the function&#39;s purpose is clearly explained in the comment above it. </p>
+<p>For more information on Go programming, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/welcome/1">A Tour of Go</a></li>
+<li><a href="https://golang.org/doc/effective_go">Effective Go</a></li>
+<li><a href="https://gobyexample.com/">Go by Example</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:04:06 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style FloatBetween fill:#228B22, stroke:#000000, stroke-width:4px;
+    style And fill:#228B22, stroke:#000000, stroke-width:4px;
+    style FloatCompare fill:#228B22, stroke:#000000, stroke-width:4px;
+    style GTE fill:#228B22, stroke:#000000, stroke-width:4px;
+    style LTE fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->FloatBetween;
+    FloatBetween-->And;
+    And-->FloatCompare;
+    FloatCompare-->GTE;
+    FloatCompare-->LTE;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:06:42 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:11:31 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:16:22 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 168:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">var</span> floatComparators = <span class="hljs-keyword">map</span>[ComparisonType]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-type">float64</span>, <span class="hljs-type">float64</span>)</span></span> <span class="hljs-type">bool</span>{
+	EQ:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">float64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value == compareTo },
+	NEQ: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">float64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value != compareTo },
+	GT:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">float64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &gt; compareTo },
+	GTE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">float64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &gt;= compareTo },
+	LT:  <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">float64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &lt; compareTo },
+	LTE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(value, compareTo <span class="hljs-type">float64</span>)</span></span> <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> value &lt;= compareTo },
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:59:51 AM PDT</p>
+<p>This code snippet is written in Go and it declares a map called <code>floatComparators</code>. This map uses <code>ComparisonType</code> as the key type and its value is a function that takes two <code>float64</code> as parameters and returns a <code>bool</code> value.</p>
+<p><code>ComparisonType</code> is not defined in this code snippet, but based on the usage, it&#39;s likely an enumerated type (or <code>enum</code>), which is a distinct type that represents distinct values. In Go, this is typically represented using <code>iota</code> within a <code>const</code> block. For example:</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> ComparisonType <span class="hljs-type">int</span>
+
+<span class="hljs-keyword">const</span> (
+    EQ ComparisonType = <span class="hljs-literal">iota</span>
+    NEQ
+    GT
+    GTE
+    LT
+    LTE
+)
+</code></pre><p>In the <code>floatComparators</code> map, each key-value pair corresponds to a different comparison operation:</p>
+<ul>
+<li><code>EQ</code>: Checks if two float64 values are equal.</li>
+<li><code>NEQ</code>: Checks if two float64 values are not equal.</li>
+<li><code>GT</code>: Checks if the first float64 value is greater than the second one.</li>
+<li><code>GTE</code>: Checks if the first float64 value is greater than or equal to the second one.</li>
+<li><code>LT</code>: Checks if the first float64 value is less than the second one.</li>
+<li><code>LTE</code>: Checks if the first float64 value is less than or equal to the second one.</li>
+</ul>
+<p>Each of these operations is represented as an anonymous function (or lambda function) that takes two float64 values and returns a boolean result based on the comparison.</p>
+<p>The map provides a way to look up these comparison functions based on the <code>ComparisonType</code>. This can be useful in various scenarios where you need to perform different comparison operations based on some condition or input.</p>
+<p>For more information on Go maps, you can refer to the <a href="https://golang.org/doc/effective_go#maps">Go documentation</a>. For more information on anonymous functions in Go, you can refer to this <a href="https://www.callicoder.com/golang-anonymous-functions/">blog post</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:04:11 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The code snippet provided does not have any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:06:46 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:11:34 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:16:26 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 177:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// TimeCompare compares a tested value to compareTo. If the tested value is not a time.Time, the constraint will fail.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">TimeCompare</span><span class="hljs-params">(comparisonType ComparisonType, compareTo *time.Time)</span></span> Constraint {
+	comparisonType = strings.ToUpper(comparisonType)
+	comparator, ok := timeComparators[comparisonType]
+	<span class="hljs-keyword">if</span> !ok {
+		<span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;Unrecognized comparison type: &quot;</span> + comparisonType)
+	}
+
+	<span class="hljs-keyword">return</span> New(<span class="hljs-string">&quot;Time&quot;</span>+comparisonType, compareTo, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(toTest <span class="hljs-keyword">interface</span>{})</span></span> (ge gomerr.Gomerr) {
+		<span class="hljs-keyword">if</span> compareTo == <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+
+		ttv, ok := flect.ReadableIndirectValue(toTest)
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span> <span class="hljs-comment">// should be NotSatisfied?</span>
+		}
+
+		<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+			<span class="hljs-keyword">if</span> r := <span class="hljs-built_in">recover</span>(); r != <span class="hljs-literal">nil</span> {
+				ge = gomerr.Unprocessable(<span class="hljs-string">&quot;toTest is not a time.Time (or *time.Time)&quot;</span>, toTest)
+			}
+		}()
+
+		<span class="hljs-keyword">if</span> !comparator(ttv.Interface().(time.Time), *compareTo) {
+			<span class="hljs-keyword">return</span> NotSatisfied(toTest)
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	})
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:01:01 AM PDT</p>
+<p>The provided code is written in Go language and defines a function named <code>TimeCompare</code>. The purpose of this function is to compare a tested value to a reference time value. If the tested value is not of type <code>time.Time</code>, the constraint will fail. </p>
+<p>The function takes two arguments. The first one is <code>comparisonType</code> of type <code>ComparisonType</code> (which is not defined in the provided code, but it is likely to be a string or an enum type representing different types of comparisons such as &quot;EQUAL&quot;, &quot;GREATER THAN&quot;, &quot;LESS THAN&quot;, etc.). The second argument is <code>compareTo</code> which is a pointer to a <code>time.Time</code> value that the tested value will be compared to.</p>
+<p>The function returns a <code>Constraint</code> (the definition of this type is not provided in the code snippet).</p>
+<p>Here&#39;s a detailed breakdown of the function:</p>
+<ol>
+<li><p>The function first converts the <code>comparisonType</code> to uppercase. This is likely done to ensure case-insensitive comparison.</p>
+</li>
+<li><p>Next, it attempts to retrieve a comparator function from a map called <code>timeComparators</code> using the <code>comparisonType</code> as a key. The <code>timeComparators</code> map is not defined in the provided code, but it is likely a map where keys are comparison types and values are functions that perform these comparisons. If the <code>comparisonType</code> is not found in the map, the function panics with an error message.</p>
+</li>
+<li><p>The function then returns a new <code>Constraint</code> object created by calling the <code>New</code> function (which is not defined in the provided code). The <code>New</code> function takes three arguments: the name of the constraint, the <code>compareTo</code> value, and a function that performs the actual comparison and returns an error if the constraint is not satisfied.</p>
+</li>
+<li><p>Inside the function passed to <code>New</code>, it first checks if <code>compareTo</code> is <code>nil</code>. If it is, it returns <code>nil</code> (meaning no error).</p>
+</li>
+<li><p>Next, it uses the <code>flect.ReadableIndirectValue</code> function to get a readable and indirect value of <code>toTest</code>. If this is not possible, it returns <code>nil</code>.</p>
+</li>
+<li><p>It then sets up a <code>defer</code> statement to recover from any panics that might occur during the comparison. If a panic occurs, it returns an <code>Unprocessable</code> error from the <code>gomerr</code> package, indicating that <code>toTest</code> is not a <code>time.Time</code> or <code>*time.Time</code>.</p>
+</li>
+<li><p>Finally, it performs the actual comparison using the retrieved comparator function. If the comparator function returns <code>false</code>, it returns a <code>NotSatisfied</code> error (which is not defined in the provided code, but likely indicates that the constraint is not satisfied). If the comparator function returns <code>true</code>, it returns <code>nil</code> (meaning no error).</p>
+</li>
+</ol>
+<p>This function is an example of the Strategy design pattern, where the specific comparison algorithm is selected at runtime based on the <code>comparisonType</code>.</p>
+<p>For more information about time comparisons in Go, you can refer to:</p>
+<ul>
+<li><a href="https://gobyexample.com/time">Go by Example: Time</a></li>
+<li><a href="https://pkg.go.dev/time">Go Time Package</a></li>
+</ul>
+<p>For more information about error handling in Go, you can refer to:</p>
+<ul>
+<li><a href="https://gobyexample.com/errors">Go by Example: Errors</a></li>
+<li><a href="https://golang.org/doc/effective_go#errors">Effective Go: Errors</a></li>
+</ul>
+<p>For more information about the Strategy design pattern, you can refer to:</p>
+<ul>
+<li><a href="https://golangbyexample.com/strategy-design-pattern-go/">Strategy Design Pattern in Go</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:04:20 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ComparisonType fill:#228B22, stroke:#000000, stroke-width:2px;
+    style UnrecognizedComparisonType fill:#B22222, stroke:#000000, stroke-width:2px;
+    style New fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ReadableIndirectValue fill:#228B22, stroke:#000000, stroke-width:2px;
+    style Unprocessable fill:#B22222, stroke:#000000, stroke-width:2px;
+    style NotSatisfied fill:#B22222, stroke:#000000, stroke-width:2px;
+    style End fill:#228B22, stroke:#000000, stroke-width:2px;
+
+    Start-->ComparisonType;
+    ComparisonType-->UnrecognizedComparisonType;
+    ComparisonType-->New;
+    New-->ReadableIndirectValue;
+    ReadableIndirectValue-->Unprocessable;
+    ReadableIndirectValue-->End;
+    New-->Unprocessable;
+    New-->NotSatisfied;
+    NotSatisfied-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:07:20 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 360</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The function panics if an unrecognized comparison type is passed. This can lead to a Denial of Service (DoS) if an attacker can control the input to this function. Learn more about this type of vulnerability here: <a href="https://owasp.org/www-community/Improper_Error_Handling">https://owasp.org/www-community/Improper_Error_Handling</a></p>
+<p><strong>Solution</strong>: Instead of panicking, return an error indicating that the comparison type is unrecognized. This allows the calling function to handle the error in a way that is appropriate for the application. Here is a guide on error handling in Go: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 371</p>
+<p><strong>Bug Type</strong>: Improper Input Validation</p>
+<p><strong>Description</strong>: The function assumes that the &#39;toTest&#39; parameter is of type &#39;time.Time&#39; without proper validation. If it is not, the function will panic. This could lead to application instability if an attacker can control the input to this function. Learn more about this type of vulnerability here: <a href="https://owasp.org/www-community/vulnerabilities/Improper_Input_Validation">https://owasp.org/www-community/vulnerabilities/Improper_Input_Validation</a></p>
+<p><strong>Solution</strong>: Validate the type of &#39;toTest&#39; before attempting to cast it to &#39;time.Time&#39;. If it is not of the correct type, return an error. Here is a guide on type assertions in Go: <a href="https://tour.golang.org/methods/15">https://tour.golang.org/methods/15</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:12:18 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 355</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of panic and recover can be expensive in terms of CPU usage. It is generally recommended to avoid using panic and recover for normal error handling in Go.</p>
+<p><strong>Solution</strong>: Consider using standard error handling techniques instead of panic and recover. For more details check: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 359</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection (flect.ReadableIndirectValue) can be expensive in terms of CPU usage. It is generally recommended to avoid using reflection where possible in Go.</p>
+<p><strong>Solution</strong>: Consider redesigning the function to avoid the need for reflection. This might involve changing the function signature to accept specific types, or using interfaces to achieve polymorphism. For more details check: <a href="https://medium.com/@felipedutratine/how-to-avoid-reflection-in-go-6034cb9c8ac">https://medium.com/@felipedutratine/how-to-avoid-reflection-in-go-6034cb9c8ac</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 368</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection (ttv.Interface().(time.Time)) can be expensive in terms of CPU usage. It is generally recommended to avoid using reflection where possible in Go.</p>
+<p><strong>Solution</strong>: Consider redesigning the function to avoid the need for reflection. This might involve changing the function signature to accept specific types, or using interfaces to achieve polymorphism. For more details check: <a href="https://medium.com/@felipedutratine/how-to-avoid-reflection-in-go-6034cb9c8ac">https://medium.com/@felipedutratine/how-to-avoid-reflection-in-go-6034cb9c8ac</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:17:12 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 360</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;TimeCompare&#39; doesn&#39;t check if the data it processes is personal data. This could lead to the processing of personal data without explicit consent, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Before processing, check if the data is personal and if explicit consent was given. This can be done by adding a consent parameter to the function or by checking a consent field in the data object itself.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 370</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;TimeCompare&#39; doesn&#39;t encrypt or anonymize personal health information (PHI) before processing it. This could lead to the exposure of PHI, which is a violation of HIPAA.</p>
+<p><strong>Solution</strong>: Ensure that any PHI is encrypted or anonymized before it is processed. This can be done by adding encryption or anonymization steps before the data is passed to the &#39;TimeCompare&#39; function.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 370</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;TimeCompare&#39; doesn&#39;t ensure the secure handling of cardholder data. This could lead to the exposure of cardholder data, which is a violation of PCI DSS.</p>
+<p><strong>Solution</strong>: Ensure that any cardholder data is securely handled. This can be done by adding encryption or tokenization steps before the data is passed to the &#39;TimeCompare&#39; function.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 209:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// TimeBetween determines whether the provided value is (inclusively) between the lower and upper values provided.</span>
+<span class="hljs-comment">// Stated explicitly, this tests for lower &lt;= value &lt;= upper.</span>
+func <span class="hljs-built_in">TimeBetween</span>(<span class="hljs-built_in">lower</span>, <span class="hljs-built_in">upper</span> *<span class="hljs-built_in">time</span>.<span class="hljs-built_in">Time</span>) Constraint {
+	c := <span class="hljs-keyword">And</span>(<span class="hljs-built_in">TimeCompare</span>(GTE, <span class="hljs-built_in">lower</span>), <span class="hljs-built_in">TimeCompare</span>(LTE, <span class="hljs-built_in">upper</span>))
+	c.(*constraint).type_ = <span class="hljs-string">&quot;TimeBetween&quot;</span>
+	<span class="hljs-keyword">return</span> c
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:01:48 AM PDT</p>
+<p>The code snippet you provided is written in Go language. It defines a function <code>TimeBetween</code> which checks if a given time value is between two other time values (inclusive).</p>
+<p>The function takes two parameters, <code>lower</code> and <code>upper</code>, which are pointers to <code>time.Time</code> objects. These two parameters represent the lower and upper bounds of the time range.</p>
+<p>Inside the function, it uses the <code>And</code> function to combine two constraints - <code>TimeCompare(GTE, lower)</code> and <code>TimeCompare(LTE, upper)</code>. </p>
+<p><code>TimeCompare</code> is a function that likely compares a given time value with another. The first parameter to this function is a comparison operator. <code>GTE</code> stands for &quot;Greater Than or Equal to&quot;, and <code>LTE</code> stands for &quot;Less Than or Equal to&quot;. So, <code>TimeCompare(GTE, lower)</code> checks if the given time value is greater than or equal to the <code>lower</code> bound, and <code>TimeCompare(LTE, upper)</code> checks if it is less than or equal to the <code>upper</code> bound.</p>
+<p>The <code>And</code> function then combines these two constraints into one. This means that for a time value to satisfy the <code>TimeBetween</code> constraint, it has to satisfy both the <code>TimeCompare(GTE, lower)</code> and <code>TimeCompare(LTE, upper)</code> constraints.</p>
+<p>Then, it sets the type of the constraint to &quot;TimeBetween&quot; and returns the constraint.</p>
+<p>This function represents a common pattern in software design called the Composite Pattern, where you can build complex objects (in this case, constraints) by combining simpler ones.</p>
+<p>This is a good example of how to build complex validation rules in a modular and reusable way. However, without the full context of the code, it&#39;s hard to say if this is the best approach for this particular project.</p>
+<p>For more information on the Composite Pattern, you can refer to this link: <a href="https://refactoring.guru/design-patterns/composite">Composite Design Pattern</a></p>
+<p>For more information on Go&#39;s time package, you can refer to this link: <a href="https://golang.org/pkg/time/">Go Time Package</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:04:29 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style TimeBetweenProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style TimeBetweenErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+    style TimeCompareProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style TimeCompareErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+    style AndProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style AndErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+    style End fill:#228B22, stroke:#000000, stroke-width:2px;
+
+    Start-->TimeBetweenProcess;
+    TimeBetweenProcess-->TimeCompareProcess;
+    TimeBetweenProcess-->TimeCompareErrorPath;
+    TimeCompareProcess-->AndProcess;
+    TimeCompareProcess-->AndErrorPath;
+    AndProcess-->End;
+    AndErrorPath-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:07:24 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:12:21 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:17:15 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./constraint/comparison.go line 217:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+var timeComparators = map[ComparisonType]func(<span class="hljs-type">time</span>.Time, <span class="hljs-type">time</span>.Time) <span class="hljs-type">bool</span>{
+	EQ:  func(<span class="hljs-keyword">value</span>, compareTo <span class="hljs-type">time</span>.Time) <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">value</span>.Equal(compareTo) },
+	NEQ: func(<span class="hljs-keyword">value</span>, compareTo <span class="hljs-type">time</span>.Time) <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> !<span class="hljs-keyword">value</span>.Equal(compareTo) },
+	GT:  func(<span class="hljs-keyword">value</span>, compareTo <span class="hljs-type">time</span>.Time) <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">value</span>.<span class="hljs-keyword">After</span>(compareTo) },
+	GTE: func(<span class="hljs-keyword">value</span>, compareTo <span class="hljs-type">time</span>.Time) <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">value</span>.<span class="hljs-keyword">After</span>(compareTo) || <span class="hljs-keyword">value</span>.Equal(compareTo) },
+	LT:  func(<span class="hljs-keyword">value</span>, compareTo <span class="hljs-type">time</span>.Time) <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">value</span>.<span class="hljs-keyword">Before</span>(compareTo) },
+	LTE: func(<span class="hljs-keyword">value</span>, compareTo <span class="hljs-type">time</span>.Time) <span class="hljs-type">bool</span> { <span class="hljs-keyword">return</span> <span class="hljs-keyword">value</span>.<span class="hljs-keyword">Before</span>(compareTo) || <span class="hljs-keyword">value</span>.Equal(compareTo) },
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:02:39 AM PDT</p>
+<p>This piece of code is written in Go language. It defines a map called <code>timeComparators</code>, where the map keys are of type <code>ComparisonType</code> (which is not defined in the given code, but it&#39;s likely an enum or similar type representing different types of comparisons), and the values are functions. Each function takes two arguments of type <code>time.Time</code> and returns a boolean value.</p>
+<p>The map <code>timeComparators</code> contains six functions, each corresponding to a different comparison operation: </p>
+<ul>
+<li><p><code>EQ</code>: Checks if two <code>time.Time</code> values are equal using the <code>Equal</code> function from the <code>time</code> package in Go. This function returns <code>true</code> if the two times represent the same instant. More details can be found <a href="https://golang.org/pkg/time/#Time.Equal">here</a>.</p>
+</li>
+<li><p><code>NEQ</code>: Checks if two <code>time.Time</code> values are not equal. It negates the result of the <code>Equal</code> function.</p>
+</li>
+<li><p><code>GT</code>: Checks if the first <code>time.Time</code> value is after the second one using the <code>After</code> function from the <code>time</code> package. This function returns <code>true</code> if the first time instant is after the second. More details can be found <a href="https://golang.org/pkg/time/#Time.After">here</a>.</p>
+</li>
+<li><p><code>GTE</code>: Checks if the first <code>time.Time</code> value is after or equal to the second one. It returns <code>true</code> if the first time is either after or equal to the second time.</p>
+</li>
+<li><p><code>LT</code>: Checks if the first <code>time.Time</code> value is before the second one using the <code>Before</code> function from the <code>time</code> package. This function returns <code>true</code> if the first time instant is before the second. More details can be found <a href="https://golang.org/pkg/time/#Time.Before">here</a>.</p>
+</li>
+<li><p><code>LTE</code>: Checks if the first <code>time.Time</code> value is before or equal to the second one. It returns <code>true</code> if the first time is either before or equal to the second time.</p>
+</li>
+</ul>
+<p>This map can be used to perform various time comparisons in a dynamic and flexible manner. You can select the appropriate comparison function based on the <code>ComparisonType</code>, and then call the function with the two <code>time.Time</code> values you want to compare.</p>
+<p>The architectural guidelines provided do not seem to conflict with this code. The code is modular and follows Go best practices for defining maps and functions.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:04:34 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleProcess;
+ExampleProcess-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:07:27 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:12:24 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 10:17:19 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div>
+</body>
+</html>

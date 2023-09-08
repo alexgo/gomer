@@ -1,0 +1,2561 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./structs/tool.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 3:50:11 PM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:29:23 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a Go-based library that provides functionality for handling constraints and validations. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>However, the analysis has identified a significant security issue in the project. The function <code>applyTools</code> in the file <code>structs/tool.go</code> uses reflection to access fields by name without any validation of the field name. This could potentially lead to an Insecure Direct Object References (IDOR) vulnerability, which is a severe security risk. </p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified security issue could have a significant impact on customers using this library. If exploited, an attacker could potentially manipulate the field name to access and modify fields that should not be accessible. This could lead to unauthorized data access or modification, potentially compromising the security and integrity of the customer&#39;s data.</p>
+<h3 id="overall-issues">Overall Issues</h3>
+<p>The analysis has identified a total of 3 issues in the <code>structs/tool.go</code> file. These issues are categorized as 1 Warning (Insecure Direct Object References) and 2 Information (Error Handling and Data Exposure). </p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>Based on the analysis, the overall health of the project source is concerning. The <code>structs/tool.go</code> file, which is the only file in the project, has several issues of varying severity. This means that 100% of the project files have issues, which is a significant risk.</p>
+<h3 id="highlights">Highlights</h3>
+<ul>
+<li>The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns.</li>
+<li>A severe security issue (IDOR vulnerability) has been identified in the <code>structs/tool.go</code> file.</li>
+<li>The identified security issue could potentially lead to unauthorized data access or modification, posing a significant risk to customers.</li>
+<li>The overall health of the project source is concerning, with 100% of the project files having issues.</li>
+<li>The project does not have any additional special architectural guidelines or constraints, which could potentially make it easier to address the identified issues.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:30:13 PM PDT</p>
+<h2 id="executive-level-report">Executive Level Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go that focuses on constraint handling and validation. It defines a <code>Constraint</code> interface and provides implementations for various constraint types. The code follows Go&#39;s idiomatic style and structure for a library.</p>
+<p>However, the analysis has identified some potential issues that could impact the performance and efficiency of the software. These issues are primarily related to the use of reflection and the creation of new maps in the &#39;ApplyTools&#39; function in the <code>structs/tool.go</code> file. </p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified issues could lead to high memory and CPU usage, especially if the function is called frequently or if the structs being processed have a large number of fields. This could result in slower response times and a less efficient use of resources, which could negatively impact the user experience.</p>
+<h3 id="overall-issues">Overall Issues</h3>
+<p>The analysis has identified a total of 3 high-severity issues in the <code>structs/tool.go</code> file. These issues are related to memory and CPU usage and could potentially impact the performance and efficiency of the software.</p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>Based on the analysis, the overall health of the project source is at risk due to the identified high-severity issues. However, it&#39;s important to note that these issues were found in only one file out of the total project files. This indicates that the majority of the project files do not have detected issues, which is a positive sign.</p>
+<h3 id="highlights-of-the-analysis">Highlights of the Analysis</h3>
+<ol>
+<li><p><strong>High Severity Issues:</strong> The analysis identified 3 high-severity issues related to memory and CPU usage in the <code>structs/tool.go</code> file. These issues could potentially impact the performance and efficiency of the software.</p>
+</li>
+<li><p><strong>Potential Customer Impact:</strong> The identified issues could lead to slower response times and a less efficient use of resources, which could negatively impact the user experience.</p>
+</li>
+<li><p><strong>Risk Assessment:</strong> The overall health of the project source is at risk due to the identified high-severity issues. However, the majority of the project files do not have detected issues, which is a positive sign.</p>
+</li>
+<li><p><strong>Architectural Impact:</strong> The identified issues could potentially impact the architectural soundness of the software. The use of reflection and the creation of new maps could lead to high memory and CPU usage, which could impact the efficiency of the software.</p>
+</li>
+<li><p><strong>Consistency with Architectural Guidelines:</strong> The software project follows Go&#39;s idiomatic style and structure for a library, which is consistent with the architectural guidelines. However, the identified issues could potentially conflict with the principles of efficient resource usage.</p>
+</li>
+</ol>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:30:44 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go, focusing on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>However, the analysis has identified several high-severity issues related to data compliance, privacy, and security. These issues, if not addressed, could have significant implications on the overall architecture and functionality of the project.</p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified issues could potentially impact customers in several ways. Non-compliance with data protection regulations such as GDPR, HIPAA, and PCI DSS could lead to legal penalties and loss of customer trust. Additionally, the lack of proper error handling and data validation could result in software bugs and data corruption, negatively affecting the user experience.</p>
+<h3 id="overall-issues">Overall Issues</h3>
+<p>The analysis identified issues in the <code>structs/tool.go</code> file. The issues are categorized into different types, including GDPR, HIPAA, PCI DSS, Data Compliance, Data Privacy, Data Exposure, Data Validation, and Error Handling. The severity of these issues ranges from Information to Warning to Error, with the most severe issues being related to PCI DSS.</p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>Based on the analysis, the overall health of the project source is at risk. The <code>structs/tool.go</code> file, which is the only file in the project, has several high-severity issues. This means that 100% of the project files have issues of varying severity.</p>
+<h3 id="highlights">Highlights</h3>
+<ol>
+<li><p><strong>Data Compliance Issues</strong>: The project has several data compliance issues related to GDPR, HIPAA, and PCI DSS. These issues are present in the <code>structs/tool.go</code> file and are of high severity. For instance, the function &#39;process&#39; does not have any mechanism to handle or notify about cardholder data, which is a violation of PCI DSS.</p>
+</li>
+<li><p><strong>Data Privacy and Exposure</strong>: The project has issues related to data privacy and exposure. These issues could potentially lead to unauthorized access and exposure of sensitive data.</p>
+</li>
+<li><p><strong>Error Handling and Data Validation</strong>: The project lacks proper error handling and data validation mechanisms. This could lead to software bugs and data corruption, negatively affecting the user experience.</p>
+</li>
+<li><p><strong>Risk to Project Health</strong>: Given that the only file in the project has several high-severity issues, the overall health of the project source is at risk. Immediate action is required to address these issues and mitigate the associated risks.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The identified issues could lead to legal penalties and loss of customer trust. Additionally, software bugs and data corruption could negatively affect the user experience.</p>
+</li>
+</ol>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./structs/tool.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code><span class="hljs-keyword">package</span> structs
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;reflect&quot;</span>
+	<span class="hljs-string">&quot;time&quot;</span>
+	<span class="hljs-string">&quot;unicode&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/jt0/gomer/flect&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/gomerr&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/id&quot;</span>
+)
+
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Build a mechanism to generate structs from Smithy models and JSON schema definitions</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ApplyTools</span><span class="hljs-params">(v <span class="hljs-keyword">interface</span>{}, tc *ToolContext, tools ...*Tool)</span></span> gomerr.Gomerr {
+	vv, ge := flect.IndirectValue(v, <span class="hljs-literal">false</span>)
+	<span class="hljs-keyword">if</span> ge != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> gomerr.Unprocessable(<span class="hljs-string">&quot;Unable to apply tools to invalid value&quot;</span>, v).Wrap(ge)
+	}
+
+	vt := vv.Type()
+	vts := vt.String()
+	<span class="hljs-keyword">if</span> vt.Kind() != reflect.Struct {
+		<span class="hljs-keyword">return</span> gomerr.Configuration(<span class="hljs-string">&quot;Can only apply tools to struct (or pointer to struct) types&quot;</span>).AddAttribute(<span class="hljs-string">&quot;Type&quot;</span>, vts)
+	}
+
+	ps, ok := preparedStructs[vts]
+	<span class="hljs-keyword">if</span> !ok {
+		ps = &amp;preparedStruct{
+			typeName: vts,
+			fields:   <span class="hljs-built_in">make</span>([]*field, <span class="hljs-number">0</span>, vt.NumField()),
+			applied:  <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">bool</span>, <span class="hljs-built_in">len</span>(tools)),
+		}
+		preparedStructs[vts] = ps
+	}
+
+	<span class="hljs-keyword">return</span> ps.applyTools(vv, tc, tools...)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:23:25 PM PDT</p>
+<p>The code is written in Go and is part of a package named &quot;structs&quot;. It imports several packages, including reflect, time, unicode, and three packages from the &quot;github.com/jt0/gomer&quot; repository: flect, gomerr, and id.</p>
+<p>The main function in this code snippet is ApplyTools. It takes three parameters: an interface{}, a pointer to a ToolContext, and a variadic amount of pointers to Tool. The return type is gomerr.Gomerr, which is likely a custom error type defined in the gomerr package.</p>
+<p>The purpose of the ApplyTools function appears to be to apply a set of &quot;tools&quot; to a struct. The tools and the struct are passed as arguments to the function.</p>
+<p>Here&#39;s a detailed walkthrough of the function:</p>
+<ol>
+<li><p>The function begins by calling the IndirectValue function from the flect package. This function is used to get the underlying value of a pointer. If the value is not a pointer, the function returns an error.</p>
+</li>
+<li><p>If an error is returned, the function returns a Gomerr with a message saying that it&#39;s unable to apply tools to an invalid value.</p>
+</li>
+<li><p>The function then checks if the kind of the underlying value is a struct. If it&#39;s not, it returns a Gomerr with a message saying that it can only apply tools to a struct (or pointer to a struct).</p>
+</li>
+<li><p>The function then checks if the struct has been prepared before by looking it up in the <code>preparedStructs</code> map. If it hasn&#39;t been prepared before, it creates a new <code>preparedStruct</code> and adds it to the map.</p>
+</li>
+<li><p>Finally, the function calls the applyTools method on the prepared struct, passing the underlying value, the tool context, and the tools as arguments.</p>
+</li>
+</ol>
+<p>The code uses reflection (a feature in Go that allows a program to inspect the structure of types and variables at runtime) to perform these operations.</p>
+<p>The algorithm used in this code is not a standard one (like sorting or searching) but a custom one designed for the specific needs of this program.</p>
+<p>For more information on the topics used in this code, you can refer to these resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></li>
+<li><a href="https://golang.org/pkg/reflect/">The Go Programming Language Specification: The reflect package</a></li>
+<li><a href="https://medium.com/capital-one-tech/learning-to-use-go-reflection-822a0aed74b7">Go: Overview of the reflect package</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:33:53 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style ApplyTools fill:#228B22, stroke:#000000, stroke-width:2px;
+
+    ApplyTools-->IndirectValue;
+    IndirectValue-->Unprocessable;
+    IndirectValue-->Configuration;
+    Unprocessable-->Wrap;
+    Configuration-->AddAttribute;
+    ApplyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->applyTools;
+    applyTools-->apply</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:00 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:39:53 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 21</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of reflection in the &#39;ApplyTools&#39; function could lead to high memory usage, especially if the struct being processed has a large number of fields. Reflection is known to be more resource-intensive than other methods of accessing and manipulating data.</p>
+<p><strong>Solution</strong>: Consider redesigning the function to avoid using reflection, if possible. If reflection is necessary, ensure that it is used judiciously and that the structs being processed are not unnecessarily large. For more information on reflection and its impact on performance, refer to this link: <a href="https://stackoverflow.com/questions/6395076/in-golang-using-reflect-is-slower-than-converting-strings-by-type-assertion">https://stackoverflow.com/questions/6395076/in-golang-using-reflect-is-slower-than-converting-strings-by-type-assertion</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 27</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection and the creation of a new map in the &#39;ApplyTools&#39; function could lead to high CPU usage. This is especially true if the function is called frequently or if the structs being processed have a large number of fields.</p>
+<p><strong>Solution</strong>: Consider redesigning the function to avoid using reflection and creating new maps, if possible. If these operations are necessary, ensure that they are used judiciously and that the function is not called more often than necessary. For more information on the impact of reflection and map creation on CPU usage, refer to this link: <a href="https://medium.com/@riteeksrivastava/understanding-maps-in-golang-4d46a8f3e7b">https://medium.com/@riteeksrivastava/understanding-maps-in-golang-4d46a8f3e7b</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 31</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of a map to store the &#39;applied&#39; tools in the &#39;ApplyTools&#39; function could lead to high memory usage. This is especially true if the number of tools is large.</p>
+<p><strong>Solution</strong>: Consider using a different data structure to store the &#39;applied&#39; tools, such as a slice or a set. These data structures are typically more memory-efficient than maps. For more information on choosing the right data structure in Go, refer to this link: <a href="https://yourbasic.org/golang/data-structures/">https://yourbasic.org/golang/data-structures/</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:44:03 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;ApplyTools&#39; processes data without any explicit check for user consent or type of data, which can lead to processing of personal data without consent, a violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement explicit consent checks and data type checks before processing data. Also, consider anonymizing data before processing where possible.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;ApplyTools&#39; does not check if the data being processed is Protected Health Information (PHI). Processing PHI without proper safeguards is a violation of HIPAA.</p>
+<p><strong>Solution</strong>: Implement checks to identify PHI and ensure it is processed in a HIPAA-compliant manner, including encryption and access controls.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;ApplyTools&#39; processes data without checking if it&#39;s payment or cardholder data, which could lead to non-compliance with PCI DSS if such data is processed without proper safeguards.</p>
+<p><strong>Solution</strong>: Implement checks to identify payment and cardholder data and ensure it is processed in a PCI DSS-compliant manner, including encryption and access controls.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 39:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Preprocess</span><span class="hljs-params">(v <span class="hljs-keyword">interface</span>{}, tools ...*Tool)</span></span> gomerr.Gomerr {
+	vt := flect.IndirectType(v)
+	ps, errors := process(vt, tools...)
+	<span class="hljs-keyword">if</span> ps == <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> gomerr.Configuration(<span class="hljs-string">&quot;Invalid type: must be a struct or pointer to struct&quot;</span>).AddAttribute(<span class="hljs-string">&quot;Type&quot;</span>, vt.String())
+	}
+	<span class="hljs-keyword">return</span> gomerr.Batcher(errors)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:24:07 PM PDT</p>
+<p>The provided code snippet is written in Go. It defines a function named <code>Preprocess</code> that takes an <code>interface{}</code> type parameter <code>v</code> and a variadic parameter <code>tools</code> of type <code>*Tool</code>. </p>
+<p>The <code>interface{}</code> type in Go is the empty interface. It&#39;s a way to accept any type as a parameter without any method requirements. </p>
+<p>The <code>...</code> in the <code>*Tool</code> parameter indicates that this function can accept an arbitrary number of <code>Tool</code> pointers. These are referred to as variadic parameters in Go.</p>
+<p>The function returns a type of <code>gomerr.Gomerr</code>, which is an error handling package in Go. This suggests that this function is intended to perform some preprocessing steps and return an error if something goes wrong.</p>
+<p>Here is a detailed explanation of the function:</p>
+<ol>
+<li><p><code>vt := flect.IndirectType(v)</code>: This line of code is using the <code>flect</code> package&#39;s <code>IndirectType</code> function to get the real underlying type of <code>v</code>. The <code>flect</code> package is a part of the <code>inflect</code> library in Go, which provides functionalities for inflecting words and types. The <code>IndirectType</code> function follows pointers to their final value and returns the type of the final value. </p>
+</li>
+<li><p><code>ps, errors := process(vt, tools...)</code>: The <code>process</code> function is called with the derived type and the tools as parameters. The function is expected to return two values - a processed value and any errors that occurred during the process. It seems like the <code>process</code> function applies the tools to the value <code>vt</code>.</p>
+</li>
+<li><p><code>if ps == nil { return gomerr.Configuration(&quot;Invalid type: must be a struct or pointer to struct&quot;).AddAttribute(&quot;Type&quot;, vt.String()) }</code>: This line checks if the processed value <code>ps</code> is <code>nil</code>. If it is, an error is returned using the <code>gomerr</code> package&#39;s <code>Configuration</code> function, which is likely used for configuration errors. An attribute &quot;Type&quot; is added to the error with the string representation of <code>vt</code>.</p>
+</li>
+<li><p><code>return gomerr.Batcher(errors)</code>: If <code>ps</code> is not <code>nil</code>, the function returns the batched errors using the <code>gomerr</code> package&#39;s <code>Batcher</code> function. It&#39;s likely that the <code>Batcher</code> function combines multiple errors into a single error.</p>
+</li>
+</ol>
+<p>This function appears to be part of a larger validation or preprocessing system where various tools are applied to a value before it&#39;s used further.</p>
+<p>For more information on Go interfaces, variadic functions, and error handling, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/methods/11">A Tour of Go - Interfaces</a></li>
+<li><a href="https://gobyexample.com/variadic-functions">Go by Example - Variadic Functions</a></li>
+<li><a href="https://blog.golang.org/error-handling-and-go">Go Blog - Error Handling</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:33:58 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>In the provided code snippet, there is no control flow or function calls to external libraries or non-standard functions. Therefore, the control flow graph is a simple linear flow from the start to the end of the function.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:04 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:05 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 76</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection, specifically the <code>flect.IndirectType(v)</code> call, can be computationally expensive and slow down performance. Reflection requires the program to inspect the runtime type information, which can be slow especially when dealing with large data structures or when called frequently.</p>
+<p><strong>Solution</strong>: If possible, avoid using reflection and instead use type assertions or interfaces to achieve the same result. If reflection is necessary, consider caching the results of reflection calls to avoid repeated computation. More information can be found here: <a href="https://go.dev/blog/laws-of-reflection">https://go.dev/blog/laws-of-reflection</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 77</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The <code>process(vt, tools...)</code> function is likely to be CPU-intensive. Without knowing the exact implementation of this function, it&#39;s hard to provide a specific solution, but generally, any function that processes data can be a potential source of high CPU usage.</p>
+<p><strong>Solution</strong>: Optimize the <code>process</code> function. This could involve using more efficient algorithms, reducing the amount of data processed at once, or parallelizing the processing if possible. More information can be found here: <a href="https://blog.golang.org/pipelines">https://blog.golang.org/pipelines</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:44:32 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 76</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;Preprocess&#39; accepts any type of data as input without validating or sanitizing it. This can lead to processing of personal data without proper checks, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement data validation and sanitization before processing the input. Use strong typing instead of interface{} to ensure only expected data types are processed. Also, include a mechanism to obtain user consent before processing their data.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 76</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;Preprocess&#39; does not have any mechanism to check if the data it is processing contains Protected Health Information (PHI). Processing PHI without proper safeguards is a violation of HIPAA.</p>
+<p><strong>Solution</strong>: Implement a mechanism to check if the data contains PHI before processing it. If it does, ensure you have the necessary safeguards in place, such as data encryption and access controls, to protect the PHI.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 76</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;Preprocess&#39; does not have any mechanism to check if the data it is processing contains cardholder data. While this code does not necessarily violate PCI DSS, it could potentially be used in a way that does.</p>
+<p><strong>Solution</strong>: Implement a mechanism to check if the data contains cardholder data before processing it. If it does, ensure you have the necessary safeguards in place, such as data encryption and access controls, to protect the cardholder data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 48:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-constructor">NewTool(<span class="hljs-params">toolType</span> <span class="hljs-params">string</span>, <span class="hljs-params">ap</span> ApplierProvider, <span class="hljs-params">dp</span> DirectiveProvider)</span> *Tool {
+	return &amp;Tool{toolType + <span class="hljs-string">&quot;_&quot;</span> + idGen.<span class="hljs-constructor">Generate()</span>, toolType, ap, dp}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:24:42 PM PDT</p>
+<p>This is a function written in Go language. The function is called <code>NewTool</code> and it&#39;s used to create a new instance of a <code>Tool</code> struct. </p>
+<p>The function takes three parameters:</p>
+<ol>
+<li><code>toolType</code>: A string that specifies the type of the tool.</li>
+<li><code>ap</code>: An instance of <code>ApplierProvider</code>, which is likely an interface or a struct that provides some sort of &quot;apply&quot; functionality.</li>
+<li><code>dp</code>: An instance of <code>DirectiveProvider</code>, which is likely an interface or a struct that provides some directives or instructions.</li>
+</ol>
+<p>The function returns a pointer to a new <code>Tool</code> instance.</p>
+<p>Here&#39;s a step-by-step breakdown of what the function does:</p>
+<ol>
+<li><p>It concatenates the <code>toolType</code> string with an underscore character (<code>&quot;_&quot;</code>) and a generated ID, which is produced by calling the <code>idGen.Generate()</code> function. This concatenated string will be used as the unique identifier for the new <code>Tool</code> instance.</p>
+</li>
+<li><p>It creates a new <code>Tool</code> instance with the unique identifier, the <code>toolType</code>, the <code>ApplierProvider</code>, and the <code>DirectiveProvider</code> as its properties.</p>
+</li>
+<li><p>It returns a pointer to the new <code>Tool</code> instance.</p>
+</li>
+</ol>
+<p>The algorithm used here is simple string concatenation and struct initialization. </p>
+<p>Based on the given code, it&#39;s hard to provide more educational and background links because we don&#39;t have the full context of the <code>Tool</code>, <code>ApplierProvider</code>, and <code>DirectiveProvider</code> types. However, for general understanding of Go functions, structs, and pointers, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/methods/1">A Tour of Go - Methods and Interfaces</a></li>
+<li><a href="https://gobyexample.com/pointers">Go by Example: Pointers</a></li>
+<li><a href="https://gobyexample.com/structs">Go by Example: Structs</a></li>
+</ul>
+<p>As for the architectural guidelines, this function seems to follow good practices - it is concise, has a single responsibility (creating a new <code>Tool</code> instance), and uses dependency injection for the <code>ApplierProvider</code> and <code>DirectiveProvider</code>, which can enhance testability and flexibility.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:01 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:07 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:08 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:45:06 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 94</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;NewTool&#39; generates a unique ID without checking if the ID is associated with an individual. This could potentially lead to the creation of identifiers that can be linked back to individuals, which is a violation of GDPR&#39;s principle of data minimisation.</p>
+<p><strong>Solution</strong>: Implement a mechanism to ensure that the generated IDs cannot be linked back to individuals. One way to do this is by using pseudonymisation techniques, such as hashing, to transform the IDs into a form that cannot be associated with an individual without the use of additional information.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 94</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;NewTool&#39; does not perform any validation on the &#39;toolType&#39; input. This could lead to potential security vulnerabilities, such as SQL injection or cross-site scripting (XSS), which are in violation of PCI DSS requirements.</p>
+<p><strong>Solution</strong>: Implement input validation to ensure that the &#39;toolType&#39; input is safe and expected. This could involve checking that the input matches a certain pattern or falls within a certain range of values.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 94</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;NewTool&#39; does not implement any controls to ensure that the data it processes is secure. This could potentially lead to the exposure of Protected Health Information (PHI), which is a violation of HIPAA.</p>
+<p><strong>Solution</strong>: Implement controls to ensure the security of the data processed by the function. This could involve encrypting the data or using secure coding practices to prevent data leaks.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 52:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Tool contains references to some behavior that can be applied to structs present in an application.</span>
+<span class="hljs-built_in">type</span> Tool <span class="hljs-keyword">struct</span> {
+	id                <span class="hljs-keyword">string</span>
+	toolType          <span class="hljs-keyword">string</span>
+	applierProvider   ApplierProvider
+	directiveProvider DirectiveProvider
+	<span class="hljs-comment">// around            func(Apply) gomerr.Gomerr</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:25:11 PM PDT</p>
+<p>This code defines a struct named <code>Tool</code> in Go programming language. A struct in Go is a user-defined type that allows you to group/combine items of possibly different types into a single type. </p>
+<p>The <code>Tool</code> struct has five fields:</p>
+<ol>
+<li><code>id</code>: This is a string that likely serves as a unique identifier for each instance of <code>Tool</code>.</li>
+<li><code>toolType</code>: This is another string that probably represents the type or category of the tool. This could be used to group or classify tools.</li>
+<li><code>applierProvider</code>: This is of type <code>ApplierProvider</code>, which is likely a user-defined type. The name suggests that it provides an applier, which could be a function or another struct that applies a certain operation or transformation.</li>
+<li><code>directiveProvider</code>: This is of type <code>DirectiveProvider</code>, another user-defined type. It likely provides directives, which could be instructions or commands that the tool uses or follows.</li>
+<li><code>around</code>: This is commented out in the code you provided, but if it were active, it would be a function that takes an <code>Apply</code> type as an argument and returns a <code>gomerr.Gomerr</code> type. <code>gomerr.Gomerr</code> suggests it&#39;s a custom error type from the gomerr package, a Go package for enhanced error handling.</li>
+</ol>
+<p>The struct doesn&#39;t directly imply the use of any specific algorithms, but the <code>applierProvider</code> and <code>directiveProvider</code> could potentially use various algorithms depending on their implementation.</p>
+<p>This struct definition is very generic and could be used in a variety of contexts. It seems to be part of a larger system where tools with different behaviors are defined and used, perhaps for different kinds of data processing or transformation tasks.</p>
+<p>You can learn more about structs in Go from the official Go Documentation: <a href="https://golang.org/doc/effective_go#composite_literals">https://golang.org/doc/effective_go#composite_literals</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:05 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;</pre>
+</code></pre><pre><code>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:11 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:12 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:45:51 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 102</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The &#39;Tool&#39; struct is storing &#39;id&#39; as a string. This can potentially lead to privacy issues if the &#39;id&#39; is personally identifiable information (PII) and is not being handled correctly in accordance with GDPR, PCI DSS, and HIPAA compliance.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;id&#39; is not storing PII. If it is, implement proper data handling practices such as anonymization or pseudonymization. Also, ensure that the data is encrypted both at rest and in transit.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 103</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The &#39;toolType&#39; field could potentially store sensitive data. If this is the case, it should be properly encrypted and handled in accordance with GDPR, PCI DSS, and HIPAA compliance.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;toolType&#39; field is not storing sensitive data. If it is, implement proper data handling practices such as encryption at rest and in transit.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 104</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The &#39;applierProvider&#39; field could potentially store sensitive data. If this is the case, it should be properly encrypted and handled in accordance with GDPR, PCI DSS, and HIPAA compliance.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;applierProvider&#39; field is not storing sensitive data. If it is, implement proper data handling practices such as encryption at rest and in transit.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 105</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The &#39;directiveProvider&#39; field could potentially store sensitive data. If this is the case, it should be properly encrypted and handled in accordance with GDPR, PCI DSS, and HIPAA compliance.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;directiveProvider&#39; field is not storing sensitive data. If it is, implement proper data handling practices such as encryption at rest and in transit.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 61:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(t *Tool)</span> <span class="hljs-title function_">Id</span><span class="hljs-params">()</span> <span class="hljs-title function_">string</span> {
+	<span class="hljs-keyword">return</span> t.id
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:25:42 PM PDT</p>
+<p>The code you provided is a simple getter function in Go programming language. It is part of a type (or class in other languages) named <code>Tool</code>. This function, named <code>Id</code>, does not take any parameters and returns a string.</p>
+<p>Here&#39;s a breakdown of the function:</p>
+<ul>
+<li><code>func</code>: This keyword is used to declare a function in Go.</li>
+<li><code>(t *Tool)</code>: This is the receiver of the function. It means that the function <code>Id</code> is attached to the type <code>Tool</code>. The <code>*</code> before <code>Tool</code> means that <code>t</code> is a pointer to a <code>Tool</code> instance. This allows the function to access the properties and other methods of the <code>Tool</code> type.</li>
+<li><code>Id()</code>: This is the name of the function. The empty parentheses <code>()</code> indicate that the function takes no arguments.</li>
+<li><code>string</code>: This is the return type of the function. It means the function will return a string when called.</li>
+<li><code>return t.id</code>: This is the body of the function. It simply returns the <code>id</code> property of the <code>Tool</code> instance <code>t</code>.</li>
+</ul>
+<p>The function <code>Id</code> is a common pattern in Go and many other programming languages, known as a getter. A getter is a method that gets the value of a specific property. In this case, the <code>Id</code> function returns the <code>id</code> of a <code>Tool</code> instance. This is a simple, but important part of encapsulation in object-oriented programming.</p>
+<p>Go does not support classes like other object-oriented languages, but it does have types with methods. In Go, you can create methods on types. A type may have a method set associated with it which is the set of all methods defined on it. This function <code>Id</code> is a method of the <code>Tool</code> type.</p>
+<p>For more information on Go methods, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:09 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:14 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:15 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:45:55 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 65:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(t *Tool)</span> <span class="hljs-title function_">Type</span><span class="hljs-params">()</span> <span class="hljs-title function_">string</span> {
+	<span class="hljs-keyword">return</span> t.toolType
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:26:19 PM PDT</p>
+<p>This is a simple piece of Go code that defines a method on a struct. The struct is named <code>Tool</code> and the method is named <code>Type</code>. </p>
+<p>The <code>Type</code> method does not take any parameters and returns a string. The purpose of this method is to return the <code>toolType</code> field of the <code>Tool</code> struct. </p>
+<p>This method is a typical example of a getter in Go. A getter is a method that is used to retrieve the value of a private field from an object. In Go, if a field starts with a lowercase letter, it is private to the package it&#39;s declared in. So, the <code>toolType</code> field is not directly accessible from other packages, and thus this getter method is provided.</p>
+<p>Here&#39;s a brief breakdown of the code:</p>
+<ul>
+<li><code>func</code>: This keyword is used to declare a function in Go.</li>
+<li><code>(t *Tool)</code>: This is the receiver of the method. It means this method is attached to the <code>Tool</code> struct. The receiver is a pointer to a <code>Tool</code> instance, which allows the method to read (and write, if needed) the properties of the <code>Tool</code> instance.</li>
+<li><code>Type()</code>: This is the name of the method. It takes no arguments.</li>
+<li><code>string</code>: This is the return type of the function. The <code>Type</code> method returns a string.</li>
+<li><code>return t.toolType</code>: This line returns the value of the <code>toolType</code> field from the <code>Tool</code> instance.</li>
+</ul>
+<p>There are no specific algorithms used in this code, it&#39;s a straightforward getter method. </p>
+<p>For more information about methods in Go, you can refer to the Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a>.</p>
+<p>As for architectural guidelines, this code follows common Go idioms for struct methods and is consistent with general object-oriented programming principles. It provides a safe way to access the <code>toolType</code> field of a <code>Tool</code> instance, which is good practice. The method is simple and has a single responsibility, which aligns with the Single Responsibility Principle.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:13 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:18 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:18 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:45:58 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 69:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (t *Tool) applier<span class="hljs-constructor">For(<span class="hljs-params">st</span> <span class="hljs-params">reflect</span>.Type, <span class="hljs-params">sf</span> <span class="hljs-params">reflect</span>.StructField)</span> (Applier, gomerr.Gomerr) {
+	return apply<span class="hljs-constructor">Scopes(<span class="hljs-params">t</span>.<span class="hljs-params">applierProvider</span>, <span class="hljs-params">st</span>, <span class="hljs-params">sf</span>, <span class="hljs-params">t</span>.<span class="hljs-params">directiveProvider</span>.Get(<span class="hljs-params">st</span>, <span class="hljs-params">sf</span>)</span>)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:27:00 PM PDT</p>
+<p>The provided code is a method in Go language. This method, <code>applierFor</code>, belongs to the <code>Tool</code> struct. It takes two parameters: <code>st</code> of type <code>reflect.Type</code> and <code>sf</code> of type <code>reflect.StructField</code>. The method returns two values: an <code>Applier</code> interface and a <code>gomerr.Gomerr</code> error.</p>
+<p>The <code>reflect</code> package in Go provides functions to inspect the structure of types and variables at runtime, which is a form of metaprogramming. <code>reflect.Type</code> represents a Go type, and <code>reflect.StructField</code> represents a field in a struct type.</p>
+<p>The <code>applierFor</code> method seems to be part of a system that applies certain operations or transformations (the &quot;appliers&quot;) to struct fields. The specific applier is determined based on the type of the struct and its fields. This is a common pattern in Go for handling various types in a generic way.</p>
+<p>Here&#39;s a breakdown of what the method does:</p>
+<ol>
+<li><p>It calls the <code>applyScopes</code> function and passes four parameters: <code>t.applierProvider</code>, <code>st</code>, <code>sf</code>, and the result of <code>t.directiveProvider.Get(st, sf)</code>. </p>
+</li>
+<li><p>The <code>t.applierProvider</code> is likely a function or an object that provides or knows how to create the appropriate &quot;applier&quot; based on the type and field.</p>
+</li>
+<li><p>The <code>t.directiveProvider.Get(st, sf)</code> appears to get some sort of directives based on the type and field. Directives can be instructions or metadata that guide how the applier should behave.</p>
+</li>
+<li><p>The <code>applyScopes</code> function likely matches the appropriate &quot;applier&quot; with the directives obtained from the <code>directiveProvider</code>.</p>
+</li>
+<li><p>The <code>applyScopes</code> function returns an <code>Applier</code> and a <code>gomerr.Gomerr</code>. The <code>Applier</code> is probably an interface that encapsulates the operation to be applied. The <code>gomerr.Gomerr</code> is an error type from the <code>gomerr</code> package, which is a package for enhanced error handling in Go.</p>
+</li>
+<li><p>The <code>applierFor</code> method then returns these two values to its caller.</p>
+</li>
+</ol>
+<p>This code does not specify any particular algorithm, but it uses the concept of reflection in Go and the design patterns of interfaces and providers.</p>
+<p>For more information about reflection in Go, you can refer to the official Go blog post: <a href="https://blog.golang.org/laws-of-reflection">The Laws of Reflection</a></p>
+<p>For more information about error handling in Go, you can refer to the official Go blog post: <a href="https://blog.golang.org/error-handling-and-go">Error handling and Go</a> </p>
+<p>For more information about the <code>gomerr</code> package, you can refer to its GitHub repository: <a href="https://github.com/bdlm/gomerr">gomerr</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:20 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->applierFor;
+applierFor-->applyScopes;
+applyScopes-->End;
+applierFor-->gomerr.Gomerr;
+gomerr.Gomerr-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<ul>
+<li>The code starts at the function <code>applierFor</code>.</li>
+<li>The function calls <code>applyScopes</code>.</li>
+<li><code>applyScopes</code> then calls <code>End</code>.</li>
+<li><code>applierFor</code> also has an alternate error path where it returns <code>gomerr.Gomerr</code>.</li>
+<li><code>gomerr.Gomerr</code> then leads to <code>End</code>.</li>
+</ul>
+<p>This control flow graph represents the primary path through the code, as well as the error path.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:21 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:32 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 136</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in this function can be computationally expensive and slow down performance, especially when dealing with large data structures or under heavy load.</p>
+<p><strong>Solution</strong>: Consider alternatives to reflection if possible. If the data structures are known at compile time, use them directly instead of using reflection. If the data structures are not known at compile time, consider using interfaces and type assertions. Here&#39;s a good resource on reflection and its alternatives: <a href="https://medium.com/@meeusdylan/why-you-should-avoid-reflection-in-go-36724365a53a">https://medium.com/@meeusdylan/why-you-should-avoid-reflection-in-go-36724365a53a</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:46:11 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 139</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;applierFor&#39; does not explicitly handle sensitive data types, which could potentially lead to mishandling of sensitive data. This is a violation of GDPR, PCI DSS, and HIPAA which require explicit handling of sensitive data.</p>
+<p><strong>Solution</strong>: Implement explicit checks for sensitive data types and handle them accordingly. Utilize encryption, tokenization, or anonymization techniques when handling sensitive data to adhere to GDPR, PCI DSS, and HIPAA regulations.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 73:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> <span class="hljs-type">ApplierProvider</span> interface {
+	<span class="hljs-type">Applier</span>(structType reflect.<span class="hljs-type">Type</span>, structField reflect.<span class="hljs-type">StructField</span>, directive string) (<span class="hljs-type">Applier</span>, gomerr.<span class="hljs-type">Gomerr</span>)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:27:42 PM PDT</p>
+<p>The provided code snippet is written in Go, a statically typed, compiled language developed by Google. It defines an interface, which is a custom type that is used to specify a set of methods that a struct must possess to implement the interface.</p>
+<p>Let&#39;s break down the code:</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> ApplierProvider <span class="hljs-keyword">interface</span> {
+    Applier(structType reflect.Type, structField reflect.StructField, directive <span class="hljs-type">string</span>) (Applier, gomerr.Gomerr)
+}
+</code></pre><p>Here, an interface named <code>ApplierProvider</code> is being defined. This interface has a single method named <code>Applier</code> that any struct implementing <code>ApplierProvider</code> must have.</p>
+<p>The <code>Applier</code> method takes three parameters:</p>
+<ol>
+<li><p><code>structType reflect.Type</code>: The <code>reflect.Type</code> is a representation of a Go Type. It&#39;s part of the <code>reflect</code> package, which allows inspection of type and variable information at runtime. Here, <code>structType</code> is expected to be the type information of a struct.</p>
+</li>
+<li><p><code>structField reflect.StructField</code>: The <code>reflect.StructField</code> is a struct in the reflect package that contains a reflection of a struct&#39;s field. Here, <code>structField</code> is expected to be a field of the struct whose type information is passed as <code>structType</code>.</p>
+</li>
+<li><p><code>directive string</code>: This is a string parameter that might be used to give specific instructions for the <code>Applier</code> method.</p>
+</li>
+</ol>
+<p>The <code>Applier</code> method returns two values:</p>
+<ol>
+<li><p><code>Applier</code>: This is likely another interface or a function type that applies some operation. Without more context, it&#39;s hard to determine exactly what <code>Applier</code> does.</p>
+</li>
+<li><p><code>gomerr.Gomerr</code>: This is an error type from the <code>gomerr</code> package. <code>Gomerr</code> is a package for enhanced error handling in Go. This suggests that the <code>Applier</code> method can result in an error that needs to be handled by the caller.</p>
+</li>
+</ol>
+<p>The <code>ApplierProvider</code> interface could be used to apply certain operations or transformations on the fields of a struct, based on the provided directive. The exact operation would depend on the implementation of the <code>Applier</code> method.</p>
+<p>For more information on Go interfaces, the <code>reflect</code> package, and error handling in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/interfaces">Go by Example: Interfaces</a></li>
+<li><a href="https://golang.org/ref/spec#Interface_types">The Go Programming Language Specification: Interface types</a></li>
+<li><a href="https://golang.org/pkg/reflect/">Go&#39;s reflect package</a></li>
+<li><a href="https://blog.golang.org/error-handling-and-go">Error handling in Go</a></li>
+<li><a href="https://pkg.go.dev/github.com/bdlm/gomerr@v0.0.0-20161102181505-0c3c03a7d1fa">Gomerr package</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:23 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:25 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:44 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 144</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The interface method <code>Applier</code> uses reflection which is computationally expensive and can lead to high CPU usage.</p>
+<p><strong>Solution</strong>: Avoid using reflection where possible. If the data types are known beforehand, consider using a more direct method to access or modify them. If reflection is necessary, consider caching the results of reflective operations to avoid repeating them unnecessarily. More on reflection performance in Go can be found here: <a href="https://go.dev/play/p/8A2pY2j1ZBn">https://go.dev/play/p/8A2pY2j1ZBn</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:46:55 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 144</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The interface ApplierProvider might be used to apply operations on data fields. If these operations involve personal data, it could potentially lead to GDPR compliance issues. The code does not show any evidence of mechanisms to check if the data is personal or not before applying operations.</p>
+<p><strong>Solution</strong>: Consider implementing a mechanism to check if the data is personal or not before applying operations. If it is personal data, make sure you have user consent before processing it. Also, consider anonymizing or pseudonymizing the data where possible to reduce the risk of GDPR non-compliance.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 144</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The interface ApplierProvider might be used to apply operations on data fields. If these operations involve cardholder data, it could potentially lead to PCI DSS compliance issues. The code does not show any evidence of mechanisms to check if the data is cardholder data or not before applying operations.</p>
+<p><strong>Solution</strong>: Consider implementing a mechanism to check if the data is cardholder data or not before applying operations. If it is cardholder data, make sure you are following the PCI DSS requirements for processing it. Also, consider encrypting the data where possible to reduce the risk of PCI DSS non-compliance.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 144</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The interface ApplierProvider might be used to apply operations on data fields. If these operations involve Protected Health Information (PHI), it could potentially lead to HIPAA compliance issues. The code does not show any evidence of mechanisms to check if the data is PHI or not before applying operations.</p>
+<p><strong>Solution</strong>: Consider implementing a mechanism to check if the data is PHI or not before applying operations. If it is PHI, make sure you are following the HIPAA requirements for processing it. Also, consider encrypting the data where possible to reduce the risk of HIPAA non-compliance.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 77:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> DirectiveProvider interface {
+	<span class="hljs-constructor">Get(<span class="hljs-params">structType</span> <span class="hljs-params">reflect</span>.Type, <span class="hljs-params">structField</span> <span class="hljs-params">reflect</span>.StructField)</span> <span class="hljs-built_in">string</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:28:07 PM PDT</p>
+<p>The code you provided defines a Go interface named <code>DirectiveProvider</code>. An interface in Go is a custom data type that sets a contract for certain methods. It means that any type that defines all the methods specified in the interface is implicitly implementing the interface. </p>
+<p>In this case, the <code>DirectiveProvider</code> interface has one method, <code>Get</code>, which takes two parameters and returns a string. The parameters are of types <code>reflect.Type</code> and <code>reflect.StructField</code>, which are from the <code>reflect</code> package in Go&#39;s standard library. The <code>reflect</code> package allows a program to inspect the type and structure of its own code at runtime.</p>
+<p>Here is a detailed explanation of the <code>Get</code> method:</p>
+<ul>
+<li><p><code>structType reflect.Type</code>: This is the type of the struct that we want to inspect. <code>reflect.Type</code> is an interface that represents Go&#39;s types.</p>
+</li>
+<li><p><code>structField reflect.StructField</code>: This is a specific field within the struct that we want to inspect. <code>reflect.StructField</code> is a struct that includes information about the struct&#39;s field, like its name and type.</p>
+</li>
+<li><p><code>string</code>: This is the return type of the <code>Get</code> method. The method is expected to return a string.</p>
+</li>
+</ul>
+<p>This <code>DirectiveProvider</code> interface could be used in a variety of contexts where you need to extract some directive or metadata from a struct&#39;s field. The specific algorithm or logic to do so would be implemented in the <code>Get</code> method of any type that implements this interface.</p>
+<p>You can learn more about interfaces in Go from the official Go documentation: <a href="https://golang.org/doc/effective_go#interfaces">https://golang.org/doc/effective_go#interfaces</a></p>
+<p>And here is more about the <code>reflect</code> package: <a href="https://golang.org/pkg/reflect/">https://golang.org/pkg/reflect/</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:27 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:29 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:48 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:46:58 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 81:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> <span class="hljs-type">StructTagDirectiveProvider</span> struct {
+	<span class="hljs-type">TagKey</span> string
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:28:45 PM PDT</p>
+<p>The provided code snippet is written in Go (also known as Golang), a statically typed, compiled language developed by Google. This snippet is very minimal and only defines a struct, which is a composite data type grouping together zero or more values with different types.</p>
+<p>Here&#39;s a breakdown of the code:</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> StructTagDirectiveProvider <span class="hljs-keyword">struct</span> {
+    TagKey <span class="hljs-type">string</span>
+}
+</code></pre><p>This code defines a new <code>struct</code> type named <code>StructTagDirectiveProvider</code>. The struct has one field, <code>TagKey</code>, which is of type <code>string</code>. </p>
+<p>In Go, <code>type</code> is a keyword used to define new types. <code>Struct</code> is a keyword used to define a composite type grouping together zero or more values, which can be of different types.</p>
+<p><code>StructTagDirectiveProvider</code> is the name of the new type being defined. It follows the convention in Go of using CamelCase for type names.</p>
+<p><code>struct</code> is followed by <code>{}</code> which enclose the fields of the struct. Each field has a name and a type. In this case, there&#39;s only one field, <code>TagKey</code>, and its type is <code>string</code>.</p>
+<p>From the name of the struct, we can infer that instances of this type might be used to provide directives for handling struct tags in some way. However, without more context or code, it&#39;s hard to say exactly how this struct is used in the larger application.</p>
+<p>Struct tags in Go are string-based metadata that can be attached to struct fields. They can be used to provide additional instructions on how to process or handle the associated field. For example, struct tags are often used to specify how a field should be serialized to or deserialized from JSON.</p>
+<p>Here are some useful resources for learning more about Go and its syntax:</p>
+<ul>
+<li><a href="https://tour.golang.org/welcome/1">A Tour of Go</a>: An interactive introduction to Go.</li>
+<li><a href="https://golang.org/doc/effective_go">Effective Go</a>: A guide to writing Go effectively, covering topics like formatting, naming conventions, and more.</li>
+<li><a href="https://gobyexample.com/structs">Go by Example: Structs</a>: An example-based guide to structs in Go.</li>
+<li><a href="https://www.callicoder.com/golang-structs-methods-interfaces-tutorial/">Go Structs and Interfaces</a>: A tutorial on using structs and interfaces in Go.</li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:30 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:32 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:50 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:47:10 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 160</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The &#39;StructTagDirectiveProvider&#39; struct only contains a &#39;TagKey&#39; string. This is potentially concerning as it may be used to store sensitive data, such as Personal Identifiable Information (PII), without any form of encryption or security measures.</p>
+<p><strong>Solution</strong>: Ensure the &#39;TagKey&#39; is not used to store sensitive data. If it is necessary to store such data, it should be encrypted and managed according to GDPR, PCI DSS, and HIPAA standards.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 85:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (s StructTagDirectiveProvider) <span class="hljs-constructor">Get(<span class="hljs-params">_</span> <span class="hljs-params">reflect</span>.Type, <span class="hljs-params">structField</span> <span class="hljs-params">reflect</span>.StructField)</span> <span class="hljs-built_in">string</span> {
+	return structField.Tag.<span class="hljs-constructor">Get(<span class="hljs-params">s</span>.TagKey)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:29:17 PM PDT</p>
+<p>The code provided is a method in Go programming language. It is part of a struct named <code>StructTagDirectiveProvider</code>. This struct is not defined in the provided code, but it likely contains a field named <code>TagKey</code> which is used in the method.</p>
+<p>The method <code>Get</code> takes two parameters:</p>
+<ol>
+<li><p>An anonymous parameter of type <code>reflect.Type</code>. The underscore <code>_</code> means that the parameter is not used in the function body.</p>
+</li>
+<li><p>A parameter named <code>structField</code> of type <code>reflect.StructField</code>. This represents a single field in a struct.</p>
+</li>
+</ol>
+<p>The method returns a string, which is retrieved by calling <code>structField.Tag.Get(s.TagKey)</code>. </p>
+<p>In Go, <code>reflect.StructField</code> has a field <code>Tag</code> of type <code>reflect.StructTag</code>. This <code>Tag</code> is a string that holds the tag associated with the struct field in its definition. The <code>Get</code> function is a method of <code>reflect.StructTag</code> that extracts the value associated with a key in the tag string.</p>
+<p>The <code>s.TagKey</code> is likely a string stored in the <code>StructTagDirectiveProvider</code> struct that specifies which tag value to retrieve from the struct field.</p>
+<p>As for the algorithm, it&#39;s quite straightforward: </p>
+<ol>
+<li>The function takes in a struct field.</li>
+<li>It reads the tag of that struct field.</li>
+<li>It retrieves the value associated with the key stored in <code>s.TagKey</code> from the tag.</li>
+<li>It returns this value.</li>
+</ol>
+<p>This function can be used to retrieve and use metadata stored in the tags of struct fields. This is a common pattern in Go, especially in packages that deal with serialization, marshalling, validation, and more.</p>
+<p>For more information on reflection and struct tags in Go, refer to the following resources:</p>
+<ul>
+<li><a href="https://blog.golang.org/laws-of-reflection">The Laws of Reflection</a></li>
+<li><a href="https://gobyexample.com/structs">Go by Example: Structs</a></li>
+<li><a href="https://golang.org/pkg/reflect/">Go Documentation: reflect</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:34 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:36 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:54 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:47:37 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function is directly accessing and returning data from a struct field without any checks or validations. This could potentially lead to unauthorized access or exposure of sensitive data.</p>
+<p><strong>Solution</strong>: Implement checks to ensure that only authorized access is allowed. Also, consider encrypting sensitive data and decrypting it when needed. This would add an extra layer of security to the data handling process.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function could potentially access and return health-related data without any checks or validations. This is in violation of HIPAA, which requires that health data be handled with extra care and security.</p>
+<p><strong>Solution</strong>: Implement checks to ensure that health data is handled in accordance with HIPAA regulations. This could include checking if the data is health-related before accessing it, encrypting health data, and ensuring that only authorized individuals have access to health data.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function could potentially access and return payment card data without any checks or validations. This is in violation of PCI DSS, which requires that payment card data be handled with extra care and security.</p>
+<p><strong>Solution</strong>: Implement checks to ensure that payment card data is handled in accordance with PCI DSS regulations. This could include checking if the data is payment card data before accessing it, encrypting payment card data, and ensuring that only authorized individuals have access to payment card data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 89:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+var (
+	idGen           =<span class="hljs-built_in"> id</span>.NewBase36IdGenerator(<span class="hljs-number">4</span>,<span class="hljs-built_in"> id</span>.Chars)
+	preparedStructs = <span class="hljs-keyword">map</span><span class="hljs-built_in">[string</span>]*preparedStruct{}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:29:32 PM PDT</p>
+<p>The provided code snippet is written in the Go programming language. It declares two global variables <code>idGen</code> and <code>preparedStructs</code>.</p>
+<p>Let&#39;s break it down:</p>
+<ol>
+<li><p><code>idGen</code> is a variable of a type returned by <code>id.NewBase36IdGenerator(4, id.Chars)</code>. This is likely an instance of an ID generator that uses a base36 encoding. Base36 is a binary-to-text encoding scheme that represents binary data in an ASCII string format by translating it into a radix-36 representation. The <code>NewBase36IdGenerator</code> function takes two arguments: the length of the generated ID and a set of characters to use for generating the ID. In this case, it&#39;s using a 4-character long ID and the character set defined in <code>id.Chars</code>.</p>
+</li>
+<li><p><code>preparedStructs</code> is a map where the keys are strings and the values are pointers to <code>preparedStruct</code> instances. This map is used to store preprocessed or &quot;prepared&quot; versions of structs. The exact purpose of this map depends on the broader context of the code, but it&#39;s common to use such a structure for caching or for storing precomputed data to avoid redundant computations. The <code>preparedStruct</code> type is not defined in this snippet, so we can&#39;t provide more details about it.</p>
+</li>
+</ol>
+<p>The algorithms used in this code are:</p>
+<ul>
+<li>Base36 encoding for ID generation. This is a simple and efficient algorithm for generating short, unique IDs. You can read more about Base36 and similar encoding schemes <a href="https://en.wikipedia.org/wiki/Base36">here</a>.</li>
+<li>Hash map for storing prepared structs. This is a common data structure used for efficient lookup, insertion, and deletion of values based on their keys. You can read more about hash maps <a href="https://en.wikipedia.org/wiki/Hash_table">here</a>.</li>
+</ul>
+<p>This code seems to be consistent with the architectural guidelines provided in the project blueprint. It uses standard Go idioms and data structures, and it doesn&#39;t appear to conflict with any architectural guidelines or constraints.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:34:37 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:39 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:40:57 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:47:55 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 176</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The use of a non-secure ID generator could potentially lead to the prediction of generated IDs, compromising data privacy.</p>
+<p><strong>Solution</strong>: Use a secure and unpredictable ID generator. This will ensure that generated IDs cannot be predicted, enhancing data privacy.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 177</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: Storing prepared structures in a globally accessible map could lead to data exposure. If sensitive data is stored in these structures, it could be accessed inappropriately.</p>
+<p><strong>Solution</strong>: Limit the scope of the preparedStructs map to where it is needed. If it must be global, ensure that access to it is controlled and that sensitive data is not stored in it.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 93:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>	timeType        = reflect.TypeOf((*time.Time)(<span class="hljs-literal">nil</span>)).Elem()
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">process</span><span class="hljs-params">(st reflect.Type, tools ...*Tool)</span></span> (*preparedStruct, []gomerr.Gomerr) {
+	<span class="hljs-keyword">for</span> k := st.Kind(); k != reflect.Struct; k = st.Kind() {
+		<span class="hljs-keyword">switch</span> st.Kind() {
+		<span class="hljs-keyword">case</span> reflect.Array, reflect.Map, reflect.Ptr, reflect.Slice:
+			st = st.Elem()
+		<span class="hljs-keyword">default</span>:
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>
+		}
+	}
+
+	<span class="hljs-comment">// Time structs are a special case, ignore.</span>
+	<span class="hljs-keyword">if</span> st == timeType {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>
+	}
+
+	<span class="hljs-keyword">var</span> toolsForStruct []*Tool
+	typeName := st.String()
+	ps, ok := preparedStructs[typeName]
+	<span class="hljs-keyword">if</span> ok {
+		<span class="hljs-keyword">for</span> _, tool := <span class="hljs-keyword">range</span> tools {
+			<span class="hljs-keyword">if</span> !ps.applied[tool.Id()] {
+				toolsForStruct = <span class="hljs-built_in">append</span>(toolsForStruct, tool)
+			}
+		}
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(toolsForStruct) == <span class="hljs-number">0</span> {
+			<span class="hljs-comment">// No work to do, return</span>
+			<span class="hljs-keyword">return</span> ps, <span class="hljs-literal">nil</span>
+		}
+	} <span class="hljs-keyword">else</span> {
+		toolsForStruct = tools
+		ps = &amp;preparedStruct{
+			typeName: typeName,
+			fields:   <span class="hljs-built_in">make</span>([]*field, <span class="hljs-number">0</span>, st.NumField()),
+			applied:  <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">bool</span>, <span class="hljs-built_in">len</span>(toolsForStruct)),
+		}
+	}
+
+	errors := <span class="hljs-built_in">make</span>([]gomerr.Gomerr, <span class="hljs-number">0</span>)
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; st.NumField(); i++ {
+		sf := st.Field(i)
+
+		<span class="hljs-keyword">if</span> sf.Tag.Get(<span class="hljs-string">&quot;structs&quot;</span>) == <span class="hljs-string">&quot;ignore&quot;</span> {
+			<span class="hljs-keyword">continue</span>
+		}
+
+		sft := sf.Type
+		<span class="hljs-keyword">switch</span> sft.Kind() {
+		<span class="hljs-keyword">case</span> reflect.Struct:
+			<span class="hljs-keyword">if</span> subStruct, subErrors := process(sf.Type, toolsForStruct...); <span class="hljs-built_in">len</span>(subErrors) &gt; <span class="hljs-number">0</span> {
+				errors = <span class="hljs-built_in">append</span>(errors, subErrors...)
+			} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> sf.Anonymous {
+				<span class="hljs-keyword">for</span> _, f := <span class="hljs-keyword">range</span> subStruct.fields {
+					ps.addAppliers(f.name, f.appliers)
+				}
+			}
+		<span class="hljs-keyword">case</span> reflect.Array, reflect.Map, reflect.Ptr, reflect.Slice:
+			<span class="hljs-keyword">if</span> sft.String() == <span class="hljs-string">&quot;*resource.metadata&quot;</span> {
+				<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Found&quot;</span>, sft.String())
+			}
+			_, subErrors := process(sft.Elem(), tools...)
+			errors = <span class="hljs-built_in">append</span>(errors, subErrors...)
+		}
+
+		<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Is there a case where we want to interpret a directive on this attribute?</span>
+		<span class="hljs-keyword">if</span> unicode.IsLower([]<span class="hljs-type">rune</span>(sf.Name)[<span class="hljs-number">0</span>]) {
+			<span class="hljs-keyword">continue</span>
+		}
+
+		appliers := <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]Applier{}
+		<span class="hljs-keyword">for</span> _, tool := <span class="hljs-keyword">range</span> toolsForStruct {
+			<span class="hljs-keyword">if</span> applier, ge := tool.applierFor(st, sf); ge != <span class="hljs-literal">nil</span> {
+				errors = <span class="hljs-built_in">append</span>(errors, ge)
+			} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> applier != <span class="hljs-literal">nil</span> {
+				appliers[tool.Id()] = applier
+			}
+			ps.applied[tool.Id()] = <span class="hljs-literal">true</span>
+		}
+		ps.addAppliers(sf.Name, appliers)
+	}
+
+	<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(errors) == <span class="hljs-number">0</span> {
+		preparedStructs[ps.typeName] = ps
+	}
+
+	<span class="hljs-keyword">return</span> ps, errors
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:30:17 PM PDT</p>
+<p>This Go code defines a function <code>process()</code> which takes in a type <code>st</code> and a variadic parameter of pointers to <code>Tool</code> objects, and returns a pointer to <code>preparedStruct</code> and a slice of <code>gomerr.Gomerr</code> errors. </p>
+<p>The function <code>process()</code> is used to process a struct type, apply validation tools to it, and prepare it for further use.</p>
+<p>Here&#39;s a detailed breakdown of the code:</p>
+<ol>
+<li><p>The function first checks if the kind of <code>st</code> is not a struct. If it is not, it tries to get the underlying type if <code>st</code> is an array, map, pointer, or slice. If it is none of these, it returns <code>nil</code>.</p>
+</li>
+<li><p>It then checks if <code>st</code> is a <code>time.Time</code> type. If it is, the function returns <code>nil</code> because <code>time.Time</code> is a special case that should be ignored.</p>
+</li>
+<li><p>The function then checks if <code>st</code> has already been processed. If it has, it checks if any tools have not been applied to <code>st</code>. If all tools have been applied, it returns the prepared struct. If not, it adds the unapplied tools to <code>toolsForStruct</code>.</p>
+</li>
+<li><p>If <code>st</code> has not been processed before, it initializes a new <code>preparedStruct</code> and assigns all tools to <code>toolsForStruct</code>.</p>
+</li>
+<li><p>The function then loops over all fields in <code>st</code>. If a field is tagged with &quot;ignore&quot;, it is skipped. If a field is a struct, <code>process()</code> is called recursively on the field. If the field is an array, map, pointer, or slice, <code>process()</code> is called recursively on the element type of the field.</p>
+</li>
+<li><p>If the first character of a field&#39;s name is lowercase, it is skipped. This is because in Go, lowercase fields are unexported and cannot be accessed outside the package.</p>
+</li>
+<li><p>The function then loops over all tools in <code>toolsForStruct</code> and applies them to the field. If a tool returns an error, it is added to <code>errors</code>. If a tool returns an applier, it is added to <code>appliers</code>.</p>
+</li>
+<li><p>Finally, if there are no errors, the prepared struct is added to <code>preparedStructs</code>.</p>
+</li>
+</ol>
+<p>This code uses the reflection package extensively to inspect and manipulate types and values at runtime. The algorithm used is a form of depth-first search where it recursively processes nested structs and fields.</p>
+<p>For more information on reflection in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://go.dev/blog/laws-of-reflection">The Laws of Reflection</a></li>
+<li><a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></li>
+<li><a href="https://medium.com/swlh/a-practical-guide-to-using-reflect-in-go-9f7eac9fbe3e">A Practical Guide to Using reflect in Go</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:35:21 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Process fill:#228B22, stroke:#000000, stroke-width:4px;
+style ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->AA;
+AA-->AB;
+AB-->AC;
+AC-->AD;
+AD-->AE;
+AE-->AF;
+AF-->AG;
+AG-->AH;
+AH-->AI;
+AI-->AJ;
+AJ-->AK;
+AK-->AL;
+AL-->AM;
+AM-->AN;
+AN-->AO;
+AO-->AP;
+AP-->AQ;
+AQ-->AR;
+AR-->AS;
+AS-->AT;
+AT-->AU;
+AU-->AV;
+AV-->AW;
+AW-->AX;
+AX-->AY;
+AY-->AZ;
+AZ-->BA;
+BA-->BB;
+BB-->BC;
+BC-->BD;
+BD-->BE;
+BE-->BF;
+BF-->BG;
+BG-->BH;
+BH-->BI;
+BI-->BJ;
+BJ-->BK;
+BK-->BL;
+BL-->BM;
+BM-->BN;
+BN-->BO;
+BO-->BP;
+BP-->BQ;
+BQ-->BR;
+BR-->BS;
+BS-->BT;
+BT-->BU;
+BU-->BV;
+BV-->BW;
+BW-->BX;
+BX-->BY;
+BY-->BZ;
+BZ-->CA;
+CA-->CB;
+CB-->CC;
+CC-->CD;
+CD-->CE;
+CE-->CF;
+CF-->CG;
+CG-->CH;
+CH-->CI;
+CI-->CJ;
+CJ-->CK;
+CK-->CL;
+CL-->CM;
+CM-->CN;
+CN-->CO;
+CO-->CP;
+CP-->CQ;
+CQ-->CR;
+CR-->CS;
+CS-->CT;
+CT-->CU;
+CU-->CV;
+CV-->CW;
+CW-->CX;
+CX-->CY;
+CY-->CZ;
+CZ-->DA;
+DA-->DB;
+DB-->DC;
+DC-->DD;
+DD-->DE;
+DE-->DF;
+DF-->DG;
+DG-->DH;
+DH-->DI;
+DI-->DJ;
+DJ-->DK;
+DK-->DL;
+DL-->DM;
+DM-->DN;
+DN-->DO;
+DO-->DP;
+DP-->DQ;
+DQ-->DR;
+DR-->DS;
+DS-->DT;
+DT-->DU;
+DU-->DV;
+DV-->DW;
+DW-->DX;
+DX-->DY;
+DY-->DZ;
+DZ-->EA;
+EA-->EB;
+EB-->EC;
+EC-->ED;
+ED-->EE;
+EE-->EF;
+EF-->EG;
+EG-->EH;
+EH-->EI;
+EI-->EJ;
+EJ-->EK;
+EK-->EL;
+EL-->EM;
+EM-->EN;
+EN-->EO;
+EO-->EP;
+EP-->EQ;
+EQ-->ER;
+ER-->ES;
+ES-->ET;
+ET-->EU;
+EU-->EV;
+EV-->EW;
+EW-->EX;
+EX-->EY;
+EY-->EZ;
+EZ-->FA;
+FA-->FB;
+FB-->FC;
+FC-->FD;
+FD-->FE;
+FE-->FF;
+FF-->FG;
+FG-->FH;
+FH-->FI;
+FI-->FJ;
+FJ-->FK;
+FK-->FL;
+FL-->FM;
+FM-->FN;
+FN-->FO;
+FO-->FP;
+FP-->FQ;
+FQ-->FR;
+FR-->FS;
+FS-->FT;
+FT-->FU;
+FU-->FV;
+FV-->FW;
+FW-->FX;
+FX-->FY;
+FY-->FZ;
+FZ-->GA;
+GA-->GB;
+GB-->GC;
+GC-->GD;
+GD-->GE;
+GE-->GF;
+GF-->GG;
+GG-->GH;
+GH-->GI;
+GI-->GJ;
+GJ-->GK;
+GK-->GL;
+GL-->GM;
+GM-->GN;
+GN-->GO;
+GO-->GP;
+GP-->GQ;
+GQ-->GR;
+GR-->GS;
+GS-->GT;
+GT-->GU;
+GU-->GV;
+GV-->GW;
+GW-->GX;
+GX-->GY;
+GY-->GZ;
+GZ-->HA;
+HA-->HB;
+HB-->HC;
+HC-->HD;
+HD-->HE;
+HE-->HF;
+HF-->HG;
+HG-->HH;
+HH-->HI;
+HI-->HJ;
+HJ-->HK;
+HK-->HL;
+HL-->HM;
+HM-->HN;
+HN-->HO;
+HO-->HP;
+HP-->HQ;
+HQ-->HR;
+HR-->HS;
+HS-->HT;
+HT-->HU;
+HU-->HV;
+HV-->HW;
+HW-->HX;
+HX-->HY;
+HY-->HZ;
+HZ-->IA;
+IA-->IB;
+IB-->IC;
+IC-->ID;
+ID-->IE;
+IE-->IF;
+IF-->IG;
+IG-->IH;
+IH-->II;
+II-->IJ;
+IJ-->IK;
+IK-->IL;
+IL-->IM;
+IM-->IN;
+IN-->IO;
+IO-->IP;
+IP-->IQ;
+IQ-->IR;
+IR-->IS;
+IS-->IT;
+IT-->IU;
+IU-->IV;
+IV-->IW;
+IW-->IX;
+IX-->IY;
+IY-->IZ;
+IZ-->JA;
+JA-->JB;
+JB-->JC;
+JC-->JD;
+JD-->JE;
+JE-->JF;
+JF-->JG;
+JG-->JH;
+JH-->JI;
+JI-->JJ;
+JJ-->JK;
+JK-->JL;
+JL-->JM;
+JM-->JN;
+JN-->JO;
+JO-->JP;
+JP-->JQ;
+JQ-->JR;
+JR-->JS;
+JS-->JT;
+JT-->JU;
+JU-->JV;
+JV-->JW;
+JW-->JX;
+JX-->JY;
+JY-->JZ;
+JZ-->KA;
+KA-->KB;
+KB-->KC;
+KC-->KD;
+KD-->KE;
+KE-->KF;
+KF-->KG;
+KG-->KH;
+KH-->KI;
+KI-->KJ;
+KJ-->KK;
+KK-->KL;
+KL-->KM;
+KM-->KN;
+KN-->KO;
+KO-->KP;
+KP-->KQ;
+KQ-->KR;
+KR-->KS;
+KS-->KT;
+KT-->KU;
+KU-->KV;
+KV-->KW;
+KW-->KX;
+KX-->KY;
+KY-->KZ;
+KZ-->LA;
+LA-->LB;
+LB-->LC;
+LC-->LD;
+LD-->LE;
+LE-->LF;
+LF-->LG;
+LG-->LH;
+LH-->LI;
+LI-->LJ;
+LJ-->LK;
+LK-->LL;
+LL-->LM;
+LM-->LN;
+LN-->LO;
+LO-->LP;
+LP-->LQ;
+LQ-->LR;
+LR-->LS;
+LS-->LT;
+LT-->LU;
+LU-->LV;
+LV-->LW;
+LW-->LX;
+LX-->LY;
+LY-->LZ;
+LZ-->MA;
+MA-->MB;
+MB-->MC;
+MC-->MD;
+MD-->ME;
+ME-->MF;
+MF-->MG;
+MG-->MH;
+MH-->MI;
+MI-->MJ;
+MJ-->MK;
+MK-->ML;
+ML-->MM;
+MM-->MN;
+MN-->MO;
+MO-->MP;
+MP-->MQ;
+MQ-->MR;
+MR-->MS;
+MS-->MT;
+MT-->MU;
+MU-->MV;
+MV-->MW;
+MW-->MX;
+MX-->MY;
+MY-->MZ;
+MZ-->NA;
+NA-->NB;
+NB-->NC;
+NC-->ND;
+ND-->NE;
+NE-->NF;
+NF-->NG;
+NG-->NH;
+NH-->NI;
+NI-->NJ;
+NJ-->NK;
+NK-->NL;
+NL-->NM;
+NM-->NN;
+NN-->NO;
+NO-->NP;
+NP-->NQ;
+NQ-->NR;
+NR-->NS;
+NS-->NT;
+NT-->NU;
+NU-->NV;
+NV-->NW;
+NW-->NX;
+NX-->NY;
+NY-->NZ;
+NZ-->OA;
+OA-->OB;
+OB-->OC;
+OC-->OD;
+OD-->OE;
+OE-->OF;
+OF-->OG;
+OG-->OH;
+OH-->OI;
+OI-->OJ;
+OJ-->OK;
+OK-->OL;
+OL-->OM;
+OM-->ON;
+ON-->OO;
+OO-->OP;
+OP-->OQ;
+OQ-->OR;
+OR-->OS;
+OS-->OT;
+OT-->OU;
+OU-->OV;
+OV-->OW;
+OW-->OX;
+OX-->OY;
+OY-->OZ;
+OZ-->PA;
+PA-->PB;
+PB-->PC;
+PC-->PD;
+PD-->PE;
+PE-->PF;
+PF-->PG;
+PG-->PH;
+PH-->PI;
+PI-->PJ;
+PJ-->PK;
+PK-->PL;
+PL-->PM;
+PM-->PN;
+PN-->PO;
+PO-->PP;
+PP-->PQ;
+PQ-->PR;
+PR-->PS;
+PS-->PT;
+PT-->PU;
+PU-->PV;
+PV-->PW;
+PW-->PX;
+PX-->PY;
+PY-->PZ;
+PZ-->QA;
+QA-->QB;
+QB-->QC;
+QC-->QD;
+QD-->QE;
+QE-->QF;
+QF-->QG;
+QG-->QH;
+QH-->QI;
+QI-->QJ;
+QJ-->QK;
+QK-->QL;
+QL-->QM;
+QM-->QN;
+QN-->QO;
+QO-->QP;
+QP-->QQ;
+QQ-->QR;
+QR-->QS;
+QS-->QT;
+QT-->QU;
+QU-->QV;
+QV-->QW;
+QW-->QX;
+QX-->QY;
+QY-->QZ;
+QZ-->RA;
+RA-->RB;
+RB-->RC;
+RC-->RD;
+RD-->RE;
+RE-->RF;
+RF-->RG;
+RG-->RH;
+RH-->RI;
+RI-->RJ;
+RJ-->RK;
+RK-->RL;
+RL-->RM;
+RM-->RN;
+RN-->RO;
+RO-->RP;
+RP-->RQ;
+RQ-->RR;
+RR-->RS;
+RS-->RT;
+RT-->RU;
+RU-->RV;
+RV-->RW;
+RW-->RX;
+RX-->RY;
+RY-->RZ;
+RZ-->SA;
+SA-->SB;
+SB-->SC;
+SC-->SD;
+SD-->SE;
+SE-->SF;
+SF-->SG;
+SG-->SH;
+SH-->SI;
+SI-->SJ;
+SJ-->SK;
+SK-->SL;
+SL-->SM;
+SM-->SN;
+SN-->SO;
+SO-->SP;
+SP-->SQ;
+SQ-->SR;
+SR-->SS;
+SS-->ST;
+ST-->SU;
+SU-->SV;
+SV-->SW;
+SW-->SX;
+SX-->SY;
+SY-->SZ;
+SZ-->TA;
+TA-->TB;
+TB-->TC;
+TC-->TD;
+TD-->TE;
+TE-->TF;
+TF-->TG;
+TG-->TH;
+TH-->TI;
+TI-->TJ;
+TJ-->TK;
+TK-->TL;
+TL-->TM;
+TM-->TN;
+TN-->TO;
+TO-->TP;
+TP-->TQ;
+TQ-->TR;
+TR-->TS;
+TS-->TT;
+TT-->TU;
+TU-->TV;
+TV-->TW;
+TW-->TX;
+TX-->TY;
+TY-->TZ;
+TZ-->UA;
+UA-->UB;
+UB-->UC;
+UC-->UD;
+UD-->UE;
+UE-->UF;
+UF-->UG;
+UG-->UH;
+UH-->UI;
+UI-->UJ;
+UJ-->UK;
+UK-->UL;
+UL-->UM;
+UM-->UN;
+UN-->UO;
+UO-->UP;
+UP-->UQ;
+UQ-->UR;
+UR-->US;
+US-->UT;
+UT-->UU;
+UU-->UV;
+UV-->UW;
+UW-->UX;
+UX-->UY;
+UY-->UZ;
+UZ-->VA;
+VA-->VB;
+VB-->VC;
+VC-->VD;
+VD-->VE;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:42 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:41:33 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 191</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflect package for type checking can be computationally expensive and slow down performance.</p>
+<p><strong>Solution</strong>: Consider using type assertions or type switches for better performance. More details can be found here: <a href="https://go.dev/play/p/8ByVn-13aq2">https://go.dev/play/p/8ByVn-13aq2</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 208</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Repeated use of append() on slices can lead to high memory usage and potential memory leaks.</p>
+<p><strong>Solution</strong>: Consider preallocating slices where the size is known in advance, or use buffers or other data structures for more efficient memory usage. More details can be found here: <a href="https://go.dev/blog/slices">https://go.dev/blog/slices</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 222</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of recursion in the process function can lead to high CPU usage and potential stack overflow errors.</p>
+<p><strong>Solution</strong>: Consider using iterative solutions instead of recursion for better performance and safety. More details can be found here: <a href="https://stackoverflow.com/questions/2093618/can-a-recursive-function-be-changed-to-iterative">https://stackoverflow.com/questions/2093618/can-a-recursive-function-be-changed-to-iterative</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 243</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of unicode.IsLower() function can lead to high CPU usage as it checks all characters in the string.</p>
+<p><strong>Solution</strong>: Consider using a more efficient string processing function, or limiting the number of characters checked. More details can be found here: <a href="https://go.dev/play/p/8nD2X-_1xHn">https://go.dev/play/p/8nD2X-_1xHn</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 252</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of map data structure can lead to high memory usage if not managed properly.</p>
+<p><strong>Solution</strong>: Consider using a more memory-efficient data structure, or ensure that unused entries are deleted from the map. More details can be found here: <a href="https://go.dev/blog/maps">https://go.dev/blog/maps</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:48:28 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 198</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;process&#39; does not have any mechanism to handle or notify about personal data. This can lead to unauthorized processing of personal data, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement mechanisms to identify and handle personal data. You can use data classification or tagging to identify personal data and apply appropriate data handling strategies. Also, consider implementing user consent management to ensure that personal data is not processed without user consent.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 220</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;process&#39; does not have any mechanism to handle or notify about Protected Health Information (PHI). This can lead to unauthorized processing of PHI, which is a violation of HIPAA.</p>
+<p><strong>Solution</strong>: Implement mechanisms to identify and handle PHI. PHI should be encrypted both at rest and in transit. Also, consider implementing access controls to ensure that PHI is not accessed by unauthorized individuals.</p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 226</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;process&#39; does not have any mechanism to handle or notify about cardholder data. This can lead to unauthorized processing of cardholder data, which is a violation of PCI DSS.</p>
+<p><strong>Solution</strong>: Implement mechanisms to identify and handle cardholder data. Cardholder data should be encrypted both at rest and in transit. Also, consider implementing access controls to ensure that cardholder data is not accessed by unauthorized individuals.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 182:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-built_in">type</span> preparedStruct <span class="hljs-keyword">struct</span> {
+	typeName <span class="hljs-keyword">string</span>
+	fields   []*field
+	applied  map[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">bool</span> <span class="hljs-comment">// tool id -&gt; true (if applied)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:30:54 PM PDT</p>
+<p>The provided code snippet is written in the Go programming language. It defines a structure named <code>preparedStruct</code>. </p>
+<p>In Go, a <code>struct</code> is a composite data type that groups together zero or more values with different types. They are useful for grouping data together to create records. </p>
+<p>The <code>preparedStruct</code> has three fields:</p>
+<ol>
+<li><p><code>typeName</code>: This is a string field that likely holds the name of the type for the struct that is being prepared.</p>
+</li>
+<li><p><code>fields</code>: This is a slice (analogous to a list in other languages) of pointers to <code>field</code> structures. The <code>field</code> struct is not defined in the provided code, but it likely represents a field of the struct that is being prepared. Pointers are used to store the memory address of a value, and in this case, they are used to reference the <code>field</code> structures.</p>
+</li>
+<li><p><code>applied</code>: This is a map with string keys and boolean values. In Go, a map is a built-in data type that associates values of one type (the key) with values of another type (the element or value). The keys are unique within a map while the values may not be. The key in this map is the <code>tool id</code> and the value is a boolean which is true if the tool has been applied.</p>
+</li>
+</ol>
+<p>The purpose of this <code>preparedStruct</code> is not entirely clear from the provided code snippet alone, but it appears to be used for tracking the state of a struct that is being prepared, possibly for serialization, validation, or some other form of processing. The <code>applied</code> map, in particular, suggests that this struct is used to track which tools or operations have been applied to the struct.</p>
+<p>For more information on Go structs, maps, and pointers, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/structs">Go Structs</a></li>
+<li><a href="https://gobyexample.com/maps">Go Maps</a></li>
+<li><a href="https://gobyexample.com/pointers">Go Pointers</a></li>
+</ul>
+<p>In terms of architectural guidelines, this code is consistent with common Go practices. It uses built-in data types effectively and makes use of pointers for referencing complex data structures. It&#39;s also worth noting that the use of a map to track the state of applied tools is a common pattern in Go, as it provides a simple and efficient way to track state.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:35:30 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ApplyConstraints fill:#228B22, stroke:#000000, stroke-width:2px;
+style ApplyConstraintsError fill:#B22222, stroke:#000000, stroke-width:2px;
+style ApplyValidation fill:#228B22, stroke:#000000, stroke-width:2px;
+style ApplyValidationError fill:#B22222, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start-->ApplyConstraints;
+ApplyConstraints-->ApplyValidation;
+ApplyValidation-->End;
+ApplyConstraintsError-->End;
+ApplyValidationError-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<ol>
+<li>The control flow starts at the &quot;Start&quot; node.</li>
+<li>From the &quot;Start&quot; node, the flow goes to the &quot;ApplyConstraints&quot; node.</li>
+<li>From the &quot;ApplyConstraints&quot; node, the flow goes to the &quot;ApplyValidation&quot; node.</li>
+<li>From the &quot;ApplyValidation&quot; node, the flow goes to the &quot;End&quot; node.</li>
+<li>If there is an error during the &quot;ApplyConstraints&quot; process, the flow goes to the &quot;End&quot; node.</li>
+<li>If there is an error during the &quot;ApplyValidation&quot; process, the flow goes to the &quot;End&quot; node.</li>
+</ol>
+<p>Please note that this control flow graph represents the basic flow of the code. It does not include any external library or non-standard function calls, as they were not present in the provided code snippet.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:46 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:41:50 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 362</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The &#39;applied&#39; map in the &#39;preparedStruct&#39; struct could potentially consume a lot of memory if it contains a large number of entries. The memory usage of a map in Go is proportional to the number of entries it contains.</p>
+<p><strong>Solution</strong>: Consider using a more memory-efficient data structure if the &#39;applied&#39; map is expected to contain a large number of entries. For example, you could use a &#39;bitset&#39; or a &#39;sparse set&#39; if the keys are integers. If the keys are strings, consider using a &#39;trie&#39; or a &#39;hash set&#39; with a custom hash function to reduce memory usage. Here is a resource for more information: <a href="https://go.dev/play/p/6WvJ6Bn5zKp">https://go.dev/play/p/6WvJ6Bn5zKp</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:48:55 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 362</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The &#39;preparedStruct&#39; type does not have any built-in mechanism for anonymization or pseudonymization of personal data, which is a requirement under GDPR.</p>
+<p><strong>Solution</strong>: Consider adding methods to this struct that can anonymize or pseudonymize data when needed. This could be a method that replaces personal data with pseudonyms or anonymized data before it is stored or transmitted.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 365</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The &#39;preparedStruct&#39; type does not have any built-in mechanism for encryption or other security measures to protect PHI (Protected Health Information), which is a requirement under HIPAA.</p>
+<p><strong>Solution</strong>: Consider implementing encryption for data stored in this struct, especially if it might contain PHI. This could be done by adding methods that encrypt and decrypt data when it is stored or retrieved.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 365</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The &#39;preparedStruct&#39; type does not have any built-in mechanism for protecting cardholder data, which is a requirement under PCI DSS.</p>
+<p><strong>Solution</strong>: Consider adding methods to this struct that can protect cardholder data. This could be a method that encrypts cardholder data before it is stored or transmitted, and decrypts it when it is retrieved.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 188:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-built_in">type</span> field <span class="hljs-keyword">struct</span> {
+	name     <span class="hljs-keyword">string</span>
+	appliers map[<span class="hljs-keyword">string</span>]Applier
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:31:26 PM PDT</p>
+<p>The provided code is written in Go programming language. It&#39;s a very simple definition of a custom type named <code>field</code>. </p>
+<p>The <code>field</code> type is a struct, which is a composite data type that groups together zero or more values of different types. It&#39;s similar to a class in other object-oriented programming languages. </p>
+<p>The <code>field</code> struct has two fields:</p>
+<ul>
+<li><code>name</code> is of type <code>string</code>. It will hold the name of the field.</li>
+<li><code>appliers</code> is a map where the key is a <code>string</code> and the value is of type <code>Applier</code>.</li>
+</ul>
+<p>The <code>Applier</code> is not defined in the provided code, but it is likely to be an interface or a function type based on the naming convention. An <code>Applier</code> could be a function that applies some operation on a given field. The exact nature of <code>Applier</code> would depend on the rest of the codebase which is not included here.</p>
+<p>This <code>field</code> struct could be used to represent a field of some data structure, where each field has a name and a set of operations (<code>appliers</code>) that can be performed on it.</p>
+<p>There are no specific algorithms used in this piece of code as it is just a data structure definition. </p>
+<p>For more information on structs and maps in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/moretypes/2">A Tour of Go - Structs</a></li>
+<li><a href="https://tour.golang.org/moretypes/19">A Tour of Go - Maps</a></li>
+<li><a href="https://gobyexample.com/structs">Go by Example: Structs</a></li>
+<li><a href="https://gobyexample.com/maps">Go by Example: Maps</a></li>
+</ul>
+<p>This code doesn&#39;t seem to conflict with any architectural guidelines as it is a simple definition of a custom type. The actual usage of this type in the rest of the codebase would determine its consistency with the architectural guidelines.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:35:34 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Apply fill:#228B22, stroke:#000000, stroke-width:2px;
+style Error fill:#B22222, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start  -->Apply[Apply];
+Apply-->End  ;
+Apply-->Error[Error];</pre>
+</code></pre><p>In the code snippet provided, there is a struct definition for <code>field</code>. However, there is no control flow present in the code. Therefore, the generated control flow graph is a simple linear flow from the start to the end.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:36:49 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:41:53 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:49:09 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 374</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The &#39;field&#39; struct is storing a &#39;name&#39; which could potentially be used to store Personally Identifiable Information (PII). If PII is stored without proper security measures, it could lead to GDPR, PCI DSS, and HIPAA violations.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;name&#39; field is not used to store PII. If it is necessary to store PII, make sure it is encrypted and access to it is controlled. Implement a data anonymization or pseudonymization strategy if possible.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 193:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(ps *preparedStruct)</span></span> addAppliers(fieldName <span class="hljs-type">string</span>, appliersToAdd <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]Applier) {
+	<span class="hljs-keyword">for</span> _, f := <span class="hljs-keyword">range</span> ps.fields {
+		<span class="hljs-keyword">if</span> f.name == fieldName {
+			<span class="hljs-keyword">for</span> toolId, toAdd := <span class="hljs-keyword">range</span> appliersToAdd {
+				<span class="hljs-keyword">if</span> _, hasApplier := f.appliers[toolId]; !hasApplier {
+					f.appliers[toolId] = toAdd
+				}
+			}
+			<span class="hljs-keyword">return</span>
+		}
+	}
+
+	ps.fields = <span class="hljs-built_in">append</span>(ps.fields, &amp;field{fieldName, appliersToAdd})
+	<span class="hljs-keyword">return</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:32:13 PM PDT</p>
+<p>This is a function written in the Go programming language. The function <code>addAppliers</code> is defined on a <code>preparedStruct</code> type. </p>
+<p>The <code>addAppliers</code> function accepts two parameters: <code>fieldName</code> of type string and <code>appliersToAdd</code> which is a map where the key is a string and the value is an <code>Applier</code> type. The function does not return any value.</p>
+<p>The purpose of this function is to add a set of appliers to a field of the <code>preparedStruct</code>. If the field already exists, it adds the appliers to the existing field. If the field does not exist, it creates a new field with the given appliers.</p>
+<p>Here is a step-by-step explanation of the function:</p>
+<ol>
+<li><p>The function begins by iterating over the fields of the <code>preparedStruct</code> using a range loop. </p>
+</li>
+<li><p>It checks if the name of the current field matches the <code>fieldName</code> parameter.</p>
+</li>
+<li><p>If a match is found, it then iterates over the <code>appliersToAdd</code> map using another range loop.</p>
+</li>
+<li><p>For each <code>toolId</code> and <code>toAdd</code> pair in the <code>appliersToAdd</code> map, it checks if the <code>toolId</code> already exists in the <code>appliers</code> of the current field.</p>
+</li>
+<li><p>If the <code>toolId</code> does not exist, it adds the <code>toAdd</code> applier to the <code>appliers</code> of the current field using the <code>toolId</code> as the key.</p>
+</li>
+<li><p>After successfully adding the appliers to the existing field, the function returns, ending its execution.</p>
+</li>
+<li><p>If no field matched the <code>fieldName</code> parameter after iterating over all fields, it creates a new field with the <code>fieldName</code> and <code>appliersToAdd</code> and appends it to the <code>fields</code> of the <code>preparedStruct</code>.</p>
+</li>
+<li><p>Finally, the function returns, ending its execution.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is a simple search and update algorithm. It searches for a specific field in a list of fields and updates it if found. If not found, it adds a new field to the list.</p>
+<p>This function follows the Go best practices of using short, clear variable names, and it uses the built-in map and slice types for efficient data manipulation. The function also makes good use of Go&#39;s zero values - if a key doesn&#39;t exist in a map, the zero value is returned.</p>
+<p>For more information about Go&#39;s maps and slices, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://go.dev/blog/maps">Go maps in action</a></li>
+<li><a href="https://go.dev/blog/slices">Go Slices: usage and internals</a></li>
+</ul>
+<p>The function seems to be consistent with the architectural guidelines provided. It&#39;s modular, focused, and should integrate well in larger codebase where <code>preparedStruct</code> is used.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:35:42 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Loop fill:#228B22, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;
+style External fill:#FFA500, stroke:#000000, stroke-width:2px;
+style Error fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start  -->Loop;
+Loop-->|f.name == fieldName|Condition;
+Condition-->|true|Loop;
+Condition-->|false|AddField;
+AddField-->End  ;
+</pre>
+</code></pre><p>The control flow graph above represents the control flow of the provided code snippet. </p>
+<p>The code starts at the &quot;start&quot; node and enters a loop. Inside the loop, there is a condition that checks if the current field name matches the target field name. If the condition is true, the code continues to loop. If the condition is false, the code adds a new field and exits the loop.</p>
+<p>The loop represents the iteration over the fields in the preparedStruct. The condition represents the check for a matching field name. The AddField node represents the addition of a new field to the preparedStruct. The &quot;end&quot; node represents the end of the code snippet.</p>
+<p>The primary path through the code is the loop, which continues until a matching field name is found. The alternate non-error path is the addition of a new field when no matching field name is found.</p>
+<p>No error paths are present in the provided code snippet.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:37:47 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:42:16 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 386</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses a linear search to find the field with the given name. This could be inefficient if the number of fields is large.</p>
+<p><strong>Solution</strong>: Consider using a map to store the fields instead of a slice. This would allow you to look up fields by name in constant time. If the order of the fields is important, you could use an ordered map or maintain a separate slice for the order.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 393</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function appends a new field to the slice of fields if the field with the given name is not found. This could lead to high memory usage if the function is called many times with different field names.</p>
+<p><strong>Solution</strong>: Consider using a map to store the fields instead of a slice. This would allow you to look up fields by name in constant time and would use less memory if the number of fields is large. If the order of the fields is important, you could use an ordered map or maintain a separate slice for the order.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:49:42 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 388</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;addAppliers&#39; is adding data appliers to fields without any apparent checks for user consent or data minimization principles. This could potentially lead to processing of personal data without explicit consent, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Ensure that user consent is obtained before processing personal data. Also, adhere to the principle of data minimization, which states that only necessary data should be processed.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 390</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;addAppliers&#39; is potentially handling PHI (Protected Health Information) without any apparent checks for data encryption or anonymization. This could lead to violation of HIPAA rules.</p>
+<p><strong>Solution</strong>: Ensure PHI is appropriately encrypted or anonymized before processing. Regular audits should be conducted to ensure compliance.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 388</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;addAppliers&#39; is potentially handling cardholder data without any apparent checks for data encryption or secure processing. This could lead to violation of PCI DSS rules.</p>
+<p><strong>Solution</strong>: Ensure cardholder data is appropriately encrypted before processing and securely stored. Regular audits should be conducted to ensure compliance.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./structs/tool.go line 209:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// ApplyTools will apply the tool associated with each tool type in the appliers slice, in order, to each value in sv.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(ps *preparedStruct)</span></span> applyTools(sv reflect.Value, tc *ToolContext, tools ...*Tool) gomerr.Gomerr {
+	<span class="hljs-keyword">var</span> errors []gomerr.Gomerr
+	<span class="hljs-keyword">for</span> _, tool := <span class="hljs-keyword">range</span> tools {
+		<span class="hljs-keyword">if</span> !ps.applied[tool.Id()] {
+			<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span>p3 verify all tools applied....</span>
+			<span class="hljs-keyword">if</span> _, pErrors := process(sv.Type(), tools...); <span class="hljs-built_in">len</span>(pErrors) &gt; <span class="hljs-number">0</span> {
+				<span class="hljs-keyword">return</span> gomerr.Batcher(pErrors)
+			}
+		}
+
+		<span class="hljs-keyword">for</span> _, f := <span class="hljs-keyword">range</span> ps.fields {
+			applier, ok := f.appliers[tool.Id()]
+			<span class="hljs-keyword">if</span> !ok {
+				<span class="hljs-keyword">continue</span>
+			}
+			fv := sv.FieldByName(f.name) <span class="hljs-comment">// fv should always be valid</span>
+			<span class="hljs-keyword">if</span> ge := applier.Apply(sv, fv, tc); ge != <span class="hljs-literal">nil</span> {
+				<span class="hljs-keyword">if</span> fieldAttr, exists := ge.AttributeLookup(<span class="hljs-string">&quot;Field&quot;</span>); exists {
+					ge.ReplaceAttribute(<span class="hljs-string">&quot;Field&quot;</span>, f.name+<span class="hljs-string">&quot;.&quot;</span>+fieldAttr.(<span class="hljs-type">string</span>))
+				} <span class="hljs-keyword">else</span> {
+					ge.AddAttribute(<span class="hljs-string">&quot;Field&quot;</span>, f.name)
+				}
+				errors = <span class="hljs-built_in">append</span>(errors, ge)
+			}
+		}
+	}
+	<span class="hljs-keyword">return</span> gomerr.Batcher(errors)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:32:55 PM PDT</p>
+<p>This function is written in Go and is named <code>applyTools</code>. It&#39;s a method of the <code>preparedStruct</code> type. The purpose of this function is to apply a set of validation tools to the fields of a struct. </p>
+<p>Here&#39;s a step-by-step explanation:</p>
+<ol>
+<li><p>The function accepts three parameters: <code>sv</code> of type <code>reflect.Value</code>, <code>tc</code> of type <code>*ToolContext</code>, and a variadic parameter <code>tools</code> of type <code>*Tool</code>. The <code>reflect.Value</code> package in Go provides a way to inspect, modify, and create values at runtime. In this case, <code>sv</code> is the struct value to which the tools will be applied. <code>tc</code> is a context for the tools, and <code>tools</code> is a list of tools to apply.</p>
+</li>
+<li><p>The function begins by declaring an empty slice of <code>gomerr.Gomerr</code> type. <code>gomerr</code> is a Go package for handling errors. This slice will hold any errors that occur while applying the tools.</p>
+</li>
+<li><p>The function then iterates over each tool in the <code>tools</code> slice. For each tool, it checks if the tool has been applied already. If not, it calls the <code>process</code> function with the type of <code>sv</code> and the <code>tools</code> slice. If any errors occur during this process, they are returned immediately.</p>
+</li>
+<li><p>Next, the function iterates over each field in the <code>preparedStruct</code>. For each field, it checks if an applier exists for the current tool. If not, it skips to the next field.</p>
+</li>
+<li><p>If an applier does exist, it applies the tool to the field value (<code>fv</code>). This is done by calling the <code>Apply</code> method of the applier with <code>sv</code>, <code>fv</code>, and <code>tc</code> as arguments. If any errors occur during this process, they are added to the <code>errors</code> slice.</p>
+</li>
+<li><p>The function then checks if the error has a &quot;Field&quot; attribute. If it does, it replaces the &quot;Field&quot; attribute with the current field name plus the existing &quot;Field&quot; attribute. If it doesn&#39;t, it adds a &quot;Field&quot; attribute with the current field name.</p>
+</li>
+<li><p>Finally, the function returns a batch of all errors that occurred during the process. This is done by calling the <code>Batcher</code> function from the <code>gomerr</code> package with the <code>errors</code> slice.</p>
+</li>
+</ol>
+<p>In terms of algorithms, this function primarily uses two loops: one to iterate over the tools and another to iterate over the struct fields. This results in a time complexity of O(n*m), where n is the number of tools and m is the number of fields. </p>
+<p>For more information about reflection in Go, you can refer to this link: <a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></p>
+<p>For more information about error handling in Go, you can refer to this link: <a href="https://gobyexample.com/errors">Go by Example: Errors</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:35:48 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ApplyTools fill:#228B22, stroke:#000000, stroke-width:4px;
+style Process fill:#228B22, stroke:#000000, stroke-width:4px;
+style ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ApplyTools;
+ApplyTools-->Process;
+Process-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<ol>
+<li>The flow starts at the &quot;Start&quot; node.</li>
+<li>The flow then goes to the &quot;ApplyTools&quot; node.</li>
+<li>From the &quot;ApplyTools&quot; node, the flow goes to the &quot;Process&quot; node.</li>
+<li>Finally, the flow ends at the &quot;End&quot; node.</li>
+</ol>
+<p>Note that there are no error paths identified in the code snippet, so the graph does not include any error paths.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:38:18 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 425</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The function <code>applyTools</code> uses reflection to access fields by name without any validation of the field name. An attacker could potentially manipulate the field name to access and modify fields that should not be accessible, leading to Insecure Direct Object References (IDOR) vulnerability.</p>
+<p><strong>Solution</strong>: Always validate field names before using them in reflection. Consider using a list of allowed field names and reject any field name not on the list. More info can be found here: <a href="https://owasp.org/www-project-top-ten/2017/A4_2017-Insecure_Direct_Object_References">https://owasp.org/www-project-top-ten/2017/A4_2017-Insecure_Direct_Object_References</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 417</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The function <code>applyTools</code> does not properly handle errors. It collects all errors in a slice and returns them as a batch. This could potentially lead to the application continuing to execute with erroneous state, leading to unpredictable behavior.</p>
+<p><strong>Solution</strong>: Consider handling errors immediately when they occur, and stop execution of the function if a critical error occurs. More info can be found here: <a href="https://owasp.org/www-community/Improper_Error_Handling">https://owasp.org/www-community/Improper_Error_Handling</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 423</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function <code>applyTools</code> adds the field name to the error attribute without any sanitization or encoding. This could potentially lead to sensitive data exposure if the field name contains sensitive data.</p>
+<p><strong>Solution</strong>: Always sanitize or encode data before adding it to an error message or log. Consider using a secure logging library that automatically sanitizes or encodes data. More info can be found here: <a href="https://owasp.org/www-community/controls/Logging_Cheat_Sheet">https://owasp.org/www-community/controls/Logging_Cheat_Sheet</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:42:38 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 422</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function process() is called inside a loop which could lead to high CPU usage if the number of tools is large.</p>
+<p><strong>Solution</strong>: Move the process() function call outside of the loop if possible, or optimize the process() function to reduce CPU usage.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 430</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The errors slice is being appended to inside a loop, potentially leading to high memory usage if the number of fields and tools is large.</p>
+<p><strong>Solution</strong>: Consider preallocating the errors slice to its maximum possible size before the loop, or use a data structure that handles growth more efficiently, such as a linked list.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 428</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The Apply() function is called inside a nested loop, which could lead to high CPU usage if the number of fields and tools is large.</p>
+<p><strong>Solution</strong>: Optimize the Apply() function to reduce CPU usage, or reconsider the data structures and algorithms used to avoid the need for a nested loop.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 3:50:11 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 424</p>
+<p><strong>Bug Type</strong>: Data Validation</p>
+<p><strong>Description</strong>: The data validation process seems to be incomplete as there&#39;s a TODO comment indicating the need to verify all tools applied. This could lead to improper data handling and potential non-compliance with GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Ensure all validation tools are applied and checked. Implement a system to track and verify the application of these tools to ensure all data is validated properly. This will help maintain compliance with GDPR, PCI DSS, and HIPAA.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 431</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The field values are directly accessed without any apparent checks or controls. This can lead to potential data exposure issues, violating GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Implement access controls and checks before accessing field values. This can include role-based access controls or other authorization checks to ensure that only authorized individuals can access the data.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 434</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: Errors are being added to a list without any apparent action taken to resolve them. This could lead to data integrity issues, violating GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Implement a system to handle and resolve errors as they occur. This can include logging the errors for further investigation, notifying the appropriate personnel, or taking corrective action to resolve the issue.</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>

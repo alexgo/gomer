@@ -1,0 +1,1334 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./data/dynamodb/nexttoken.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 6:42:17 PM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:58:06 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go, focusing on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types.</p>
+<p>However, the analysis has identified several high-severity issues in the project, specifically in the <code>data/dynamodb/nexttoken.go</code> file. These issues include insecure encryption, insecure data handling, insecure direct object references (IDOR), and insecure cryptographic storage. </p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified issues could potentially impact the security of the data processed by the library, making it vulnerable to attacks such as Man-in-the-Middle (MITM), where attackers could decrypt and manipulate the data. This could lead to data breaches, loss of customer trust, and potential legal implications.</p>
+<h3 id="overall-issues-for-the-software-project">Overall Issues for the Software Project</h3>
+<p>The project has a single file with multiple high-severity issues. This suggests that the project may have systemic issues with data security and encryption, which could potentially impact the entire project.</p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>Given that the project consists of a single file, 100% of the project files have been identified with high-severity issues. This indicates a high risk to the overall health of the project source.</p>
+<h3 id="highlights-of-the-analysis">Highlights of the Analysis</h3>
+<ol>
+<li><p><strong>Insecure Encryption</strong>: The encryption context is set to nil during the encryption process in <code>data/dynamodb/nexttoken.go</code>. This can potentially lead to weak encryption and make the system vulnerable to attacks like MITM.</p>
+</li>
+<li><p><strong>Insecure Data Handling</strong>: The <code>data/dynamodb/nexttoken.go</code> file has been flagged for insecure data handling. This could potentially lead to data breaches if not addressed.</p>
+</li>
+<li><p><strong>Insecure Direct Object References (IDOR)</strong>: The <code>data/dynamodb/nexttoken.go</code> file has been flagged for IDOR. This could potentially allow attackers to bypass authorization and access resources directly.</p>
+</li>
+<li><p><strong>Insecure Cryptographic Storage</strong>: The <code>data/dynamodb/nexttoken.go</code> file has been flagged for insecure cryptographic storage. This could potentially allow attackers to decrypt sensitive data.</p>
+</li>
+<li><p><strong>Risk Assessment</strong>: Given that 100% of the project files have been identified with high-severity issues, this indicates a high risk to the overall health of the project source.</p>
+</li>
+</ol>
+<p>In conclusion, while the project follows Go&#39;s idiomatic style and structure for a library, the identified high-severity issues pose a significant risk to the project&#39;s overall health and potential customer impact. It is recommended to address these issues promptly to mitigate potential risks.</p>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:58:52 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact:</strong> The software project is a library written in Go that focuses on constraint handling and validation. It follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns. However, the file <code>data/dynamodb/nexttoken.go</code> has been identified with high-severity issues related to CPU and Memory usage. This could potentially impact the performance of the software, especially when handling large data.</p>
+</li>
+<li><p><strong>Risk Analysis:</strong> The identified issues in <code>data/dynamodb/nexttoken.go</code> are of high severity, indicating a significant risk to the project. The encryption operation in this file can be CPU-intensive, especially for large data. This could lead to performance degradation and increased resource consumption, which could impact the overall health of the project.</p>
+</li>
+<li><p><strong>Potential Customer Impact:</strong> If the issues are not addressed, customers using this library could experience slow performance and increased resource usage, especially when dealing with large data. This could negatively impact the user experience and potentially lead to customer dissatisfaction.</p>
+</li>
+<li><p><strong>Overall Issues:</strong> The project consists of a single file, <code>data/dynamodb/nexttoken.go</code>, which has been identified with high-severity issues. This indicates that 100% of the project files have issues, which is a significant concern. The issues are related to CPU and Memory usage, which are critical for the performance of the software.</p>
+</li>
+<li><p><strong>Risk Assessment:</strong> Given that all the project files have high-severity issues, the overall health of the project source is at risk. Immediate attention and remediation are required to address these issues and ensure the software performs optimally.</p>
+</li>
+</ol>
+<p>Highlights:</p>
+<ul>
+<li>The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns.</li>
+<li>The file <code>data/dynamodb/nexttoken.go</code> has high-severity issues related to CPU and Memory usage, which could impact the performance of the software.</li>
+<li>The identified issues indicate a significant risk to the project, potentially leading to performance degradation and increased resource consumption.</li>
+<li>Customers using this library could experience slow performance and increased resource usage, which could negatively impact the user experience.</li>
+<li>Given that all the project files have high-severity issues, the overall health of the project source is at risk.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:59:47 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go that focuses on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>However, the analysis of the project&#39;s source code has revealed several high-severity issues related to data compliance, particularly in the file <code>data/dynamodb/nexttoken.go</code>. These issues could potentially impact the overall architecture of the project, as they may require significant changes to the way data is handled and stored.</p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified issues could have a significant impact on customers, particularly those in industries with strict data compliance requirements such as healthcare or finance. Non-compliance with regulations such as GDPR, HIPAA, and PCI DSS could result in fines, reputational damage, and loss of customer trust.</p>
+<h3 id="overall-issues">Overall Issues</h3>
+<p>The project&#39;s source code contains a number of issues related to data encryption, data privacy, data retention, and compliance with GDPR, HIPAA, and PCI DSS. These issues are concentrated in the file <code>data/dynamodb/nexttoken.go</code>.</p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>Based on the analysis, the overall health of the project source is at risk due to the high-severity issues identified. The fact that these issues are concentrated in a single file suggests that the project&#39;s data handling and storage mechanisms may need to be reviewed and potentially redesigned.</p>
+<h3 id="highlights">Highlights</h3>
+<ol>
+<li><p><strong>Data Encryption Issues</strong>: The project&#39;s source code uses base64 encoding, which is not a secure way of encoding sensitive data. This could potentially lead to a breach of GDPR, PCI DSS, and HIPAA compliance. </p>
+</li>
+<li><p><strong>Data Privacy Concerns</strong>: The &#39;nextToken&#39; struct could potentially contain sensitive data in the &#39;Filter&#39; or &#39;LastEvaluatedKey&#39; fields. These fields are used to filter and paginate data, and could contain sensitive information such as user identifiers, email addresses, or other personal data.</p>
+</li>
+<li><p><strong>Data Retention Problems</strong>: The &#39;Expiration&#39; field in the &#39;nextToken&#39; struct could potentially lead to data being retained longer than necessary, which could violate GDPR&#39;s data minimization principle.</p>
+</li>
+<li><p><strong>Compliance Risks</strong>: The identified issues could result in non-compliance with regulations such as GDPR, HIPAA, and PCI DSS, potentially leading to fines, reputational damage, and loss of customer trust.</p>
+</li>
+<li><p><strong>Risk Concentration</strong>: The fact that all of the identified issues are concentrated in a single file (<code>data/dynamodb/nexttoken.go</code>) suggests that the project&#39;s data handling and storage mechanisms may need to be reviewed and potentially redesigned.</p>
+</li>
+</ol>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./data/dynamodb/nexttoken.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code><span class="hljs-keyword">package</span> <span class="hljs-title">dynamodb</span>
+
+import (
+	<span class="hljs-string">&quot;encoding/base64&quot;</span>
+	<span class="hljs-string">&quot;encoding/json&quot;</span>
+	<span class="hljs-string">&quot;fmt&quot;</span>
+	<span class="hljs-string">&quot;strings&quot;</span>
+	<span class="hljs-string">&quot;time&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/aws&quot;</span>
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/service/dynamodb&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/jt0/gomer/crypto&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/data&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/gomerr&quot;</span>
+)
+
+<span class="hljs-keyword">type</span> <span class="hljs-type">nextTokenizer </span>struct {
+	cipher crypto.Cipher
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:24:04 PM PDT</p>
+<p>This code is written in the Go programming language. It is a part of a package named <code>dynamodb</code> which likely interacts with Amazon&#39;s DynamoDB service, a NoSQL database service.</p>
+<p>The code imports several packages:</p>
+<ul>
+<li><code>encoding/base64</code> and <code>encoding/json</code> are standard Go packages for handling base64 and JSON encoding respectively.</li>
+<li><code>fmt</code> and <code>strings</code> are also standard Go packages for formatting strings and handling string operations.</li>
+<li><code>time</code> is used for time-related operations.</li>
+<li><code>github.com/aws/aws-sdk-go/aws</code> and <code>github.com/aws/aws-sdk-go/service/dynamodb</code> are AWS SDK packages for Go, used for interacting with AWS services, specifically DynamoDB.</li>
+<li><code>github.com/jt0/gomer/crypto</code> is likely a custom package for cryptographic operations.</li>
+<li><code>github.com/jt0/gomer/data</code> is likely a custom package for handling data in some specific way.</li>
+<li><code>github.com/jt0/gomer/gomerr</code> is likely a custom package for error handling.</li>
+</ul>
+<p>The code then defines a new type <code>nextTokenizer</code> which has a <code>cipher</code> field of type <code>crypto.Cipher</code>. This suggests that <code>nextTokenizer</code> will be used for some sort of cryptographic operations, likely related to tokenization. Tokenization is a process of replacing sensitive data with non-sensitive data, called tokens, which have no exploitable meaning. This is often used in the context of data security.</p>
+<p>The <code>crypto.Cipher</code> type is not defined in this code snippet, but it likely represents a cipher for cryptographic operations, based on its name and the fact that it&#39;s part of the <code>crypto</code> package. A cipher is an algorithm for performing encryption or decryption.</p>
+<p>As for the algorithms used, it&#39;s hard to say without seeing more of the code. The imported packages suggest that it might involve base64 encoding, JSON encoding, and some sort of cryptographic operations, but the specifics would depend on how these packages are used in the rest of the code.</p>
+<p>For more information on the topics related to this code, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/json">Go by Example: JSON</a></li>
+<li><a href="https://gobyexample.com/base64-encoding">Go by Example: Base64 Encoding</a></li>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/">AWS SDK for Go API documentation</a></li>
+<li><a href="https://golang.org/doc/code.html#Packages">Go documentation on packages</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Tokenization_(data_security)">Tokenization (data security) on Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Cipher">Cipher on Wikipedia</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:30:34 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start  -->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:54 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:34:47 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 4</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Multiple encoding libraries are imported but not all of them are used, which can lead to unnecessary memory allocation.</p>
+<p><strong>Solution</strong>: Remove unused imports to optimize memory usage. In Go, the compiler will usually do this as part of its optimization, but it&#39;s a good practice to keep the code clean from unused imports.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 11</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Multiple libraries from the same package are imported, which can lead to unnecessary memory allocation.</p>
+<p><strong>Solution</strong>: Use a single import statement for the package and use the package&#39;s functions as needed. This can help reduce the memory footprint.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 14</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The crypto package is imported but not used, which can lead to unnecessary CPU cycles during compilation.</p>
+<p><strong>Solution</strong>: Remove unused imports to optimize CPU usage during compilation. In Go, the compiler will usually do this as part of its optimization, but it&#39;s a good practice to keep the code clean from unused imports.</p>
+</li>
+<li><p><strong>Severity</strong>: 1/10</p>
+<p><strong>Line Number</strong>: 20</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The struct &#39;nextTokenizer&#39; is declared but not used, which can lead to unnecessary memory allocation.</p>
+<p><strong>Solution</strong>: Remove unused structs to optimize memory usage. In Go, the compiler will usually do this as part of its optimization, but it&#39;s a good practice to keep the code clean from unused structs.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:38:40 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 10</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The code is using the base64 encoding which is not a secure way of encoding sensitive data. This could potentially lead to a breach of GDPR, PCI DSS, and HIPAA compliance.</p>
+<p><strong>Solution</strong>: Replace base64 encoding with a secure encryption method. Consider using AES encryption or RSA encryption for sensitive data. Always use strong encryption algorithms and methods for sensitive data.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 22</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The code seems to be using a custom implementation of cryptographic functions, which is generally discouraged due to the high risk of introducing security vulnerabilities. This could potentially lead to a breach of GDPR, PCI DSS, and HIPAA compliance.</p>
+<p><strong>Solution</strong>: Instead of using a custom implementation, use standard, well-tested cryptographic libraries provided by trusted organizations. In Go, consider using the crypto package provided by the standard library.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 21:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> nextToken <span class="hljs-keyword">struct</span> {
+	Version          <span class="hljs-type">uint</span>               <span class="hljs-string">`json:&quot;v&quot;`</span>
+	Filter           <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*<span class="hljs-type">string</span> <span class="hljs-string">`json:&quot;fd&quot;`</span>
+	LastEvaluatedKey <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>  <span class="hljs-string">`json:&quot;lek&quot;`</span>
+	Expiration       time.Time          <span class="hljs-string">`json:&quot;exp&quot;`</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:24:39 PM PDT</p>
+<p>This code is written in Go language and it defines a struct named <code>nextToken</code>. </p>
+<p>A struct in Go is a user-defined type that allows you to group/combine items of possibly different types into a single type. It is similar to classes in OOP languages.</p>
+<p>The <code>nextToken</code> struct has four fields:</p>
+<ol>
+<li><p><code>Version</code>: This is an unsigned integer (<code>uint</code>) that likely represents the version of the next token. </p>
+</li>
+<li><p><code>Filter</code>: This is a map with string keys and pointers to string values. This could be used to filter out certain results when the next token is used.</p>
+</li>
+<li><p><code>LastEvaluatedKey</code>: This is a map with string keys and string values. In the context of DynamoDB, LastEvaluatedKey is used for pagination. DynamoDB returns a set of results (a page) that fit within the 1 MB size limit. If there are more results, it also returns the LastEvaluatedKey value. You can use this value in a subsequent operation to retrieve the next set of results.</p>
+</li>
+<li><p><code>Expiration</code>: This is a <code>time.Time</code> value that likely represents when the next token will expire.</p>
+</li>
+</ol>
+<p>Each field is annotated with a <code>json</code> struct tag. These tags define how the struct fields are encoded to or decoded from JSON. For example, the <code>Version</code> field is encoded to JSON as <code>v</code>.</p>
+<p>The struct doesn&#39;t seem to use any specific algorithms. It is a simple data structure used to hold related pieces of data.</p>
+<p>For more information on Go structs, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/moretypes/2">A Tour of Go - Structs</a></li>
+<li><a href="https://gobyexample.com/structs">Go by Example: Structs</a></li>
+</ul>
+<p>For more information on DynamoDB pagination and the LastEvaluatedKey, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html">DynamoDB Developer Guide - Query Pagination</a></li>
+<li><a href="https://pkg.go.dev/github.com/aws/aws-sdk-go/service/dynamodb#QueryOutput.LastEvaluatedKey">AWS SDK for Go API Reference - LastEvaluatedKey</a></li>
+</ul>
+<p>The code appears to be consistent with the architectural guidelines provided. It is a simple struct definition and doesn&#39;t seem to violate any architectural principles or constraints.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:30:39 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;</pre>
+</code></pre><pre><code>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:57 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:35:05 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 40</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The struct &#39;nextToken&#39; uses map data structures for &#39;Filter&#39; and &#39;LastEvaluatedKey&#39;. Maps in Go can consume significant memory when they become large.</p>
+<p><strong>Solution</strong>: Consider using a more memory-efficient data structure if the sizes of &#39;Filter&#39; and &#39;LastEvaluatedKey&#39; can become large. If the size remains small, the current implementation is adequate.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 40</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The &#39;nextToken&#39; struct uses the &#39;time.Time&#39; type for &#39;Expiration&#39;. Time operations can be expensive in terms of CPU usage.</p>
+<p><strong>Solution</strong>: If &#39;Expiration&#39; does not require high precision, consider using a simpler data type such as an integer timestamp. If high precision is required, the current implementation is adequate.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:39:04 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 41</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The &#39;nextToken&#39; struct could potentially contain sensitive data in the &#39;Filter&#39; or &#39;LastEvaluatedKey&#39; fields. These fields are used to filter and paginate data, and could contain sensitive information such as user identifiers, email addresses, or other personal data.</p>
+<p><strong>Solution</strong>: Consider using a more secure method for filtering and paginating data, such as hashing or encrypting the filter keys and values. Also, ensure that any sensitive data in these fields is properly anonymized or pseudonymized before being stored or transmitted.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 44</p>
+<p><strong>Bug Type</strong>: Data Retention</p>
+<p><strong>Description</strong>: The &#39;Expiration&#39; field in the &#39;nextToken&#39; struct could potentially lead to data being retained longer than necessary, which could violate GDPR&#39;s data minimization principle.</p>
+<p><strong>Solution</strong>: Ensure that the &#39;Expiration&#39; field is used to automatically delete data when it is no longer needed. Also, consider implementing a data retention policy that specifies how long different types of data should be kept, and ensure that this policy is enforced in the code.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 28:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(nt nextToken)</span> <span class="hljs-title function_">ExpiresAt</span><span class="hljs-params">()</span> <span class="hljs-title function_">time</span>.<span class="hljs-title function_">Time</span> {
+	<span class="hljs-keyword">return</span> nt.Expiration
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:24:56 PM PDT</p>
+<p>This is a simple function in Go (Golang) programming language. The function is called <code>ExpiresAt</code> and it&#39;s a method of the <code>nextToken</code> type. </p>
+<p>Here&#39;s a breakdown of the code:</p>
+<ul>
+<li><p><code>func (nt nextToken) ExpiresAt() time.Time {</code>: This line defines a method named <code>ExpiresAt</code> for the type <code>nextToken</code>. <code>nt</code> is the receiver, which is an instance of <code>nextToken</code>. The method does not take any parameters and returns a value of type <code>time.Time</code>.</p>
+</li>
+<li><p><code>return nt.Expiration</code>: This line returns the <code>Expiration</code> field of the <code>nextToken</code> instance. The <code>Expiration</code> field is presumably of type <code>time.Time</code>.</p>
+</li>
+<li><p><code>}</code>: This line marks the end of the method.</p>
+</li>
+</ul>
+<p>The function <code>ExpiresAt</code> is a getter method which returns the value of the <code>Expiration</code> field of a <code>nextToken</code> object. Getter methods are common in object-oriented programming and are used to retrieve the value of an object&#39;s attribute.</p>
+<p>There isn&#39;t any specific algorithm used in this function as it&#39;s a simple getter function. The function is likely part of a larger codebase where <code>nextToken</code> objects are used, possibly for managing tokens in an authentication system. The <code>ExpiresAt</code> method would be used to determine when a token expires.</p>
+<p>For more information about methods in Go, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a></p>
+<p>For more information about the <code>time.Time</code> type in Go, you can refer to the official Go documentation: <a href="https://golang.org/pkg/time/#Time">https://golang.org/pkg/time/#Time</a></p>
+<p>As far as architectural guidelines are concerned, this function seems to follow standard Go practices. It&#39;s a simple, single-responsibility function that follows the naming conventions of Go (CamelCase for exported functions). There doesn&#39;t seem to be any conflict with typical software architecture principles.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:30:43 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:32:01 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:35:07 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:39:15 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 57</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function &#39;ExpiresAt&#39; is returning the expiration time of a token. If this data is logged or exposed in any way, it could potentially lead to a security vulnerability as it may provide attackers with useful information to guess or brute force the token.</p>
+<p><strong>Solution</strong>: Avoid logging or exposing sensitive information such as token expiration times. If needed for debugging, ensure logs are properly secured and access is restricted. Consider using a secure and centralized logging system where access is strictly controlled.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 32:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+const (
+	stringPrefix = &quot;S:&quot;
+	numberPrefix = &quot;N:&quot;
+
+	NextPageToken = &quot;NextPageToken&quot;
+)
+
+var formatVersionExpirations = []<span class="hljs-type">time</span>.Time{
+	<span class="hljs-type">time</span>.Date(<span class="hljs-number">1971</span>, <span class="hljs-number">11</span>, <span class="hljs-number">30</span>, <span class="hljs-number">3</span>, <span class="hljs-number">56</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-type">time</span>.UTC), // <span class="hljs-keyword">Version</span> &quot;0&quot; expired a <span class="hljs-keyword">while</span> ago
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:25:36 PM PDT</p>
+<p>This code snippet is written in Go, a statically typed, compiled language developed by Google. It&#39;s a simple piece of code that declares a few constants and a variable.</p>
+<p>Let&#39;s break down the code:</p>
+<ol>
+<li><p><code>const</code>: This keyword is used to declare constants in Go. Constants are similar to variables, but their values cannot be changed once they are declared. In this code, we have three constants declared: <code>stringPrefix</code>, <code>numberPrefix</code>, and <code>NextPageToken</code>.</p>
+<ul>
+<li><code>stringPrefix</code> is assigned the value <code>&quot;S:&quot;</code></li>
+<li><code>numberPrefix</code> is assigned the value <code>&quot;N:&quot;</code></li>
+<li><code>NextPageToken</code> is assigned the value <code>&quot;NextPageToken&quot;</code></li>
+</ul>
+</li>
+<li><p><code>var</code>: This keyword is used to declare variables in Go. In this code, we have one variable declared: <code>formatVersionExpirations</code>.</p>
+<ul>
+<li><code>formatVersionExpirations</code> is declared as a slice of <code>time.Time</code> values. A slice is a data structure in Go that holds items of a specific type. The <code>time.Time</code> type represents a point in time with nanosecond precision. The slice is initialized with one value: <code>time.Date(1971, 11, 30, 3, 56, 0, 0, time.UTC)</code>. This represents the date and time when version &quot;0&quot; expired.</li>
+</ul>
+</li>
+</ol>
+<p>The purpose of this code snippet is not entirely clear without additional context. However, it appears to be setting up some constants and a variable related to some kind of versioning or pagination system. The prefixes might be used for some kind of string encoding or identification system, and the <code>NextPageToken</code> constant might be used for pagination in an API or similar system.</p>
+<p>The <code>formatVersionExpirations</code> variable could be used to track the expiration times of different versions of something, perhaps a data format or API version. The only version expiration time provided is for &quot;version 0&quot;, which expired at the specified date and time.</p>
+<p>This code does not appear to use any specific algorithms, but it does use some basic features of the Go language, such as constants, variables, slices, and the <code>time.Time</code> type.</p>
+<p>For more information on these features of Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/constants">Go by Example: Constants</a></li>
+<li><a href="https://gobyexample.com/variables">Go by Example: Variables</a></li>
+<li><a href="https://gobyexample.com/slices">Go by Example: Slices</a></li>
+<li><a href="https://gobyexample.com/time">Go by Example: Time</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:30:47 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:32:04 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:35:10 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:39:53 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 1/10</p>
+<p><strong>Line Number</strong>: 62</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The use of constants for data prefixes may lead to data processing issues, as GDPR requires explicit consent for data processing. If these constants are used to categorize or process personal data without explicit consent, it may lead to GDPR non-compliance.</p>
+<p><strong>Solution</strong>: Ensure that any data processing that involves personal data has obtained explicit consent from the data subject. This consent should be freely given, specific, informed and unambiguous. It may be necessary to modify the code to include checks for consent before processing data.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 66</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The use of a hardcoded &#39;NextPageToken&#39; could potentially lead to unauthorized access to sensitive health information, which is a violation of HIPAA&#39;s Security Rule. If this token is used to access or transmit protected health information (PHI), it may lead to HIPAA non-compliance.</p>
+<p><strong>Solution</strong>: Replace the hardcoded &#39;NextPageToken&#39; with a secure method of generating and validating tokens. This could involve using a secure random number generator to create tokens, and storing them securely with associated user sessions.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 69</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The use of hardcoded date values in &#39;formatVersionExpirations&#39; could lead to non-compliance with PCI DSS Requirement 3, which requires the protection of stored cardholder data. If these dates are used to manage the storage of cardholder data, it may lead to PCI DSS non-compliance.</p>
+<p><strong>Solution</strong>: Replace the hardcoded dates with a secure method of managing the storage of cardholder data. This could involve using a secure database with encryption for data at rest, and implementing data retention and disposal policies.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 43:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">var</span> formatVersion = <span class="hljs-type">uint</span>(<span class="hljs-built_in">len</span>(formatVersionExpirations))
+
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> add queryable details into token</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t *nextTokenizer)</span></span> tokenize(q data.Queryable, lastEvaluatedKey <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue) (*<span class="hljs-type">string</span>, gomerr.Gomerr) {
+	<span class="hljs-keyword">if</span> lastEvaluatedKey == <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>
+	}
+
+	nt := &amp;nextToken{
+		Version:          formatVersion,
+		Filter:           <span class="hljs-literal">nil</span>, <span class="hljs-comment">// TODO</span>
+		LastEvaluatedKey: encodeLastEvaluatedKey(lastEvaluatedKey),
+		Expiration:       expirationTime(),
+	}
+
+	toEncrypt, err := json.Marshal(nt)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Marshal(NextPageToken, nt).Wrap(err)
+	}
+
+	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> provide an encryption context - probably w/ q data</span>
+	encrypted, ge := t.cipher.Encrypt(toEncrypt, <span class="hljs-literal">nil</span>)
+	<span class="hljs-keyword">if</span> ge != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ge
+	}
+
+	encoded := base64.RawURLEncoding.EncodeToString(encrypted)
+	<span class="hljs-keyword">return</span> &amp;encoded, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:26:43 PM PDT</p>
+<p>This code is written in Go language and is part of a server-side application. It appears to be part of a system that interacts with a DynamoDB database, and handles the creation of a token for pagination.</p>
+<p>Here&#39;s a line-by-line explanation:</p>
+<ol>
+<li><p><code>var formatVersion = uint(len(formatVersionExpirations))</code>: This line declares a global variable <code>formatVersion</code> that converts the length of <code>formatVersionExpirations</code> to an unsigned integer. <code>formatVersionExpirations</code> is not defined in the provided code, but it likely contains different versions of token formats.</p>
+</li>
+<li><p><code>func (t *nextTokenizer) tokenize(q data.Queryable, lastEvaluatedKey map[string]*dynamodb.AttributeValue) (*string, gomerr.Gomerr) {</code>: This line defines a method <code>tokenize</code> on the <code>nextTokenizer</code> type. The method takes two arguments: <code>q</code> of type <code>data.Queryable</code> and <code>lastEvaluatedKey</code> which is a map with string keys and <code>dynamodb.AttributeValue</code> values. It returns a pointer to a string and a <code>gomerr.Gomerr</code> error.</p>
+</li>
+<li><p><code>if lastEvaluatedKey == nil { return nil, nil }</code>: This line checks if <code>lastEvaluatedKey</code> is <code>nil</code>. If it is, the function returns <code>nil</code> for both the string pointer and the error.</p>
+</li>
+<li><p>The next block of code creates a <code>nextToken</code> struct and assigns values to its fields. <code>Version</code> is set to <code>formatVersion</code>, <code>Filter</code> is set to <code>nil</code> (with a TODO comment indicating this should be updated), <code>LastEvaluatedKey</code> is set to the result of <code>encodeLastEvaluatedKey(lastEvaluatedKey)</code>, and <code>Expiration</code> is set to the result of <code>expirationTime()</code>.</p>
+</li>
+<li><p><code>toEncrypt, err := json.Marshal(nt)</code>: This line marshals the <code>nextToken</code> struct to a JSON format and assigns it to <code>toEncrypt</code>. If an error occurs during marshaling, it is assigned to <code>err</code>.</p>
+</li>
+<li><p><code>if err != nil { return nil, gomerr.Marshal(NextPageToken, nt).Wrap(err) }</code>: This line checks if an error occurred during marshaling. If it did, it wraps the error with additional information and returns <code>nil</code> for the string pointer and the wrapped error.</p>
+</li>
+<li><p><code>encrypted, ge := t.cipher.Encrypt(toEncrypt, nil)</code>: This line encrypts the marshaled <code>nextToken</code> using the <code>Encrypt</code> method of the <code>cipher</code> field of <code>nextTokenizer</code>. The second argument to <code>Encrypt</code> is <code>nil</code>, but a TODO comment indicates that this should be updated to provide an encryption context.</p>
+</li>
+<li><p><code>if ge != nil { return nil, ge }</code>: This line checks if an error occurred during encryption. If it did, it returns <code>nil</code> for the string pointer and the error.</p>
+</li>
+<li><p><code>encoded := base64.RawURLEncoding.EncodeToString(encrypted)</code>: This line encodes the encrypted <code>nextToken</code> to a base64 string.</p>
+</li>
+<li><p><code>return &amp;encoded, nil</code>: This line returns a pointer to the base64-encoded string and <code>nil</code> for the error.</p>
+</li>
+</ol>
+<p>In summary, this function is designed to create a token for pagination in a DynamoDB query. It creates a <code>nextToken</code> struct, marshals it to JSON, encrypts it, and then encodes it to a base64 string. The function handles errors at each step and returns a <code>gomerr.Gomerr</code> error if any occur.</p>
+<p>For more information on Go server application architecture and best practices, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/dynamo-example-read-table-item.html">Working with DynamoDB in Go</a></li>
+<li><a href="https://blog.golang.org/error-handling-and-go">Error handling in Go</a></li>
+<li><a href="https://github.com/golang-standards/project-layout">Go Project Layout</a></li>
+<li><a href="https://blog.golang.org/json-and-go">JSON and Go</a></li>
+<li><a href="https://gobyexample.com/base64-encoding">Go by Example: Base64 Encoding</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:30:55 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is shown in green, while the alternate non-error paths are shown in the default style.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:32:28 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 89</p>
+<p><strong>Bug Type</strong>: Insecure Encryption</p>
+<p><strong>Description</strong>: The encryption context is set to nil during the encryption process. This can potentially lead to weak encryption and make the system vulnerable to attacks like Man-in-the-Middle (MITM), where attackers could decrypt and manipulate the data.</p>
+<p><strong>Solution</strong>: Provide a valid encryption context. The encryption context should ideally contain information that you can use to add an additional layer of security to your cryptographic operations. For more information, see the AWS guide on encryption context: <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context">https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 92</p>
+<p><strong>Bug Type</strong>: Insecure Data Handling</p>
+<p><strong>Description</strong>: The encrypted data is being encoded using base64.RawURLEncoding, which is not safe for use in URLs without further encoding. This can potentially lead to issues like data leakage or manipulation if the encoded data is intercepted during transmission.</p>
+<p><strong>Solution</strong>: Consider using URL-safe encoding methods, or ensure that the encoded data is properly escaped before being included in a URL. For more information, see the Go documentation on base64 encoding: <a href="https://golang.org/pkg/encoding/base64/">https://golang.org/pkg/encoding/base64/</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:35:45 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 91</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of json.Marshal can be CPU-intensive, especially for large complex structures.</p>
+<p><strong>Solution</strong>: Consider using a more efficient serialization library if the structure of &#39;nt&#39; is complex or large. Libraries such as &#39;ffjson&#39; can offer better performance.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 97</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The encryption operation can be CPU-intensive, especially for large data.</p>
+<p><strong>Solution</strong>: Consider using a more efficient encryption method if the size of &#39;toEncrypt&#39; is large. Also, ensure the cipher is properly optimized for your use case.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 100</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: Base64 encoding can be CPU-intensive for large data.</p>
+<p><strong>Solution</strong>: If the size of &#39;encrypted&#39; is large, consider using a more efficient encoding method. Also, ensure that encoding is necessary for your use case.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 86</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Repeatedly creating &#39;nt&#39; objects in a loop can lead to high memory usage.</p>
+<p><strong>Solution</strong>: Consider reusing &#39;nt&#39; objects if this function is called in a loop. This can be achieved by resetting the fields of &#39;nt&#39; instead of creating a new object.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 94</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The &#39;toEncrypt&#39; byte array can lead to high memory usage if the size of &#39;nt&#39; is large.</p>
+<p><strong>Solution</strong>: Consider using a streaming approach to serialization and encryption if the size of &#39;nt&#39; is large. This can help to reduce memory usage.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:40:09 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 91</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The encryption context for the cipher is set to null. This means that the same encryption key is used for all data, which is a violation of GDPR, PCI DSS, and HIPAA regulations.</p>
+<p><strong>Solution</strong>: Provide a unique encryption context for each data object. This can be done by using a unique attribute of the data object, such as its ID or creation time, as the encryption context.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 85</p>
+<p><strong>Bug Type</strong>: Data Processing</p>
+<p><strong>Description</strong>: The &#39;Filter&#39; field of the &#39;nextToken&#39; object is set to null. This means that all data is processed, without any filtering. This could lead to unnecessary data processing, which is a violation of GDPR&#39;s data minimization principle.</p>
+<p><strong>Solution</strong>: Implement a filtering mechanism to ensure that only necessary data is processed. This can be done by adding a &#39;Filter&#39; function that checks whether a data object should be processed, based on its attributes.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 83</p>
+<p><strong>Bug Type</strong>: Data Retention</p>
+<p><strong>Description</strong>: The &#39;Expiration&#39; field of the &#39;nextToken&#39; object is set to a static value. This means that all data is retained for the same period of time, regardless of its nature. This is a violation of GDPR, PCI DSS, and HIPAA regulations, which require data to be retained for no longer than is necessary for the purposes for which it was collected.</p>
+<p><strong>Solution</strong>: Implement a mechanism to set the &#39;Expiration&#39; field based on the nature of the data object. This can be done by adding a &#39;SetExpiration&#39; function that sets the &#39;Expiration&#39; field based on the data object&#39;s attributes.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 73:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// untokenize will pull the NextPageToken from the queryable and (if there is one) decode the value. Possible errors:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//  gomerr.BadValueError&#x27;s Type:</span>
+<span class="hljs-comment">//      Expired:</span>
+<span class="hljs-comment">//      	If the token was generated more than 24 hours ago (a hard-coded duration)</span>
+<span class="hljs-comment">//          If the token is using an old format version</span>
+<span class="hljs-comment">//      Malformed:</span>
+<span class="hljs-comment">//          If the token is not Base64-encoded</span>
+<span class="hljs-comment">//          If the token fails decryption</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// See the crypto.kmsDataKeyDecrypter Decrypt operation for additional errors types.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(t *nextTokenizer)</span></span> untokenize(q data.Queryable) (<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue, gomerr.Gomerr) {
+	<span class="hljs-keyword">if</span> q.NextPageToken() == <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>
+	}
+
+	encrypted, err := base64.RawURLEncoding.DecodeString(*q.NextPageToken())
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.MalformedValue(NextPageToken, <span class="hljs-literal">nil</span>).Wrap(err)
+	}
+
+	toUnmarshal, ge := t.cipher.Decrypt(encrypted, <span class="hljs-literal">nil</span>)
+	<span class="hljs-keyword">if</span> ge != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.MalformedValue(NextPageToken, <span class="hljs-literal">nil</span>).Wrap(ge)
+	}
+
+	nt := &amp;nextToken{}
+	<span class="hljs-keyword">if</span> err = json.Unmarshal(toUnmarshal, nt); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.MalformedValue(NextPageToken, <span class="hljs-literal">nil</span>).Wrap(err)
+	}
+
+	<span class="hljs-comment">// only one version to check so far...</span>
+	<span class="hljs-keyword">if</span> nt.Version != formatVersion {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.ValueExpired(NextPageToken, formatVersionExpirations[nt.Version]).Wrap(ge)
+	}
+
+	<span class="hljs-keyword">if</span> nt.tokenExpired() {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.ValueExpired(NextPageToken, nt.Expiration)
+	}
+
+	<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> validate filter</span>
+
+	<span class="hljs-keyword">return</span> decodeLastEvaluatedKey(nt.LastEvaluatedKey), <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:27:29 PM PDT</p>
+<p>This Go function, <code>untokenize</code>, is part of a <code>nextTokenizer</code> struct and its purpose is to decode a token (which is a string) that is passed to a queryable object. This token is used for pagination in a database query, specifically for AWS DynamoDB. </p>
+<p>Here&#39;s a step-by-step explanation of what the function does:</p>
+<ol>
+<li><p>The function first checks if the <code>NextPageToken</code> is <code>nil</code>. If it is, the function returns <code>nil</code> for both the map of <code>dynamodb.AttributeValue</code> and the error (<code>gomerr.Gomerr</code>). This means there&#39;s no token to decode, and hence, no further processing is needed.</p>
+</li>
+<li><p>If the token exists, the function attempts to decode it from a Base64-encoded string using <code>base64.RawURLEncoding.DecodeString</code>. If there&#39;s an error during decoding, it returns a <code>MalformedValue</code> error from the <code>gomerr</code> package. This error indicates that the token is not properly Base64-encoded.</p>
+</li>
+<li><p>If the Base64 decoding is successful, the function attempts to decrypt the token using the <code>cipher.Decrypt</code> method. If decryption fails, it returns another <code>MalformedValue</code> error, indicating that the token could not be decrypted.</p>
+</li>
+<li><p>If decryption is successful, the function attempts to unmarshal the decrypted token into a <code>nextToken</code> struct using <code>json.Unmarshal</code>. If this fails, it returns another <code>MalformedValue</code> error, indicating that the token could not be unmarshalled into the <code>nextToken</code> struct.</p>
+</li>
+<li><p>The function then checks the version of the token against the expected format version. If they don&#39;t match, it returns a <code>ValueExpired</code> error, indicating that the token uses an old format version.</p>
+</li>
+<li><p>The function also checks if the token has expired by calling the <code>tokenExpired</code> method on the <code>nextToken</code> struct. If the token has expired, it returns a <code>ValueExpired</code> error.</p>
+</li>
+<li><p>If all the checks pass, the function decodes the <code>LastEvaluatedKey</code> field of the token and returns it. This key is used by DynamoDB for pagination.</p>
+</li>
+</ol>
+<p>The function uses the following algorithms:</p>
+<ul>
+<li>Base64 decoding: an algorithm for converting data into a string representation that can be transmitted and stored easily.</li>
+<li>Decryption: an algorithm for converting encrypted data back into its original form.</li>
+<li>JSON unmarshalling: an algorithm for converting a JSON-encoded string back into a Go data structure.</li>
+</ul>
+<p>For more information on these topics, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/encoding/base64/">Base64 Encoding and Decoding</a></li>
+<li><a href="https://blog.golang.org/json">JSON and Go</a></li>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/service/dynamodb/">AWS SDK for Go - DynamoDB</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:03 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is shown in green, while the error path is shown in red. The graph starts with the function <code>untokenize</code> and follows the control flow through various steps until it reaches the end.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:32:58 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 155</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The function untokenize directly uses the NextPageToken provided by the user without proper validation. This could lead to Insecure Direct Object References (IDOR) where an attacker could manipulate the token to gain unauthorized access to data.</p>
+<p><strong>Solution</strong>: Use server-side session management where the server generates and maintains the tokens. Also, ensure you validate and sanitize all user inputs. More on IDOR can be found here: <a href="https://owasp.org/www-community/Insecure_Direct_Object_References">https://owasp.org/www-community/Insecure_Direct_Object_References</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 167</p>
+<p><strong>Bug Type</strong>: Insecure Cryptographic Storage</p>
+<p><strong>Description</strong>: The function untokenize uses a custom encryption method for the NextPageToken. If the encryption algorithm is not strong enough, it may be vulnerable to attacks.</p>
+<p><strong>Solution</strong>: Use standard encryption algorithms and libraries that have been thoroughly tested and validated by the security community. More on Insecure Cryptographic Storage can be found here: <a href="https://owasp.org/www-community/vulnerabilities/Insecure_Cryptographic_Storage">https://owasp.org/www-community/vulnerabilities/Insecure_Cryptographic_Storage</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 177</p>
+<p><strong>Bug Type</strong>: Missing Function Level Access Control</p>
+<p><strong>Description</strong>: The function untokenize does not perform any access control checks. This could allow unauthorized users to access sensitive information.</p>
+<p><strong>Solution</strong>: Implement access control checks to ensure that only authorized users can perform certain actions. More on Missing Function Level Access Control can be found here: <a href="https://owasp.org/www-community/vulnerabilities/Missing_Function_Level_Access_Control">https://owasp.org/www-community/vulnerabilities/Missing_Function_Level_Access_Control</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:36:28 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 154</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of base64 decoding can be computationally expensive if the input string is large. This can lead to high CPU usage.</p>
+<p><strong>Solution</strong>: If the input strings are expected to be large, consider using a more efficient decoding algorithm or library. Alternatively, if possible, consider reducing the size of the input strings.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 161</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of JSON unmarshalling can be computationally expensive, especially for large input data. This can lead to high CPU usage.</p>
+<p><strong>Solution</strong>: Consider using a more efficient unmarshalling library or algorithm if the input data is expected to be large. Alternatively, try to reduce the size of the input data if possible.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 176</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The decodeLastEvaluatedKey function is not shown in the provided code, but if it involves complex computations or data manipulations, it could potentially lead to high CPU usage.</p>
+<p><strong>Solution</strong>: Ensure the decodeLastEvaluatedKey function is implemented efficiently. Consider using more efficient algorithms or data structures if necessary.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 154</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Decoding a base64 string results in a byte slice which can consume a significant amount of memory if the string is large.</p>
+<p><strong>Solution</strong>: Ensure the base64 strings being decoded are not excessively large. If they are, consider alternative ways of handling the data that do not require decoding the entire string at once.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 161</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Unmarshalling a JSON string results in a data structure that can consume a significant amount of memory, especially if the JSON string is large or complex.</p>
+<p><strong>Solution</strong>: Ensure the JSON strings being unmarshalled are not excessively large or complex. If they are, consider alternative ways of handling the data that do not require unmarshalling the entire string at once.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:40:43 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 150</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function untokenize() could potentially expose sensitive data if the token decryption fails. The decrypted token might contain personally identifiable information (PII) which, if exposed, would violate GDPR regulations.</p>
+<p><strong>Solution</strong>: Ensure that in case of decryption failure, no sensitive data is exposed. Implement proper error handling to prevent data leaks. Consider using a secure logging mechanism that masks or removes sensitive data.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 156</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function untokenize() does not validate the format of the token before attempting to decrypt it. If the token contains health information, this could violate HIPAA regulations.</p>
+<p><strong>Solution</strong>: Ensure that the token format is validated before decryption. Implement checks to ensure that the token does not contain any health information, or if it does, that it is handled in a HIPAA-compliant manner.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 164</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function untokenize() does not validate the token&#39;s expiration date before attempting to decrypt it. If the token contains payment card information, this could violate PCI DSS regulations.</p>
+<p><strong>Solution</strong>: Ensure that the token&#39;s expiration date is validated before decryption. Implement checks to ensure that the token does not contain any payment card information, or if it does, that it is handled in a PCI DSS-compliant manner.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 118:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func expirationTime() <span class="hljs-type">time</span>.Time {
+	<span class="hljs-keyword">return</span> <span class="hljs-type">time</span>.Now().UTC().<span class="hljs-keyword">Add</span>(<span class="hljs-type">time</span>.Hour * <span class="hljs-number">24</span>)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:28:00 PM PDT</p>
+<p>The provided code snippet is a function in Go programming language. This function is named <code>expirationTime</code> and it does not take any parameters. The function returns a value of type <code>time.Time</code>.</p>
+<p>Here&#39;s a breakdown of what the function does:</p>
+<ol>
+<li><p><code>time.Now()</code> is a function provided by the Go standard library&#39;s <code>time</code> package. It returns the current local time.</p>
+</li>
+<li><p><code>.UTC()</code> is a method that converts the local time to Coordinated Universal Time (UTC). It&#39;s good practice to use UTC when dealing with times in a programming context to avoid issues with time zones and daylight saving time changes.</p>
+</li>
+<li><p><code>.Add(time.Hour * 24)</code> is another method that adds a duration to the time. In this case, it&#39;s adding 24 hours to the current time. <code>time.Hour</code> is a constant provided by the <code>time</code> package that represents one hour.</p>
+</li>
+</ol>
+<p>So, the <code>expirationTime</code> function returns the current time in UTC, plus 24 hours. This could be used, for example, to set an expiration time for a token or a cache item.</p>
+<p>Regarding the algorithm used, it&#39;s a simple time manipulation algorithm. The function is using the system&#39;s clock to get the current time, converting it to UTC, and then adding a duration to it.</p>
+<p>For more information about the <code>time</code> package in Go, you can refer to the official Go documentation: <a href="https://pkg.go.dev/time">https://pkg.go.dev/time</a>. You can also learn more about handling times in Go from this blog post: <a href="https://yourbasic.org/golang/time-date-difference-clock/">https://yourbasic.org/golang/time-date-difference-clock/</a>. </p>
+<p>In terms of architectural guidelines, this function is quite standard and should not conflict with most guidelines. It is a simple utility function that doesn&#39;t have any side effects or dependencies, which makes it easy to test and reuse.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:06 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:33:01 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:36:31 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:40:56 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 236</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function expirationTime() generates a time that may be used as an expiration time for data storage or cookies. This could potentially violate GDPR if the time period exceeds the necessary retention period for the data.</p>
+<p><strong>Solution</strong>: Ensure that the retention period for any data or cookies using this expiration time complies with GDPR&#39;s data minimization and storage limitation principles, which state that personal data should only be stored for as long as necessary for the processing purposes.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 122:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (nt *nextToken) token<span class="hljs-constructor">Expired()</span> <span class="hljs-built_in">bool</span> {
+	return time.<span class="hljs-constructor">Now()</span>.<span class="hljs-constructor">UTC()</span>.<span class="hljs-constructor">After(<span class="hljs-params">nt</span>.Expiration)</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:28:30 PM PDT</p>
+<p>The provided code is a function in Go (Golang) that checks if a token has expired. It is a method of the <code>nextToken</code> struct. This function doesn&#39;t seem to use any complex algorithms; it simply compares the current time with the expiration time of the token.</p>
+<p>Here is a detailed explanation:</p>
+<ol>
+<li><p><code>func (nt *nextToken) tokenExpired() bool</code>: This is the function declaration. It is a method named <code>tokenExpired</code> that belongs to the <code>nextToken</code> type. The method doesn&#39;t take any parameters and returns a boolean value. The receiver <code>nt</code> is a pointer to a <code>nextToken</code> instance.</p>
+</li>
+<li><p><code>return time.Now().UTC().After(nt.Expiration)</code>: This is the body of the function. It checks if the current UTC time is after the expiration time of the token. </p>
+<ul>
+<li><p><code>time.Now().UTC()</code>: This gets the current time in UTC format.</p>
+</li>
+<li><p><code>nt.Expiration</code>: This is accessing the <code>Expiration</code> field of the <code>nextToken</code> struct which is presumably a <code>time.Time</code> value representing when the token expires.</p>
+</li>
+<li><p><code>After(nt.Expiration)</code>: This is a method of the <code>Time</code> struct in the <code>time</code> package. It checks if the current time (<code>time.Now().UTC()</code>) is after the <code>Expiration</code> time of the token. If the current time is after the expiration time, it means the token has expired, so it returns <code>true</code>. If not, it returns <code>false</code>.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>The function <code>tokenExpired</code> is a typical way to check token expiration in many systems dealing with authentication and authorization. The underlying principle is simple: if the current time surpasses the expiration time, the token is no longer valid.</p>
+<p>For more information on the <code>time</code> package in Go, you can refer to the official Go documentation: <a href="https://pkg.go.dev/time">https://pkg.go.dev/time</a>. This package provides functionality for measuring and displaying time.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:10 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:33:05 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:36:45 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 244</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The tokenExpired() function uses the time.Now().UTC().After() function, which is not efficient if called frequently, as it involves system calls.</p>
+<p><strong>Solution</strong>: Consider using a more efficient method for checking the token expiration. For example, you can store the expiration time as a Unix timestamp and compare it with the current Unix timestamp. This approach avoids the need for converting times to UTC and is more efficient. Here&#39;s an example: &#39;return time.Now().Unix() &gt; nt.Expiration.Unix()&#39;.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:41:16 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 244</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;tokenExpired&#39; checks if a token has expired, but it does not log this event. Under GDPR, it is required to keep a record of all data processing activities, including authentication and session management.</p>
+<p><strong>Solution</strong>: Consider adding logging functionality to record when a token has expired. Ensure that these logs are stored securely and that they do not contain sensitive user information to avoid violating privacy regulations.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 244</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: If the tokens in question are used to access Protected Health Information (PHI), the lack of logging could be a HIPAA violation, as HIPAA requires tracking of PHI access.</p>
+<p><strong>Solution</strong>: Add logging to track when tokens expire. Ensure that the logs are secure and comply with HIPAA&#39;s privacy and security rules.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 126:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (nt *nextToken) formatVersionExpired() <span class="hljs-type">bool</span> {
+	<span class="hljs-keyword">if</span> nt.Version == formatVersion {
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-type">time</span>.Now().UTC().<span class="hljs-keyword">After</span>(formatVersionExpirations[nt.<span class="hljs-keyword">Version</span>])
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:29:02 PM PDT</p>
+<p>This function is a method of the <code>nextToken</code> struct. It checks whether the format version of the <code>nextToken</code> instance has expired. The function is named <code>formatVersionExpired</code>.</p>
+<p>The function follows these steps:</p>
+<ol>
+<li><p>It checks if the <code>Version</code> field of the <code>nextToken</code> instance is equal to a global constant named <code>formatVersion</code>. If they are equal, the function returns <code>false</code> - meaning the format version of the <code>nextToken</code> instance has not expired.</p>
+</li>
+<li><p>If the <code>Version</code> field of the <code>nextToken</code> instance is not equal to <code>formatVersion</code>, it checks if the current time (in UTC) is after the expiration time of the format version of the <code>nextToken</code> instance.</p>
+</li>
+<li><p>The expiration time of the format version is retrieved from a global map named <code>formatVersionExpirations</code> using the <code>Version</code> field of the <code>nextToken</code> instance as the key.</p>
+</li>
+<li><p>If the current time is after the expiration time, the function returns <code>true</code> - meaning the format version of the <code>nextToken</code> instance has expired. Otherwise, it would return <code>false</code>.</p>
+</li>
+</ol>
+<p>This function appears to be a part of a version control or backward compatibility system. Here, each version of the format has an expiration time, and this function is used to check whether a given <code>nextToken</code> instance is using an expired format version.</p>
+<p>This function uses a simple comparison algorithm to check version equality and a time comparison algorithm to check whether the current time is after the expiration time of a given version.</p>
+<p>For more information on time handling in Go, you can refer to the official Go documentation: <a href="https://golang.org/pkg/time/">https://golang.org/pkg/time/</a></p>
+<p>As for the architectural guidelines, this function seems to be well-structured, modular, and follows good practices of encapsulation by making <code>formatVersionExpired</code> a method of the <code>nextToken</code> struct. This function does not appear to conflict with any common architectural guidelines or constraints.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:20 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+</pre>
+</code></pre><p>The control flow graph for the provided code is as follows:</p>
+<pre><code>    +-------------------+
+    |    formatVersionExpired    |
+    +-------------------+
+              |
+              v
+    +-------------------+
+    |        if         |
+    +-------------------+
+              |
+              v
+    +-------------------+
+    |    return false   |
+    +-------------------+
+              |
+              v
+    +-------------------+
+    |    return true    |
+    +-------------------+
+              |
+              v
+    +-------------------+
+    |        End        |
+    +-------------------+
+</code></pre><p>The primary path through the code is the non-error path, which returns <code>false</code> if the <code>Version</code> is equal to <code>formatVersion</code>. If the <code>Version</code> is not equal to <code>formatVersion</code>, the function checks if the current time is after the expiration time for the given <code>Version</code>. If it is, the function returns <code>true</code>, indicating that the format version has expired. Otherwise, it returns <code>false</code>.</p>
+<p>There are no external library or non-standard function calls in the provided code.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:33:07 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:36:58 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 253</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function time.Now().UTC() is called every time the function formatVersionExpired() is run. This can lead to unnecessary CPU usage if the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider storing the current time in a variable before the loop, or use a time ticker for regular intervals. This way, the current time is only fetched when necessary, reducing CPU usage.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:41:33 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 255</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function formatVersionExpired does not seem to handle any personal data directly, but it&#39;s using a versioning system that could potentially be linked to personal data. If the versioning system is tied to personal data, this could be a violation of the GDPR&#39;s right to erasure, as old versions of personal data could still be accessible.</p>
+<p><strong>Solution</strong>: Ensure that versioning systems are not tied to personal data or that old versions of personal data are properly deleted when the right to erasure is invoked. Consider implementing pseudonymization techniques to decouple personal data from direct identifiers.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 133:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">encodeLastEvaluatedKey</span><span class="hljs-params">(lastEvaluatedKey <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue)</span></span> <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span> {
+	lek := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>, <span class="hljs-built_in">len</span>(lastEvaluatedKey))
+
+	<span class="hljs-keyword">for</span> key, value := <span class="hljs-keyword">range</span> lastEvaluatedKey {
+		<span class="hljs-keyword">if</span> value.S != <span class="hljs-literal">nil</span> {
+			lek[key] = fmt.Sprintf(<span class="hljs-string">&quot;%s%s&quot;</span>, stringPrefix, *value.S)
+		} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> value.N != <span class="hljs-literal">nil</span> {
+			lek[key] = fmt.Sprintf(<span class="hljs-string">&quot;%s%s&quot;</span>, numberPrefix, *value.N)
+		}
+	}
+
+	<span class="hljs-keyword">return</span> lek
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:29:39 PM PDT</p>
+<p>This is a function written in Go language that encodes a map of last evaluated keys from DynamoDB. </p>
+<p>Here&#39;s a detailed explanation of the code:</p>
+<p>The function <code>encodeLastEvaluatedKey</code> takes a map <code>lastEvaluatedKey</code> as input where the keys are strings and the values are pointers to <code>dynamodb.AttributeValue</code> objects. The <code>dynamodb.AttributeValue</code> is a struct in AWS SDK for Go that represents an attribute of a DynamoDB item.</p>
+<p>The function then creates a new map <code>lek</code> with the same length as <code>lastEvaluatedKey</code>. The keys in <code>lek</code> are strings and the values are also strings.</p>
+<p>The function then iterates over each entry in <code>lastEvaluatedKey</code>. For each key-value pair, it checks if the <code>AttributeValue</code> is of type string (<code>S</code>) or number (<code>N</code>). If it is a string, the function adds an entry to <code>lek</code> with the same key and the value prefixed with <code>stringPrefix</code>. If it is a number, the function adds an entry to <code>lek</code> with the same key and the value prefixed with <code>numberPrefix</code>.</p>
+<p>Finally, the function returns the <code>lek</code> map.</p>
+<p>The algorithm used in this function is a simple iteration over a map, with a conditional check for each entry. The time complexity of this function is O(n), where n is the number of entries in the input map.</p>
+<p>This function is likely part of a larger system that interacts with AWS DynamoDB. The <code>lastEvaluatedKey</code> is used in DynamoDB to handle paginated results. When you request a set of items from DynamoDB, it might not return all the items in one response, especially if there are a lot of items to return. Instead, it returns a subset of items and a <code>lastEvaluatedKey</code>. You can use this key in a subsequent request to get the next set of items.</p>
+<p>For more information on DynamoDB and the <code>AttributeValue</code> struct, you can refer to the AWS SDK for Go documentation: <a href="https://pkg.go.dev/github.com/aws/aws-sdk-go/service/dynamodb#AttributeValue">https://pkg.go.dev/github.com/aws/aws-sdk-go/service/dynamodb#AttributeValue</a></p>
+<p>And for more information on DynamoDB pagination and the use of <code>lastEvaluatedKey</code>, you can refer to the DynamoDB Developer Guide: <a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html">https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:34 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style Loop fill:#228B22, stroke:#000000, stroke-width:2px;
+    style End fill:#228B22, stroke:#000000, stroke-width:2px;
+    style Error fill:#B22222, stroke:#000000, stroke-width:2px;
+
+    Start  -->Loop{Loop};
+    Loop-->|value.S != nil|CheckString[Check if value.S is not nil];
+    Loop-->|value.S == nil|CheckNumber[Check if value.S is nil];
+    CheckString-->|true|AssignString[Assign string value to lek];
+    CheckString-->|false|CheckNumber;
+    CheckNumber-->|true|AssignNumber[Assign number value to lek];
+    CheckNumber-->|false|Loop;
+    AssignString-->Loop;
+    AssignNumber-->Loop;
+    Loop-->End  ;</pre>
+</code></pre><p>The control flow graph for the <code>encodeLastEvaluatedKey</code> function is as follows:</p>
+<ol>
+<li>The function starts at the <code>Start</code> node.</li>
+<li>It then enters a loop represented by the <code>Loop</code> node.</li>
+<li>Inside the loop, it checks if <code>value.S</code> is not <code>nil</code> at the <code>CheckString</code> node.</li>
+<li>If <code>value.S</code> is not <code>nil</code>, it proceeds to the <code>AssignString</code> node and assigns the string value to <code>lek</code>.</li>
+<li>If <code>value.S</code> is <code>nil</code>, it proceeds to the <code>CheckNumber</code> node.</li>
+<li>At the <code>CheckNumber</code> node, it checks if <code>value.N</code> is not <code>nil</code>.</li>
+<li>If <code>value.N</code> is not <code>nil</code>, it proceeds to the <code>AssignNumber</code> node and assigns the number value to <code>lek</code>.</li>
+<li>If <code>value.N</code> is <code>nil</code>, it goes back to the <code>Loop</code> node.</li>
+<li>The loop continues until all key-value pairs in <code>lastEvaluatedKey</code> have been processed.</li>
+<li>Finally, it reaches the <code>End</code> node, indicating the end of the function.</li>
+</ol>
+<p>The control flow graph does not show any error paths as there are no explicit error handling statements in the code.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:33:11 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:37:18 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 266</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function makes use of the fmt.Sprintf function to concatenate strings. This can be inefficient as it creates a new string in memory each time it&#39;s called, leading to higher memory usage.</p>
+<p><strong>Solution</strong>: Use the &#39;+&#39; operator or strings.Builder for concatenation, as they are more efficient. Here&#39;s a link to the Go documentation for strings.Builder: <a href="https://golang.org/pkg/strings/#Builder">https://golang.org/pkg/strings/#Builder</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 264</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function creates a new map with the same length as the input map. If the input map is large, this can lead to high memory usage.</p>
+<p><strong>Solution</strong>: If the input map is large and not all keys are used, consider using a dynamic approach to add keys to the map only when they are needed. If all keys are used, the current approach is optimal.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:41:49 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 268</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function <code>encodeLastEvaluatedKey</code> may expose sensitive data through logging or error messages. This can lead to a violation of GDPR, PCI DSS, and HIPAA regulations, which require that sensitive data be protected from unauthorized disclosure.</p>
+<p><strong>Solution</strong>: Ensure that sensitive data is not logged or included in error messages. Use a secure method to handle sensitive data. Consider using a data masking or tokenization solution to protect sensitive data.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 268</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The function <code>encodeLastEvaluatedKey</code> does not appear to encrypt data before storing it. This can lead to a violation of GDPR, PCI DSS, and HIPAA regulations, which require that sensitive data be encrypted in transit and at rest.</p>
+<p><strong>Solution</strong>: Encrypt sensitive data before storing it. Consider using a data encryption solution that meets the requirements of the relevant compliance regulations.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 268</p>
+<p><strong>Bug Type</strong>: Data Retention</p>
+<p><strong>Description</strong>: The function <code>encodeLastEvaluatedKey</code> does not appear to implement data retention policies. This can lead to a violation of GDPR and HIPAA regulations, which require that data be retained only for as long as necessary and then securely deleted.</p>
+<p><strong>Solution</strong>: Implement data retention policies that comply with GDPR and HIPAA regulations. Securely delete data when it is no longer needed.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/nexttoken.go line 147:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">decodeLastEvaluatedKey</span><span class="hljs-params">(lek <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)</span></span> <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue {
+	<span class="hljs-keyword">var</span> exclusiveStartKey = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue)
+
+	<span class="hljs-keyword">for</span> key, value := <span class="hljs-keyword">range</span> lek {
+		<span class="hljs-keyword">if</span> strings.HasPrefix(value, numberPrefix) {
+			exclusiveStartKey[key] = &amp;dynamodb.AttributeValue{N: aws.String(strings.TrimPrefix(value, numberPrefix))}
+		} <span class="hljs-keyword">else</span> {
+			exclusiveStartKey[key] = &amp;dynamodb.AttributeValue{S: aws.String(strings.TrimPrefix(value, stringPrefix))}
+		}
+	}
+
+	<span class="hljs-keyword">return</span> exclusiveStartKey
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:30:20 PM PDT</p>
+<p>The provided code is written in Go language and it is a function that decodes the last evaluated key from a map of strings to a map of DynamoDB AttributeValues. </p>
+<p>Here&#39;s a detailed explanation of the code:</p>
+<ol>
+<li><p>The function <code>decodeLastEvaluatedKey</code> is declared with an argument <code>lek</code> of type <code>map[string]string</code>. This function returns a <code>map[string]*dynamodb.AttributeValue</code>.</p>
+</li>
+<li><p>A new map <code>exclusiveStartKey</code> is created with the same type as the return type of the function.</p>
+</li>
+<li><p>The function then starts a loop over the <code>lek</code> map. The <code>range</code> keyword is used to iterate over map type data in Go. It returns both the key and value for each entry in the map.</p>
+</li>
+<li><p>Inside the loop, it checks if the value of the current map entry starts with a <code>numberPrefix</code> using the <code>strings.HasPrefix</code> function. This function returns true if the string (in this case, the value of the map entry) starts with the specified prefix.</p>
+</li>
+<li><p>If the value does start with <code>numberPrefix</code>, it creates a new <code>dynamodb.AttributeValue</code> with <code>N</code> (representing a number type in DynamoDB) set to the value of the map entry, after removing the <code>numberPrefix</code> using <code>strings.TrimPrefix</code>. It then assigns this new <code>AttributeValue</code> to the <code>exclusiveStartKey</code> map at the position of the current key.</p>
+</li>
+<li><p>If the value does not start with <code>numberPrefix</code>, it assumes the value starts with a <code>stringPrefix</code> and does a similar operation as in step 5, but sets <code>S</code> (representing a string type in DynamoDB) in the <code>AttributeValue</code>.</p>
+</li>
+<li><p>After the loop, the function returns the <code>exclusiveStartKey</code> map.</p>
+</li>
+</ol>
+<p>The algorithm used here is a simple map iteration and string prefix checking. The time complexity of the algorithm is O(n), where n is the size of the input map <code>lek</code>.</p>
+<p>This function is a part of Amazon DynamoDB data handling where it decodes the last evaluated key. The LastEvaluatedKey is used to continue a previous operation, for example, when you&#39;re paginating results.</p>
+<p>For more information on DynamoDB and AttributeValue, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://aws.amazon.com/dynamodb/">Amazon DynamoDB</a></li>
+<li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_AttributeValue.html">AttributeValue</a></li>
+<li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.html">Working with Queries in DynamoDB</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:31:40 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Loop fill:#228B22, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;
+style Error fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->Loop;
+Loop-->End;</pre>
+</code></pre><p>The control flow graph for the provided code is a simple loop. The loop starts at the &quot;Start&quot; node and continues until it reaches the &quot;End&quot; node. There are no error paths in this code, so the graph does not include any error nodes.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:33:15 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:37:46 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 292</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function decodeLastEvaluatedKey uses the strings.HasPrefix and strings.TrimPrefix functions within a loop. These functions are computationally expensive as they iterate over the entire string.</p>
+<p><strong>Solution</strong>: Consider using a more efficient algorithm to perform these operations. For example, you could use a switch statement to check the first character of the string and perform the appropriate action. This would only require a single pass over the string. Also, consider precomputing the trimmed values and storing them in a lookup table if the set of possible values is small and known in advance.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 292</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function decodeLastEvaluatedKey creates a new map and a new dynamodb.AttributeValue for each key-value pair in the input map. This can lead to high memory usage if the input map is large.</p>
+<p><strong>Solution</strong>: Consider reusing the input map or the dynamodb.AttributeValue objects if possible. If the input map is not used elsewhere, you could modify it in place instead of creating a new map. Similarly, if the dynamodb.AttributeValue objects are not used elsewhere, you could modify them in place instead of creating new objects.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:42:17 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 296</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function decodeLastEvaluatedKey processes and returns sensitive data, which could lead to data exposure if mishandled.</p>
+<p><strong>Solution</strong>: Ensure that all data is properly encrypted before it is processed and returned. Also, consider implementing access controls to restrict who can access this data.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 298</p>
+<p><strong>Bug Type</strong>: Data Integrity</p>
+<p><strong>Description</strong>: The function manipulates data directly, which could lead to data integrity issues if not properly managed.</p>
+<p><strong>Solution</strong>: Consider using a managed service for data manipulation to ensure data integrity is maintained.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 300</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The function processes data without any apparent checks for data privacy, which could lead to violations of GDPR, PCI DSS, and HIPAA regulations.</p>
+<p><strong>Solution</strong>: Implement checks to ensure that data privacy regulations are adhered to when processing data.</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>

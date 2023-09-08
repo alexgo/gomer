@@ -1,0 +1,1094 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./auth/accessprincipal.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 6:19:32 AM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:25:52 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The project appears to be a well-structured Go library focusing on constraint handling and validation. However, the use of the &#39;unsafe&#39; package in the &#39;auth/accessprincipal.go&#39; file could potentially introduce bugs and security vulnerabilities, impacting the overall architectural soundness of the project. </p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The &#39;auth/accessprincipal.go&#39; file has several issues of varying severity, including insecure dependency, insecure default permissions, and improper error handling. These issues represent a significant risk to the project, potentially leading to security vulnerabilities and unstable behavior. </p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: If left unaddressed, these issues could lead to a compromised user experience, including potential security breaches and application instability. This could negatively impact customer trust and satisfaction.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The project has a total of 1 file, all of which have detected issues. The issues range from &#39;Information&#39; to &#39;Warning&#39; severity, indicating a need for immediate attention and remediation.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li><strong>Health of the Project Source</strong>: Given that 100% of the project files have detected issues, the health of the project source is concerning. The presence of &#39;Warning&#39; severity issues in the &#39;auth/accessprincipal.go&#39; file indicates a significant risk to the project.</li>
+</ul>
+<p>Highlights of the Analysis:</p>
+<ol>
+<li><p><strong>Insecure Dependency</strong>: The &#39;auth/accessprincipal.go&#39; file has an insecure dependency issue due to the use of the &#39;unsafe&#39; package. This could lead to code that is vulnerable to various kinds of bugs and security vulnerabilities.</p>
+</li>
+<li><p><strong>Insecure Default Permissions</strong>: The &#39;auth/accessprincipal.go&#39; file has an issue with insecure default permissions. This could potentially expose sensitive data or functionality to unauthorized users.</p>
+</li>
+<li><p><strong>Improper Error Handling</strong>: The &#39;auth/accessprincipal.go&#39; file has an issue with improper error handling. This could lead to unstable behavior and potential application crashes.</p>
+</li>
+<li><p><strong>Overall Risk</strong>: Given that all the project files have detected issues, there is a significant risk to the project. Immediate attention and remediation are required to ensure the stability and security of the project.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The issues identified could lead to a compromised user experience, including potential security breaches and application instability. This could negatively impact customer trust and satisfaction.</p>
+</li>
+</ol>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:25:59 PM PDT</p>
+<p>Executive Report:</p>
+<ol>
+<li><strong>Architectural Impact</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Risk Analysis</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Potential Customer Impact</strong>: Based on the analysis, there are no severe issues that could potentially impact customers.</li>
+<li><strong>Performance Issues</strong>: Our analysis did not identify any explicit performance issues in the file.</li>
+<li><strong>Risk Assessment</strong>: Based on the current analysis of this file, no severe issues have been found. However, this doesn&#39;t guarantee that the file is risk-free.</li>
+</ol>
+<p>Highlights:</p>
+<ul>
+<li>No severe issues were identified in the current analysis of this file.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 2:26:28 PM PDT</p>
+<p>Executive Level Report:</p>
+<p>The software project under review is a library written in Go that focuses on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>However, the analysis has identified several high-severity issues related to data compliance, particularly in the file <code>auth/accessprincipal.go</code>. These issues could potentially impact the project&#39;s compliance with GDPR, HIPAA, and PCI DSS regulations, and could lead to unauthorized access to sensitive data.</p>
+<p>Key Highlights:</p>
+<ol>
+<li><p><strong>GDPR Compliance Risk</strong>: The code does not provide a mechanism for users to give consent before their data is processed. This is a violation of GDPR, which requires explicit and informed user consent before data processing. This issue was found in 6 instances in the <code>auth/accessprincipal.go</code> file.</p>
+</li>
+<li><p><strong>HIPAA Compliance Risk</strong>: The code does not implement any form of access control or audit logging, both of which are required by HIPAA. This issue was found in 4 instances in the <code>auth/accessprincipal.go</code> file.</p>
+</li>
+<li><p><strong>PCI DSS Compliance Risk</strong>: The code does not seem to implement encryption for stored data, which is a requirement under PCI DSS. This issue was found in 5 instances in the <code>auth/accessprincipal.go</code> file.</p>
+</li>
+<li><p><strong>Data Access Control Risk</strong>: The principal has an access level of &#39;ReadAll&#39;, which could potentially allow it to read all fields. This could lead to unauthorized access to sensitive data, such as personal health information (PHI), personally identifiable information (PII), or cardholder data (CHD). This issue was found in 1 instance in the <code>auth/accessprincipal.go</code> file.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<p>The overall health of the project source is concerning. All the issues were found in the <code>auth/accessprincipal.go</code> file, which suggests that this file is a high-risk area in the project. The fact that no issues were found in other files does not necessarily mean that they are free of issues, but rather that the analysis did not identify any. </p>
+<p>The high number of GDPR, HIPAA, and PCI DSS compliance issues in the <code>auth/accessprincipal.go</code> file suggests that data compliance is a significant risk for this project. The potential impact of these issues on the overall project is high, as non-compliance with these regulations could lead to legal penalties and reputational damage.</p>
+<p>Recommendations:</p>
+<p>To mitigate these risks, it is recommended to implement a mechanism for obtaining user consent before data processing, implement access control and audit logging, encrypt stored data, and limit the principal&#39;s access level to prevent unauthorized access to sensitive data.</p>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./auth/accessprincipal.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code><span class="hljs-keyword">package</span> auth
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;strconv&quot;</span>
+	<span class="hljs-string">&quot;unsafe&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/jt0/gomer/gomerr&quot;</span>
+)
+
+<span class="hljs-comment">// Reserved AccessPrincipal names</span>
+<span class="hljs-keyword">const</span> (
+	ReadWriteAll = <span class="hljs-string">&quot;ReadWriteAll&quot;</span>
+	ReadAll      = <span class="hljs-string">&quot;ReadAll&quot;</span>
+	NoAccess     = <span class="hljs-string">&quot;NoAccess&quot;</span>
+)
+
+<span class="hljs-comment">// Built-in, field-scoped AccessPrincipals. Additional principals can be specified by calling</span>
+<span class="hljs-comment">// RegisterFieldAccessPrincipals</span>
+<span class="hljs-comment">//goland:noinspection GoUnusedGlobalVariable</span>
+<span class="hljs-keyword">var</span> (
+	ReadWriteAllFields = AccessPrincipal{ReadWriteAll, fieldAccessPrincipal}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:54:54 AM PDT</p>
+<p>This code is written in Go, a statically typed, compiled language that is often used for system programming, backend web development, and other large-scale applications.</p>
+<p>The code declares a package named <code>auth</code>, which suggests that this code is related to authentication.</p>
+<p>It imports three packages:</p>
+<ol>
+<li><code>strconv</code>: This is a standard Go package used for conversions to and from string representations of basic data types.</li>
+<li><code>unsafe</code>: This is another standard Go package that contains operations that step around the type safety of Go programs. It&#39;s generally recommended to avoid using this package unless absolutely necessary, as it can lead to hard-to-debug problems.</li>
+<li><code>github.com/jt0/gomer/gomerr</code>: This is a third-party package. <code>gomerr</code> is likely a package for handling errors in Go.</li>
+</ol>
+<p>The code then defines three constants, <code>ReadWriteAll</code>, <code>ReadAll</code>, and <code>NoAccess</code>. These are likely used as identifiers for different levels of access in the authentication system.</p>
+<p>The <code>AccessPrincipal</code> type is used to define a struct with two fields: a string and a function. This struct is probably used to manage access control within the application. The function <code>fieldAccessPrincipal</code> is not defined in this code snippet, but it probably determines what actions a user can perform based on their <code>AccessPrincipal</code>.</p>
+<p><code>ReadWriteAllFields</code> is a global variable of type <code>AccessPrincipal</code>. It is initialized with the <code>ReadWriteAll</code> constant and the <code>fieldAccessPrincipal</code> function. This suggests that <code>ReadWriteAllFields</code> is a built-in access principal that allows read and write access to all fields.</p>
+<p>The comment above <code>ReadWriteAllFields</code> is a directive for the GoLand IDE to suppress warnings about the variable being unused. This suggests that the variable is intended to be used elsewhere in the codebase.</p>
+<p>Regarding the algorithm used, there isn&#39;t a specific one being implemented in this code. It is more about defining data structures and constants that are likely to be used in access control algorithms elsewhere in the project.</p>
+<p>You can learn more about Go packages, constants, and variables from the official Go documentation:</p>
+<ul>
+<li><a href="https://golang.org/doc/effective_go#packages">Packages</a></li>
+<li><a href="https://golang.org/ref/spec#Constants">Constants</a></li>
+<li><a href="https://golang.org/ref/spec#Variables">Variables</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:03:14 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:05:30 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 2</p>
+<p><strong>Bug Type</strong>: Insecure Dependency</p>
+<p><strong>Description</strong>: The &#39;unsafe&#39; package is being imported and used. This package contains operations that step around the type safety of Go programs and may lead to code that is vulnerable to various kinds of bugs and security vulnerabilities.</p>
+<p><strong>Solution</strong>: Avoid using the &#39;unsafe&#39; package in Go programs. If you must use it, ensure that the code is thoroughly reviewed and tested to prevent potential bugs and vulnerabilities. You can read more about this here: <a href="https://golang.org/pkg/unsafe/">https://golang.org/pkg/unsafe/</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 11</p>
+<p><strong>Bug Type</strong>: Insecure Default Permissions</p>
+<p><strong>Description</strong>: The constants &#39;ReadWriteAll&#39;, &#39;ReadAll&#39;, and &#39;NoAccess&#39; are defined with public visibility, which means they can be accessed and potentially modified by any code that imports this package. This could lead to privilege escalation if these constants are used for access control decisions.</p>
+<p><strong>Solution</strong>: Consider making these constants unexported (lowercase) to limit their visibility to the current package, or ensure that they are only used in a read-only manner. You can read more about this here: <a href="https://tour.golang.org/basics/3">https://tour.golang.org/basics/3</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:09:55 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 6</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The &#39;unsafe&#39; package is being imported but not used in the provided code. This could potentially lead to unnecessary memory usage.</p>
+<p><strong>Solution</strong>: Remove the &#39;unsafe&#39; import if it is not used in the rest of your code. Unnecessary imports can lead to larger binary sizes and increased memory usage.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 18</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The &#39;ReadWriteAllFields&#39; variable is declared but not used in the provided code. This could lead to unnecessary memory allocation.</p>
+<p><strong>Solution</strong>: If the variable &#39;ReadWriteAllFields&#39; is not used in the rest of your code, consider removing it to save memory.</p>
+</li>
+<li><p><strong>Severity</strong>: 1/10</p>
+<p><strong>Line Number</strong>: 18</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The &#39;ReadWriteAllFields&#39; variable is declared but not initialized. This could lead to unnecessary CPU cycles if the variable is used before being assigned a value.</p>
+<p><strong>Solution</strong>: Initialize &#39;ReadWriteAllFields&#39; when it is declared to avoid unnecessary CPU cycles. For example: &#39;ReadWriteAllFields = AccessPrincipal{ReadWriteAll, fieldAccessPrincipal}&#39;</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:13:33 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The code does not provide a mechanism for users to give consent before their data is processed. Under GDPR, it is mandatory to obtain user consent before processing their data.</p>
+<p><strong>Solution</strong>: Implement a consent mechanism that asks users for permission before processing their data. The consent must be explicit and informed, meaning the user should know exactly what data is being collected and how it will be used.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The code does not implement any form of access control or audit logging, both of which are required by HIPAA to ensure that only authorized individuals have access to protected health information.</p>
+<p><strong>Solution</strong>: Implement access control mechanisms to restrict access to protected health information to only those individuals who need it. Also, implement audit logging to keep a record of who accessed what data and when.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The code does not seem to implement encryption for stored data. PCI DSS requires that stored cardholder data must be encrypted.</p>
+<p><strong>Solution</strong>: Implement encryption for stored data to protect cardholder data. Use strong cryptography and security protocols to safeguard sensitive cardholder data during transmission over open, public networks.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 22:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>	<span class="hljs-attr">ReadAllFields</span>      = AccessPrincipal{ReadAll, fieldAccessPrincipal}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:55:36 AM PDT</p>
+<p>The code snippet you provided is quite short and without context, but I&#39;ll do my best to explain it.</p>
+<p><code>ReadAllFields</code> is a variable being assigned the value of <code>AccessPrincipal{ReadAll, fieldAccessPrincipal}</code>. This appears to be a struct initialization in the Go programming language.</p>
+<p><code>AccessPrincipal</code> is likely a struct type defined somewhere else in the code. It is being initialized with two values: <code>ReadAll</code> and <code>fieldAccessPrincipal</code>. Without the full context, it is hard to say exactly what these values represent, but based on their names, we can make some educated guesses:</p>
+<ul>
+<li><p><code>ReadAll</code> likely represents some sort of permission or access level that allows reading all fields of a certain data structure or database entry. This could be an enumerated value or a constant defined elsewhere in the code.</p>
+</li>
+<li><p><code>fieldAccessPrincipal</code> seems to be another variable or constant that is likely related to the identity or role that is allowed this level of access. The term &quot;principal&quot; in software often refers to an entity that can be authenticated or assigned roles and permissions.</p>
+</li>
+</ul>
+<p>In terms of algorithms, this code snippet is too short to contain any. It is a simple assignment operation, initializing a struct with two values.</p>
+<p>As for consistency with architectural guidelines, since there are no additional special architectural guidelines or constraints provided for this software project, it&#39;s hard to assess the consistency or conflicts between the code and the guidelines. However, the code seems to represent a common practice in Go and software development in general: defining permissions or access levels and assigning them to roles or identities.</p>
+<p>For more information on Go struct types and their initialization, you can refer to the Go documentation: <a href="https://golang.org/ref/spec#Struct_types">Go Structs</a> and <a href="https://golang.org/ref/spec#Composite_literals">Go Composite Literals</a> which covers the syntax used to initialize a struct.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:03:21 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:05:34 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:10:00 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:14:03 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 42</p>
+<p><strong>Bug Type</strong>: Data Access</p>
+<p><strong>Description</strong>: The principal has an access level of &#39;ReadAll&#39;, which could potentially allow it to read all fields. This could lead to unauthorized access to sensitive data, such as personal health information (PHI), personally identifiable information (PII), or cardholder data (CHD). This could violate GDPR, HIPAA, and PCI DSS regulations, which require that access to sensitive data be limited to only those who need it to perform their job functions.</p>
+<p><strong>Solution</strong>: Implement the principle of least privilege (PoLP), where each user is given the minimum levels of access necessary to complete their job functions. This could be done by replacing &#39;ReadAll&#39; with more specific access levels, or by implementing additional checks to ensure that the user has a legitimate need to access the data. Also, consider implementing role-based access control (RBAC), where access rights are granted to users based on their role within the organization.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 23:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>	<span class="hljs-attr">NoFieldAccess</span>      = AccessPrincipal{NoAccess, fieldAccessPrincipal}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:56:17 AM PDT</p>
+<p>The line of code you provided is a declaration and initialization of a variable named <code>NoFieldAccess</code> of type <code>AccessPrincipal</code>.</p>
+<p><code>AccessPrincipal</code> is a struct type that is not defined in the provided code snippet. However, it seems to be a type that represents some form of access control or permissions in the software. It could have multiple fields, but we can infer that it takes at least two arguments, <code>NoAccess</code> and <code>fieldAccessPrincipal</code>, during initialization.</p>
+<p><code>NoAccess</code> and <code>fieldAccessPrincipal</code> are also not defined in the provided code snippet. They could be constants, variables, or other types of values. Given the naming, <code>NoAccess</code> likely represents a state or level of access that indicates no permissions, while <code>fieldAccessPrincipal</code> might represent a specific principal (like a user or role) related to field access.</p>
+<p>This line of code is creating a new <code>AccessPrincipal</code> object with <code>NoAccess</code> and <code>fieldAccessPrincipal</code> as parameters and assigning it to <code>NoFieldAccess</code>. This <code>NoFieldAccess</code> could then be used elsewhere in the code to represent a state where there is no access to a certain field for a specific principal.</p>
+<p>Without additional context, it&#39;s hard to provide more specifics or identify the exact algorithms used. However, this line is a common pattern in Go for creating and initializing a new instance of a struct.</p>
+<p>The architectural guidelines provided do not specify any constraints or requirements that could be directly related to this line of code. Therefore, it&#39;s hard to make a judgment about its consistency with the guidelines.</p>
+<p>For more information about struct types in Go, you can refer to the official Go documentation: <a href="https://golang.org/ref/spec#Struct_types">Go Structs</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:03:28 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:05:38 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:10:05 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:14:27 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 44</p>
+<p><strong>Bug Type</strong>: Data Access Control</p>
+<p><strong>Description</strong>: The AccessPrincipal object &#39;NoFieldAccess&#39; is set with &#39;NoAccess&#39; which might deny access to all fields. This could lead to data unavailability issues.</p>
+<p><strong>Solution</strong>: Review the use of &#39;NoFieldAccess&#39; and ensure it&#39;s not being used to deny access to fields that should be accessible. Implement appropriate access control mechanisms for data fields.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 24:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>)
+
+func NewFieldAccessPrincipal(<span class="hljs-type">name</span> string) AccessPrincipal {
+	<span class="hljs-keyword">if</span> <span class="hljs-type">name</span> == ReadWriteAll || <span class="hljs-type">name</span> == ReadAll || <span class="hljs-type">name</span> == NoAccess {
+		panic(&quot;Cannot create an AccessPrincipal with one a predefined name: &quot; + <span class="hljs-type">name</span>)
+	}
+
+	<span class="hljs-keyword">return</span> AccessPrincipal{<span class="hljs-type">name</span> <span class="hljs-comment">/* fieldAccessScope, */</span>, fieldAccessPrincipal}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:57:16 AM PDT</p>
+<p>This is a function written in Go language. The function <code>NewFieldAccessPrincipal</code> takes a string argument <code>name</code> and returns an object of type <code>AccessPrincipal</code>. </p>
+<p>The function checks if the input <code>name</code> is equal to one of the predefined names: <code>ReadWriteAll</code>, <code>ReadAll</code>, or <code>NoAccess</code>. If the <code>name</code> matches any of these predefined names, the function will panic and stop execution, throwing an error message &quot;Cannot create an AccessPrincipal with one a predefined name: &quot; + <code>name</code>. </p>
+<p>If the <code>name</code> does not match any of the predefined names, the function will proceed to create and return a new <code>AccessPrincipal</code> object. The <code>AccessPrincipal</code> is initialized with the <code>name</code> and <code>fieldAccessPrincipal</code> as its properties.</p>
+<p>Here is a brief explanation of the algorithm used:</p>
+<ol>
+<li>Receive a string <code>name</code> as input.</li>
+<li>Check if <code>name</code> is equal to <code>ReadWriteAll</code>, <code>ReadAll</code>, or <code>NoAccess</code>.</li>
+<li>If <code>name</code> matches any of the predefined names, the function panics and stops execution, throwing an error message.</li>
+<li>If <code>name</code> does not match any of the predefined names, create a new <code>AccessPrincipal</code> object with <code>name</code> and <code>fieldAccessPrincipal</code> as properties.</li>
+<li>Return the new <code>AccessPrincipal</code> object.</li>
+</ol>
+<p>This function seems to be a part of an Access Control List (ACL) or Role-Based Access Control (RBAC) system, where <code>AccessPrincipal</code> could be a role or user with certain access rights. The predefined names <code>ReadWriteAll</code>, <code>ReadAll</code>, <code>NoAccess</code> possibly represent predefined access rights or roles in the system.</p>
+<p>For more information about panic and error handling in Go, you can refer to the official Go blog post: <a href="https://blog.golang.org/defer-panic-and-recover">Defer, Panic, and Recover</a></p>
+<p>For more information about Access Control Lists (ACL) and Role-Based Access Control (RBAC), you can refer to these resources:</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Access-control_list">Access Control Lists</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Role-based_access_control">Role-Based Access Control</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:03:36 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The code snippet provided does not have any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:05:58 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 50</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The function NewFieldAccessPrincipal takes a string parameter &#39;name&#39; and directly uses it without any validation. This can lead to Insecure Direct Object References (IDOR) where an attacker can manipulate &#39;name&#39; to gain unauthorized access to data.</p>
+<p><strong>Solution</strong>: Always validate and sanitize user inputs. Consider using a whitelist of acceptable inputs. More information about IDOR and how to prevent it can be found here: <a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control">https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control</a></p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 51</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The function uses panic() which is not recommended for error handling in Go. Panic stops the ordinary flow of a Go program and begins panicking. If the error is not recovered, the program will exit. This can lead to Denial of Service (DoS) if an attacker can trigger this panic.</p>
+<p><strong>Solution</strong>: Use error handling instead of panic(). Return errors to the caller of your function. More information about error handling in Go can be found here: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:10:23 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 49</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of panic function can lead to abrupt termination of the program, which can be a performance issue if not handled properly.</p>
+<p><strong>Solution</strong>: Instead of using panic, consider returning an error to the caller function. This way, the caller function can decide how to handle the error without terminating the entire program. Here is a link to Go&#39;s official blog post on error handling: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:15:04 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 50</p>
+<p><strong>Bug Type</strong>: Data Access Control</p>
+<p><strong>Description</strong>: The function &#39;NewFieldAccessPrincipal&#39; does not perform any access control checks before creating a new AccessPrincipal. This could potentially allow unauthorized users to gain access to sensitive data, violating GDPR, PCI DSS, and HIPAA requirements for data access control.</p>
+<p><strong>Solution</strong>: Implement access control checks before creating a new AccessPrincipal. Only authorized users should be allowed to create new AccessPrincipals. For more information on data access control, refer to: <a href="https://www.hipaajournal.com/hipaa-compliance-checklist/">https://www.hipaajournal.com/hipaa-compliance-checklist/</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 48</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The function &#39;NewFieldAccessPrincipal&#39; uses &#39;panic&#39; to handle errors. This could potentially expose sensitive information in stack traces, violating GDPR, PCI DSS, and HIPAA requirements for data privacy.</p>
+<p><strong>Solution</strong>: Replace &#39;panic&#39; with proper error handling that does not expose sensitive information. For more information on secure error handling, refer to: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 33:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// RegisterFieldAccessPrincipals allows the application to define named principals with different levels of access</span>
+<span class="hljs-comment">// to the fields that comprise that application&#x27;s domain entities.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">RegisterFieldAccessPrincipals</span><span class="hljs-params">(accessPrincipals ...AccessPrincipal)</span></span> {
+	l := <span class="hljs-built_in">len</span>(accessPrincipals)
+	<span class="hljs-keyword">if</span> l &gt; maximumRegisteredAccessPrincipals {
+		<span class="hljs-built_in">panic</span>(<span class="hljs-string">&quot;Too many principals - maximum count = &quot;</span> + strconv.Itoa(maximumRegisteredAccessPrincipals))
+	}
+
+	l--
+	<span class="hljs-keyword">for</span> i, r := <span class="hljs-keyword">range</span> accessPrincipals {
+		fieldAccessPrincipalIndexes[r] = <span class="hljs-type">uint</span>(l - i)
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:58:16 AM PDT</p>
+<p>In the provided code snippet, we have a function named <code>RegisterFieldAccessPrincipals</code> that is used to register different access levels for the fields in the application&#39;s domain entities. </p>
+<p>Let&#39;s break down the code:</p>
+<ul>
+<li><p>The function <code>RegisterFieldAccessPrincipals</code> takes a variadic parameter <code>accessPrincipals</code> of type <code>AccessPrincipal</code>. Variadic parameters allow you to pass an arbitrary number of arguments to a function.</p>
+</li>
+<li><p>The first line of the function gets the length of the <code>accessPrincipals</code> slice and assigns it to the variable <code>l</code>.</p>
+</li>
+<li><p>The next block of code checks if the length <code>l</code> is greater than a predefined constant <code>maximumRegisteredAccessPrincipals</code>. If it is, the function panics and stops execution, returning an error message. This is a simple form of input validation to ensure that the system does not overload with too many access principals.</p>
+</li>
+<li><p>The code then decrements the length <code>l</code> by 1. This is to adjust the length for zero-indexing in the upcoming loop.</p>
+</li>
+<li><p>The function then loops over the <code>accessPrincipals</code> slice using a range loop, which provides both the index <code>i</code> and the value <code>r</code> for each iteration. </p>
+</li>
+<li><p>Inside the loop, it assigns the value of <code>l - i</code> to the <code>fieldAccessPrincipalIndexes</code> map at the key <code>r</code>. This is essentially assigning a unique index to each access principal in reverse order. The map <code>fieldAccessPrincipalIndexes</code> is used to store these indexes.</p>
+</li>
+</ul>
+<p>This function is a part of the access control mechanism of the application. The <code>AccessPrincipal</code> type is likely a struct or an interface that represents a user or a role with certain access rights. </p>
+<p>The algorithm used here is quite straightforward and doesn&#39;t fall under any specific well-known algorithm category. It&#39;s a simple loop with a map assignment operation.</p>
+<p>You can find more information about Go&#39;s control structures, including loops and conditionals, in the official Go documentation here: <a href="https://golang.org/doc/effective_go#control-structures">https://golang.org/doc/effective_go#control-structures</a></p>
+<p>For more information about Go&#39;s map type, you can refer to this link: <a href="https://blog.golang.org/maps">https://blog.golang.org/maps</a></p>
+<p>For more information about access control and principals, you might find this article helpful: <a href="https://en.wikipedia.org/wiki/Principal_(computer_security)">https://en.wikipedia.org/wiki/Principal_(computer_security)</a> </p>
+<p>The code is consistent with the Go language&#39;s conventions and best practices. It uses Go&#39;s built-in types and structures effectively. There are no apparent conflicts with architectural guidelines based on the provided code snippet.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:03:54 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start  -->CheckLength;
+CheckLength-->ErrorPath;
+CheckLength-->Loop;
+Loop-->LoopCondition;
+LoopCondition-->Loop;
+LoopCondition-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<ol>
+<li>The control flow starts at the function <code>RegisterFieldAccessPrincipals</code>.</li>
+<li>The code checks the length of the <code>accessPrincipals</code> slice.</li>
+<li>If the length is greater than <code>maximumRegisteredAccessPrincipals</code>, an error path is taken and a panic is raised.</li>
+<li>If the length is within the allowed range, a loop is entered.</li>
+<li>The loop iterates over each element in the <code>accessPrincipals</code> slice.</li>
+<li>After each iteration, the loop condition is checked.</li>
+<li>If the loop condition is true, the loop continues to the next iteration.</li>
+<li>If the loop condition is false, the control flow reaches the end of the function.</li>
+</ol>
+<p>Note: The primary path is the default non-colored style, while the error path is shown in the ErrorPath style.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:06:35 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 71</p>
+<p><strong>Bug Type</strong>: Denial of Service</p>
+<p><strong>Description</strong>: The function RegisterFieldAccessPrincipals can cause a panic if the number of accessPrincipals is more than the maximumRegisteredAccessPrincipals. This could lead to a Denial of Service (DoS) if an attacker can control the number of accessPrincipals.</p>
+<p><strong>Solution</strong>: Instead of panicking, consider returning an error to the caller. This allows the caller to handle the error in a way that doesn&#39;t crash the entire application. More details about error handling can be found here: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 75</p>
+<p><strong>Bug Type</strong>: Information Disclosure</p>
+<p><strong>Description</strong>: The function RegisterFieldAccessPrincipals uses the index of the accessPrincipals slice as a value in the fieldAccessPrincipalIndexes map. If an attacker can read this map, they can determine the order in which the accessPrincipals were registered, which might be sensitive information.</p>
+<p><strong>Solution</strong>: Consider using a secure method to generate the values for the fieldAccessPrincipalIndexes map, such as a secure random number generator. More details about secure random number generation can be found here: <a href="https://golang.org/pkg/crypto/rand/">https://golang.org/pkg/crypto/rand/</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:10:52 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 71</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of &#39;panic&#39; stops the normal execution of the program and begins panicking. This can lead to memory leaks if not handled properly.</p>
+<p><strong>Solution</strong>: Instead of using &#39;panic&#39;, consider returning an error message and handle it gracefully. This allows for better control over the program flow and resource management. Resource: <a href="https://blog.golang.org/defer-panic-and-recover">https://blog.golang.org/defer-panic-and-recover</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 76</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The loop over &#39;accessPrincipals&#39; array and calculation inside the loop could be inefficient if the array is large.</p>
+<p><strong>Solution</strong>: Consider using a more efficient data structure or algorithm to reduce time complexity. For example, you could use a map to store the accessPrincipals, which provides O(1) lookup time. Resource: <a href="https://yourbasic.org/golang/data-structures-complexity/">https://yourbasic.org/golang/data-structures-complexity/</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:15:51 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 69</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function <code>RegisterFieldAccessPrincipals</code> does not implement any form of access control or audit logging, both of which are required by HIPAA to ensure that only authorized individuals have access to protected health information.</p>
+<p><strong>Solution</strong>: Implement access control and audit logging to ensure that only authorized individuals have access to protected health information.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 69</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function <code>RegisterFieldAccessPrincipals</code> does not include any mechanism for data subjects to exercise their rights under GDPR, such as the right to access, rectify, erase, restrict processing of, or object to processing of their personal data.</p>
+<p><strong>Solution</strong>: Implement mechanisms for data subjects to exercise their rights under GDPR.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 69</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function <code>RegisterFieldAccessPrincipals</code> does not appear to implement any controls to protect cardholder data, which is a requirement under PCI DSS.</p>
+<p><strong>Solution</strong>: Implement controls to protect cardholder data, such as encryption, tokenization, and access controls.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 47:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// At some point we may want to support additional access scopes, but for now, accessScope and fieldAccessScope</span>
+<span class="hljs-comment">// remain unexported. When we&#x27;re ready, the only thing to do is to export these, add one or more new scope types,</span>
+<span class="hljs-comment">// and create a NewAccessPrincipal(name, accessScope) function and/or additional scope-specific helpers.</span>
+<span class="hljs-comment">// AccessPrincipal registration can either be done per scope, or a single function can be provided. In the latter</span>
+<span class="hljs-comment">// case, the logic will need to be updated to deal w/ mixed scopes per call.</span>
+<span class="hljs-keyword">const</span> (
+	fieldAccessScope accessScope = <span class="hljs-string">&quot;Field&quot;</span>
+
+	fieldAccessPrincipal = fieldAccessScope + <span class="hljs-string">&quot;AccessPrincipal&quot;</span>
+)
+
+<span class="hljs-keyword">type</span> accessScope = PrincipalType
+
+<span class="hljs-keyword">var</span> fieldAccessPrincipalIndexes = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[Principal]<span class="hljs-type">uint</span>)
+
+<span class="hljs-comment">// AccessPrincipal corresponds to a named Principal that can be associated with permissions to grant CRUD (extensible</span>
+<span class="hljs-comment">// to others) abilities on different things w/in an application.</span>
+<span class="hljs-keyword">type</span> AccessPrincipal <span class="hljs-keyword">struct</span> {
+	name <span class="hljs-type">string</span>
+	<span class="hljs-comment">// scope         accessScope</span>
+	principalType PrincipalType
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:59:14 AM PDT</p>
+<p>This code is written in Go language and is part of a security system that manages access control by defining access principals.</p>
+<p>An access principal is an entity that can have permissions associated with it. It could be a user, a role, or a group, and it can be granted abilities to perform CRUD (Create, Read, Update, Delete) operations on different resources within an application. </p>
+<p>Here&#39;s a detailed explanation of the code:</p>
+<ol>
+<li><p>The code starts by defining a constant <code>fieldAccessScope</code> of type <code>accessScope</code>. This is used to define the scope of an access principal. In this case, it&#39;s set to &quot;Field&quot;, which could mean that this principal is associated with field-level access control. The <code>fieldAccessPrincipal</code> constant is a concatenation of the <code>fieldAccessScope</code> and the string &quot;AccessPrincipal&quot;.</p>
+</li>
+<li><p>The <code>accessScope</code> is defined as an alias for the type <code>PrincipalType</code>. This means that wherever <code>accessScope</code> is used, it is equivalent to using <code>PrincipalType</code>.</p>
+</li>
+<li><p>The <code>fieldAccessPrincipalIndexes</code> is a map where the keys are of type <code>Principal</code> and the values are of type <code>uint</code>. This could be used to keep track of the index or order of each principal in the field access scope.</p>
+</li>
+<li><p>The <code>AccessPrincipal</code> struct is defined with two fields: <code>name</code> and <code>principalType</code>. The <code>name</code> is a string that represents the name of the principal. The <code>principalType</code> is of type <code>PrincipalType</code> and represents the type of the principal.</p>
+</li>
+</ol>
+<p>The code also includes a comment block that indicates potential future enhancements to the system. These include supporting additional access scopes, exporting the currently unexported <code>accessScope</code> and <code>fieldAccessScope</code>, and creating a function to generate new access principals. The comment also mentions that the registration of access principals could be done either per scope or through a single function, which would require updating the logic to handle mixed scopes per call.</p>
+<p>The algorithm used in this code is fairly straightforward as it&#39;s mostly defining types and constants. The complexity would come in when these types are used in other parts of the application to manage access control.</p>
+<p>For more information on access control and security in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://www.toptal.com/go/go-authentication-and-authorization">Go Auth: Securing Your Web Applications with Go</a></li>
+<li><a href="https://gowebexamples.com/basic-authentication/">Go Web Examples: Basic Authentication</a></li>
+<li><a href="https://gobyexample.com/collection-functions">Go by Example: Collection Functions</a> for understanding how maps work in Go.</li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:04:05 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleProcess;
+ExampleProcess-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<pre><code>Start --&gt; ExampleProcess
+Start --&gt; ExampleProcess
+ExampleProcess --&gt; End
+</code></pre><p>Note: The code snippet provided does not contain any control flow decision points or error paths. Therefore, the control flow graph is a simple linear flow from the start to the end of the code.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:06:40 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:11:29 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 99</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The global variable &#39;fieldAccessPrincipalIndexes&#39; is initialized with an empty map. If this map grows large and is not properly managed, it could lead to increased memory usage.</p>
+<p><strong>Solution</strong>: Consider using a more efficient data structure or implementing a mechanism to manage the size of this map. If the map is not expected to grow large, this may not be an issue. For large maps, consider using a concurrent data structure or a database to store the data.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 104</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The &#39;AccessPrincipal&#39; struct includes a string field &#39;name&#39;. If instances of this struct are created with large strings, it could lead to increased memory usage.</p>
+<p><strong>Solution</strong>: Consider limiting the size of the &#39;name&#39; field if possible. If large strings are necessary, consider using a more memory-efficient data structure or storing the strings externally and referencing them in the struct.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:16:41 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 98</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The AccessPrincipal struct holds user-specific data but does not have any explicit mechanism for data erasure, which is a requirement under GDPR.</p>
+<p><strong>Solution</strong>: Implement a method for securely erasing data stored in the AccessPrincipal struct when a user requests it. This could be a method like &#39;EraseData&#39; that zeroes out the struct&#39;s fields.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 98</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The AccessPrincipal struct could potentially store Protected Health Information (PHI). However, there are no safeguards in place to protect this data.</p>
+<p><strong>Solution</strong>: Ensure PHI is encrypted both at rest and in transit. Consider implementing access control mechanisms to restrict who can access the data.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 98</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The AccessPrincipal struct could potentially hold sensitive cardholder data, but there are no explicit protections for this data.</p>
+<p><strong>Solution</strong>: Encrypt sensitive cardholder data at rest and in transit, and implement strong access control measures to restrict who can access this data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 70:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(p AccessPrincipal)</span> <span class="hljs-title function_">Id</span><span class="hljs-params">()</span> <span class="hljs-title function_">string</span> {
+	<span class="hljs-keyword">return</span> p.name
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 5:59:50 AM PDT</p>
+<p>This code snippet is a method named <code>Id()</code> that belongs to the <code>AccessPrincipal</code> type. The method does not take any parameters and returns a string. </p>
+<p>The <code>AccessPrincipal</code> type is not defined in the provided code, but it seems to be a struct or an interface that contains a field named <code>name</code>. </p>
+<p>The <code>Id()</code> method simply returns the <code>name</code> field of the <code>AccessPrincipal</code> instance on which it is called. This method can be used to retrieve the identifier of an <code>AccessPrincipal</code> object. </p>
+<p>There is no specific algorithm used in this method; it&#39;s a simple getter function that returns the value of a field.</p>
+<p>The code is written in the Go programming language. In Go, methods are defined on types (similar to classes in other object-oriented programming languages). The syntax <code>func (p AccessPrincipal) Id() string</code> defines a method named <code>Id()</code> on the <code>AccessPrincipal</code> type.</p>
+<p>For more information about methods in Go, you can refer to the Go documentation: </p>
+<ul>
+<li><a href="https://gobyexample.com/methods">Go by Example: Methods</a></li>
+<li><a href="https://tour.golang.org/methods/1">A Tour of Go: Methods</a></li>
+</ul>
+<p>As for the architectural guidelines, this code snippet is too small to make any significant architectural statements. However, it does follow good practice by encapsulating the <code>name</code> field and providing a method to access it, rather than exposing the field directly. This is consistent with the principle of information hiding in software architecture.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:04:11 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:07:05 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 142</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The function returns the &#39;name&#39; field of the AccessPrincipal object directly. This could lead to Insecure Direct Object References (IDOR), where an attacker can manipulate references to access unauthorized data.</p>
+<p><strong>Solution</strong>: To prevent IDOR, avoid exposing internal object references to users. Instead of returning the &#39;name&#39; field directly, consider using an indirect reference map, or ensure proper access controls are in place before returning the data. More information on how to prevent IDOR can be found at: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:11:36 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:17:35 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 138</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The method returns a user&#39;s name as an identifier, which can be considered personally identifiable information (PII). Under GDPR, handling PII requires explicit consent from the user.</p>
+<p><strong>Solution</strong>: Consider using a non-identifying unique user ID instead of the user&#39;s name. If the name must be used, ensure explicit consent is obtained from the user for its use as an identifier.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 138</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: Under HIPAA, the use of personal identifiers can lead to potential exposure of Protected Health Information (PHI). This method returns a user&#39;s name, which can be considered a personal identifier.</p>
+<p><strong>Solution</strong>: Use a de-identified unique user ID instead of the user&#39;s name. If the name must be used, ensure it is properly protected and access is limited to authorized individuals.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 138</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: Under PCI DSS, the use of personal identifiers can lead to potential exposure of cardholder data. This method returns a user&#39;s name, which can be considered a personal identifier.</p>
+<p><strong>Solution</strong>: Use a non-identifying unique user ID instead of the user&#39;s name. If the name must be used, ensure it is properly protected and access is limited to authorized individuals.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 74:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(p AccessPrincipal)</span> <span class="hljs-title function_">Type</span><span class="hljs-params">()</span> <span class="hljs-title function_">PrincipalType</span> {
+	<span class="hljs-keyword">return</span> p.principalType
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:00:33 AM PDT</p>
+<p>This is a simple method in Go language, defined on the struct <code>AccessPrincipal</code>. The method is named <code>Type</code> and it doesn&#39;t take any arguments except the implicit <code>AccessPrincipal</code> receiver. It returns a value of type <code>PrincipalType</code>.</p>
+<p>The <code>PrincipalType</code> is likely an enumerated type (enum), which is a special type used to define collections of constants. In Go, enums are created using the <code>iota</code> identifier.</p>
+<p>The <code>AccessPrincipal</code> struct is not shown in this code snippet, but it likely has a field named <code>principalType</code> of type <code>PrincipalType</code>. </p>
+<p>The method <code>Type</code> is a getter method, which is a common pattern in object-oriented programming. Its purpose is to retrieve the value of an object&#39;s attribute or property. In this case, it retrieves the <code>principalType</code> field from the <code>AccessPrincipal</code> object on which it&#39;s called.</p>
+<p>The algorithm used here is straightforward: the method simply returns the <code>principalType</code> of the <code>AccessPrincipal</code> object. There are no conditional statements or loops, so the time complexity of this method is O(1), which means it always executes in constant time, regardless of the size of the input.</p>
+<p>The code seems to follow Go&#39;s conventions and best practices. It uses a method receiver <code>(p AccessPrincipal)</code>, which is a common way to define methods associated with a struct in Go. The method is also named in a way that clearly communicates its purpose.</p>
+<p>For more information on methods in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/methods/1">A Tour of Go - Methods</a></li>
+<li><a href="https://gobyexample.com/methods">Go by Example: Methods</a></li>
+<li><a href="https://golang.org/doc/effective_go#methods">Effective Go - Methods</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:04:17 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:07:09 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:11:40 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:17:39 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 78:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p AccessPrincipal)</span></span> Release(<span class="hljs-type">bool</span>) gomerr.Gomerr {
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:01:02 AM PDT</p>
+<p>This code defines a method named <code>Release</code> on the <code>AccessPrincipal</code> struct. The method takes a single boolean parameter which is unnamed, and returns a <code>Gomerr</code> type.</p>
+<p><code>Gomerr</code> is a custom error type in Go, which is typically used to provide more detailed and structured error information. However, in this case, the method always returns <code>nil</code>, indicating that it doesn&#39;t generate any errors.</p>
+<p>The function signature suggests that it might be intended to release some kind of resource associated with the <code>AccessPrincipal</code>, but since the implementation is empty, it&#39;s hard to determine its exact purpose without more context.</p>
+<p>Here is a breakdown of the code:</p>
+<ul>
+<li><code>func</code>: This keyword is used to declare a function in Go.</li>
+<li><code>(p AccessPrincipal)</code>: This is the receiver of the method, which makes the function a method bound to the <code>AccessPrincipal</code> struct. This means you can call this method on instances of <code>AccessPrincipal</code>.</li>
+<li><code>Release(bool)</code>: This is the name of the method and its parameter list. The method takes one parameter of type <code>bool</code>. The parameter is unnamed, which means it&#39;s not possible to refer to it within the function. This is not a problem in this case, since the function doesn&#39;t use this parameter.</li>
+<li><code>gomerr.Gomerr</code>: This is the return type of the function. <code>Gomerr</code> is a custom error type, typically used to provide more structured error information.</li>
+<li><code>return nil</code>: This line returns <code>nil</code> from the function. Since <code>Gomerr</code> is an error type, returning <code>nil</code> indicates that no error occurred.</li>
+</ul>
+<p>It&#39;s worth noting that the use of a boolean parameter in this function could be a violation of the Command Query Separation (CQS) principle, which states that a method should either be a command that performs an action, or a query that returns data, but not both. If the <code>Release</code> method is intended to perform an action based on the boolean parameter, it might be better to split it into two separate methods for clarity and maintainability.</p>
+<p>For more information on Go functions and methods, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://tour.golang.org/moretypes/1">Functions</a> on A Tour of Go</li>
+<li><a href="https://tour.golang.org/methods/1">Methods</a> on A Tour of Go</li>
+<li><a href="https://blog.golang.org/error-handling-and-go">Error handling and Go</a> on The Go Blog</li>
+<li><a href="https://martinfowler.com/bliki/CommandQuerySeparation.html">Command Query Separation</a> by Martin Fowler</li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:04:24 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+ExampleProcess-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:07:13 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:11:44 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:17:50 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 156</p>
+<p><strong>Bug Type</strong>: Missing Access Control</p>
+<p><strong>Description</strong>: The Release function does not check if the AccessPrincipal has the right to perform the action. This could lead to unauthorized access or data leaks.</p>
+<p><strong>Solution</strong>: Implement proper access control checks before performing any action. This could be done by adding a function to the AccessPrincipal type that checks if the principal has the right to perform the action.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 82:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+type AccessPermissions uint8
+
+//goland:noinspection GoUnusedConst
+const (
+	ReadPermission   AccessPermissions = <span class="hljs-number">1</span> &lt;&lt; iota // = <span class="hljs-number">0b00000001</span> (<span class="hljs-number">1</span>)
+	reserved2                                      // = <span class="hljs-number">0b00000010</span> (<span class="hljs-number">2</span>)
+	reserved3                                      // = <span class="hljs-number">0b00000100</span> (<span class="hljs-number">4</span>)
+	CreatePermission                               // = <span class="hljs-number">0b00001000</span> (<span class="hljs-number">8</span>)
+	UpdatePermission                               // = <span class="hljs-number">0b00010000</span> (<span class="hljs-number">16</span>)
+	deletePermission                               // = <span class="hljs-number">0b00100000</span> (<span class="hljs-number">32</span>) NB: until exported, this need <span class="hljs-keyword">not</span> be <span class="hljs-keyword">for</span> &#x27;<span class="hljs-built_in">delete</span>&#x27;
+	reserved7                                      // = <span class="hljs-number">0b01000000</span> (<span class="hljs-number">64</span>)
+	reserved8                                      // = <span class="hljs-number">0b10000000</span> (<span class="hljs-number">128</span>)
+
+	WritePermissions     = CreatePermission | UpdatePermission
+	LifecyclePermissions = WritePermissions | deletePermission
+	NoPermissions        = <span class="hljs-number">0b00000000</span>
+	AllPermissions       = ^NoPermissions // <span class="hljs-number">0b11111111</span>
+
+	sizeOfAccessPermissions          = unsafe.Sizeof(principalPermissions(<span class="hljs-number">0</span>))
+	sizeOfPrincipalAccessPermissions = unsafe.Sizeof(ReadPermission)
+
+	maximumRegisteredAccessPrincipals = int(sizeOfAccessPermissions / sizeOfPrincipalAccessPermissions)
+
+	bitsPerByte             = <span class="hljs-number">8</span>
+	permissionsPerPrincipal = uint(sizeOfPrincipalAccessPermissions) * bitsPerByte
+)
+
+type principalPermissions uint32
+
+func (p principalPermissions) grants(principal AccessPrincipal, permissionsNeeded AccessPermissions) bool {
+	<span class="hljs-keyword">if</span> permissionsNeeded == NoPermissions {
+		<span class="hljs-built_in">return</span> <span class="hljs-literal">false</span> // TODO: should this <span class="hljs-built_in">return</span> <span class="hljs-literal">true</span> <span class="hljs-keyword">or</span> <span class="hljs-literal">false</span>?
+	}
+
+	switch principal.name {
+	case NoAccess:
+		<span class="hljs-built_in">return</span> <span class="hljs-literal">false</span>
+	case ReadWriteAll:
+		<span class="hljs-built_in">return</span> <span class="hljs-literal">true</span>
+	case ReadAll:
+		<span class="hljs-built_in">return</span> ReadPermission&amp;permissionsNeeded == ReadPermission
+	default:
+		<span class="hljs-built_in">return</span> p.principalAccessPermissions(principal)&amp;permissionsNeeded == permissionsNeeded
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:01:58 AM PDT</p>
+<p>This code is written in Go and it is primarily dealing with access permissions for a system, likely to be used for authorization purposes.</p>
+<p>The code defines a type <code>AccessPermissions</code> which is an alias for <code>uint8</code>. This is a type of unsigned 8-bit integer, meaning it can represent values from 0 to 255.</p>
+<p>The code then defines a series of constants of type <code>AccessPermissions</code>, which are used to represent different access permissions within the system. The <code>iota</code> keyword in Go is used to simplify the declaration of enumerated constants. It starts at 0 and increments by one each time it is used. The <code>&lt;&lt;</code> operator is a bitwise shift to the left, effectively multiplying the value by 2.</p>
+<p>The <code>const</code> block defines eight different permissions, two of which are reserved. It also defines composite permissions <code>WritePermissions</code> and <code>LifecyclePermissions</code> which are combinations of other permissions. The <code>|</code> operator is a bitwise OR, which combines the bits of two numbers.</p>
+<p>The <code>NoPermissions</code> constant represents a lack of any permissions, and <code>AllPermissions</code> represents having all permissions. The <code>^</code> operator is a bitwise NOT, which flips all the bits of a number.</p>
+<p>The code then calculates the number of access principals that can be registered, based on the size of the permissions.</p>
+<p>The <code>principalPermissions</code> type is defined as an alias for <code>uint32</code>, and a method <code>grants</code> is defined on it. This method checks if a given principal has the necessary permissions. It uses a switch statement to handle different cases based on the principal&#39;s name.</p>
+<p>The algorithm used here is a simple bitwise operation and comparison algorithm. It checks if the required permissions are a subset of the principal&#39;s permissions.</p>
+<p>For more information on bitwise operations in Go, you can refer to this resource: <a href="https://yourbasic.org/golang/bitwise-operator-cheat-sheet/">Bitwise operators in Go</a>.</p>
+<p>For more information on the <code>iota</code> keyword in Go, you can refer to this resource: <a href="https://go101.org/article/iota.html">Iota in Go</a>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:04:33 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExamplErrorPath-->End;</pre>
+</code></pre><p>NO CONTROL FLOW FOUND</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:08:06 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 176</p>
+<p><strong>Bug Type</strong>: Insecure Equality Testing</p>
+<p><strong>Description</strong>: The function grants() uses insecure equality testing to check if the permissions needed are equal to &#39;NoPermissions&#39;. This could lead to potential security vulnerabilities as it might not account for all the potential states of &#39;permissionsNeeded&#39;.</p>
+<p><strong>Solution</strong>: Instead of using &#39;==&#39;, consider using a more secure comparison function that can handle different states of &#39;permissionsNeeded&#39;. Refer to this link for more details: <a href="https://owasp.org/www-community/attacks/Insecure_Comparison">https://owasp.org/www-community/attacks/Insecure_Comparison</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 179</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The function grants() directly references the &#39;principal.name&#39; object without any validation or authorization check. This could lead to potential security vulnerabilities such as unauthorized access or modification of the &#39;principal.name&#39; object.</p>
+<p><strong>Solution</strong>: Consider adding validation and authorization checks before accessing or modifying the &#39;principal.name&#39; object. Refer to this link for more details: <a href="https://owasp.org/www-community/attacks/Insecure_Direct_Object_Reference">https://owasp.org/www-community/attacks/Insecure_Direct_Object_Reference</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 186</p>
+<p><strong>Bug Type</strong>: Insecure Equality Testing</p>
+<p><strong>Description</strong>: The function grants() uses insecure equality testing to check if the permissions needed are equal to the permissions granted to the principal. This could lead to potential security vulnerabilities as it might not account for all the potential states of &#39;permissionsNeeded&#39; and &#39;permissionsGranted&#39;.</p>
+<p><strong>Solution</strong>: Instead of using &#39;==&#39;, consider using a more secure comparison function that can handle different states of &#39;permissionsNeeded&#39; and &#39;permissionsGranted&#39;. Refer to this link for more details: <a href="https://owasp.org/www-community/attacks/Insecure_Comparison">https://owasp.org/www-community/attacks/Insecure_Comparison</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:12:26 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 187</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The <code>grants</code> function uses a switch-case statement to check the <code>principal.name</code>. This could be inefficient if there are many principals as the function will have to iterate through all the cases until it finds a match.</p>
+<p><strong>Solution</strong>: Consider using a hash map or dictionary to store the permissions for each principal. This would allow for constant time lookup regardless of the number of principals. Here is a link to Go&#39;s map documentation: <a href="https://go.dev/tour/maps">https://go.dev/tour/maps</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 187</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The <code>grants</code> function uses bitwise operations to check permissions. While bitwise operations are typically fast, they can be difficult to understand and maintain. This could lead to bugs that degrade performance.</p>
+<p><strong>Solution</strong>: If performance is not a concern, consider using a more straightforward approach to check permissions, such as using boolean flags or an enumeration. If performance is a concern, ensure that developers understand bitwise operations and their implications.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:18:36 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The use of unsafe package to determine the size of AccessPermissions and PrincipalAccessPermissions could potentially lead to memory corruption or data leakage, compromising the privacy of health-related data.</p>
+<p><strong>Solution</strong>: Avoid using the unsafe package. Instead, consider using safe and standard methods for size determination, such as using the binary package or custom methods.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 192</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function grants() does not have any mechanism to log or audit access attempts. This could potentially lead to unauthorized data access without detection, violating the GDPR&#39;s requirement for accountability and transparency in data processing.</p>
+<p><strong>Solution</strong>: Implement an auditing or logging mechanism that records every access attempt, including the identity of the user, the permissions requested, and the outcome of the request.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 192</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function grants() does not implement strict access control. It returns true for all permissions if the principal is ReadWriteAll, which could lead to unauthorized data access, violating the PCI DSS requirement for strict access control to cardholder data.</p>
+<p><strong>Solution</strong>: Implement a more granular access control mechanism that verifies the specific permissions of each user before granting access. Ensure that the principle of least privilege is followed.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./auth/accessprincipal.go line 128:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p principalPermissions)</span></span> principalAccessPermissions(principal AccessPrincipal) AccessPermissions {
+	principalIndex, ok := fieldAccessPrincipalIndexes[principal]
+	<span class="hljs-keyword">if</span> !ok {
+		<span class="hljs-keyword">return</span> NoPermissions
+	}
+
+	<span class="hljs-comment">// Move the principal&#x27;s permissions to the lowest-order bits, then convert to the right type which will</span>
+	<span class="hljs-comment">// truncate the rest.</span>
+	<span class="hljs-keyword">return</span> AccessPermissions(p &gt;&gt; (permissionsPerPrincipal * principalIndex))
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:02:50 AM PDT</p>
+<p>This code defines a function <code>principalAccessPermissions</code> which is a method of the <code>principalPermissions</code> type. The function takes an argument <code>principal</code> of type <code>AccessPrincipal</code> and returns a value of type <code>AccessPermissions</code>.</p>
+<p>The function appears to be used for managing access permissions for different principals in a system. Here&#39;s how it works:</p>
+<ol>
+<li><p>The function first tries to get the index of the given principal from the <code>fieldAccessPrincipalIndexes</code> map. If the principal is not found in the map, it returns <code>NoPermissions</code>, which presumably represents a lack of access permissions.</p>
+</li>
+<li><p>If the principal is found, the function calculates the principal&#39;s permissions by shifting the principal&#39;s permissions to the lowest-order bits of the <code>principalPermissions</code> value. This is done using the <code>&gt;&gt;</code> (right shift) operator in Go, which shifts the bits of its left operand to the right. The number of positions to shift is given by <code>permissionsPerPrincipal * principalIndex</code>.</p>
+</li>
+<li><p>The result of the shift operation is then converted to the <code>AccessPermissions</code> type, which will truncate any extra bits.</p>
+</li>
+</ol>
+<p>The algorithm used here is a form of bitwise manipulation. Bitwise operations are a fundamental part of computer science and are used for a variety of purposes, such as managing permissions in this case. This method provides a compact and efficient way to store and manipulate permissions for multiple principals.</p>
+<p>As for architectural guidelines, this code seems to follow the general principles of encapsulation and modularity. It defines a specific function for getting a principal&#39;s permissions, which can be used wherever this functionality is needed. This makes the code easier to understand, test, and maintain.</p>
+<p>For more information on bitwise operations in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://yourbasic.org/golang/bitwise-operator-cheat-sheet/">Bitwise operators in Go</a></li>
+<li><a href="https://austingwalters.com/bit-manipulation-bitwise-operations-in-go/">Bit shifting in Go</a></li>
+<li><a href="https://medium.com/@sebdah/go-best-practices-lets-talk-about-imports-4d5d04411c92">Access control in Go</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:04:43 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+    Start-->ExampleProcess;
+    Start-->ExampleErrorPath;
+    ExampleProcess-->End;
+    ExamplErrorPath-->End;</pre>
+</code></pre><p>NO CONTROL FLOW FOUND</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:08:10 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:12:31 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 6:19:32 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 259</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;principalAccessPermissions&#39; does not perform any checks to ensure that the &#39;principal&#39; is authorized to access the requested data. This could potentially lead to unauthorized access to Protected Health Information (PHI), which would be a violation of the HIPAA Security Rule.</p>
+<p><strong>Solution</strong>: Implement an access control mechanism to verify that the &#39;principal&#39; is authorized to access the requested data. This could be done using Role-Based Access Control (RBAC) or Attribute-Based Access Control (ABAC).</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 259</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;principalAccessPermissions&#39; does not perform any checks to ensure that the &#39;principal&#39; has given consent to access their personal data. This could potentially lead to unauthorized processing of personal data, which would be a violation of the GDPR.</p>
+<p><strong>Solution</strong>: Implement a consent mechanism to verify that the &#39;principal&#39; has given explicit consent to process their personal data. This could be done using a consent management platform.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 259</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;principalAccessPermissions&#39; does not perform any checks to ensure that the &#39;principal&#39; is authorized to access cardholder data. This could potentially lead to unauthorized access to cardholder data, which would be a violation of the PCI DSS.</p>
+<p><strong>Solution</strong>: Implement an access control mechanism to verify that the &#39;principal&#39; is authorized to access cardholder data. This could be done using Role-Based Access Control (RBAC) or Attribute-Based Access Control (ABAC).</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>

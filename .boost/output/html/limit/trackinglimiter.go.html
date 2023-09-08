@@ -1,0 +1,1077 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./limit/trackinglimiter.go</h1>
+    <p>Date Generated: Wednesday, September 6, 2023 at 11:49:50 PM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:22:01 PM PDT</p>
+<p>Executive Report:</p>
+<ol>
+<li><strong>Architectural Impact</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Risk Analysis</strong>: The analysis of this file has not revealed any severe issues.</li>
+<li><strong>Potential Customer Impact</strong>: Based on the analysis, there are no severe issues that could potentially impact customers.</li>
+<li><strong>Performance Issues</strong>: Our analysis did not identify any explicit performance issues in the file.</li>
+<li><strong>Risk Assessment</strong>: Based on the current analysis of this file, no severe issues have been found. However, this doesn&#39;t guarantee that the file is risk-free.</li>
+</ol>
+<p>Highlights:</p>
+<ul>
+<li>No severe issues were identified in the current analysis of this file.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:22:47 PM PDT</p>
+<p>Executive Report:</p>
+<p>The software project under review is a library written in Go, focusing on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>Key Highlights:</p>
+<ol>
+<li><p><strong>Issue Distribution</strong>: The project consists of a single file, <code>limit/trackinglimiter.go</code>, which has both warning and informational issues related to memory and CPU usage. This indicates that all the code in the project has some level of issues, which could potentially impact the overall health of the project.</p>
+</li>
+<li><p><strong>Severity of Issues</strong>: The most severe issues found in the project are of &#39;Warning&#39; severity, related to memory and CPU usage. These issues could potentially impact the performance and efficiency of the software, especially if the software is expected to handle large volumes of data or high levels of traffic.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The issues related to memory and CPU usage could potentially impact the customer experience, especially in terms of software performance and efficiency. If the software is used in a resource-constrained environment or if it needs to handle large volumes of data, these issues could lead to slow response times or even software crashes.</p>
+</li>
+<li><p><strong>Risk Assessment</strong>: Given that all the code in the project has some level of issues, the overall risk to the project is high. The issues related to memory and CPU usage, in particular, could pose significant risks in terms of software performance and efficiency. </p>
+</li>
+<li><p><strong>Architectural Impact</strong>: The issues identified in the project could potentially impact the architectural soundness of the software. The use of memory-inefficient data structures and unnecessary fields could lead to inefficient use of resources, which could in turn impact the scalability and performance of the software.</p>
+</li>
+</ol>
+<p>In conclusion, while the project follows Go&#39;s idiomatic style and structure for a library, there are significant issues related to memory and CPU usage that could potentially impact the performance, efficiency, and scalability of the software. These issues need to be addressed to ensure the overall health and success of the project.</p>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:23:37 PM PDT</p>
+<p>Executive Report:</p>
+<p>The software project under review is a library written in Go, focusing on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>However, the analysis has identified several compliance issues related to GDPR, HIPAA, and PCI DSS in the <code>limit/trackinglimiter.go</code> file. These issues could potentially impact the project&#39;s overall health and pose risks to the customers if not addressed promptly.</p>
+<p>Key Highlights:</p>
+<ol>
+<li><p><strong>Severity of Issues:</strong> The most severe issue identified is an error related to HIPAA compliance in the <code>limit/trackinglimiter.go</code> file. The function <code>SetOverride</code> may be storing protected health information (PHI) without proper safeguards, which is a violation of HIPAA. This could potentially lead to legal implications and loss of customer trust.</p>
+</li>
+<li><p><strong>GDPR Compliance:</strong> A warning related to GDPR compliance was also identified in the <code>limit/trackinglimiter.go</code> file. The &#39;TrackingLimiter&#39; struct could potentially be used to store user data or activity, which could be considered personal data under GDPR. If this data is not properly anonymized or if consent is not obtained from the user, this could be a violation of GDPR.</p>
+</li>
+<li><p><strong>PCI DSS Compliance:</strong> The <code>limit/trackinglimiter.go</code> file also has issues related to PCI DSS compliance. This could potentially impact customers who use credit cards for transactions, as PCI DSS is a set of security standards designed to ensure that all companies that accept, process, store or transmit credit card information maintain a secure environment.</p>
+</li>
+<li><p><strong>Risk Assessment:</strong> The <code>limit/trackinglimiter.go</code> file is the only file in the project and it has several compliance issues. This indicates that 100% of the project files have issues, which is a significant risk. The overall health of the project source is at risk due to these compliance issues.</p>
+</li>
+<li><p><strong>Customer Impact:</strong> The identified issues could potentially impact the customers in terms of data privacy and security. If the issues are not addressed, it could lead to legal implications, loss of customer trust, and potential financial penalties.</p>
+</li>
+</ol>
+<p>Recommendations:</p>
+<p>The project team should prioritize addressing these compliance issues to mitigate the risks. This could include implementing encryption methods, access controls, and audit controls for storing PHI, ensuring that any personal data stored is properly anonymized or that consent is obtained from the user, and ensuring that all credit card information is maintained in a secure environment.</p>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./limit/trackinglimiter.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code><span class="hljs-keyword">package</span> limit
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;reflect&quot;</span>
+	<span class="hljs-string">&quot;strings&quot;</span>
+)
+
+<span class="hljs-keyword">type</span> TrackingLimiter <span class="hljs-keyword">struct</span> {
+	Currents  <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]amount
+	Overrides <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]amount
+	dirty     <span class="hljs-type">bool</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:33:38 PM PDT</p>
+<p>The code you provided is a Go code snippet that defines a package named <code>limit</code> and a <code>TrackingLimiter</code> struct within it. </p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> limit
+
+<span class="hljs-keyword">import</span> (
+    <span class="hljs-string">&quot;reflect&quot;</span>
+    <span class="hljs-string">&quot;strings&quot;</span>
+)
+
+<span class="hljs-keyword">type</span> TrackingLimiter <span class="hljs-keyword">struct</span> {
+    Currents  <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]amount
+    Overrides <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]amount
+    dirty     <span class="hljs-type">bool</span>
+}
+</code></pre><p>The <code>TrackingLimiter</code> struct has three fields:</p>
+<ol>
+<li><p><code>Currents</code>: This is a map where the key is a string and the value is of the type <code>amount</code>. This field could be used to track the current limits for various variables or resources.</p>
+</li>
+<li><p><code>Overrides</code>: This is another map with string keys and <code>amount</code> values. It could be used to store any overriding limits that should take precedence over the current limits.</p>
+</li>
+<li><p><code>dirty</code>: This is a boolean field. Typically, a <code>dirty</code> flag in software development is used to track whether a value has changed from its original. In this context, it could be used to indicate whether the current limits or overrides have been updated.</p>
+</li>
+</ol>
+<p>The <code>reflect</code> and <code>strings</code> packages are imported at the beginning of the code, but they are not used in the provided snippet. The <code>reflect</code> package provides functions to inspect the type and value of variables at runtime, useful for creating more dynamic code. The <code>strings</code> package provides functions to manipulate and analyze strings.</p>
+<p>In terms of algorithms, this code snippet doesn&#39;t implement any specific algorithm. It&#39;s more about data organization and structure.</p>
+<p>This code is consistent with Go&#39;s conventions for structuring code and defining types. It is also consistent with the architectural blueprint you provided earlier. The <code>TrackingLimiter</code> struct could be part of the server-side application&#39;s mechanisms for rate limiting, resource management, or similar functionalities.</p>
+<p>For more information on Go&#39;s structs and types, you can refer to the official Go documentation: </p>
+<ul>
+<li><a href="https://golang.org/ref/spec#Struct_types">Go Structs</a></li>
+<li><a href="https://golang.org/ref/spec#Map_types">Go Maps</a></li>
+<li><a href="https://golang.org/doc/effective_go#packages">Go Packages</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:40:01 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+
+    Start-->A;
+</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:42:41 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:44:01 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 6</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The TrackingLimiter struct uses maps which can be memory inefficient if they grow large. Also, the &#39;dirty&#39; boolean field might be unnecessary and consume extra memory if not used properly.</p>
+<p><strong>Solution</strong>: Consider using a more memory efficient data structure if the maps grow large. Evaluate the need for the &#39;dirty&#39; field and remove it if it&#39;s not necessary. If the &#39;dirty&#39; field is used to track changes, consider a design where changes are processed immediately or use a more efficient tracking mechanism.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:47:55 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 8</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The &#39;TrackingLimiter&#39; struct could potentially be used to store user data or activity, which could be considered personal data under GDPR. If this data is not properly anonymized or if consent is not obtained from the user, this could be a violation of GDPR.</p>
+<p><strong>Solution</strong>: Ensure that any personal data stored in the &#39;TrackingLimiter&#39; struct is properly anonymized or that consent is obtained from the user. Alternatively, consider not storing personal data in this struct at all.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 13:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> <span class="hljs-type">amount </span>int64
+
+func (l *TrackingLimiter) Current(<span class="hljs-keyword">limited</span> <span class="hljs-keyword">Limited</span>) Amount {
+	<span class="hljs-keyword">if</span> l.Currents == nil {
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">limited</span>.LimitAmount().Zero()
+	}
+
+	current, ok := l.Currents[unqualifiedTypeName(reflect.TypeOf(<span class="hljs-keyword">limited</span>))]
+	<span class="hljs-keyword">if</span> !ok {
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">limited</span>.LimitAmount().Zero()
+	}
+
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">limited</span>.LimitAmount().convert(current)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:34:45 PM PDT</p>
+<p>The provided code snippet is written in Go language and it defines a method <code>Current</code> on the <code>TrackingLimiter</code> type. This method is used to get the current limit amount for a specific type that implements the <code>Limited</code> interface.</p>
+<p>Here&#39;s a line by line explanation of the code:</p>
+<ol>
+<li><p><code>type amount int64</code>: This line defines a new type <code>amount</code> which is based on <code>int64</code>. This is a simple type aliasing, which can be useful for adding more context to the code or for adding methods to the type.</p>
+</li>
+<li><p><code>func (l *TrackingLimiter) Current(limited Limited) Amount {</code>: This line defines a method <code>Current</code> on the pointer to <code>TrackingLimiter</code> type. The method takes an argument <code>limited</code> of interface type <code>Limited</code> and returns a value of type <code>Amount</code>.</p>
+</li>
+<li><p><code>if l.Currents == nil {</code>: This line checks if the <code>Currents</code> field of the <code>TrackingLimiter</code> instance is <code>nil</code>. If it is <code>nil</code>, it means there are no current limits set.</p>
+</li>
+<li><p><code>return limited.LimitAmount().Zero()</code>: This line returns a zero limit amount. The <code>LimitAmount</code> method is called on the <code>limited</code> object (which is assumed to be of type <code>Limited</code>) to get an <code>Amount</code> instance, and then the <code>Zero</code> method is called on this instance to get a zero limit amount.</p>
+</li>
+<li><p><code>current, ok := l.Currents[unqualifiedTypeName(reflect.TypeOf(limited))]</code>: This line attempts to retrieve the current limit amount for the type of the <code>limited</code> object from the <code>Currents</code> map. The <code>reflect.TypeOf</code> function is used to get the runtime type of the <code>limited</code> object, and <code>unqualifiedTypeName</code> is assumed to be a function that returns a string representation of this type. The <code>ok</code> variable is a boolean indicating whether the retrieval was successful.</p>
+</li>
+<li><p><code>if !ok {</code>: This line checks if the retrieval was not successful. If it wasn&#39;t, it means there is no current limit set for the type of the <code>limited</code> object.</p>
+</li>
+<li><p><code>return limited.LimitAmount().Zero()</code>: This line returns a zero limit amount, similar to line 4.</p>
+</li>
+<li><p><code>return limited.LimitAmount().convert(current)</code>: This line converts the retrieved current limit amount to an <code>Amount</code> instance and returns it. The <code>convert</code> method is assumed to be a method on the <code>Amount</code> type that takes an <code>amount</code> instance and returns an <code>Amount</code> instance.</p>
+</li>
+</ol>
+<p>The algorithm used in this code is fairly straightforward. It attempts to retrieve the current limit amount for a specific type from a map, and if it can&#39;t, it returns a zero limit amount. The code uses reflection to get the runtime type of the object, which is a common technique in Go for dealing with dynamic types.</p>
+<p>For more information on Go&#39;s type system and reflection, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></li>
+<li><a href="https://blog.golang.org/laws-of-reflection">The Laws of Reflection</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:40:07 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+ExampleProcess-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:42:44 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:44:32 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 28</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in the line <code>reflect.TypeOf(limited)</code> can be computationally expensive and slow down performance. This could potentially impact the software&#39;s scalability and responsiveness, especially under heavy load.</p>
+<p><strong>Solution</strong>: Avoid using reflection whenever possible. If the type of <code>limited</code> is known at compile time, use a type assertion instead. If not, consider redesigning your data structures to avoid the need for reflection. Online resource: <a href="https://go.dev/play/p/8ByZqdK1bf6">https://go.dev/play/p/8ByZqdK1bf6</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 26</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Checking if <code>l.Currents</code> is nil before every operation can lead to unnecessary memory usage if this function is called frequently. This could potentially lead to slower response times and a less responsive user interface.</p>
+<p><strong>Solution</strong>: A better approach would be to ensure that <code>l.Currents</code> is never nil, for example by initializing it in the constructor of <code>TrackingLimiter</code>. Online resource: <a href="https://go.dev/play/p/8ByZqdK1bf6">https://go.dev/play/p/8ByZqdK1bf6</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:47:59 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 28:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (l *TrackingLimiter) <span class="hljs-built_in">SetCurrent</span>(limited Limited, current Amount) {
+	<span class="hljs-keyword">if</span> l<span class="hljs-selector-class">.Currents</span> == nil {
+		l<span class="hljs-selector-class">.Currents</span> = <span class="hljs-built_in">make</span>(map<span class="hljs-selector-attr">[string]</span>amount)
+	}
+	l<span class="hljs-selector-class">.Currents</span><span class="hljs-selector-attr">[unqualifiedTypeName(reflect.TypeOf(limited))]</span> = current<span class="hljs-selector-class">.amount</span>()
+
+	l<span class="hljs-selector-class">.dirty</span> = true
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:35:33 PM PDT</p>
+<p>The code snippet provided is a method of a <code>TrackingLimiter</code> struct in Go. This method, <code>SetCurrent</code>, is used to update the current amount of a limited resource. It takes two parameters: <code>limited</code>, which is an interface of type <code>Limited</code>, and <code>current</code>, which is of type <code>Amount</code>.</p>
+<p>Here is a detailed breakdown of the method:</p>
+<ol>
+<li><p><code>if l.Currents == nil {</code>: This line checks if the <code>Currents</code> field of the <code>TrackingLimiter</code> struct is <code>nil</code>. <code>Currents</code> is presumably a map that tracks the current amount of each limited resource.</p>
+</li>
+<li><p><code>l.Currents = make(map[string]amount)</code>: If <code>Currents</code> is <code>nil</code>, this line initializes it as a new map where the keys are strings and the values are of type <code>amount</code>.</p>
+</li>
+<li><p><code>l.Currents[unqualifiedTypeName(reflect.TypeOf(limited))] = current.amount()</code>: This line updates the current amount of the limited resource. The <code>reflect.TypeOf(limited)</code> function call gets the type of the <code>limited</code> object at runtime. The <code>unqualifiedTypeName</code> function (which is not defined in this code snippet) presumably gets a string that represents the type name without any package or module information. This string is used as the key in the <code>Currents</code> map. The <code>current.amount()</code> function call presumably gets the numeric value of the <code>current</code> object, which is stored as the value in the <code>Currents</code> map.</p>
+</li>
+<li><p><code>l.dirty = true</code>: This line marks the <code>TrackingLimiter</code> as &quot;dirty&quot;, which typically means that it has unsaved changes. This could be used elsewhere in the code to trigger a save operation, for example.</p>
+</li>
+</ol>
+<p>The algorithm used in this code is fairly straightforward: it checks if a map is initialized, and if not, initializes it. Then it updates a value in the map and marks the object as &quot;dirty&quot;. The use of reflection to get the type of the <code>limited</code> object at runtime is a common technique in Go, especially when working with interfaces.</p>
+<p>For more information on Go maps, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#maps">https://golang.org/doc/effective_go#maps</a></p>
+<p>For more information on reflection in Go, you can refer to this article: <a href="https://medium.com/@timakin/go-reflection-ea7ded26f434">https://medium.com/@timakin/go-reflection-ea7ded26f434</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:40:44 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+
+style A fill:#B22222, stroke:#000000, stroke-width:2px;
+style B fill:#B22222, stroke:#000000, stroke-width:2px;
+style C fill:#B22222, stroke:#000000, stroke-width:2px;
+style D fill:#B22222, stroke:#000000, stroke-width:2px;
+style E fill:#B22222, stroke:#000000, stroke-width:2px;
+style F fill:#B22222, stroke:#000000, stroke-width:2px;
+style G fill:#B22222, stroke:#000000, stroke-width:2px;
+style H fill:#B22222, stroke:#000000, stroke-width:2px;
+style I fill:#B22222, stroke:#000000, stroke-width:2px;
+style J fill:#B22222, stroke:#000000, stroke-width:2px;
+style K fill:#B22222, stroke:#000000, stroke-width:2px;
+style L fill:#B22222, stroke:#000000, stroke-width:2px;
+style M fill:#B22222, stroke:#000000, stroke-width:2px;
+style N fill:#B22222, stroke:#000000, stroke-width:2px;
+style O fill:#B22222, stroke:#000000, stroke-width:2px;
+style P fill:#B22222, stroke:#000000, stroke-width:2px;
+style Q fill:#B22222, stroke:#000000, stroke-width:2px;
+style R fill:#B22222, stroke:#000000, stroke-width:2px;
+style S fill:#B22222, stroke:#000000, stroke-width:2px;
+style T fill:#B22222, stroke:#000000, stroke-width:2px;
+style U fill:#B22222, stroke:#000000, stroke-width:2px;
+style V fill:#B22222, stroke:#000000, stroke-width:2px;
+style W fill:#B22222, stroke:#000000, stroke-width:2px;
+style X fill:#B22222, stroke:#000000, stroke-width:2px;
+style Y fill:#B22222, stroke:#000000, stroke-width:2px;
+style Z fill:#B22222, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;</pre>
+</code></pre><p>The control flow graph for the provided source code is as follows:</p>
+<pre><code>SetCurrent--&gt;A;
+A--&gt;B;
+B--&gt;C;
+C--&gt;D;
+D--&gt;E;
+E--&gt;F;
+F--&gt;G;
+G--&gt;H;
+H--&gt;I;
+I--&gt;J;
+J--&gt;K;
+K--&gt;L;
+L--&gt;M;
+M--&gt;N;
+N--&gt;O;
+O--&gt;P;
+P--&gt;Q;
+Q--&gt;R;
+R--&gt;S;
+S--&gt;T;
+T--&gt;U;
+U--&gt;V;
+V--&gt;W;
+W--&gt;X;
+X--&gt;Y;
+Y--&gt;Z;
+Z--&gt;End;
+</code></pre><p>The primary path through the code is from <code>SetCurrent</code> to <code>End</code>. There are no error paths identified in the provided code snippet.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:43:11 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 58</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The code directly uses the user input (limited) to access the object (Currents) without proper validation or authorization checks. This can potentially allow an attacker to manipulate the input and gain unauthorized access to data.</p>
+<p><strong>Solution</strong>: Ensure that the user input is properly validated and sanitized before using it. Also, implement proper authorization checks to prevent unauthorized access. Refer to the OWASP guide on preventing IDOR: <a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control">https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 60</p>
+<p><strong>Bug Type</strong>: Information Disclosure</p>
+<p><strong>Description</strong>: The code uses reflection to get the type name of the object. This can potentially disclose sensitive information about the internal workings of the application. An attacker can use this information to craft targeted attacks.</p>
+<p><strong>Solution</strong>: Avoid using reflection to expose type information. If it&#39;s necessary, ensure that the exposed information does not reveal sensitive details about the application&#39;s internal workings. Here is a useful resource on this topic: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html#java">https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html#java</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:44:50 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 59</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in Go, as seen in <code>unqualifiedTypeName(reflect.TypeOf(limited))</code>, can be computationally expensive and slow down performance. This could potentially impact the software&#39;s scalability and responsiveness, especially under heavy load.</p>
+<p><strong>Solution</strong>: To improve performance, it is recommended to avoid using reflection whenever possible. If the type of <code>limited</code> is known at compile time, consider using a type switch or assert the type directly. If the type is not known at compile time, consider redesigning the code to avoid the need for reflection. More on reflection performance in Go can be found here: <a href="https://go.dev/play/p/7i6K9g_U8n6">https://go.dev/play/p/7i6K9g_U8n6</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:48:29 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 58</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The code is storing the type of a limited object in a map without any apparent checks for personal data. This could potentially lead to the storage of personal data without explicit user consent.</p>
+<p><strong>Solution</strong>: Ensure that personal data is not being stored without explicit user consent. Implement checks to ensure sensitive data is not being stored inappropriately.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 61</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The code is storing the current amount of a limited object without any apparent checks for health-related data. This could potentially lead to the storage of health-related data without proper security measures.</p>
+<p><strong>Solution</strong>: Ensure that health-related data is not being stored without proper security measures. Implement checks to ensure sensitive data is not being stored inappropriately.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 61</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The code is storing the current amount of a limited object without any apparent checks for financial data. This could potentially lead to the storage of financial data without proper security measures.</p>
+<p><strong>Solution</strong>: Ensure that financial data is not being stored without proper security measures. Implement checks to ensure sensitive data is not being stored inappropriately.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 37:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(l *TrackingLimiter)</span></span> Override(limited Limited) Amount {
+	<span class="hljs-keyword">if</span> l.Overrides == <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	}
+
+	override, ok := l.Overrides[unqualifiedTypeName(reflect.TypeOf(limited))]
+	<span class="hljs-keyword">if</span> !ok {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	}
+
+	<span class="hljs-keyword">return</span> limited.LimitAmount().convert(override)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:36:22 PM PDT</p>
+<p>The provided code is a method of a <code>TrackingLimiter</code> struct in Go. The <code>TrackingLimiter</code> struct is not defined in this snippet, but based on the context, it appears to be a rate limiter or similar construct that keeps track of usage of some resource.</p>
+<p>The <code>Override</code> method takes an argument of <code>Limited</code> type, which is also not defined in this snippet, but it&#39;s likely an interface with a <code>LimitAmount()</code> method.</p>
+<p>Here&#39;s a detailed line-by-line explanation:</p>
+<ul>
+<li><p><code>func (l *TrackingLimiter) Override(limited Limited) Amount {</code>: This line defines the <code>Override</code> method on the <code>TrackingLimiter</code> struct. This method takes one parameter <code>limited</code> of type <code>Limited</code> and returns an <code>Amount</code> type.</p>
+</li>
+<li><p><code>if l.Overrides == nil {</code>: This line checks if the <code>Overrides</code> field of the <code>TrackingLimiter</code> struct is <code>nil</code>. If it is, the method returns <code>nil</code>, indicating that there are no overrides.</p>
+</li>
+<li><p><code>override, ok := l.Overrides[unqualifiedTypeName(reflect.TypeOf(limited))]</code>: This line tries to find an override for the type of <code>limited</code> in the <code>Overrides</code> map. The <code>unqualifiedTypeName(reflect.TypeOf(limited))</code> expression uses reflection to get the type of <code>limited</code> and then gets its unqualified name (i.e., the name without the package prefix). The <code>ok</code> variable is a boolean that indicates whether the override was found.</p>
+</li>
+<li><p><code>if !ok {</code>: This line checks if the override was not found. If it&#39;s true, the method returns <code>nil</code>.</p>
+</li>
+<li><p><code>return limited.LimitAmount().convert(override)</code>: This line calls the <code>LimitAmount</code> method on <code>limited</code> to get the limit amount, and then calls the <code>convert</code> method on the result to convert it to the override amount. The converted amount is then returned.</p>
+</li>
+</ul>
+<p>The algorithm used here is a simple lookup in a map with a fallback to a default value. It uses the Go built-in <code>reflect</code> package to get the type of the <code>limited</code> object.</p>
+<p>For more information on Go reflection, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://blog.golang.org/laws-of-reflection">The Laws of Reflection</a></li>
+<li><a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:41:22 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+    Start-->A;
+    A-->B;
+    B-->C;
+    C-->D;
+    D-->E;
+    E-->F;
+    F-->G;
+    G-->H;
+    H-->I;
+    I-->J;
+    J-->K;
+    K-->L;
+    L-->M;
+    M-->N;
+    N-->O;
+    O-->P;
+    P-->Q;
+    Q-->R;
+    R-->S;
+    S-->T;
+    T-->U;
+    U-->V;
+    V-->W;
+    W-->X;
+    X-->Y;
+    Y-->Z;
+    Z-->End;
+    style A fill:#B22222, stroke:#000000, stroke-width:2px;
+    style B fill:#B22222, stroke:#000000, stroke-width:2px;
+    style C fill:#B22222, stroke:#000000, stroke-width:2px;
+    style D fill:#B22222, stroke:#000000, stroke-width:2px;
+    style E fill:#B22222, stroke:#000000, stroke-width:2px;
+    style F fill:#B22222, stroke:#000000, stroke-width:2px;
+    style G fill:#B22222, stroke:#000000, stroke-width:2px;
+    style H fill:#B22222, stroke:#000000, stroke-width:2px;
+    style I fill:#B22222, stroke:#000000, stroke-width:2px;
+    style J fill:#B22222, stroke:#000000, stroke-width:2px;
+    style K fill:#B22222, stroke:#000000, stroke-width:2px;
+    style L fill:#B22222, stroke:#000000, stroke-width:2px;
+    style M fill:#B22222, stroke:#000000, stroke-width:2px;
+    style N fill:#B22222, stroke:#000000, stroke-width:2px;
+    style O fill:#B22222, stroke:#000000, stroke-width:2px;
+    style P fill:#B22222, stroke:#000000, stroke-width:2px;
+    style Q fill:#B22222, stroke:#000000, stroke-width:2px;
+    style R fill:#B22222, stroke:#000000, stroke-width:2px;
+    style S fill:#B22222, stroke:#000000, stroke-width:2px;
+    style T fill:#B22222, stroke:#000000, stroke-width:2px;
+    style U fill:#B22222, stroke:#000000, stroke-width:2px;
+    style V fill:#B22222, stroke:#000000, stroke-width:2px;
+    style W fill:#B22222, stroke:#000000, stroke-width:2px;
+    style X fill:#B22222, stroke:#000000, stroke-width:2px;
+    style Y fill:#B22222, stroke:#000000, stroke-width:2px;
+    style Z fill:#B22222, stroke:#000000, stroke-width:2px;
+    style End fill:#228B22, stroke:#000000, stroke-width:2px;</pre>
+</code></pre><p>The control flow graph for the provided code is as follows:</p>
+<pre><code>TrackingLimiter.Override --&gt; A
+A --&gt; B
+B --&gt; C
+C --&gt; D
+D --&gt; E
+E --&gt; F
+F --&gt; G
+G --&gt; H
+H --&gt; I
+I --&gt; J
+J --&gt; K
+K --&gt; L
+L --&gt; M
+M --&gt; N
+N --&gt; O
+O --&gt; P
+P --&gt; Q
+Q --&gt; R
+R --&gt; S
+S --&gt; T
+T --&gt; U
+U --&gt; V
+V --&gt; W
+W --&gt; X
+X --&gt; Y
+Y --&gt; Z
+Z --&gt; End
+</code></pre><p>The primary path through the code is from <code>TrackingLimiter.Override</code> to <code>End</code>. The error path is from <code>A</code> to <code>Z</code>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:43:15 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:45:00 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 79</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in &#39;reflect.TypeOf(limited)&#39; can be computationally expensive and slow down performance.</p>
+<p><strong>Solution</strong>: If possible, avoid using reflection. Instead, consider using type assertion or interfaces to achieve the same goal. Here is a resource that may help: <a href="https://medium.com/@cep21/what-accept-interfaces-return-structs-means-in-go-2fe879e25ee8">https://medium.com/@cep21/what-accept-interfaces-return-structs-means-in-go-2fe879e25ee8</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 83</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The &#39;convert&#39; function may be computationally expensive depending on its implementation. If it involves complex calculations or conversions, it could impact performance.</p>
+<p><strong>Solution</strong>: Consider optimizing the &#39;convert&#39; function. If it&#39;s doing complex calculations, consider using more efficient algorithms or data structures. If it&#39;s doing conversions, consider whether they are necessary or if there&#39;s a more efficient way to achieve the same result.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:48:59 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 75</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function is accessing data without checking if the user has given consent. This is a violation of GDPR regulations, which require explicit user consent before accessing their data.</p>
+<p><strong>Solution</strong>: Add a consent check before accessing user data. Also, ensure that users have the ability to withdraw their consent at any time.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 77</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function is potentially handling sensitive payment data without proper safeguards. This could be a violation of PCI DSS regulations, which require secure handling of payment data.</p>
+<p><strong>Solution</strong>: Ensure that any payment data is handled securely, with encryption and secure transmission methods. Also, limit access to payment data to only those who need it.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 79</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function is potentially accessing health data without proper safeguards. This could be a violation of HIPAA regulations, which require secure handling of health data.</p>
+<p><strong>Solution</strong>: Ensure that any health data is handled securely, with encryption and secure transmission methods. Also, limit access to health data to only those who need it.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 50:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (l *TrackingLimiter) <span class="hljs-built_in">SetOverride</span>(limited Limited, override Amount) {
+	<span class="hljs-keyword">if</span> override<span class="hljs-selector-class">.Exceeds</span>(limited<span class="hljs-selector-class">.DefaultLimit</span>()) {
+		<span class="hljs-keyword">if</span> l<span class="hljs-selector-class">.Overrides</span> == nil {
+			l<span class="hljs-selector-class">.Overrides</span> = <span class="hljs-built_in">make</span>(map<span class="hljs-selector-attr">[string]</span>amount)
+		}
+		l<span class="hljs-selector-class">.Overrides</span><span class="hljs-selector-attr">[unqualifiedTypeName(reflect.TypeOf(limited))]</span> = override<span class="hljs-selector-class">.amount</span>()
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-built_in">delete</span>(l<span class="hljs-selector-class">.Overrides</span>, <span class="hljs-built_in">unqualifiedTypeName</span>(reflect<span class="hljs-selector-class">.TypeOf</span>(limited)))
+	}
+
+	l<span class="hljs-selector-class">.dirty</span> = true
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:37:15 PM PDT</p>
+<p>This function is a method of the <code>TrackingLimiter</code> struct. The <code>SetOverride</code> method is used to override the default limit of a <code>Limited</code> object with a new limit <code>Amount</code>. The <code>Limited</code> object is an interface that defines a method <code>DefaultLimit()</code>, which returns the default limit of the object. In this case, <code>Amount</code> is a type used to represent the limit value, which could be a number or any other data type depending on the implementation.</p>
+<p>Here is a step-by-step explanation of the function:</p>
+<ol>
+<li><p>The function first checks if the override limit exceeds the default limit of the <code>Limited</code> object. If it does, it proceeds to step 2; otherwise, it proceeds to step 3.</p>
+</li>
+<li><p>If the override limit exceeds the default limit, the function checks if the <code>Overrides</code> map of the <code>TrackingLimiter</code> object is <code>nil</code>. If it is, it initializes the <code>Overrides</code> map. Then it adds an entry to the <code>Overrides</code> map with the type name of the <code>Limited</code> object (without the package path) as the key and the override limit as the value. The <code>unqualifiedTypeName(reflect.TypeOf(limited))</code> function is used to get the type name of the <code>Limited</code> object without the package path. The <code>reflect.TypeOf()</code> function is a built-in Go function that returns the dynamic type of a value, which is then passed to the <code>unqualifiedTypeName()</code> function.</p>
+</li>
+<li><p>If the override limit does not exceed the default limit, the function deletes the entry for the <code>Limited</code> object from the <code>Overrides</code> map. This is done using the <code>delete()</code> built-in function in Go.</p>
+</li>
+<li><p>Finally, the function sets the <code>dirty</code> field of the <code>TrackingLimiter</code> object to <code>true</code>. This could be used to mark the <code>TrackingLimiter</code> object as having been modified, which could be useful for caching or other optimization purposes.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is essentially a conditional update of a map, which is a fundamental operation in many programming languages. It doesn&#39;t seem to use any specific well-known algorithms.</p>
+<p>For more information on Go&#39;s built-in <code>reflect</code> package, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://blog.golang.org/laws-of-reflection">The Laws of Reflection</a></li>
+<li><a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></li>
+<li><a href="https://golang.org/pkg/reflect/">Go reflect package</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:41:59 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+
+style A fill:#B22222, stroke:#000000, stroke-width:2px;
+style B fill:#B22222, stroke:#000000, stroke-width:2px;
+style C fill:#B22222, stroke:#000000, stroke-width:2px;
+style D fill:#B22222, stroke:#000000, stroke-width:2px;
+style E fill:#B22222, stroke:#000000, stroke-width:2px;
+style F fill:#B22222, stroke:#000000, stroke-width:2px;
+style G fill:#B22222, stroke:#000000, stroke-width:2px;
+style H fill:#B22222, stroke:#000000, stroke-width:2px;
+style I fill:#B22222, stroke:#000000, stroke-width:2px;
+style J fill:#B22222, stroke:#000000, stroke-width:2px;
+style K fill:#B22222, stroke:#000000, stroke-width:2px;
+style L fill:#B22222, stroke:#000000, stroke-width:2px;
+style M fill:#B22222, stroke:#000000, stroke-width:2px;
+style N fill:#B22222, stroke:#000000, stroke-width:2px;
+style O fill:#B22222, stroke:#000000, stroke-width:2px;
+style P fill:#B22222, stroke:#000000, stroke-width:2px;
+style Q fill:#B22222, stroke:#000000, stroke-width:2px;
+style R fill:#B22222, stroke:#000000, stroke-width:2px;
+style S fill:#B22222, stroke:#000000, stroke-width:2px;
+style T fill:#B22222, stroke:#000000, stroke-width:2px;
+style U fill:#B22222, stroke:#000000, stroke-width:2px;
+style V fill:#B22222, stroke:#000000, stroke-width:2px;
+style W fill:#B22222, stroke:#000000, stroke-width:2px;
+style X fill:#B22222, stroke:#000000, stroke-width:2px;
+style Y fill:#B22222, stroke:#000000, stroke-width:2px;
+style Z fill:#B22222, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;</pre>
+</code></pre><p>The control flow graph for the provided code is as follows:</p>
+<pre><code>Start--&gt;A;
+A--&gt;B;
+B--&gt;C;
+C--&gt;D;
+D--&gt;E;
+E--&gt;F;
+F--&gt;G;
+G--&gt;H;
+H--&gt;I;
+I--&gt;J;
+J--&gt;K;
+K--&gt;L;
+L--&gt;M;
+M--&gt;N;
+N--&gt;O;
+O--&gt;P;
+P--&gt;Q;
+Q--&gt;R;
+R--&gt;S;
+S--&gt;T;
+T--&gt;U;
+U--&gt;V;
+V--&gt;W;
+W--&gt;X;
+X--&gt;Y;
+Y--&gt;Z;
+Z--&gt;End;
+</code></pre><p>The primary path through the code is from Start to End. There are no error paths identified in the code.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:43:18 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:45:44 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 99</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in reflect.TypeOf(limited) can be computationally expensive and slow down performance. This could potentially impact the software&#39;s scalability and responsiveness, especially under heavy load.</p>
+<p><strong>Solution</strong>: Consider alternatives to using reflection. If the type of &#39;limited&#39; is known at compile time, it would be more efficient to use a type assertion or type switch. If the type is not known, consider redesigning the code to avoid the need for reflection. Here is a link for more information: <a href="https://golang.org/doc/faq#convert_slice_of_interface">https://golang.org/doc/faq#convert_slice_of_interface</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 99</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The map &#39;l.Overrides&#39; is initialized only when &#39;override.Exceeds(limited.DefaultLimit())&#39; is true. This could lead to unnecessary memory allocation if &#39;override&#39; often exceeds the default limit.</p>
+<p><strong>Solution</strong>: Consider initializing the map &#39;l.Overrides&#39; during the creation of the &#39;TrackingLimiter&#39; object. This way, the memory allocation is done upfront, and you avoid allocating memory during the function execution. Here is a link for more information: <a href="https://dave.cheney.net/2018/07/12/slices-from-the-ground-up">https://dave.cheney.net/2018/07/12/slices-from-the-ground-up</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 99</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of &#39;delete&#39; function on the map &#39;l.Overrides&#39; could be expensive if the map is large. This could lead to high CPU usage and slow down the performance.</p>
+<p><strong>Solution</strong>: If the map &#39;l.Overrides&#39; is expected to be large, consider using a different data structure that supports more efficient deletion, such as a balanced tree or a hash table with separate chaining. Here is a link for more information: <a href="https://yourbasic.org/golang/data-structures/">https://yourbasic.org/golang/data-structures/</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:49:36 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 104</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function SetOverride may be storing personal data in a map without explicit user consent, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: You should ensure that explicit user consent is obtained before storing their personal data. This could be achieved by adding a check to confirm user consent before adding data to the map. Additionally, you should implement a way for users to withdraw their consent and have their data removed from the map.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 104</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function SetOverride may be storing sensitive cardholder data in a map without proper encryption, which is a violation of PCI DSS.</p>
+<p><strong>Solution</strong>: You should ensure that sensitive cardholder data is encrypted before being stored. This could be achieved by implementing encryption methods before adding data to the map.</p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 104</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function SetOverride may be storing protected health information (PHI) in a map without proper safeguards, which is a violation of HIPAA.</p>
+<p><strong>Solution</strong>: You should ensure that PHI is stored securely and in compliance with HIPAA requirements. This could be achieved by implementing encryption methods, access controls, and audit controls before adding data to the map.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 63:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (l *TrackingLimiter) Maximum(limited Limited) Amount {
+	<span class="hljs-keyword">override</span> := l.Override(limited)
+	defaultLimit := limited.DefaultLimit()
+
+	<span class="hljs-keyword">if</span> <span class="hljs-keyword">override</span> != nil &amp;&amp; <span class="hljs-keyword">override</span>.Exceeds(defaultLimit) {
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">override</span>
+	} <span class="hljs-keyword">else</span> {
+		<span class="hljs-keyword">return</span> defaultLimit
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:37:59 PM PDT</p>
+<p>This is a Go function named <code>Maximum</code> which belongs to a struct called <code>TrackingLimiter</code>. </p>
+<p>The function takes a parameter <code>limited</code> of interface type <code>Limited</code> and returns an <code>Amount</code>. The <code>Limited</code> interface and <code>Amount</code> type are not defined in this snippet, but they are likely defined elsewhere in the project.</p>
+<p>Here&#39;s a step-by-step breakdown of the function:</p>
+<ol>
+<li><p>It calls the <code>Override</code> method of the <code>TrackingLimiter</code> struct, passing in the <code>limited</code> parameter. The <code>Override</code> method is not defined in this snippet, but it likely returns an <code>Amount</code> or <code>nil</code>.</p>
+</li>
+<li><p>It calls the <code>DefaultLimit</code> method on the <code>limited</code> parameter. This method is expected to return a default <code>Amount</code>.</p>
+</li>
+<li><p>It checks if the <code>override</code> is not <code>nil</code> and if the <code>override</code> exceeds the <code>defaultLimit</code>. The <code>Exceeds</code> method is not defined in this snippet, but it likely compares two <code>Amounts</code> and returns a boolean.</p>
+</li>
+<li><p>If the <code>override</code> is not <code>nil</code> and it exceeds the <code>defaultLimit</code>, it returns the <code>override</code>. Otherwise, it returns the <code>defaultLimit</code>.</p>
+</li>
+</ol>
+<p>The algorithm used in this function is a simple conditional check. It verifies if an override limit exists and if it&#39;s greater than the default limit. If so, it uses the override limit. Otherwise, it uses the default limit.</p>
+<p>This function is likely part of a rate limiting or resource limiting system where there are default limits that can be overridden in some cases. </p>
+<p>For more on rate limiting in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://www.alexedwards.net/blog/how-to-rate-limit-http-requests">Rate limiting using Go</a></li>
+<li><a href="https://medium.com/@deckarep/golangs-real-time-clock-and-timers-4dc3c4eeb00d">Rate Limiting a Go Web Service</a></li>
+<li><a href="https://gobyexample.com/rate-limiting">Go by Example: Rate Limiting</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:42:12 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ApplyOverride;
+ApplyOverride-->CheckOverride;
+CheckOverride-->Exceeds;
+Exceeds-->ReturnOverride;
+CheckOverride-->DefaultLimit;
+DefaultLimit-->ReturnDefault;
+ReturnOverride-->ReturnAmount;
+ReturnDefault-->ReturnAmount;
+ReturnAmount-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is shown in green, while the error path is shown in red.</p>
+<p>The control flow starts at the function <code>Maximum</code> and then proceeds to <code>ApplyOverride</code>. From there, it goes to <code>CheckOverride</code> and then to <code>Exceeds</code>. If the condition in <code>Exceeds</code> is true, the control flow goes to <code>ReturnOverride</code>, otherwise it goes to <code>DefaultLimit</code>. Finally, the control flow goes to <code>ReturnAmount</code> and then ends.</p>
+<p>Please note that the control flow graph assumes that the functions <code>Override</code>, <code>Exceeds</code>, and <code>DefaultLimit</code> are defined elsewhere in the code.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:43:22 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:46:06 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 127</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The &#39;Override&#39; method is called twice for the same input, which can lead to redundant computations if the method is complex or involves IO operations.</p>
+<p><strong>Solution</strong>: Store the result of the &#39;Override&#39; method in a variable and use the stored value instead of calling the method twice. This will reduce the number of method calls, which can improve performance if the method is computationally intensive.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 128</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The &#39;DefaultLimit&#39; method is called even when it&#39;s not needed, which can lead to unnecessary computations.</p>
+<p><strong>Solution</strong>: Rearrange the condition to return &#39;override&#39; immediately when it&#39;s not nil, and only call &#39;DefaultLimit&#39; when &#39;override&#39; is nil. This will avoid unnecessary method calls, which can improve performance if the method is computationally intensive.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:49:39 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 74:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(l *TrackingLimiter)</span> <span class="hljs-title function_">IsDirty</span><span class="hljs-params">()</span> <span class="hljs-title function_">bool</span> {
+	<span class="hljs-keyword">return</span> l.dirty
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:38:34 PM PDT</p>
+<p>The code you provided is a simple function in Go language. The function <code>IsDirty()</code> is a method of the <code>TrackingLimiter</code> struct. </p>
+<p>Here is a detailed explanation:</p>
+<ul>
+<li><p><code>func</code>: This keyword is used to define a function in Go.</p>
+</li>
+<li><p><code>(l *TrackingLimiter)</code>: This is known as a receiver in Go. It attaches the function to the <code>TrackingLimiter</code> type so the function becomes a method of <code>TrackingLimiter</code>. The <code>*</code> before <code>TrackingLimiter</code> means that <code>l</code> is a pointer to a <code>TrackingLimiter</code> instance. This means that if <code>l</code> is modified within the method, the changes will be reflected on the original <code>TrackingLimiter</code> object that invoked the method.</p>
+</li>
+<li><p><code>IsDirty()</code>: This is the method name. It takes no parameters and returns a boolean value.</p>
+</li>
+<li><p><code>return l.dirty</code>: This line returns the value of the <code>dirty</code> field from the <code>TrackingLimiter</code> object.</p>
+</li>
+</ul>
+<p>The <code>IsDirty</code> method is likely part of a &quot;dirty checking&quot; algorithm. In programming, &quot;dirty checking&quot; is a way to track whether a value or state has changed (&quot;dirty&quot;) or not (&quot;clean&quot;). It&#39;s commonly used in various scenarios such as database and state management, GUI programming, and more.</p>
+<p>This function doesn&#39;t seem to conflict with any architectural guidelines as it&#39;s a fairly standard way to check the state of an object in many programming paradigms. </p>
+<p>For more information on methods in Go, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:42:16 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:43:26 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:46:10 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:49:43 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 78:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-params">(l *TrackingLimiter)</span> <span class="hljs-title function_">ClearDirty</span><span class="hljs-params">()</span> {
+	l.dirty = <span class="hljs-literal">false</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:39:08 PM PDT</p>
+<p>This is a simple Go function that is part of a struct called <code>TrackingLimiter</code>. </p>
+<p>The function <code>ClearDirty()</code> does not take any parameters and does not return any value. It sets the boolean field <code>dirty</code> of the <code>TrackingLimiter</code> struct to <code>false</code>. </p>
+<p>The purpose of this function could be to reset or clear the <code>dirty</code> flag in the <code>TrackingLimiter</code> object. The <code>dirty</code> flag is typically used in programming to indicate that an object&#39;s state has changed, and it needs to be updated or saved to a database, file, etc. </p>
+<p>In this case, calling <code>ClearDirty()</code> would indicate that the <code>TrackingLimiter</code> is in a clean state, and no updates or saves are needed.</p>
+<p>The function is quite straightforward and does not use any specific algorithm. It&#39;s a common practice in Go (and other languages) to encapsulate the manipulation of struct&#39;s fields within its methods to maintain the integrity of the data.</p>
+<p>For more information about methods in Go, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#methods">https://golang.org/doc/effective_go#methods</a></p>
+<p>For more information about the use of a <code>dirty</code> flag in programming, you can refer to this explanation on StackOverflow: <a href="https://stackoverflow.com/questions/11012427/meaning-and-strategy-of-dirty-flag-in-programming">https://stackoverflow.com/questions/11012427/meaning-and-strategy-of-dirty-flag-in-programming</a></p>
+<p>In terms of the architectural guidelines provided, this code is consistent with common Go practices and does not appear to conflict with any guidelines. It&#39;s a simple and effective way to manage the state of a <code>TrackingLimiter</code> object.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:42:22 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+    style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+    style ClearDirtyProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+    Start-->ClearDirtyProcess;
+    ClearDirtyProcess-->End;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:43:29 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:46:13 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:49:47 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./limit/trackinglimiter.go line 82:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">unqualifiedTypeName</span><span class="hljs-params">(t reflect.Type)</span></span> <span class="hljs-type">string</span> {
+	s := t.String()
+	<span class="hljs-keyword">return</span> s[strings.Index(s, <span class="hljs-string">&quot;.&quot;</span>)+<span class="hljs-number">1</span>:]
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:39:48 PM PDT</p>
+<p>This Go function <code>unqualifiedTypeName</code> takes a <code>reflect.Type</code> as an argument and returns a string. The <code>reflect</code> package in Go provides a way to inspect the type and value of variables at runtime. Here, the function is used to extract the unqualified type name of a variable.</p>
+<p>Here is a detailed explanation of the function:</p>
+<ul>
+<li><p><code>s := t.String()</code>: This line converts the <code>reflect.Type</code> to a string. The <code>String()</code> method returns a string representation of the type. If the type was declared with a name, that name is returned.</p>
+</li>
+<li><p><code>strings.Index(s, &quot;.&quot;)+1</code>: This line finds the index of the first occurrence of the character &quot;.&quot; in the string <code>s</code> using the <code>Index</code> function from the <code>strings</code> package. This function returns -1 if &quot;.&quot; is not found in <code>s</code>. The <code>+1</code> is added to the index to point to the character after the &quot;.&quot;.</p>
+</li>
+<li><p><code>return s[strings.Index(s, &quot;.&quot;)+1:]</code>: This line returns a substring of <code>s</code> starting from the character after the &quot;.&quot; to the end of <code>s</code>. If &quot;.&quot; is not found in <code>s</code>, it returns the whole string <code>s</code> (since <code>strings.Index(s, &quot;.&quot;)</code> would be -1 and adding 1 gives 0 which is the start of the string).</p>
+</li>
+</ul>
+<p>The function overall is used to get the unqualified type name from a qualified type name. In Go, a qualified type name is a type name that includes the package name (like <code>package.Type</code>), and an unqualified type name is just the type name without the package name. This function effectively removes the package name from a qualified type name.</p>
+<p>For more information on Go&#39;s <code>reflect</code> package, you can refer to the official documentation: <a href="https://golang.org/pkg/reflect/">https://golang.org/pkg/reflect/</a> </p>
+<p>For more information on Go&#39;s <code>strings</code> package, you can refer to the official documentation: <a href="https://golang.org/pkg/strings/">https://golang.org/pkg/strings/</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:42:27 PM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style unqualifiedTypeName fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->unqualifiedTypeName;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:43:32 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:46:39 PM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 164</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function <code>unqualifiedTypeName</code> uses reflection which can be computationally expensive and slow down performance. The use of <code>reflect.Type</code> and <code>reflect.String</code> can impact CPU usage.</p>
+<p><strong>Solution</strong>: Try to avoid using reflection if possible. If the type is known at compile time, use type assertions or type switches. If the type is not known, consider redesigning the code to avoid reflection. More on this can be found here: <a href="https://go.dev/blog/laws-of-reflection">https://go.dev/blog/laws-of-reflection</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 166</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function <code>unqualifiedTypeName</code> uses <code>strings.Index</code> which can be inefficient if the string is large. This can impact CPU usage.</p>
+<p><strong>Solution</strong>: If the size of the string is known and it&#39;s large, consider using a more efficient search algorithm. For example, you can use the Boyer-Moore algorithm or the Knuth-Morris-Pratt algorithm. More on this can be found here: <a href="https://en.wikipedia.org/wiki/String-searching_algorithm">https://en.wikipedia.org/wiki/String-searching_algorithm</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Wednesday, September 6, 2023 at 11:49:50 PM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div>
+</body>
+</html>

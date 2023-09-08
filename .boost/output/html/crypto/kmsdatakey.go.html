@@ -1,0 +1,1515 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./crypto/kmsdatakey.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 9:10:03 AM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:25:12 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go that focuses on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types.</p>
+<p>However, the analysis has identified several issues of varying severity in the project&#39;s source code, specifically in the <code>crypto/kmsdatakey.go</code> file. These issues, if not addressed, could potentially impact the overall architecture and functionality of the project, and pose significant risks to data security and integrity.</p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified issues, particularly those related to insecure cryptographic practices and storage, could potentially impact customers by compromising the security of their data. If an attacker were to exploit these vulnerabilities, they could gain unauthorized access to sensitive information, leading to potential data breaches.</p>
+<h3 id="overall-issues">Overall Issues</h3>
+<p>The project&#39;s source code contains a number of issues, with the <code>crypto/kmsdatakey.go</code> file being the most affected. The issues range from warnings to informational, with the most severe being related to insecure cryptographic practices and storage.</p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>Based on the analysis, the overall health of the project source is concerning. The <code>crypto/kmsdatakey.go</code> file, which contains the most severe issues, represents a significant portion of the project&#39;s source code. This suggests that a large percentage of the project files could potentially have issues of similar severity.</p>
+<h3 id="highlights">Highlights</h3>
+<ul>
+<li>The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types.</li>
+<li>The <code>crypto/kmsdatakey.go</code> file contains several issues of varying severity, with the most severe being related to insecure cryptographic practices and storage.</li>
+<li>The identified issues could potentially impact customers by compromising the security of their data, leading to potential data breaches.</li>
+<li>The overall health of the project source is concerning, with a large percentage of the project files potentially having issues of similar severity.</li>
+</ul>
+<p>In conclusion, while the project follows good architectural practices in terms of structure and separation of concerns, the identified issues pose significant risks to data security and integrity. It is recommended that these issues be addressed as soon as possible to mitigate potential risks and ensure the overall health and success of the project.</p>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:25:57 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go that focuses on constraint handling and validation. The architecture appears to be sound, with a clear separation of concerns and adherence to Go&#39;s idiomatic style and structure for a library. However, there are some issues that could impact the overall project.</p>
+<ol>
+<li><p><strong>Network Usage and Latency:</strong> The most severe issue found is in the file <code>crypto/kmsdatakey.go</code>. The function <code>GenerateDataKeyWithContext</code> is a network call to the AWS KMS service. If this function is called frequently, it could lead to high network usage and latency. This could potentially impact the performance of the software, especially if it is used in a high-traffic environment.</p>
+</li>
+<li><p><strong>CPU and Memory Usage:</strong> The same file also has issues related to CPU and memory usage. While these are not as severe as the network issue, they could still impact the performance of the software, especially if it is used in a resource-constrained environment.</p>
+</li>
+<li><p><strong>Risk Assessment:</strong> Only one file was provided for analysis, and it has issues of varying severity. This suggests that there may be similar issues in other parts of the project that were not provided for analysis. Therefore, the overall health of the project source could be at risk.</p>
+</li>
+<li><p><strong>Potential Customer Impact:</strong> The issues found could impact the performance of the software, which could in turn impact the user experience. If the software is slow or unresponsive, it could lead to user dissatisfaction and potential loss of customers.</p>
+</li>
+<li><p><strong>Overall Issues:</strong> The issues found are primarily related to performance. While these are not necessarily architectural issues, they could still impact the overall project. It is recommended that the project team review the code for potential optimizations and consider implementing strategies such as caching and key rotation to mitigate these issues.</p>
+</li>
+</ol>
+<p>In conclusion, while the architecture of the project appears to be sound, there are performance issues that could impact the overall project. It is recommended that the project team address these issues to ensure the success of the project.</p>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 1:26:57 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The software project appears to be a library written in Go that focuses on constraint handling and validation. The primary file with issues is <code>crypto/kmsdatakey.go</code>, which handles encryption and key management. The issues identified in this file could potentially impact the overall architecture of the project, particularly if the encryption and key management functions are central to the project&#39;s functionality. </p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The most severe issues found in the project relate to data encryption, encryption key management, GDPR, HIPAA, and PCI DSS compliance. These issues pose a significant risk to the project, as they could lead to data breaches, regulatory fines, and loss of customer trust. The fact that these issues are present in a single file (<code>crypto/kmsdatakey.go</code>) suggests that the risk is localized and could be mitigated by focusing on this file.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The issues identified could have a significant impact on customers, particularly if they result in a data breach. Customers could potentially have their sensitive data exposed, which could lead to identity theft and other forms of fraud. Additionally, the lack of GDPR, HIPAA, and PCI DSS compliance could result in customers being unable to use the software due to regulatory constraints.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The project has a total of 5 warning issues and 1 information issue in <code>crypto/kmsdatakey.go</code>. This suggests that while there are significant issues to address, the overall health of the project is not necessarily poor, as the issues are localized to a single file. However, the severity of the issues in this file means that they should be addressed as a priority.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li><strong>Overall Health</strong>: The project consists of a single file, <code>crypto/kmsdatakey.go</code>, which has several issues. This means that 100% of the project files have issues. However, the fact that there is only one file in the project suggests that the issues could be addressed relatively quickly.</li>
+<li><strong>Severity of Issues</strong>: The issues in the project are of high severity, relating to data encryption, encryption key management, and compliance with GDPR, HIPAA, and PCI DSS. These issues pose a significant risk to the project and should be addressed as a priority.</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li>The project is a Go library focusing on constraint handling and validation.</li>
+<li>The primary file with issues, <code>crypto/kmsdatakey.go</code>, handles encryption and key management.</li>
+<li>The most severe issues relate to data encryption, encryption key management, and compliance with GDPR, HIPAA, and PCI DSS.</li>
+<li>These issues pose a significant risk to the project and could have a major impact on customers.</li>
+<li>The overall health of the project is not necessarily poor, as the issues are localized to a single file. However, the severity of the issues means they should be addressed as a priority.</li>
+</ul>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./crypto/kmsdatakey.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code><span class="hljs-keyword">package</span> crypto
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;bytes&quot;</span>
+	<span class="hljs-string">&quot;context&quot;</span>
+	<span class="hljs-string">&quot;crypto/aes&quot;</span>
+	<span class="hljs-string">&quot;crypto/cipher&quot;</span>
+	<span class="hljs-string">&quot;crypto/rand&quot;</span>
+	<span class="hljs-string">&quot;encoding/binary&quot;</span>
+	<span class="hljs-string">&quot;io&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/aws&quot;</span>
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/aws/awserr&quot;</span>
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/service/kms&quot;</span>
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/service/kms/kmsiface&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/jt0/gomer/gomerr&quot;</span>
+)
+
+<span class="hljs-keyword">const</span> (
+	encryptedEncodingFormatVersion     = <span class="hljs-number">1</span>
+	encryptedEncodingFormatVersionByte = <span class="hljs-type">byte</span>(encryptedEncodingFormatVersion)
+)
+
+<span class="hljs-keyword">type</span> kmsDataKeyEncrypter <span class="hljs-keyword">struct</span> {
+	kms   kmsiface.KMSAPI
+	keyId <span class="hljs-type">string</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:42:13 AM PDT</p>
+<p>This code snippet is written in Go and is a part of a package named <code>crypto</code>. This package is likely used for cryptographic operations in the application. </p>
+<p>The code imports several packages which are used for cryptographic operations, random number generation, and AWS Key Management Service (KMS). </p>
+<p>The <code>crypto/aes</code> package provides Advanced Encryption Standard (AES) implementation, a symmetric encryption algorithm.</p>
+<p>The <code>crypto/cipher</code> package provides common cryptographic cipher interfaces.</p>
+<p>The <code>crypto/rand</code> package provides a cryptographically secure random number generator.</p>
+<p>The <code>github.com/aws/aws-sdk-go/aws</code>, <code>github.com/aws/aws-sdk-go/service/kms</code>, and <code>github.com/aws/aws-sdk-go/service/kms/kmsiface</code> packages are used for interacting with AWS KMS, which is a managed service that makes it easy for you to create and control the cryptographic keys used to encrypt your data.</p>
+<p>The <code>github.com/jt0/gomer/gomerr</code> package is likely a custom error handling package used in the application.</p>
+<p>The code defines a constant <code>encryptedEncodingFormatVersion</code> and <code>encryptedEncodingFormatVersionByte</code> which are likely used to specify the version of the encoding format for the encrypted data.</p>
+<p>The <code>kmsDataKeyEncrypter</code> struct is defined with two fields - <code>kms</code> and <code>keyId</code>. The <code>kms</code> field is of type <code>kmsiface.KMSAPI</code> which is an interface to AWS KMS. The <code>keyId</code> field is a string likely used to store the identifier for a specific key in AWS KMS.</p>
+<p>For more information on the cryptographic operations in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/crypto/">Package crypto</a></li>
+<li><a href="https://golang.org/pkg/crypto/aes/">Package crypto/aes</a></li>
+<li><a href="https://golang.org/pkg/crypto/cipher/">Package crypto/cipher</a></li>
+<li><a href="https://golang.org/pkg/crypto/rand/">Package crypto/rand</a></li>
+</ul>
+<p>For more information on AWS SDK for Go and AWS KMS, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://aws.amazon.com/sdk-for-go/">AWS SDK for Go</a></li>
+<li><a href="https://aws.amazon.com/kms/">AWS Key Management Service (KMS)</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:52:27 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExamplErrorPath-->End;</pre>
+</code></pre><p>NO CONTROL FLOW FOUND</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:54:25 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:59:49 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:05:47 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 1</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The encryption method used is AES, which while secure, does not specify the encryption mode. Some modes such as ECB are not secure for sensitive data.</p>
+<p><strong>Solution</strong>: Ensure that a secure mode of AES encryption is used, such as CBC, CFB, OFB, or GCM. These modes provide better security for sensitive data.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 23</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The key used for encryption is not clearly defined, which could lead to weak encryption if not properly managed.</p>
+<p><strong>Solution</strong>: Ensure that the encryption key is securely generated and stored. Consider using a secure key management service.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 29:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> add support for asymmetric keys</span>
+func <span class="hljs-constructor">KmsDataKeyEncrypter(<span class="hljs-params">kmsClient</span> <span class="hljs-params">kmsiface</span>.KMSAPI, <span class="hljs-params">masterKeyId</span> <span class="hljs-params">string</span>)</span> Encrypter {
+	return kmsDataKeyEncrypter{
+		kms:   kmsClient,
+		keyId: masterKeyId,
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:42:33 AM PDT</p>
+<p>This is a Go function named <code>KmsDataKeyEncrypter</code> that returns an instance of an <code>Encrypter</code> interface. This function is likely part of a larger project that handles encryption and decryption of data using AWS Key Management Service (KMS).</p>
+<p>The function takes two parameters:</p>
+<ol>
+<li><p><code>kmsClient</code> is an interface of type <code>kmsiface.KMSAPI</code>. This interface is provided by the AWS SDK for Go. It represents a client that can make requests to the AWS KMS service. The client is passed into the function, which allows for dependency injection, a software design pattern that improves testability and decoupling.</p>
+</li>
+<li><p><code>masterKeyId</code> is a string that represents the ID of a master key in AWS KMS. This key is used to encrypt and decrypt data keys.</p>
+</li>
+</ol>
+<p>The function returns an instance of <code>kmsDataKeyEncrypter</code>, which is a struct that implements the <code>Encrypter</code> interface. The <code>kmsDataKeyEncrypter</code> struct is initialized with the <code>kmsClient</code> and <code>masterKeyId</code> passed into the function.</p>
+<p>The returned <code>Encrypter</code> can then be used to perform encryption operations, likely using the AWS KMS client to generate and encrypt data keys using the specified master key.</p>
+<p>The comment at the top of the function indicates a future enhancement: adding support for asymmetric keys. Currently, it seems that only symmetric keys are supported.</p>
+<p>This function is part of the Key Management Service (KMS) provided by AWS, which is a managed service that makes it easy for you to create and control the cryptographic keys used to encrypt your data.</p>
+<p>For more information on AWS KMS and the AWS SDK for Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://aws.amazon.com/kms/">AWS Key Management Service (KMS)</a></li>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/">AWS SDK for Go API Reference</a></li>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/service/kms/kmsiface/">AWS SDK for Go: kmsiface package</a></li>
+</ul>
+<p>The function seems to follow the architectural guidelines and best practices for Go and for using AWS services.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:52:31 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:55:07 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 60</p>
+<p><strong>Bug Type</strong>: Insecure Cryptographic Practices</p>
+<p><strong>Description</strong>: The function <code>KmsDataKeyEncrypter</code> does not support asymmetric encryption. Asymmetric encryption is more secure than symmetric encryption because the decryption key is not shared and cannot be intercepted during transmission. The lack of support for asymmetric keys may limit the security of the encryption process.</p>
+<p><strong>Solution</strong>: Consider adding support for asymmetric encryption. This typically involves generating a pair of keys: a public key for encryption and a private key for decryption. The AWS SDK for Go provides support for creating asymmetric keys in KMS. You can refer to the official AWS documentation: <a href="https://docs.aws.amazon.com/sdk-for-go/api/service/kms/#KMS.CreateKey">https://docs.aws.amazon.com/sdk-for-go/api/service/kms/#KMS.CreateKey</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:59:53 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:06:12 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 60</p>
+<p><strong>Bug Type</strong>: Encryption Key Management</p>
+<p><strong>Description</strong>: The function KmsDataKeyEncrypter generates an encryption key but doesn&#39;t seem to have a mechanism for key rotation or key management, which is a requirement in GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Implement a key management system that includes regular key rotation, backup, and recovery. AWS Key Management Service (KMS) can be used for this purpose.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 60</p>
+<p><strong>Bug Type</strong>: Asymmetric Key Encryption</p>
+<p><strong>Description</strong>: The TODO comment indicates a lack of support for asymmetric keys, which are important for secure communication between systems as they allow for both encryption and signature verification.</p>
+<p><strong>Solution</strong>: Implement support for asymmetric keys. AWS KMS supports RSA and Elliptic Curve keys, which can be used for asymmetric encryption.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 37:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (k kmsDataKeyEncrypter) <span class="hljs-constructor">Encrypt(<span class="hljs-params">plaintext</span> []<span class="hljs-params">byte</span>, <span class="hljs-params">encryptionContext</span> <span class="hljs-params">map</span>[<span class="hljs-params">string</span>]<span class="hljs-operator">*</span><span class="hljs-params">string</span>)</span> (<span class="hljs-literal">[]</span>byte, gomerr.Gomerr) {
+	return k.<span class="hljs-constructor">EncryptWithContext(<span class="hljs-params">context</span>.Background()</span>, plaintext, encryptionContext)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:43:25 AM PDT</p>
+<p>The provided code is a method in Go programming language. The method is <code>Encrypt</code> and it is associated with the <code>kmsDataKeyEncrypter</code> type (which is likely a struct). The <code>Encrypt</code> method takes two parameters: a slice of bytes (<code>plaintext</code>) and a map with string keys and pointer to string values (<code>encryptionContext</code>).</p>
+<p>The purpose of this method is to encrypt the provided plaintext using a specific encryption context. The encryption context is a set of key-value pairs that you can pass to AWS KMS along with the plaintext. AWS KMS uses the encryption context as additional authenticated data (AAD) when it encrypts and decrypts data.</p>
+<p>The <code>Encrypt</code> method calls another method <code>EncryptWithContext</code>, passing <code>context.Background()</code>, <code>plaintext</code>, and <code>encryptionContext</code> as parameters. <code>context.Background()</code> returns a non-nil, empty Context, which is never canceled, has no values, and has no deadline. It is typically used by the main function, initialization, and tests, and as the top-level Context for incoming requests.</p>
+<p>The <code>EncryptWithContext</code> method likely performs the actual encryption process, using the AWS Key Management Service (AWS KMS) or similar. This method is not visible in the provided code snippet, but it would typically use an encryption algorithm such as AES (Advanced Encryption Standard) or RSA (Rivest–Shamir–Adleman), provided by the AWS KMS service.</p>
+<p>The <code>Encrypt</code> method returns two values: a slice of bytes (the encrypted data) and a <code>Gomerr</code> type. <code>Gomerr</code> is a custom error type used in this project for error handling. If the encryption process is successful, the method will return the encrypted data and a nil <code>Gomerr</code>. If there is an error, it will return a nil slice of bytes and a non-nil <code>Gomerr</code> containing information about the error.</p>
+<p>For more information about encryption in AWS KMS, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://d1.awsstatic.com/whitepapers/KMS-Cryptographic-Details.pdf">AWS Key Management Service Cryptographic Details</a></li>
+<li><a href="https://docs.aws.amazon.com/kms/latest/APIReference/Welcome.html">AWS KMS API Reference</a></li>
+<li><a href="https://golang.org/pkg/context/">Go context package</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:52:39 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Encrypt fill:#228B22, stroke:#000000, stroke-width:4px;
+style EncryptWithContext fill:#228B22, stroke:#000000, stroke-width:4px;
+style Error fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->Encrypt;
+Encrypt-->EncryptWithContext;
+EncryptWithContext-->End;
+EncryptWithContext-->Error;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<ul>
+<li>The start of the graph is the function <code>Encrypt</code>.</li>
+<li>The primary path is represented by the green color.</li>
+<li>The primary path goes from <code>Encrypt</code> to <code>EncryptWithContext</code> and then to the end.</li>
+<li>The error path is represented by the red color.</li>
+<li>The error path goes from <code>EncryptWithContext</code> to the error block.</li>
+</ul>
+<p>Please note that the control flow graph only represents the control flow within the provided code snippet. If there are any external library calls or non-standard functions, they are not shown in the graph.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:55:10 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:00:10 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 74</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The Encrypt function uses context.Background() which might result in a performance issue if the context needs to be cancelled before the encryption process is completed, as there is no way to cancel a background context.</p>
+<p><strong>Solution</strong>: Consider passing a context from the calling function to allow for cancellation if necessary. This can improve CPU usage by not doing unnecessary work. Reference: <a href="https://pkg.go.dev/context#Background">https://pkg.go.dev/context#Background</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:06:24 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 74</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The encryption function uses a default context, which might not have sufficient security configurations.</p>
+<p><strong>Solution</strong>: Use a context that includes security configurations such as timeouts and cancellation signals. Also, consider using a context that allows for tracing and logging encryption operations for auditing purposes.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 41:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// Decrypt returns the decrypted form of the encrypted content given the optional encryptionContext. If</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//  gomerr.NotFoundError:</span>
+<span class="hljs-comment">//      The Encrypter keyId isn&#x27;t found within KMS</span>
+<span class="hljs-comment">//  gomerr.BadValueError:</span>
+<span class="hljs-comment">//      The KMS key is in an invalid state</span>
+<span class="hljs-comment">//  gomerr.InternalError:</span>
+<span class="hljs-comment">//      A problem with the underlying crypto libraries</span>
+<span class="hljs-comment">//  gomerr.DependencyError:</span>
+<span class="hljs-comment">//      An unexpected error occurred calling KMS</span>
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> add support for grant tokens?</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(k kmsDataKeyEncrypter)</span></span> EncryptWithContext(context context.Context, plaintext []<span class="hljs-type">byte</span>, encryptionContext <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*<span class="hljs-type">string</span>) ([]<span class="hljs-type">byte</span>, gomerr.Gomerr) {
+	input := &amp;kms.GenerateDataKeyInput{
+		KeyId:             &amp;k.keyId,
+		EncryptionContext: encryptionContext,
+		KeySpec:           aws.String(kms.DataKeySpecAes256),
+	}
+
+	dataKey, err := k.kms.GenerateDataKeyWithContext(context, input)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">if</span> awsErr, ok := err.(awserr.Error); ok {
+			<span class="hljs-keyword">switch</span> awsErr.Code() {
+			<span class="hljs-keyword">case</span> kms.ErrCodeNotFoundException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.NotFound(<span class="hljs-string">&quot;kms.KeyId&quot;</span>, *input.KeyId).Wrap(err)
+			<span class="hljs-keyword">case</span> kms.ErrCodeDisabledException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.InvalidValue(<span class="hljs-string">&quot;KmsKey.&quot;</span>+*input.KeyId+<span class="hljs-string">&quot;.KeyState&quot;</span>, kms.KeyStateDisabled, kms.KeyStateEnabled).Wrap(err)
+			<span class="hljs-keyword">case</span> kms.ErrCodeInvalidStateException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.InvalidValue(<span class="hljs-string">&quot;KmsKey.&quot;</span>+*input.KeyId+<span class="hljs-string">&quot;.KeyState&quot;</span>, <span class="hljs-string">&quot;&lt;unavailable&gt;&quot;</span>, kms.KeyStateEnabled).Wrap(err)
+			<span class="hljs-keyword">case</span> kms.ErrCodeInvalidKeyUsageException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.InvalidValue(<span class="hljs-string">&quot;KmsKey.&quot;</span>+*input.KeyId+<span class="hljs-string">&quot;.KeyUsage&quot;</span>, <span class="hljs-string">&quot;&lt;unavailable&gt;&quot;</span>, kms.KeyUsageTypeEncryptDecrypt).Wrap(err)
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Dependency(<span class="hljs-string">&quot;KMS&quot;</span>, input).Wrap(err)
+	}
+
+	encrypted, nonce, ge := encrypt(dataKey.Plaintext, plaintext)
+	<span class="hljs-keyword">if</span> ge != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ge
+	}
+
+	<span class="hljs-keyword">return</span> encode(encrypted, nonce, dataKey.CiphertextBlob), <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:44:35 AM PDT</p>
+<p>The provided code snippet is a function written in Go that uses Amazon Key Management Service (KMS) to generate a data key and then uses that data key to encrypt some plaintext data. The AWS SDK for Go is used to interact with KMS.</p>
+<p>Here&#39;s a detailed explanation:</p>
+<ol>
+<li><p>The function <code>EncryptWithContext</code> is defined on the <code>kmsDataKeyEncrypter</code> struct. It takes three parameters: a context, a byte slice representing the plaintext to be encrypted, and a map representing the encryption context.</p>
+</li>
+<li><p>A <code>GenerateDataKeyInput</code> struct from the AWS KMS package is created. It is populated with the KeyId from the <code>kmsDataKeyEncrypter</code> struct, the provided encryption context, and a key specification string indicating the use of AES-256 encryption.</p>
+</li>
+<li><p>The <code>GenerateDataKeyWithContext</code> function from the AWS KMS package is called with the context and input struct. This function generates a new data key. The generated data key is in plaintext and also returned encrypted under the provided KeyId.</p>
+</li>
+<li><p>If an error occurs during key generation, the error is checked to see if it&#39;s an AWS error. If it is, the error code is checked and a custom error from the <code>gomerr</code> package is returned, providing more context about the error. If the error is not an AWS error, a generic dependency error is returned.</p>
+</li>
+<li><p>If the data key is successfully generated, the <code>encrypt</code> function is called with the plaintext data key and the plaintext data to be encrypted. This function is not defined in the provided code, but it likely uses the data key to encrypt the plaintext data using some form of symmetric encryption (likely AES-256 given the key specification).</p>
+</li>
+<li><p>If an error occurs during encryption, it is returned. Otherwise, the <code>encode</code> function is called with the encrypted data, a nonce (presumably generated during the encryption process), and the encrypted form of the data key. This function is also not defined in the provided code, but it likely combines these inputs into a single byte slice in some way.</p>
+</li>
+<li><p>The result of the <code>encode</code> function is returned. This is the final encrypted output.</p>
+</li>
+</ol>
+<p>This code follows best practices for using AWS KMS to encrypt data. The AWS KMS service is used to generate a data key, which is used to encrypt the data locally. This allows the data to be decrypted without making a call to KMS, while still allowing the data key to be rotated or revoked through KMS.</p>
+<p>For more information on AWS KMS and the AWS SDK for Go, refer to the following resources:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/service/kms/">AWS SDK for Go API Reference: KMS</a></li>
+<li><a href="https://d1.awsstatic.com/whitepapers/KMS-Cryptographic-Details.pdf">AWS Key Management Service Cryptographic Details</a></li>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/welcome.html">AWS SDK for Go Developer Guide</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:52:49 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is represented by the colored flow blocks, while the non-error paths are represented by the default non-colored flow blocks. The error paths are represented by the colored flow blocks with the error style.</p>
+<p>The control flow starts at the function <code>EncryptWithContext</code> and follows the path A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; F -&gt; G -&gt; H -&gt; I -&gt; J -&gt; K -&gt; L -&gt; M -&gt; N -&gt; O -&gt; P -&gt; Q -&gt; R -&gt; S -&gt; T -&gt; U -&gt; V -&gt; W -&gt; X -&gt; Y -&gt; Z -&gt; End.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:55:48 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 98</p>
+<p><strong>Bug Type</strong>: Insecure Cryptographic Storage</p>
+<p><strong>Description</strong>: The encryption function &#39;encrypt&#39; does not appear to use a unique initialization vector (IV) or nonce for each encryption operation. This can make the encryption vulnerable to attacks, as using the same nonce for different encryption operations with the same key can allow an attacker to derive the key.</p>
+<p><strong>Solution</strong>: Ensure that a unique nonce is used for each encryption operation. This can be achieved by generating a new random nonce for each operation, and including it in the encrypted output so it can be used for decryption. Refer to this link for more information: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 90</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The error handling in this function could potentially leak information about the internal state of the application. For example, returning a specific error when a key is not found could allow an attacker to enumerate valid keys.</p>
+<p><strong>Solution</strong>: Consider returning more generic error messages to the user, and logging the specific error details internally for debugging purposes. Refer to this link for more information: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:00:52 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 89</p>
+<p><strong>Bug Type</strong>: Network</p>
+<p><strong>Description</strong>: The function <code>GenerateDataKeyWithContext</code> is a network call to the AWS KMS service. If this function is called frequently, it could lead to high network usage and latency.</p>
+<p><strong>Solution</strong>: Consider caching the data keys if they are reused frequently to reduce the number of network calls. Use a key rotation strategy to update the cached keys periodically for security. Refer to AWS best practices for key management: <a href="https://docs.aws.amazon.com/kms/latest/developerguide/best-practices.html">https://docs.aws.amazon.com/kms/latest/developerguide/best-practices.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 103</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The <code>encrypt</code> function is potentially a CPU-intensive operation, depending on the size of the <code>plaintext</code> input. If large data is being encrypted frequently, it could lead to high CPU usage.</p>
+<p><strong>Solution</strong>: Consider offloading the encryption process to a background job or worker thread if it&#39;s causing performance issues in the main thread. Also, consider using a streaming encryption method if dealing with large data.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 106</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The <code>encode</code> function likely creates a new byte slice to hold the encoded data. If the <code>encrypted</code> and <code>nonce</code> inputs are large, this could lead to high memory usage.</p>
+<p><strong>Solution</strong>: Consider using a buffer pool or reusing existing buffers to reduce memory allocation and GC pressure. Refer to Go&#39;s <code>sync.Pool</code> for buffer pooling: <a href="https://golang.org/pkg/sync/#Pool">https://golang.org/pkg/sync/#Pool</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:07:13 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 87</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;EncryptWithContext&#39; does not implement any logging mechanism to record the processing activities. This is a violation of GDPR Article 30 which requires organizations to maintain a record of processing activities.</p>
+<p><strong>Solution</strong>: Implement a logging mechanism to keep track of processing activities. Ensure that the logs are protected and only accessible to authorized personnel. Consider using a logging library that supports GDPR compliance.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 97</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The encryption function does not seem to have mechanisms to ensure the confidentiality, integrity, and availability of electronic protected health information (ePHI). This could potentially violate the HIPAA Security Rule.</p>
+<p><strong>Solution</strong>: Ensure that the application has mechanisms in place to protect ePHI. This could include data backup, disaster recovery, and emergency mode operation plans.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 91</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;EncryptWithContext&#39; does not seem to implement strong cryptographic controls when processing cardholder data. This could potentially be a violation of PCI DSS Requirement 3 which mandates the protection of stored cardholder data.</p>
+<p><strong>Solution</strong>: Ensure that strong cryptographic controls are used when processing cardholder data. This could include the use of strong encryption keys, secure cryptographic algorithms, and proper key management practices.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 85:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">encrypt</span><span class="hljs-params">(key, plaintext []<span class="hljs-type">byte</span>)</span></span> (encrypted []<span class="hljs-type">byte</span>, nonce []<span class="hljs-type">byte</span>, ge gomerr.Gomerr) {
+	block, err := aes.NewCipher(key)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, gomerr.Internal(<span class="hljs-string">&quot;aes.NewCipher&quot;</span>).Wrap(err)
+	}
+
+	aead, err := cipher.NewGCM(block)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, gomerr.Internal(<span class="hljs-string">&quot;cipher.NewGCM&quot;</span>).Wrap(err)
+	}
+
+	nonce = <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, aead.NonceSize())
+	_, _ = io.ReadFull(rand.Reader, nonce)
+
+	<span class="hljs-keyword">return</span> aead.Seal(plaintext[:<span class="hljs-number">0</span>], nonce, plaintext, <span class="hljs-literal">nil</span>), nonce, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:45:43 AM PDT</p>
+<p>The code you provided is a function in Go programming language that encrypts a plaintext message using the AES (Advanced Encryption Standard) algorithm in GCM (Galois/Counter Mode). </p>
+<p>Here is a step-by-step explanation of the function:</p>
+<ol>
+<li><p>The function <code>encrypt</code> takes three arguments - <code>key</code>, <code>plaintext</code>, and returns three values - <code>encrypted</code>, <code>nonce</code>, and <code>ge</code>. The <code>key</code> is the secret key for AES encryption, the <code>plaintext</code> is the data that needs to be encrypted. The function returns the <code>encrypted</code> data, a <code>nonce</code> (Number Once - a number or bit string that is used only once, in security engineering), and a <code>ge</code> which is a custom error value from the <code>gomerr</code> package.</p>
+</li>
+<li><p><code>aes.NewCipher(key)</code> creates a new cipher block using the AES algorithm and the provided key. If an error occurs (for example, if the key size is not 16, 24, or 32 bytes), the function returns an error wrapped with a message &quot;aes.NewCipher&quot;.</p>
+</li>
+<li><p><code>cipher.NewGCM(block)</code> creates a new GCM (Galois/Counter Mode) using the given block cipher. The GCM mode is a type of symmetric key cryptographic block ciphers. If an error occurs (for example, if the block&#39;s block size is not 16 bytes), the function returns an error wrapped with a message &quot;cipher.NewGCM&quot;.</p>
+</li>
+<li><p><code>aead.NonceSize()</code> returns the size of the nonce that must be passed to <code>Seal</code>. In this code, a nonce of the correct size is created and filled with random numbers from <code>rand.Reader</code>.</p>
+</li>
+<li><p><code>aead.Seal(plaintext[:0], nonce, plaintext, nil)</code> encrypts and authenticates <code>plaintext</code>, appends the result to the destination, which in this case is the slice <code>plaintext[:0]</code> (a slice of <code>plaintext</code> with length 0), and returns the updated slice. The nonce must be NonceSize() bytes long and unique for all time, for a given key.</p>
+</li>
+<li><p>The function finally returns the encrypted data, the nonce, and nil (indicating no error occurred during the process).</p>
+</li>
+</ol>
+<p>This encryption function is consistent with standard cryptographic practices and doesn&#39;t seem to conflict with any architectural guidelines or constraints.</p>
+<p>For more information on AES-GCM encryption in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/crypto/cipher/">GoDoc for crypto/cipher</a></li>
+<li><a href="https://golang.org/pkg/crypto/aes/">GoDoc for crypto/aes</a></li>
+<li><a href="https://golang.org/pkg/crypto/rand/">GoDoc for crypto/rand</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES encryption</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">Galois/Counter Mode</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:53:12 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;
+
+style A fill:#B22222, stroke:#000000, stroke-width:2px;
+style B fill:#B22222, stroke:#000000, stroke-width:2px;
+style C fill:#B22222, stroke:#000000, stroke-width:2px;
+style D fill:#B22222, stroke:#000000, stroke-width:2px;
+style E fill:#B22222, stroke:#000000, stroke-width:2px;
+style F fill:#B22222, stroke:#000000, stroke-width:2px;
+style G fill:#B22222, stroke:#000000, stroke-width:2px;
+style H fill:#B22222, stroke:#000000, stroke-width:2px;
+style I fill:#B22222, stroke:#000000, stroke-width:2px;
+style J fill:#B22222, stroke:#000000, stroke-width:2px;
+style K fill:#B22222, stroke:#000000, stroke-width:2px;
+style L fill:#B22222, stroke:#000000, stroke-width:2px;
+style M fill:#B22222, stroke:#000000, stroke-width:2px;
+style N fill:#B22222, stroke:#000000, stroke-width:2px;
+style O fill:#B22222, stroke:#000000, stroke-width:2px;
+style P fill:#B22222, stroke:#000000, stroke-width:2px;
+style Q fill:#B22222, stroke:#000000, stroke-width:2px;
+style R fill:#B22222, stroke:#000000, stroke-width:2px;
+style S fill:#B22222, stroke:#000000, stroke-width:2px;
+style T fill:#B22222, stroke:#000000, stroke-width:2px;
+style U fill:#B22222, stroke:#000000, stroke-width:2px;
+style V fill:#B22222, stroke:#000000, stroke-width:2px;
+style W fill:#B22222, stroke:#000000, stroke-width:2px;
+style X fill:#B22222, stroke:#000000, stroke-width:2px;
+style Y fill:#B22222, stroke:#000000, stroke-width:2px;
+style Z fill:#B22222, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;</pre>
+</code></pre><p>The control flow graph for the provided code is as follows:</p>
+<ul>
+<li>The start node represents the beginning of the <code>encrypt</code> function.</li>
+<li>The nodes A to Z represent the different steps and decision points in the code.</li>
+<li>The primary path is represented by the default non-colored style.</li>
+<li>Error paths are represented by the style with red fill color.</li>
+<li>The End node represents the end of the <code>encrypt</code> function.</li>
+</ul>
+<p>Please note that this control flow graph assumes that there are no external library calls or non-standard function calls within the code snippet provided.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:56:06 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 173</p>
+<p><strong>Bug Type</strong>: Cryptographic Issues</p>
+<p><strong>Description</strong>: The use of a random nonce in this context might lead to issues if the same nonce is ever used twice with the same key. In the GCM mode, this can lead to a complete breakdown of the confidentiality and authenticity of the encryption.</p>
+<p><strong>Solution</strong>: Consider using a counter or other deterministic method for generating nonces. Make sure that the same nonce is never used twice with the same key. You can also use a larger nonce size to reduce the chance of a collision. Refer to this link for more information: <a href="https://crypto.stackexchange.com/questions/26790/how-often-should-i-re-key-a-gcm-encryption">https://crypto.stackexchange.com/questions/26790/how-often-should-i-re-key-a-gcm-encryption</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:01:39 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: aes.NewCipher is a CPU-intensive operation.</p>
+<p><strong>Solution</strong>: Consider using a pre-computed cipher block when the key is not changing frequently. This can be stored and reused to avoid the overhead of creating a new cipher for each encryption operation.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 174</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: cipher.NewGCM is a CPU-intensive operation.</p>
+<p><strong>Solution</strong>: Similar to aes.NewCipher, consider using a pre-computed AEAD (Authenticated Encryption with Associated Data) when the key is not changing frequently. This can be stored and reused to avoid the overhead of creating a new AEAD for each encryption operation.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 178</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: io.ReadFull(rand.Reader, nonce) is a CPU-intensive operation as it involves random number generation.</p>
+<p><strong>Solution</strong>: Consider reusing nonces if the security implications are acceptable. This can be done by using a counter-based nonce generation strategy instead of a random nonce for each encryption operation.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 180</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: aead.Seal is creating a new slice for each encryption operation which can lead to higher memory usage.</p>
+<p><strong>Solution</strong>: Consider reusing slices if possible, especially for large plaintexts. This can be done by using sync.Pool to pool and reuse byte slices.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:07:41 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 168</p>
+<p><strong>Bug Type</strong>: Cryptography</p>
+<p><strong>Description</strong>: The encryption key is not securely managed. This can lead to exposure of sensitive data.</p>
+<p><strong>Solution</strong>: Ensure the encryption key is securely managed, such as using a secure key management service or hardware security module (HSM).</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 176</p>
+<p><strong>Bug Type</strong>: Cryptography</p>
+<p><strong>Description</strong>: The randomness of the nonce may not be sufficient. This can lead to weak encryption and potential exposure of sensitive data.</p>
+<p><strong>Solution</strong>: Ensure the randomness of the nonce is sufficient, such as using a secure random number generator.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 102:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func <span class="hljs-built_in">encode</span>(ciphertext, nonce, ciphertextBlob <span class="hljs-selector-attr">[]</span>byte) <span class="hljs-selector-attr">[]</span>byte {
+	writer := <span class="hljs-built_in">new</span>(bytes.Buffer)
+
+	writer<span class="hljs-selector-class">.WriteByte</span>(encryptedEncodingFormatVersionByte)
+
+	_ = binary<span class="hljs-selector-class">.Write</span>(writer, binary<span class="hljs-selector-class">.LittleEndian</span>, <span class="hljs-built_in">uint16</span>(<span class="hljs-built_in">len</span>(ciphertext)))
+	writer<span class="hljs-selector-class">.Write</span>(ciphertext)
+
+	_ = binary<span class="hljs-selector-class">.Write</span>(writer, binary<span class="hljs-selector-class">.LittleEndian</span>, <span class="hljs-built_in">uint16</span>(<span class="hljs-built_in">len</span>(ciphertextBlob)))
+	writer<span class="hljs-selector-class">.Write</span>(ciphertextBlob)
+
+	_ = binary<span class="hljs-selector-class">.Write</span>(writer, binary<span class="hljs-selector-class">.LittleEndian</span>, <span class="hljs-built_in">uint16</span>(<span class="hljs-built_in">len</span>(nonce)))
+	writer<span class="hljs-selector-class">.Write</span>(nonce)
+
+	return writer<span class="hljs-selector-class">.Bytes</span>()
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:46:36 AM PDT</p>
+<p>This Go function, <code>encode</code>, is used to create a byte array that includes a version byte, followed by the lengths and contents of the ciphertext, ciphertextBlob, and nonce. The lengths are stored as 16-bit unsigned integers. The function takes three parameters, all of which are byte slices:</p>
+<ol>
+<li><code>ciphertext</code>: This is typically the result of encrypting plaintext data.</li>
+<li><code>nonce</code>: A nonce (number used once) is a random or pseudo-random number that is used in cryptographic communications to ensure security. It is used only once to prevent replay attacks.</li>
+<li><code>ciphertextBlob</code>: This could be any additional encrypted data or metadata that needs to be stored along with the ciphertext and nonce.</li>
+</ol>
+<p>The function follows these steps:</p>
+<ol>
+<li>A new <code>bytes.Buffer</code> is created. This will be used to build the final byte array.</li>
+<li>The <code>encryptedEncodingFormatVersionByte</code> is written to the buffer. This is likely a constant defined elsewhere in the code that indicates the version of the encoding format being used.</li>
+<li>The length of the <code>ciphertext</code> byte slice is written to the buffer as a 16-bit unsigned integer in little-endian format. Little-endian means the least significant byte is stored in the smallest address.</li>
+<li>The <code>ciphertext</code> byte slice itself is written to the buffer.</li>
+<li>Steps 3 and 4 are repeated for the <code>ciphertextBlob</code> and <code>nonce</code> byte slices.</li>
+<li>The contents of the buffer are returned as a byte slice.</li>
+</ol>
+<p>The <code>binary.Write</code> function is used to write the length of each byte slice to the buffer. This function takes a <code>io.Writer</code>, a byte order (in this case, <code>binary.LittleEndian</code>), and a data value to write. The <code>_ =</code> before each call to <code>binary.Write</code> is used to explicitly ignore the error value that <code>binary.Write</code> returns. This is not considered best practice in Go, as it could lead to undetected errors.</p>
+<p>This function does not seem to use any specific algorithm, but rather a specific process or protocol for encoding the given data into a specific format.</p>
+<p>For more information on <code>bytes.Buffer</code> and <code>binary.Write</code>, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/bytes/#Buffer">bytes.Buffer</a></li>
+<li><a href="https://golang.org/pkg/encoding/binary/#Write">binary.Write</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:53:18 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is represented by the default non-colored style. The error path is represented by the red style.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:56:50 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 205</p>
+<p><strong>Bug Type</strong>: Insecure Cryptography</p>
+<p><strong>Description</strong>: The &#39;encode&#39; function is using a fixed nonce for encoding. Using a fixed nonce can lead to nonce reuse, which is a serious security vulnerability in cryptographic systems. Nonce reuse can lead to attacks where an adversary can recover the original plaintext from the ciphertext, compromising the confidentiality of the data. More details can be found at - <a href="https://en.wikipedia.org/wiki/Nonce_(cryptography)#Failures_if_re-used_or_not_randomly_generated">https://en.wikipedia.org/wiki/Nonce_(cryptography)#Failures_if_re-used_or_not_randomly_generated</a></p>
+<p><strong>Solution</strong>: Ensure that the nonce is unique for each encryption operation. This can be achieved by generating a new random nonce for each operation, or by using a counter that is guaranteed to be unique for each operation. More details can be found at - <a href="https://crypto.stackexchange.com/questions/3965/what-is-the-main-difference-between-a-key-a-nonce-and-an-iv">https://crypto.stackexchange.com/questions/3965/what-is-the-main-difference-between-a-key-a-nonce-and-an-iv</a></p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 209</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: Errors from &#39;binary.Write&#39; function calls are ignored. This can lead to silent failures where the function continues to execute even when an error has occurred, potentially leading to incorrect results or further errors down the line. More details can be found at - <a href="https://golang.org/pkg/encoding/binary/#Write">https://golang.org/pkg/encoding/binary/#Write</a></p>
+<p><strong>Solution</strong>: Always handle errors from function calls. This can be as simple as checking if the error is not nil and returning it up the call stack, or it can involve more complex error handling logic depending on the needs of the application. More details can be found at - <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:02:27 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 202</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function allocates a new buffer for every call, which could lead to increased memory usage if the function is called frequently or with large inputs.</p>
+<p><strong>Solution</strong>: Consider reusing a buffer if possible, or using a buffer pool to manage memory more efficiently. See <a href="https://golang.org/pkg/sync/#Pool">https://golang.org/pkg/sync/#Pool</a> for more information on buffer pools in Go.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 208</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses binary.Write for writing integers, which is slower than using the binary.PutUvarint function.</p>
+<p><strong>Solution</strong>: Consider using binary.PutUvarint instead of binary.Write for writing integers. See <a href="https://golang.org/pkg/encoding/binary/#PutUvarint">https://golang.org/pkg/encoding/binary/#PutUvarint</a> for more information.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 210</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses binary.Write for writing integers, which is slower than using the binary.PutUvarint function.</p>
+<p><strong>Solution</strong>: Consider using binary.PutUvarint instead of binary.Write for writing integers. See <a href="https://golang.org/pkg/encoding/binary/#PutUvarint">https://golang.org/pkg/encoding/binary/#PutUvarint</a> for more information.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 212</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses binary.Write for writing integers, which is slower than using the binary.PutUvarint function.</p>
+<p><strong>Solution</strong>: Consider using binary.PutUvarint instead of binary.Write for writing integers. See <a href="https://golang.org/pkg/encoding/binary/#PutUvarint">https://golang.org/pkg/encoding/binary/#PutUvarint</a> for more information.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:07:55 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 202</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The function &#39;encode&#39; is handling sensitive data encryption but does not handle errors from &#39;binary.Write&#39;. This could lead to incomplete or incorrect data being encrypted, which could compromise data integrity and potentially expose sensitive data.</p>
+<p><strong>Solution</strong>: Add error handling after each &#39;binary.Write&#39; to ensure that the write operation was successful. If an error occurs, it should be properly logged and handled to prevent data corruption or exposure.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 119:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">type</span> kmsDataKeyDecrypter struct {
+	kms kmsiface.<span class="hljs-type">KMSAPI</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:47:29 AM PDT</p>
+<p>The provided code snippet is written in Go language and it&#39;s a simple definition of a struct named <code>kmsDataKeyDecrypter</code>. This struct has one field, <code>kms</code>, which is of type <code>kmsiface.KMSAPI</code>. </p>
+<p>Let&#39;s break it down:</p>
+<ul>
+<li><p><code>type</code>: This is a keyword in Go used to define a new type.</p>
+</li>
+<li><p><code>kmsDataKeyDecrypter</code>: This is the name of the new type being defined, which in this case is a struct. The naming convention suggests that this struct is used for decrypting data keys using KMS (Key Management Service).</p>
+</li>
+<li><p><code>struct</code>: This keyword is used to define a composite data type that groups together zero or more values of different types. In Go, structs are used to create user-defined types.</p>
+</li>
+<li><p><code>kms</code>: This is a field in the struct. In Go, struct fields are accessed using dot notation.</p>
+</li>
+<li><p><code>kmsiface.KMSAPI</code>: This is the type of the <code>kms</code> field. <code>kmsiface.KMSAPI</code> is an interface provided by AWS SDK for Go. This interface defines the set of methods that a KMS service client should have. By defining <code>kms</code> field as <code>kmsiface.KMSAPI</code>, the <code>kmsDataKeyDecrypter</code> struct can use any type that satisfies <code>kmsiface.KMSAPI</code> interface, which provides flexibility and makes testing easier.</p>
+</li>
+</ul>
+<p>The <code>kmsDataKeyDecrypter</code> struct is likely used to interact with AWS KMS service for decrypting data keys. The actual decryption would be done in methods associated with this struct, which are not included in the provided code snippet.</p>
+<p>For more information on Go structs and interfaces, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/structs">Go by Example: Structs</a></li>
+<li><a href="https://gobyexample.com/interfaces">Go by Example: Interfaces</a></li>
+<li><a href="https://pkg.go.dev/github.com/aws/aws-sdk-go/service/kms/kmsiface">AWS SDK for Go: kmsiface package</a></li>
+</ul>
+<p>As per the architectural guidelines provided, this code snippet seems to be consistent with the general Go project structure. It defines a struct for a specific functionality (decrypting data keys using KMS), which is a common practice in Go.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:53:26 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->Decrypt;
+Decrypt-->End;
+
+style Decrypt fill:#228B22, stroke:#000000, stroke-width:4px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;</pre>
+</code></pre><p>In the above control flow graph, the primary path is shown in green, representing the normal flow of execution. The <code>Decrypt</code> block represents the decryption process using the <code>kms</code> service. The flow then continues to the <code>End</code> block, indicating the end of the function.</p>
+<p>Since there is no control flow decision or error handling in the provided code snippet, there are no alternate or error paths shown in the graph.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:56:53 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:02:31 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:08:02 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 236</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The code is using AWS Key Management Service (KMS) for data encryption/decryption but it doesn&#39;t show any explicit management of access control to the keys. This could potentially lead to unauthorized access to sensitive data.</p>
+<p><strong>Solution</strong>: Implement strict access control policies for the KMS keys. Ensure that only authorized entities have access to the keys. Use AWS IAM roles and policies for access control.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 123:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">func</span> <span class="hljs-title function_">KmsDataKeyDecrypter</span><span class="hljs-params">(kmsClient kmsiface.KMSAPI)</span> <span class="hljs-title function_">Decrypter</span> {
+	<span class="hljs-keyword">return</span> kmsDataKeyDecrypter{
+		kms: kmsClient,
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:48:06 AM PDT</p>
+<p>This is a simple function written in Go programming language. It&#39;s designed to create and return an instance of a <code>Decrypter</code> interface. The function <code>KmsDataKeyDecrypter</code> receives a <code>kmsClient</code> as an argument, which should be a type that satisfies the <code>kmsiface.KMSAPI</code> interface, and returns a <code>Decrypter</code>.</p>
+<p>The <code>kmsiface.KMSAPI</code> interface is a part of the AWS SDK for Go. It represents a subset of the AWS Key Management Service (KMS) API. This interface is used to interact with the AWS KMS service, which provides cryptographic keys and operations. More details can be found <a href="https://docs.aws.amazon.com/sdk-for-go/api/service/kms/kmsiface/">here</a>.</p>
+<p>The <code>Decrypter</code> is an interface (not shown in the code snippet) that is expected to have a method for decrypting data. The <code>kmsDataKeyDecrypter</code> struct (also not shown in the code snippet), which is returned by this function, is expected to implement this <code>Decrypter</code> interface.</p>
+<p>The function essentially acts as a constructor for a <code>kmsDataKeyDecrypter</code> that uses the provided <code>kmsClient</code> to perform its decryption operations. This is a common pattern in Go, where interfaces are used to abstract the implementation details and promote loose coupling between components.</p>
+<p>There isn&#39;t any complex algorithm involved in this function. It&#39;s more about design and architecture, specifically the use of interfaces for dependency injection and abstraction.</p>
+<p>If you want to learn more about Go interfaces and how they are used, you can refer to this <a href="https://gobyexample.com/interfaces">Go by Example: Interfaces</a> tutorial.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:53:30 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:56:57 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:02:35 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:08:06 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 129:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+// Decrypt <span class="hljs-keyword">returns</span> the same data (<span class="hljs-keyword">and</span> errors) <span class="hljs-keyword">as</span> DecryptWithContext <span class="hljs-keyword">using</span> just the Background context.
+func (k kmsDataKeyDecrypter) Decrypt(<span class="hljs-keyword">encrypted</span> []byte, encryptionContext map[string]*string) ([]byte, gomerr.Gomerr) {
+	<span class="hljs-keyword">return</span> k.DecryptWithContext(context.Background(), <span class="hljs-keyword">encrypted</span>, encryptionContext)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:48:55 AM PDT</p>
+<p>This is a Go function that is a method of the <code>kmsDataKeyDecrypter</code> struct. The function is named <code>Decrypt</code> and it takes two arguments: <code>encrypted</code>, which is a slice of bytes, and <code>encryptionContext</code>, which is a map of string pointers. The function returns two values: a slice of bytes and a <code>Gomerr</code> type, which is likely a custom error type used in this project.</p>
+<p>The purpose of this function is to decrypt data that was previously encrypted. The encryption context is additional authenticated data that was provided at the time of encryption and must be supplied to decrypt the data.</p>
+<p>The function <code>Decrypt</code> is a wrapper around the <code>DecryptWithContext</code> function. The <code>DecryptWithContext</code> function is presumably similar, but also takes a context as an argument. Contexts in Go are used to manage and cancel long-running tasks.</p>
+<p>The function <code>Decrypt</code> creates a new context using <code>context.Background()</code> and passes this along with the other arguments to <code>DecryptWithContext</code>. The <code>context.Background()</code> function in Go is typically used as the top-level Context for incoming requests or for long-running background tasks.</p>
+<p>As for the algorithm used, it&#39;s not specified in this function. The actual decryption would be done in the <code>DecryptWithContext</code> function. However, since the struct is named <code>kmsDataKeyDecrypter</code>, it&#39;s likely that the AWS Key Management Service (KMS) is being used for encryption and decryption. AWS KMS uses envelope encryption, where the data is encrypted with a data key, and the data key is then encrypted with a master key.</p>
+<p>For more information on AWS KMS and envelope encryption, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html">AWS Key Management Service Concepts</a></li>
+<li><a href="https://docs.aws.amazon.com/kms/latest/developerguide/services-s3-envelope-encryption.html">AWS KMS Envelope Encryption</a></li>
+</ul>
+<p>For more information on contexts in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/context/">Go Context Package</a></li>
+<li><a href="https://blog.golang.org/context-and-structs">Go Blog: Contexts and Structs</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:53:37 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a simple linear flow. The function <code>Decrypt</code> calls the function <code>DecryptWithContext</code> with the <code>Background</code> context. The result of <code>DecryptWithContext</code> is returned by <code>Decrypt</code>. There are no error paths or external library calls in this code snippet.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:57:02 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:02:38 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:08:15 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 260</p>
+<p><strong>Bug Type</strong>: Encryption/Decryption</p>
+<p><strong>Description</strong>: The function Decrypt is potentially handling sensitive data, but there is no explicit verification of the encryption context. This could lead to unauthorized decryption of sensitive data, which is a violation of GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Consider implementing additional checks to verify the encryption context before proceeding with decryption. This could include verifying the identity of the requestor, checking their permissions, or requiring additional authentication steps.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 134:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> add support for grant tokens?</span>
+<span class="hljs-comment">// DecryptWithContext returns the decrypted form of the encrypted content given the optional encryptionContext.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//  gomerr.UnmarshalError:</span>
+<span class="hljs-comment">//      There is a problem reading the the encoded data</span>
+<span class="hljs-comment">//  gomerr.BadValueError (type = Invalid):</span>
+<span class="hljs-comment">//      The encryption context did not match the encrypted data, or the encrypted data is corrupted, or the KMS</span>
+<span class="hljs-comment">//      key is in an invalid state</span>
+<span class="hljs-comment">//  gomerr.InternalError:</span>
+<span class="hljs-comment">//      A problem with the underlying crypto libraries</span>
+<span class="hljs-comment">//  gomerr.DependencyError:</span>
+<span class="hljs-comment">//      An unexpected error occurred calling KMS</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(k kmsDataKeyDecrypter)</span></span> DecryptWithContext(context context.Context, encrypted []<span class="hljs-type">byte</span>, encryptionContext <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*<span class="hljs-type">string</span>) ([]<span class="hljs-type">byte</span>, gomerr.Gomerr) {
+	ciphertext, ciphertextBlob, nonce, ge := k.decode(encrypted)
+	<span class="hljs-keyword">if</span> ge != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, ge
+	}
+
+	input := &amp;kms.DecryptInput{
+		CiphertextBlob:    ciphertextBlob,
+		EncryptionContext: encryptionContext,
+	}
+
+	dataKey, err := k.kms.DecryptWithContext(context, input)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">if</span> awsErr, ok := err.(awserr.Error); ok {
+			<span class="hljs-keyword">switch</span> awsErr.Code() {
+			<span class="hljs-keyword">case</span> kms.ErrCodeInvalidCiphertextException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.InvalidValue(<span class="hljs-string">&quot;ciphertext&quot;</span>, input, <span class="hljs-literal">nil</span>).Wrap(err)
+			<span class="hljs-keyword">case</span> kms.ErrCodeDisabledException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.InvalidValue(<span class="hljs-string">&quot;KmsKey.KeyState&quot;</span>, kms.KeyStateDisabled, kms.KeyStateEnabled).Wrap(err)
+			<span class="hljs-keyword">case</span> kms.ErrCodeInvalidStateException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.InvalidValue(<span class="hljs-string">&quot;KmsKey.KeyState&quot;</span>, <span class="hljs-string">&quot;&lt;unavailable&gt;&quot;</span>, kms.KeyStateEnabled).Wrap(err)
+			<span class="hljs-keyword">case</span> kms.ErrCodeInvalidKeyUsageException:
+				<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.InvalidValue(<span class="hljs-string">&quot;KmsKey.KeyUsage&quot;</span>, <span class="hljs-string">&quot;&lt;unavailable&gt;&quot;</span>, kms.KeyUsageTypeEncryptDecrypt).Wrap(err)
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Dependency(<span class="hljs-string">&quot;Kms&quot;</span>, input).Wrap(err)
+	}
+
+	<span class="hljs-keyword">return</span> k.decrypt(dataKey.Plaintext, ciphertext, nonce)
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:50:03 AM PDT</p>
+<p>This Go code is a function <code>DecryptWithContext</code> of the <code>kmsDataKeyDecrypter</code> struct. The function decrypts the encrypted content using an optional encryptionContext and returns the decrypted form of the encrypted content. </p>
+<p>The function&#39;s parameters are:</p>
+<ul>
+<li><code>context</code>: the context within which the function will operate, used for things like timeout and cancellation signals.</li>
+<li><code>encrypted</code>: the encrypted data to be decrypted.</li>
+<li><code>encryptionContext</code>: a map of strings that provides additional authenticated data.</li>
+</ul>
+<p>Here&#39;s a detailed step-by-step breakdown of what the function does:</p>
+<ol>
+<li><p>It calls the <code>decode</code> method on <code>k</code> (which is of type <code>kmsDataKeyDecrypter</code>) and passes the <code>encrypted</code> data. This method likely converts the encrypted data from its encoded form back into its original binary form and also extracts the ciphertext and nonce from it. The <code>nonce</code> is a random or pseudo-random number that is used in combination with the key for encryption and decryption.</p>
+</li>
+<li><p>It then checks if there was an error (<code>ge</code>) during the decoding process. If there was an error, it returns <code>nil</code> and the error.</p>
+</li>
+<li><p>It creates a <code>DecryptInput</code> struct and populates it with the <code>ciphertextBlob</code> and <code>encryptionContext</code>. The <code>DecryptInput</code> struct is an AWS SDK type used as input to the KMS (Key Management Service) <code>Decrypt</code> function.</p>
+</li>
+<li><p>It calls the <code>DecryptWithContext</code> method on <code>k.kms</code> with the <code>context</code> and <code>input</code> as arguments. This method uses AWS&#39;s KMS to decrypt the <code>ciphertextBlob</code> using the specified <code>encryptionContext</code>.</p>
+</li>
+<li><p>It checks if there was an error during the decryption process. If there was an error, it checks if the error is of type <code>awserr.Error</code>. If it is, it checks the error code and based on the error code, it wraps the error with a <code>gomerr</code> error and returns <code>nil</code> and the error. If the error is not of type <code>awserr.Error</code>, it wraps the error with a <code>gomerr.Dependency</code> error and returns <code>nil</code> and the error.</p>
+</li>
+<li><p>If there was no error during the decryption process, it calls the <code>decrypt</code> method on <code>k</code> with the decrypted data key&#39;s plaintext, ciphertext, and nonce as arguments. This method likely uses the plaintext data key, ciphertext, and nonce to decrypt the ciphertext and return the original plain text data.</p>
+</li>
+</ol>
+<p>The function uses the <code>gomerr</code> package for error handling. This package defines a set of error types that can be used to wrap and add context to errors.</p>
+<p>For more information about AWS KMS and the AWS SDK for Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/">AWS SDK for Go API Reference</a></li>
+<li><a href="https://aws.amazon.com/kms/">AWS Key Management Service</a></li>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/service/kms/">AWS SDK for Go - KMS</a></li>
+<li><a href="https://github.com/benjaminkomen/gomerr">Gomerr</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:53:43 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The provided code snippet does not contain any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:57:45 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 277</p>
+<p><strong>Bug Type</strong>: Insecure Cryptographic Storage</p>
+<p><strong>Description</strong>: The data decryption key is stored in plaintext, which can be a security risk if an attacker gains access to the system. This issue can lead to unauthorized access to sensitive information.</p>
+<p><strong>Solution</strong>: The data decryption key should be stored in a secure manner, such as using a secure key management system or using hardware security modules. More information can be found here: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 286</p>
+<p><strong>Bug Type</strong>: Error Handling and Logging</p>
+<p><strong>Description</strong>: The error handling in this code is not sufficient. It only checks for specific AWS errors and does not handle other potential errors. This can lead to unhandled exceptions and potential crashes.</p>
+<p><strong>Solution</strong>: Improve error handling by adding a default case to the switch statement to handle other potential errors. More information can be found here: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 291</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References</p>
+<p><strong>Description</strong>: The code directly references an object (KmsKey) based on user-supplied input. This can lead to unauthorized access if an attacker can manipulate the input to reference an object they are not supposed to access.</p>
+<p><strong>Solution</strong>: Use access control checks or other indirect reference maps to prevent unauthorized access. More information can be found here: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:03:17 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 277</p>
+<p><strong>Bug Type</strong>: Network</p>
+<p><strong>Description</strong>: The function <code>DecryptWithContext</code> makes a network call to AWS KMS service for every decryption request. This could potentially lead to high network usage if the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider implementing a caching mechanism to store frequently used keys, which can reduce the number of network calls. AWS SDK also supports connection pooling and request retry strategies that can help improve network performance. More information can be found at <a href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html">https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/configuring-sdk.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 276</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The <code>DecryptWithContext</code> function creates a new <code>DecryptInput</code> object for every decryption request, which can lead to high memory usage if the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider using object pooling for <code>DecryptInput</code> objects to reduce memory allocation and garbage collection overhead. More information can be found at <a href="https://golang.org/doc/play/pool.go">https://golang.org/doc/play/pool.go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 280</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function <code>DecryptWithContext</code> uses type assertion and switch-case statements to handle AWS errors, which can be computationally expensive if the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider implementing a more efficient error handling mechanism, such as using error wrapping with <code>%w</code> verb in <code>fmt.Errorf</code> function. More information can be found at <a href="https://blog.golang.org/go1.13-errors">https://blog.golang.org/go1.13-errors</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:09:03 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 273</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function DecryptWithContext potentially handles sensitive health data. The encryption and decryption process does not seem to have any explicit measures to ensure the confidentiality, integrity, and availability of the health data as required by the HIPAA Security Rule.</p>
+<p><strong>Solution</strong>: Implement measures to ensure the confidentiality, integrity, and availability of health data. This could include using strong encryption algorithms, maintaining an audit trail of data access and modifications, and implementing backup and recovery procedures.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 273</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function DecryptWithContext potentially handles personal data. It does not seem to have any explicit measures to ensure that the data is processed lawfully, fairly, and in a transparent manner, or that the data is collected for specified, explicit, and legitimate purposes as required by GDPR.</p>
+<p><strong>Solution</strong>: Implement measures to ensure that personal data is processed according to GDPR requirements. This could include obtaining explicit consent from users for data processing, limiting data collection and processing to necessary purposes, and implementing procedures for responding to user requests for data access, correction, or deletion.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 273</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function DecryptWithContext potentially handles credit card data. The encryption and decryption process does not seem to have any explicit measures to protect cardholder data as required by PCI DSS.</p>
+<p><strong>Solution</strong>: Implement measures to protect cardholder data according to PCI DSS requirements. This could include using strong encryption algorithms, maintaining an audit trail of data access and modifications, implementing access controls, and regularly testing security systems and processes.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 178:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// decode extracts the previously encoded values for ciphertext, ciphertextBlob, and nonce. Possible errors:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//  gomerr.Unmarshal:</span>
+<span class="hljs-comment">//      There is a problem reading the the encoded data</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(k kmsDataKeyDecrypter)</span></span> decode(encoded []<span class="hljs-type">byte</span>) (ciphertext []<span class="hljs-type">byte</span>, ciphertextBlob []<span class="hljs-type">byte</span>, nonce []<span class="hljs-type">byte</span>, ge gomerr.Gomerr) {
+	reader := bytes.NewBuffer(encoded)
+
+	<span class="hljs-comment">// Only one version to check so far...</span>
+	<span class="hljs-keyword">if</span> version, _ := reader.ReadByte(); version != encryptedEncodingFormatVersion {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, gomerr.Unmarshal(<span class="hljs-string">&quot;encoded&quot;</span>, reader, version).Wrap(ge)
+	}
+
+	<span class="hljs-keyword">var</span> length <span class="hljs-type">uint16</span>
+	_ = binary.Read(reader, binary.LittleEndian, &amp;length)
+	ciphertext = <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, length)
+	<span class="hljs-keyword">if</span> n, err := reader.Read(ciphertext); err != <span class="hljs-literal">nil</span> || n != <span class="hljs-type">int</span>(length) {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, gomerr.Unmarshal(<span class="hljs-string">&quot;ciphertext&quot;</span>, reader, ciphertext).Wrap(err)
+	}
+
+	_ = binary.Read(reader, binary.LittleEndian, &amp;length)
+	ciphertextBlob = <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, length)
+	<span class="hljs-keyword">if</span> n, err := reader.Read(ciphertextBlob); err != <span class="hljs-literal">nil</span> || n != <span class="hljs-type">int</span>(length) {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, gomerr.Unmarshal(<span class="hljs-string">&quot;ciphertextBlob&quot;</span>, reader, ciphertextBlob).Wrap(err)
+	}
+
+	_ = binary.Read(reader, binary.LittleEndian, &amp;length)
+	nonce = <span class="hljs-built_in">make</span>([]<span class="hljs-type">byte</span>, length)
+	<span class="hljs-keyword">if</span> n, err := reader.Read(nonce); err != <span class="hljs-literal">nil</span> || n != <span class="hljs-type">int</span>(length) {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span>, gomerr.Unmarshal(<span class="hljs-string">&quot;nonce&quot;</span>, reader, nonce).Wrap(err)
+	}
+
+	<span class="hljs-keyword">return</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:50:55 AM PDT</p>
+<p>The provided code is a function named <code>decode</code> in Go language. It is a method of the <code>kmsDataKeyDecrypter</code> struct. The purpose of this function is to extract previously encoded values for ciphertext, ciphertextBlob, and nonce from the provided encoded byte array.</p>
+<p>The function accepts a byte array <code>encoded</code> as an argument and returns four values: <code>ciphertext</code>, <code>ciphertextBlob</code>, <code>nonce</code> and <code>ge</code> (an error object of type <code>gomerr.Gomerr</code>).</p>
+<p>Here is a step by step breakdown of the function:</p>
+<ol>
+<li><p>A bytes buffer <code>reader</code> is created from the <code>encoded</code> byte array. This buffer will be used to sequentially read the encoded data.</p>
+</li>
+<li><p>The function reads the first byte from the <code>reader</code> buffer and checks if it matches <code>encryptedEncodingFormatVersion</code>. If it doesn&#39;t match, the function returns an error using <code>gomerr.Unmarshal</code>.</p>
+</li>
+<li><p>The function reads the next 2 bytes (uint16) from the <code>reader</code> buffer into the <code>length</code> variable using <code>binary.Read</code> with <code>binary.LittleEndian</code> byte order. This <code>length</code> represents the size of the following <code>ciphertext</code>.</p>
+</li>
+<li><p>A byte slice <code>ciphertext</code> of size <code>length</code> is created and filled by reading <code>length</code> bytes from the <code>reader</code> buffer. If the read operation fails or the number of read bytes doesn&#39;t match <code>length</code>, the function returns an error using <code>gomerr.Unmarshal</code>.</p>
+</li>
+<li><p>Steps 3 and 4 are repeated to read <code>ciphertextBlob</code> and <code>nonce</code> from the <code>reader</code> buffer.</p>
+</li>
+<li><p>If all the read operations are successful, the function returns <code>ciphertext</code>, <code>ciphertextBlob</code>, <code>nonce</code>, and <code>nil</code> error.</p>
+</li>
+</ol>
+<p>This function uses the concept of buffers, binary data reading, and error handling in Go. The error handling is done using the <code>gomerr</code> package, which is a Go package to handle errors in a more structured and meaningful way.</p>
+<p>For more information about the used concepts, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/bytes/#Buffer">Buffer types in Go</a></li>
+<li><a href="https://golang.org/pkg/encoding/binary/">Reading binary data in Go</a></li>
+<li><a href="https://github.com/bdlm/errors">Error handling in Go using gomerr</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Endianness">Little and Big Endian byte order</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:53:54 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is represented by the colored flow blocks, while the non-error alternate paths are represented by the default non-colored flow blocks. The error path is represented by the red flow block.</p>
+<p>The control flow starts at the function <code>decode</code> and follows the path A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; F -&gt; G -&gt; H -&gt; I -&gt; J -&gt; K -&gt; L -&gt; M -&gt; N -&gt; O -&gt; P -&gt; Q -&gt; R -&gt; S -&gt; T -&gt; U -&gt; V -&gt; W -&gt; X -&gt; Y -&gt; Z -&gt; End.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:58:20 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 362</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The function binary.Read is called without checking the error return value. This could potentially lead to unexpected behavior if an error occurs during the reading of the binary data. This is a security issue because it could lead to data corruption or other unexpected behavior.</p>
+<p><strong>Solution</strong>: Always check the error return value of functions that can fail. In this case, you should check the error return value of binary.Read and handle any errors appropriately. This might involve returning an error to the caller or retrying the operation, depending on the specific requirements of your application. For more details, refer to: <a href="https://golang.org/doc/effective_go#errors">https://golang.org/doc/effective_go#errors</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 362</p>
+<p><strong>Bug Type</strong>: Denial of Service</p>
+<p><strong>Description</strong>: The function make is called with a length value that is read from the input data. This could potentially lead to a denial of service attack if an attacker can control the input data and provide a very large length value, causing the application to allocate a large amount of memory and potentially crash due to out of memory error.</p>
+<p><strong>Solution</strong>: Always validate input data before using it to allocate memory. In this case, you should add a check to ensure that the length value read from the input data is within a reasonable range before calling make. For more details, refer to: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:03:56 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 366</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function makes multiple allocations with <code>make([]byte, length)</code>. This could lead to high memory usage if the function is called frequently or if <code>length</code> is large.</p>
+<p><strong>Solution</strong>: Consider using a buffer pool to reuse memory buffers instead of creating new ones each time the function is called. This can help reduce memory allocations and GC pressure. Here is a link to an example of how to implement a buffer pool in Go: <a href="https://www.ardanlabs.com/blog/2013/08/pooling-buffers-for-fun-and-profit.html">https://www.ardanlabs.com/blog/2013/08/pooling-buffers-for-fun-and-profit.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 354</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function uses <code>bytes.NewBuffer(encoded)</code> to create a new buffer for each call. This could lead to unnecessary memory allocations if <code>encoded</code> is large or the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider reusing the same buffer for multiple calls to the function, or using a buffer pool as suggested above.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 360</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function uses <code>binary.Read(reader, binary.LittleEndian, &amp;length)</code> multiple times to read data from the buffer. This could be inefficient if <code>length</code> is large, as <code>binary.Read</code> has to decode the data each time it is called.</p>
+<p><strong>Solution</strong>: Consider using a more efficient method to read the data from the buffer. For example, you could use <code>io.ReadFull(reader, length)</code> to read the data in one go, which could be more efficient if <code>length</code> is large.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:09:42 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 358</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function decode does not appear to have any data anonymization or pseudonymization implemented. GDPR requires that personal data is protected by such measures.</p>
+<p><strong>Solution</strong>: Consider implementing data anonymization or pseudonymization strategies when handling personal data. This could be done at the point of data collection or during data processing.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 367</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function decode seems to handle ciphertextBlob, which might contain credit card information. The function does not appear to use secure cryptographic algorithms for data decryption, which is a requirement of PCI DSS.</p>
+<p><strong>Solution</strong>: Ensure that the function decode uses secure cryptographic algorithms for data decryption. This could be done by using industry standard cryptographic libraries.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 374</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function decode may handle health information in the form of a nonce. The function does not appear to have any safeguards in place to ensure the confidentiality, integrity, and availability of health information, which is a requirement of HIPAA.</p>
+<p><strong>Solution</strong>: Consider implementing safeguards to protect health information. This could be done by using encryption, access controls, and data integrity checks.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./crypto/kmsdatakey.go line 212:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-comment">// decrypt performs the ciphertext decryption using the provided key and nonce. The response contains the decrypted</span>
+<span class="hljs-comment">// value or:</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">//  gomerr.Internal:</span>
+<span class="hljs-comment">//      An error wrapping the underlying Go crypto error.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(k kmsDataKeyDecrypter)</span></span> decrypt(key []<span class="hljs-type">byte</span>, ciphertext []<span class="hljs-type">byte</span>, nonce []<span class="hljs-type">byte</span>) ([]<span class="hljs-type">byte</span>, gomerr.Gomerr) {
+	block, err := aes.NewCipher(key)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Internal(<span class="hljs-string">&quot;aes.NewCipher&quot;</span>).Wrap(err)
+	}
+
+	aead, err := cipher.NewGCM(block)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Internal(<span class="hljs-string">&quot;cipher.NewGCM&quot;</span>).Wrap(err)
+	}
+
+	plaintext, err := aead.Open(ciphertext[:<span class="hljs-number">0</span>], nonce, ciphertext, <span class="hljs-literal">nil</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Internal(<span class="hljs-string">&quot;aead.Open&quot;</span>).Wrap(err)
+	}
+
+	<span class="hljs-keyword">return</span> plaintext, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:52:10 AM PDT</p>
+<p>The provided code is a function in Go that decrypts a given ciphertext using the AES (Advanced Encryption Standard) algorithm. The function is a method of the <code>kmsDataKeyDecrypter</code> type.</p>
+<p>The function <code>decrypt</code> takes three parameters: <code>key</code>, <code>ciphertext</code>, and <code>nonce</code>. The <code>key</code> is the encryption key used for decryption. The <code>ciphertext</code> is the encrypted data that needs to be decrypted. The <code>nonce</code> is a random number used once, and it&#39;s needed for the decryption process.</p>
+<p>Here is a detailed step-by-step explanation of the code:</p>
+<ol>
+<li><p><code>block, err := aes.NewCipher(key)</code>: This line creates a new cipher block using the provided key. The <code>aes.NewCipher</code> function returns a new AES cipher.Block, which is an interface that represents a block cipher running in its primitive mode. If there is an error, it returns the error.</p>
+</li>
+<li><p><code>if err != nil { return nil, gomerr.Internal(&quot;aes.NewCipher&quot;).Wrap(err) }</code>: This line checks if there was an error creating the new cipher block. If there was an error, it wraps the error with <code>gomerr.Internal</code> and returns it.</p>
+</li>
+<li><p><code>aead, err := cipher.NewGCM(block)</code>: This line creates a new Galois/Counter Mode (GCM) with the given block cipher. GCM is a mode of operation for symmetric key cryptographic block ciphers that has been widely adopted because of its efficiency and performance. If there is an error, it returns the error.</p>
+</li>
+<li><p><code>if err != nil { return nil, gomerr.Internal(&quot;cipher.NewGCM&quot;).Wrap(err) }</code>: This line checks if there was an error creating the new GCM. If there was an error, it wraps the error with <code>gomerr.Internal</code> and returns it.</p>
+</li>
+<li><p><code>plaintext, err := aead.Open(ciphertext[:0], nonce, ciphertext, nil)</code>: This line decrypts the ciphertext and returns the resulting plaintext. The <code>Open</code> function decrypts and authenticates ciphertext, returning the resulting plaintext. If the authentication fails, it returns an error.</p>
+</li>
+<li><p><code>if err != nil { return nil, gomerr.Internal(&quot;aead.Open&quot;).Wrap(err) }</code>: This line checks if there was an error during the decryption. If there was an error, it wraps the error with <code>gomerr.Internal</code> and returns it.</p>
+</li>
+<li><p><code>return plaintext, nil</code>: If there were no errors during the decryption process, the function returns the decrypted plaintext and <code>nil</code> for the error.</p>
+</li>
+</ol>
+<p>In terms of architectural guidelines, this code follows the Go best practices for error handling by checking for errors after each operation that could potentially fail and returning early if an error is encountered. It also uses the <code>gomerr</code> package for wrapping and handling errors, which can provide more context about where and why an error occurred.</p>
+<p>For more information about AES, GCM, and the Go <code>crypto/cipher</code> package, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://golang.org/pkg/crypto/cipher/">Go crypto/cipher package</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES (Advanced Encryption Standard)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM (Galois/Counter Mode)</a></li>
+<li><a href="https://blog.golang.org/go1.13-errors">Go error handling best practices</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:54:11 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->Decrypt;
+Decrypt-->NewCipher;
+NewCipher-->ErrorCheck1;
+ErrorCheck1-->NewGCM;
+NewGCM-->ErrorCheck2;
+ErrorCheck2-->Open;
+Open-->ErrorCheck3;
+ErrorCheck3-->ReturnPlainText;
+ErrorCheck1-->ReturnError1;
+ErrorCheck2-->ReturnError2;
+ErrorCheck3-->ReturnError3;
+ReturnPlainText-->End;
+ReturnError1-->End;
+ReturnError2-->End;
+ReturnError3-->End;</pre>
+</code></pre><p>In the above control flow graph, the primary path is shown in green, representing the successful execution of the <code>decrypt</code> function. The error paths are shown in red, indicating the occurrence of an error.</p>
+<p>The control flow starts at the <code>decrypt</code> function and proceeds to the <code>NewCipher</code> function, where a new cipher block is created. If an error occurs during this step, the control flow goes to the <code>ReturnError1</code> block, which returns an internal error wrapped with the underlying Go crypto error.</p>
+<p>If no error occurs, the control flow proceeds to the <code>NewGCM</code> function, where a new GCM cipher is created. If an error occurs during this step, the control flow goes to the <code>ReturnError2</code> block, which returns an internal error wrapped with the underlying error from <code>cipher.NewGCM</code>.</p>
+<p>If no error occurs, the control flow proceeds to the <code>Open</code> function, where the ciphertext is decrypted. If an error occurs during this step, the control flow goes to the <code>ReturnError3</code> block, which returns an internal error wrapped with the underlying error from <code>aead.Open</code>.</p>
+<p>If no error occurs, the control flow proceeds to the <code>ReturnPlainText</code> block, which returns the decrypted plaintext.</p>
+<p>Finally, the control flow ends at the <code>End</code> block.</p>
+<p>Note: The external library functions <code>NewCipher</code>, <code>NewGCM</code>, and <code>Open</code> are represented as distinct flow blocks in the diagram.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 8:59:07 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 430</p>
+<p><strong>Bug Type</strong>: Insecure Use of Cryptography</p>
+<p><strong>Description</strong>: The use of AES-GCM for encryption without any form of key management can lead to key reuse, which is a serious vulnerability in AES-GCM. In the worst case, if a nonce gets reused with the same key, the same keystream gets generated and used to encrypt the plaintext, which can lead to the complete loss of confidentiality for the messages encrypted with the reused nonce and key.</p>
+<p><strong>Solution</strong>: Use a form of key management that ensures a key is not reused with the same nonce. One common method is to use a counter as a nonce and to ensure the key is changed before the counter overflows. Another method is to use a random nonce and to keep a list of used nonces to ensure they do not get reused. For more information, refer to the following resources: <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">Key Management Guidelines</a>, <a href="https://eprint.iacr.org/2016/475.pdf">Nonce-Disrespecting Adversaries</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 433</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: The code does not verify the length of the nonce before using it with AES-GCM. If a nonce of incorrect length is used, the Go crypto library will panic and could crash the application.</p>
+<p><strong>Solution</strong>: Check the length of the nonce before using it with AES-GCM. The nonce for AES-GCM must be exactly 12 bytes long. If the nonce is not the correct length, return an error to the caller instead of panicking. For more information, refer to the following resource: <a href="https://golang.org/pkg/crypto/cipher/">Go crypto/cipher package documentation</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:04:26 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 426</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: aes.NewCipher is a CPU-intensive operation that can slow down performance if called frequently.</p>
+<p><strong>Solution</strong>: Consider reusing the cipher.Block object if the key does not change frequently, instead of creating a new one each time the function is called.</p>
+</li>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 430</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: cipher.NewGCM is a CPU-intensive operation that can slow down performance if called frequently.</p>
+<p><strong>Solution</strong>: Consider reusing the cipher.AEAD object if the block does not change frequently, instead of creating a new one each time the function is called.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 434</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: aead.Open creates a new slice for the decrypted data, which can increase memory usage if the ciphertext is large or the function is called frequently.</p>
+<p><strong>Solution</strong>: Consider reusing a buffer for the decrypted data, if possible. Be aware of potential data races if the buffer is shared across goroutines.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 9:10:03 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 428</p>
+<p><strong>Bug Type</strong>: Data Encryption</p>
+<p><strong>Description</strong>: The encryption key is not being managed securely. The key is passed as a parameter to the function, which could lead to it being exposed in logs or error messages.</p>
+<p><strong>Solution</strong>: Use a secure key management system to handle encryption keys. Do not pass keys as parameters to functions.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 438</p>
+<p><strong>Bug Type</strong>: Error Handling</p>
+<p><strong>Description</strong>: Error messages are being returned directly to the caller. This could potentially expose sensitive information, such as details of the encryption process.</p>
+<p><strong>Solution</strong>: Implement a system for managing error messages that does not expose sensitive information. Consider using generic error messages for the end user and detailed logs for developers.</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>

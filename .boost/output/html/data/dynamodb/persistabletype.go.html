@@ -1,0 +1,1409 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"; mermaid.initialize({ startOnLoad: true });</script>
+    <style>
+        @page {
+            margin: 2cm;
+            size: letter;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.0;
+            overflow-x: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+
+        /* Use this class for analysis sections */
+        .analysis-section {
+            padding-top: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .new-page-section {
+            page-break-before: always;
+        }
+
+        .analysis-section h1, .analysis-section h2 {
+            color: #444;
+        }
+
+        .analysis-section p {
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Polyverse Boost Source Analysis Details: ./data/dynamodb/persistabletype.go</h1>
+    <p>Date Generated: Thursday, September 7, 2023 at 2:53:35 AM PDT</p>
+    <div class="><hr>
+<h3 id="boost-architectural-quick-summary-security-report">Boost Architectural Quick Summary Security Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 3:32:06 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The software project is a library written in Go that focuses on constraint handling and validation. It defines a <code>Constraint</code> interface and provides implementations for various constraint types. The code follows Go&#39;s idiomatic style and structure for a library. However, the presence of issues such as Insecure Direct Object References (IDOR) and Improper Input Validation in the <code>persistabletype.go</code> file could potentially impact the overall architecture of the project. These issues could lead to unauthorized data access and unexpected behavior, respectively, which could compromise the integrity of the project.</p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The <code>persistabletype.go</code> file has multiple severe issues, including IDOR, Improper Input Validation, Insecure Deserialization, Insecure Regular Expression, Improper Error Handling, Denial of Service (DoS), and Buffer Overflow. These issues represent significant security risks that could lead to data breaches, service disruptions, and other serious consequences. The risk is further compounded by the fact that this file appears to be a core component of the project.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The presence of these issues could potentially impact customers in several ways. Unauthorized data access could lead to privacy breaches, while service disruptions could affect the availability of the application. Furthermore, the presence of these issues could undermine customer trust in the application, leading to potential loss of customers.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The project has a significant number of issues, with the <code>persistabletype.go</code> file being the most affected. The issues range from warnings to information level issues, with the majority being warnings. This indicates a need for immediate attention and remediation to ensure the overall health of the project.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li>The project consists of a single file, <code>persistabletype.go</code>, which has multiple severe issues. This represents 100% of the project files having issues, indicating a high risk level for the project.</li>
+<li>The severity of the issues is predominantly at the warning level, further increasing the risk level.</li>
+</ul>
+<p>Highlights:</p>
+<ul>
+<li>The project follows Go&#39;s idiomatic style and structure for a library, indicating good architectural practices.</li>
+<li>The <code>persistabletype.go</code> file, a core component of the project, has multiple severe issues, representing a significant risk to the project.</li>
+<li>The presence of these issues could lead to unauthorized data access, service disruptions, and other serious consequences, potentially impacting customers.</li>
+<li>The project has a high risk level, with 100% of the project files having issues, predominantly at the warning level.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-performance-report">Boost Architectural Quick Summary Performance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 3:32:58 PM PDT</p>
+<p>Executive Level Report:</p>
+<ol>
+<li><p><strong>Architectural Impact</strong>: The software project is a library written in Go that focuses on constraint handling and validation. It follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns. However, the use of reflection in the &#39;persistabletype.go&#39; file could potentially impact the performance and memory usage of the software. This could affect the overall efficiency of the software and may need to be addressed.</p>
+</li>
+<li><p><strong>Risk Analysis</strong>: The risk associated with this project is moderate. The use of reflection in Go can be computationally expensive and slow down performance, especially if the function is called frequently. This could potentially lead to performance issues in the software. However, the risk is mitigated by the fact that only one file (&#39;persistabletype.go&#39;) has been identified with these issues.</p>
+</li>
+<li><p><strong>Potential Customer Impact</strong>: The potential impact on customers is low to moderate. If the performance issues are not addressed, it could lead to slower response times and increased memory usage, which could affect the user experience. However, as the issues are confined to a single file, the impact may not be widespread.</p>
+</li>
+<li><p><strong>Overall Issues</strong>: The overall health of the project source is good, with only one file identified with issues. The issues identified are of &#39;Warning&#39; severity, indicating that they should be addressed, but are not critical errors. The issues relate to memory and CPU usage, which could impact the performance of the software.</p>
+</li>
+</ol>
+<p>Risk Assessment:</p>
+<ul>
+<li><strong>Health of the Project Source</strong>: The health of the project source is generally good. Only one file out of the entire project has been identified with issues, indicating a high level of code quality and adherence to best practices.</li>
+<li><strong>Percentage of Project Files with Issues</strong>: Based on the information provided, approximately 100% of the project files have issues of &#39;Warning&#39; severity. This indicates a need for some attention and potential refactoring, but does not represent a critical risk to the project.</li>
+</ul>
+<p>Key Highlights:</p>
+<ul>
+<li>The project follows Go&#39;s idiomatic style and structure for a library, indicating a well-structured and organized codebase.</li>
+<li>The use of reflection in the &#39;persistabletype.go&#39; file could potentially impact the performance and memory usage of the software.</li>
+<li>The risk associated with this project is moderate, due to potential performance issues.</li>
+<li>The potential impact on customers is low to moderate, as the issues are confined to a single file.</li>
+<li>The overall health of the project source is good, with only one file identified with issues.</li>
+</ul>
+</div><p></p><div class="new-page-section><hr>
+<h3 id="boost-architectural-quick-summary-compliance-report">Boost Architectural Quick Summary Compliance Report</h3>
+<p>Last Updated: Friday, September 8, 2023 at 3:33:45 PM PDT</p>
+<h2 id="executive-report">Executive Report</h2>
+<h3 id="architectural-impact-and-risk-analysis">Architectural Impact and Risk Analysis</h3>
+<p>The software project under review is a library written in Go that focuses on constraint handling and validation. The project follows Go&#39;s idiomatic style and structure for a library, providing a clear separation of concerns by defining a <code>Constraint</code> interface and implementing different constraint types. </p>
+<p>However, the analysis has identified several high-severity issues related to data compliance, privacy, and security in the <code>data/dynamodb/persistabletype.go</code> file. These issues could potentially impact the overall architecture of the project, as they may require significant changes to the data handling and storage mechanisms to ensure compliance with various data protection regulations.</p>
+<h3 id="potential-customer-impact">Potential Customer Impact</h3>
+<p>The identified issues could have a significant impact on customers, particularly those in regions or industries with strict data protection regulations. Non-compliance with regulations such as GDPR, PCI DSS, and HIPAA could result in penalties for the customers and damage their trust in the product.</p>
+<h3 id="overall-issues">Overall Issues</h3>
+<p>The <code>data/dynamodb/persistabletype.go</code> file has the most severe issues, with violations in data privacy, security, access, exposure, retention, and compliance. These issues need to be addressed promptly to mitigate the potential risks.</p>
+<h3 id="risk-assessment">Risk Assessment</h3>
+<p>The overall health of the project source is concerning, given that the only file analyzed has multiple high-severity issues. This suggests that there may be systemic issues with data handling and compliance in the project.</p>
+<h3 id="highlights">Highlights</h3>
+<ol>
+<li><p><strong>Data Compliance</strong>: The <code>data/dynamodb/persistabletype.go</code> file has five instances of data compliance issues, the highest among all categories. This indicates a significant risk of non-compliance with data protection regulations.</p>
+</li>
+<li><p><strong>Data Privacy and Security</strong>: There are multiple instances of potential data privacy and security violations in the <code>data/dynamodb/persistabletype.go</code> file. These issues could lead to unauthorized access or exposure of sensitive data.</p>
+</li>
+<li><p><strong>Regulatory Compliance</strong>: The project has potential violations of GDPR, PCI DSS, and HIPAA regulations. Non-compliance with these regulations could result in legal penalties and reputational damage.</p>
+</li>
+<li><p><strong>Customer Impact</strong>: The identified issues could impact customers&#39; trust in the product and result in penalties for non-compliance with data protection regulations.</p>
+</li>
+<li><p><strong>Risk Assessment</strong>: The presence of multiple high-severity issues in the only file analyzed suggests a high risk level for the project. Immediate action is required to address these issues and mitigate the potential risks.</p>
+</li>
+</ol>
+</div><p></p>
+    <h1>Detailed Analysis</h1><div>
+                    <h2>./data/dynamodb/persistabletype.go :</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code><span class="hljs-keyword">package</span> dynamodb
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">&quot;fmt&quot;</span>
+	<span class="hljs-string">&quot;reflect&quot;</span>
+	<span class="hljs-string">&quot;regexp&quot;</span>
+	<span class="hljs-string">&quot;strconv&quot;</span>
+	<span class="hljs-string">&quot;strings&quot;</span>
+	<span class="hljs-string">&quot;unicode&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/service/dynamodb&quot;</span>
+	<span class="hljs-string">&quot;github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute&quot;</span>
+
+	<span class="hljs-string">&quot;github.com/jt0/gomer/constraint&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/data&quot;</span>
+	<span class="hljs-string">&quot;github.com/jt0/gomer/gomerr&quot;</span>
+)
+
+<span class="hljs-keyword">type</span> persistableType <span class="hljs-keyword">struct</span> {
+	name             <span class="hljs-type">string</span>
+	dbNames          <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>                <span class="hljs-comment">// field name -&gt; storage name</span>
+	fieldConstraints <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]constraint.Constraint <span class="hljs-comment">// Map of field name -&gt; constraint needed to be satisfied</span>
+	resolver         ItemResolver
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:24:45 AM PDT</p>
+<p>This Go code defines a package named <code>dynamodb</code> which is likely to contain functionalities related to AWS DynamoDB operations. </p>
+<p>The import statement at the top includes several packages that are used within the <code>dynamodb</code> package. These packages provide functionalities such as string formatting, reflection, regular expressions, string manipulation, and unicode character handling. It also imports packages for AWS DynamoDB and DynamoDB attribute handling, as well as packages from the <code>gomer</code> project, which include functionalities for data constraints and error handling.</p>
+<p>The code then defines a struct type named <code>persistableType</code>. This struct is likely used to represent a type of data that can be stored in a DynamoDB database. The struct has four fields:</p>
+<ol>
+<li><code>name</code>: This is likely the name of the type that is being stored. For example, if the persistable types were users, this field might contain the string &quot;user&quot;.</li>
+<li><code>dbNames</code>: This is a map where the keys are the names of fields in the persistable type and the values are the names of the corresponding fields in the DynamoDB database.</li>
+<li><code>fieldConstraints</code>: This is another map where the keys are the names of fields in the persistable type and the values are constraints that need to be satisfied for those fields. The constraints are likely defined elsewhere in the <code>gomer</code> project.</li>
+<li><code>resolver</code>: This is an <code>ItemResolver</code>, which is likely a type defined elsewhere in the <code>dynamodb</code> package. This type is probably used to resolve items from the DynamoDB database into instances of <code>persistableType</code>.</li>
+</ol>
+<p>This code does not contain any specific algorithms. It is primarily defining a data structure (<code>persistableType</code>) and its properties. The algorithms or functions that operate on instances of this data structure are not included in this code snippet.</p>
+<p>For more information on Go&#39;s struct types and how to use them, you can refer to the official Go documentation: <a href="https://golang.org/doc/effective_go#composite_literals">https://golang.org/doc/effective_go#composite_literals</a></p>
+<p>For more information on AWS DynamoDB and how to interact with it using Go, you can refer to the AWS SDK for Go documentation: <a href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/dynamo-example-create-table-item.html">https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/dynamo-example-create-table-item.html</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:33:35 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExamplErrorPath-->End;</pre>
+</code></pre><p>NO CONTROL FLOW FOUND</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:35:52 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 15</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The &#39;persistableType&#39; struct uses a map &#39;dbNames&#39; to map field names to storage names. This can lead to Insecure Direct Object References (IDOR) if the field names are user-supplied input. An attacker could manipulate the field names to access unauthorized data.</p>
+<p><strong>Solution</strong>: To prevent IDOR vulnerabilities, avoid using user-supplied input directly in your application. Always validate and sanitize user input before using it. Consider using an indirect reference map (IRM) to map user-supplied input to actual database identifiers. More about IDOR can be found here: <a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control">https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control</a></p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 16</p>
+<p><strong>Bug Type</strong>: Improper Input Validation</p>
+<p><strong>Description</strong>: The &#39;fieldConstraints&#39; map in &#39;persistableType&#39; struct could be vulnerable to improper input validation. If the constraints are not properly validated, it could lead to unexpected behavior or even security vulnerabilities.</p>
+<p><strong>Solution</strong>: Always validate constraints before using them. Consider using a strong type system to ensure that only valid constraints are used. More about input validation can be found here: <a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection">https://owasp.org/www-project-top-ten/2017/A1_2017-Injection</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:41:00 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 4</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The &#39;reflect&#39; package can be heavy on memory usage, especially when used extensively or on large data structures.</p>
+<p><strong>Solution</strong>: Avoid using reflection where possible. If you need to use it, consider limiting its use to initialization or infrequent operations.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 11</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of maps can lead to higher memory usage, especially if they are large or numerous.</p>
+<p><strong>Solution</strong>: Consider alternatives to maps if they are not necessary. If they are, ensure they are cleaned up properly after use to free up memory.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 12</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The use of maps can lead to higher memory usage, especially if they are large or numerous.</p>
+<p><strong>Solution</strong>: Consider alternatives to maps if they are not necessary. If they are, ensure they are cleaned up properly after use to free up memory.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:47:16 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 12</p>
+<p><strong>Bug Type</strong>: Data Privacy</p>
+<p><strong>Description</strong>: The persistableType struct contains a &#39;dbNames&#39; field that maps field names to storage names. This could potentially expose sensitive data if field names correspond to sensitive data types, violating GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Encrypt field names and data before storing them. Implement access controls to limit who can access this data. Use pseudonymization or anonymization techniques for data processing.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 13</p>
+<p><strong>Bug Type</strong>: Data Security</p>
+<p><strong>Description</strong>: The &#39;fieldConstraints&#39; field could potentially expose sensitive data if it is not properly secured. If constraint data includes sensitive information, it could be a violation of GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Encrypt constraint data before storing it. Implement access controls to limit who can access this data. Use pseudonymization or anonymization techniques for data processing.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 14</p>
+<p><strong>Bug Type</strong>: Data Access</p>
+<p><strong>Description</strong>: The &#39;resolver&#39; field appears to provide access to items. If access is not properly controlled, this could lead to unauthorized access to sensitive data, violating GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Implement proper access controls to limit who can access data through the resolver. Ensure that access logs are maintained for auditing purposes.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 25:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">newPersistableType</span><span class="hljs-params">(table *table, persistableName <span class="hljs-type">string</span>, pType reflect.Type)</span></span> (*persistableType, gomerr.Gomerr) {
+	pt := &amp;persistableType{
+		name:             persistableName,
+		dbNames:          <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>, <span class="hljs-number">0</span>),
+		fieldConstraints: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]constraint.Constraint, <span class="hljs-number">1</span>),
+		resolver:         resolver(pType),
+	}
+
+	<span class="hljs-keyword">if</span> errors := pt.processFields(pType, <span class="hljs-string">&quot;&quot;</span>, table, <span class="hljs-built_in">make</span>([]gomerr.Gomerr, <span class="hljs-number">0</span>)); <span class="hljs-built_in">len</span>(errors) &gt; <span class="hljs-number">0</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Configuration(<span class="hljs-string">&quot;&#x27;db&#x27; tag errors found for type: &quot;</span> + persistableName).Wrap(gomerr.Batcher(errors))
+	}
+
+	<span class="hljs-keyword">return</span> pt, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:25:36 AM PDT</p>
+<p>The provided code snippet is a function in Go programming language. The function <code>newPersistableType</code> is used to create a new <code>persistableType</code> object, which is a custom type defined elsewhere in the code. The function takes three arguments: a pointer to a <code>table</code> object, a <code>persistableName</code> string, and a <code>pType</code> which is of <code>reflect.Type</code> type. <code>reflect.Type</code> is a built-in interface in Go which represents Go&#39;s type system.</p>
+<p>The function starts by creating a new <code>persistableType</code> object <code>pt</code> and initializing its fields. It uses the <code>make</code> function to create empty maps for <code>dbNames</code> and <code>fieldConstraints</code>. The <code>resolver</code> field is set by calling the <code>resolver</code> function with <code>pType</code> as an argument.</p>
+<p>The function then calls the <code>processFields</code> method on the <code>pt</code> object, passing <code>pType</code>, an empty string, the <code>table</code> object, and an empty slice of type <code>gomerr.Gomerr</code> as arguments. If <code>processFields</code> returns any errors, these are wrapped in a <code>gomerr.Configuration</code> error and returned by the <code>newPersistableType</code> function.</p>
+<p>If no errors occur, the function returns the newly created <code>persistableType</code> object and <code>nil</code> for the error.</p>
+<p>The <code>gomerr</code> package used in this code is a custom Go error handling package. It provides a way to create, wrap, and handle errors in a more structured way than the built-in Go error handling.</p>
+<p>In terms of algorithms, this function uses a straightforward procedural approach. It creates a new object, processes the fields of the object, checks for errors, and then either returns the new object or an error.</p>
+<p>For more information on the <code>reflect</code> package in Go, you can refer to the official Go documentation: <a href="https://golang.org/pkg/reflect/">Go reflect package</a></p>
+<p>For more information on error handling in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://blog.golang.org/error-handling-and-go">Go blog: Error handling and Go</a></li>
+<li><a href="https://gobyexample.com/errors">Go by Example: Errors</a></li>
+</ul>
+<p>Please note that the <code>gomerr</code> package is likely a custom package used in this project, and detailed information about it may not be available online.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:33:45 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<pre><code>newPersistableType --&gt; pt.processFields
+pt.processFields --&gt; gomerr.Configuration
+gomerr.Configuration --&gt; gomerr.Batcher
+</code></pre><p>The primary path is from <code>newPersistableType</code> to <code>pt.processFields</code>.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:35:56 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:41:41 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 56</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The make function is called with a capacity of 0 for the &#39;dbNames&#39; map. This could lead to unnecessary memory reallocations when the map is populated.</p>
+<p><strong>Solution</strong>: Consider initializing the map with a reasonable capacity if the number of elements can be estimated. If the number of elements is unknown, it is often better to not specify the capacity, as Go will automatically allocate a default initial capacity.</p>
+</li>
+<li><p><strong>Severity</strong>: 1/10</p>
+<p><strong>Line Number</strong>: 57</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The make function is called with a capacity of 1 for the &#39;fieldConstraints&#39; map. This could lead to unnecessary memory reallocations when the map is populated.</p>
+<p><strong>Solution</strong>: Consider initializing the map with a reasonable capacity if the number of elements can be estimated. If the number of elements is unknown, it is often better to not specify the capacity, as Go will automatically allocate a default initial capacity.</p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 61</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The processFields method is called with an empty slice made with make([]gomerr.Gomerr, 0). This means that the slice has an initial length of 0 and may need to be resized in the method, which is a relatively expensive operation.</p>
+<p><strong>Solution</strong>: If the expected number of errors can be estimated, consider initializing the slice with that length. If not, consider using the built-in append function to add elements to the slice, which automatically handles resizing.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:48:02 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 53</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function &#39;newPersistableType&#39; processes fields without performing any form of data sanitization or validation. This could potentially expose sensitive data.</p>
+<p><strong>Solution</strong>: Implement data validation and sanitization measures before processing fields. This can be achieved by introducing a function that checks and sanitizes the input before it&#39;s processed.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 55</p>
+<p><strong>Bug Type</strong>: Data Retention</p>
+<p><strong>Description</strong>: The function &#39;newPersistableType&#39; does not appear to have a mechanism for managing data retention. This could potentially lead to violations of GDPR and other data privacy regulations, which require that data is not retained for longer than necessary.</p>
+<p><strong>Solution</strong>: Implement a data retention policy that specifies how long data should be retained, and ensure that data is deleted once this period has expired.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 57</p>
+<p><strong>Bug Type</strong>: Logging Sensitive Data</p>
+<p><strong>Description</strong>: The function &#39;newPersistableType&#39; logs errors that could potentially include sensitive data. This could lead to violations of GDPR, PCI DSS, and HIPAA, which require that sensitive data is not logged.</p>
+<p><strong>Solution</strong>: Implement a logging policy that excludes sensitive data. This can be achieved by sanitizing the data before it&#39;s logged, or by using a logging tool that automatically excludes sensitive data.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 40:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">resolver</span><span class="hljs-params">(pt reflect.Type)</span></span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(<span class="hljs-keyword">interface</span>{})</span></span> (<span class="hljs-keyword">interface</span>{}, gomerr.Gomerr) {
+	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(i <span class="hljs-keyword">interface</span>{})</span></span> (<span class="hljs-keyword">interface</span>{}, gomerr.Gomerr) {
+		m, ok := i.(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue)
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Internal(<span class="hljs-string">&quot;DynamoDB Item is not a map[string]*dynamodb.AttributeValue&quot;</span>).AddAttribute(<span class="hljs-string">&quot;Actual&quot;</span>, i)
+		}
+
+		resolved := reflect.New(pt).Interface().(data.Persistable)
+
+		err := dynamodbattribute.UnmarshalMap(m, resolved)
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, gomerr.Unmarshal(resolved.TypeName(), m, resolved).Wrap(err)
+		}
+
+		<span class="hljs-keyword">return</span> resolved, <span class="hljs-literal">nil</span>
+	}
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:26:51 AM PDT</p>
+<p>This function <code>resolver</code> is written in Go and it&#39;s used to convert DynamoDB data into a Go struct. It&#39;s a higher-order function that returns a function which takes an interface and returns a pair of values: a Go struct and an error.</p>
+<p>Here is a detailed explanation of the code:</p>
+<ol>
+<li><p><code>func resolver(pt reflect.Type) func(interface{}) (interface{}, gomerr.Gomerr)</code>: This is the declaration of the <code>resolver</code> function. It takes a <code>reflect.Type</code> as an argument, which is a representation of a Go Type, and returns a function that takes an interface and returns a pair of an interface and a <code>gomerr.Gomerr</code> (which is an error type from the <code>gomerr</code> package).</p>
+</li>
+<li><p><code>m, ok := i.(map[string]*dynamodb.AttributeValue)</code>: This line is a type assertion. It checks if the input <code>i</code> can be asserted to be of type <code>map[string]*dynamodb.AttributeValue</code> (a map where the keys are strings and the values are pointers to DynamoDB Attribute Values). If the type assertion is successful, <code>ok</code> is <code>true</code> and <code>m</code> is the map.</p>
+</li>
+<li><p><code>if !ok {...}</code>: If the type assertion failed, the function returns an internal error using <code>gomerr.Internal</code> with a message indicating that the DynamoDB Item is not of the expected type. The actual type of <code>i</code> is added as an attribute to the error.</p>
+</li>
+<li><p><code>resolved := reflect.New(pt).Interface().(data.Persistable)</code>: This line creates a new value of the type <code>pt</code> using <code>reflect.New</code>, converts it to an interface using <code>Interface()</code>, and then asserts that the resulting interface is of type <code>data.Persistable</code>.</p>
+</li>
+<li><p><code>err := dynamodbattribute.UnmarshalMap(m, resolved)</code>: This line attempts to unmarshal the DynamoDB data stored in <code>m</code> into the <code>resolved</code> struct using the <code>UnmarshalMap</code> function from the <code>dynamodbattribute</code> package. If there&#39;s an error during the unmarshalling, it&#39;s stored in <code>err</code>.</p>
+</li>
+<li><p><code>if err != nil {...}</code>: If there was an error during unmarshalling, the function returns an unmarshal error using <code>gomerr.Unmarshal</code> with the type name of <code>resolved</code>, the DynamoDB data, and the <code>resolved</code> struct. The original error <code>err</code> is wrapped in the returned error.</p>
+</li>
+<li><p><code>return resolved, nil</code>: If there were no errors during the process, the function returns the <code>resolved</code> struct and a <code>nil</code> error.</p>
+</li>
+</ol>
+<p>This function uses reflection, which is a feature of Go that allows a program to manipulate objects with arbitrary types. It also uses the <code>dynamodbattribute</code> package to convert between DynamoDB Attribute Values and Go types.</p>
+<p>For more information on reflection in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://go.dev/blog/laws-of-reflection">The Laws of Reflection</a></li>
+<li><a href="https://gobyexample.com/reflection">Go by Example: Reflection</a></li>
+</ul>
+<p>For more information on the <code>dynamodbattribute</code> package, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://pkg.go.dev/github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute">Package dynamodbattribute</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:33:54 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExamplErrorPath-->End;</pre>
+</code></pre><p>The code snippet provided does not have any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:36:30 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 84</p>
+<p><strong>Bug Type</strong>: Improper Input Validation</p>
+<p><strong>Description</strong>: The function takes an interface{} type as input, which is then asserted to a map[string]*dynamodb.AttributeValue type without proper validation. If the provided input is not of the expected type, the assertion will fail and a runtime panic will occur, leading to potential Denial of Service (DoS) attacks.</p>
+<p><strong>Solution</strong>: Always validate the input before type assertion. Consider using the &#39;comma ok&#39; idiom to safely assert the type and handle the error without causing a panic. Read more about this in Go documentation: <a href="https://golang.org/doc/effective_go#interface_conversions">https://golang.org/doc/effective_go#interface_conversions</a></p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 88</p>
+<p><strong>Bug Type</strong>: Insecure Deserialization</p>
+<p><strong>Description</strong>: The function uses the dynamodbattribute.UnmarshalMap function to deserialize the map into a data.Persistable type. Insecure deserialization can lead to various attacks, including Remote Code Execution (RCE), if the deserialized data contains malicious payload.</p>
+<p><strong>Solution</strong>: Always validate and sanitize the data before deserialization. Consider using digital signatures or checksums to ensure the integrity of the serialized data. Read more about this in OWASP Top 10 2021: <a href="https://owasp.org/www-project-top-ten/2021/A06_2021-Vulnerable_and_Outdated_Components">https://owasp.org/www-project-top-ten/2021/A06_2021-Vulnerable_and_Outdated_Components</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:42:14 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 84</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of reflection in Go can be computationally expensive and slow down performance. This is particularly true if this function is called frequently.</p>
+<p><strong>Solution</strong>: Consider using a more direct approach to type conversion, if possible. If reflection is necessary, consider caching the results of reflection if the function is called frequently with the same types. <a href="https://blog.golang.org/laws-of-reflection">GoLang Reflection Guide</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 89</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The use of dynamodbattribute.UnmarshalMap can be slow if the provided map is large. This function has to iterate through each key-value pair in the map and unmarshal it into the provided struct.</p>
+<p><strong>Solution</strong>: Consider if there are ways to reduce the size of the map being unmarshaled. If not, consider if there are ways to optimize the struct that the map is being unmarshaled into. <a href="https://docs.aws.amazon.com/sdk-for-go/v1/developer-guide/dynamo-example-read-table-item.html">GoLang DynamoDB Guide</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:48:35 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 84</p>
+<p><strong>Bug Type</strong>: Data and Privacy Compliance</p>
+<p><strong>Description</strong>: The function <code>resolver</code> logs the full stack trace, which might include sensitive data such as personal health information, user data, or payment information. This could be a violation of GDPR, PCI DSS, and HIPAA, which require secure handling of sensitive information.</p>
+<p><strong>Solution</strong>: To resolve this issue, avoid logging sensitive data. If it&#39;s necessary to log for debugging purposes, ensure the data is anonymized or pseudonymized. Implement a centralized logging system where logs can be monitored and audited.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 88</p>
+<p><strong>Bug Type</strong>: Data and Privacy Compliance</p>
+<p><strong>Description</strong>: The function <code>resolver</code> unmarshals data without checking its type or content. This could lead to processing of sensitive data such as personal health information, user data, or payment information in violation of GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: To resolve this issue, implement data validation and type checking before unmarshalling data. Make sure that the data being processed is allowed by the user and is necessary for the operation of the application.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 58:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (pt *persistableType) processFields(structType reflect.Type, fieldPath string, table *table, errors []gomerr.Gomerr) []gomerr.Gomerr {
+	<span class="hljs-attribute">for i</span> := 0; <span class="hljs-attribute">i &lt; structType.NumField(); i++ {
+		field</span> := structType<span class="hljs-variable">.Field</span>(i)
+		fieldName := field<span class="hljs-variable">.Name</span>
+
+		if field<span class="hljs-variable">.Type</span><span class="hljs-variable">.Kind</span>() == reflect<span class="hljs-variable">.Struct</span> &amp;&amp; field<span class="hljs-variable">.Anonymous</span> {
+			errors = pt<span class="hljs-variable">.processFields</span>(field<span class="hljs-variable">.Type</span>, fieldPath+fieldName+&quot;.&quot;, table, errors)
+		} else if unicode<span class="hljs-variable">.IsLower</span>([]rune(fieldName)[0]) {
+			continue
+		} else {
+			pt<span class="hljs-variable">.processNameTag</span>(fieldName, field<span class="hljs-variable">.Tag</span><span class="hljs-variable">.Get</span>(&quot;db<span class="hljs-variable">.name</span>&quot;))
+
+			errors = pt<span class="hljs-variable">.processConstraintsTag</span>(fieldName, field<span class="hljs-variable">.Tag</span><span class="hljs-variable">.Get</span>(&quot;db<span class="hljs-variable">.constraints</span>&quot;), table, errors)
+			errors = pt<span class="hljs-variable">.processKeysTag</span>(fieldName, field<span class="hljs-variable">.Tag</span><span class="hljs-variable">.Get</span>(&quot;db<span class="hljs-variable">.keys</span>&quot;), table<span class="hljs-variable">.indexes</span>, errors)
+		}
+	}
+
+	return errors
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:27:49 AM PDT</p>
+<p>The given code is a function in Go that processes the fields of a struct in order to establish a mapping between the struct fields and database columns. This is often used in Object-Relational Mapping (ORM) where you map your Go structs to database tables.</p>
+<p>Let&#39;s break down the function:</p>
+<ul>
+<li><p>The function <code>processFields</code> takes 4 parameters: <code>structType</code> which is a reflect.Type object, <code>fieldPath</code> which is a string, <code>table</code> which is a pointer to a table object, and <code>errors</code> which is a slice of Gomerr errors.</p>
+</li>
+<li><p>The function loops over each field in the struct using a <code>for</code> loop and the <code>NumField</code> method of the <code>reflect.Type</code> object.</p>
+</li>
+<li><p>For each field, it checks if the field is a nested struct (i.e., if the field&#39;s type is a struct and the field is anonymous). If it is, it recursively calls <code>processFields</code> on the nested struct. The <code>fieldPath</code> is updated to keep track of the nested field&#39;s path.</p>
+</li>
+<li><p>If the field is not a nested struct, it checks if the field name starts with a lowercase letter using the <code>unicode.IsLower</code> function. If it does, it skips the field since unexported (private) fields in Go start with a lowercase letter and these fields are not meant to be used outside the package they are defined in.</p>
+</li>
+<li><p>If the field is not a nested struct and its name does not start with a lowercase letter, it processes the field. It first processes the name tag of the field using the <code>processNameTag</code> function. This is likely to map the field name to a database column name.</p>
+</li>
+<li><p>It then processes the constraints tag of the field using the <code>processConstraintsTag</code> function. This is likely to apply any constraints defined in the struct field&#39;s tag to the corresponding database column.</p>
+</li>
+<li><p>Finally, it processes the keys tag of the field using the <code>processKeysTag</code> function. This is likely to establish any keys defined in the struct field&#39;s tag in the database.</p>
+</li>
+<li><p>The function returns the errors encountered during the processing of the fields.</p>
+</li>
+</ul>
+<p>In terms of algorithms, this function uses recursion to traverse nested structs, and a for loop to iterate over each field in the struct. It also uses reflection to inspect the struct&#39;s fields at runtime.</p>
+<p>For more information on Go&#39;s reflect package and how it can be used to inspect types at runtime, you can refer to the official Go documentation: <a href="https://golang.org/pkg/reflect/">Go reflect package</a></p>
+<p>As for the architectural guidelines, the function appears to follow good practices. It&#39;s designed to be reusable and to handle errors properly. It also uses the powerful features of Go&#39;s reflect package to provide a flexible way to process struct fields.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:34:06 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ProcessFields fill:#228B22, stroke:#000000, stroke-width:4px;
+style ProcessFieldsError fill:#B22222, stroke:#000000, stroke-width:2px;
+style ProcessFields fill:#228B22, stroke:#000000, stroke-width:4px;
+style ProcessFieldsError fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ProcessFields;
+ProcessFields-->ProcessFields;
+ProcessFields-->ProcessFieldsError;
+ProcessFieldsError-->ProcessFields;</pre>
+</code></pre><p>The control flow graph for the provided source code is as follows:</p>
+<ul>
+<li>The start of the graph is the function <code>processFields</code>.</li>
+<li>The primary path is represented by the green-colored flow blocks.</li>
+<li>The non-error alternate paths are represented by the default non-colored flow blocks.</li>
+<li>The error paths are represented by the red-colored flow blocks.</li>
+</ul>
+<p>Please note that this control flow graph does not include any external library or non-standard function calls.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:37:16 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 124</p>
+<p><strong>Bug Type</strong>: Information Disclosure</p>
+<p><strong>Description</strong>: The function <code>processFields</code> uses reflection to access the fields of a struct. This can lead to information disclosure if sensitive information is stored in the struct fields. This is because reflection allows for the inspection of the fields and methods of an object at runtime, potentially revealing sensitive data.</p>
+<p><strong>Solution</strong>: Avoid storing sensitive data in struct fields directly. Instead, use secure methods to store and access sensitive data. Also, limit the use of reflection as much as possible. Refer to OWASP guidelines on sensitive data exposure: <a href="https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure.html">https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 124</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The function <code>processFields</code> uses reflection to directly access object references. This can lead to Insecure Direct Object References (IDOR) if an attacker can manipulate the references to gain unauthorized access to data.</p>
+<p><strong>Solution</strong>: Ensure that proper authorization checks are performed before allowing access to object references. Use indirect object references instead of direct ones. Refer to OWASP guidelines on IDOR: <a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html">https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 129</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The function <code>processFields</code> accumulates errors in a slice and returns them at the end of the function. This could lead to improper error handling as the function continues processing even when errors occur.</p>
+<p><strong>Solution</strong>: It is recommended to handle errors as soon as they occur. If an error is encountered, the function should stop processing and return the error immediately. Refer to Go best practices on error handling: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:42:33 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 116</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The processFields function uses reflection extensively which is computationally expensive and could slow down the performance of the application, especially if this function is called frequently.</p>
+<p><strong>Solution</strong>: Consider using code generation or interfaces to avoid reflection. If reflection is necessary, try to minimize its usage or cache the results if possible. Refer to this link for more details: <a href="https://stackoverflow.com/questions/6395076/in-golang-using-reflect-is-it-possible-to-set-the-value-of-a-struct-field-given">https://stackoverflow.com/questions/6395076/in-golang-using-reflect-is-it-possible-to-set-the-value-of-a-struct-field-given</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 124</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The conversion of fieldName to rune array and accessing the first element can be costly when done in a loop.</p>
+<p><strong>Solution</strong>: Consider checking the first character of the string directly using string indexing if possible. Refer to this link for more details: <a href="https://stackoverflow.com/questions/46376140/what-is-the-difference-between-a-string-and-a-rune-in-go">https://stackoverflow.com/questions/46376140/what-is-the-difference-between-a-string-and-a-rune-in-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 127</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The processNameTag, processConstraintsTag, and processKeysTag functions are called inside the loop which could potentially be expensive if these functions have complex logic.</p>
+<p><strong>Solution</strong>: Consider optimizing these functions or if they are performing similar tasks, you might want to combine them into a single function to reduce the function call overhead. Refer to this link for more details: <a href="https://golang.org/doc/effective_go#complex128">https://golang.org/doc/effective_go#complex128</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:49:52 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 120</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;processFields&#39; is processing fields from a struct without any data validation or sanitization. This could lead to the processing of sensitive data, such as Personal Identifiable Information (PII), credit card data, or health information, in violation of GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Implement data validation and sanitization checks to ensure that only expected, non-sensitive data is processed. This could include checks for data type, length, format, and the presence of sensitive information. Additionally, consider implementing a data classification system to identify and protect sensitive data.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 123</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;processFields&#39; is processing anonymous struct fields. Anonymous struct fields can contain any data, including sensitive data, and their use can make it difficult to ensure data compliance.</p>
+<p><strong>Solution</strong>: Avoid using anonymous struct fields for data that could potentially be sensitive. Instead, use named struct fields with clearly defined data types, and implement data validation and sanitization checks for these fields.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 127</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;processNameTag&#39; is being called with the &#39;db.name&#39; tag of a field, but it&#39;s not clear if this tag could contain sensitive data. The use of tags for sensitive data could potentially violate GDPR, PCI DSS, or HIPAA.</p>
+<p><strong>Solution</strong>: Ensure that tags do not contain sensitive data. If tags must be used for sensitive data, implement appropriate protection measures, such as encryption or tokenization.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 129</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;processConstraintsTag&#39; is being called with the &#39;db.constraints&#39; tag of a field, but it&#39;s not clear if this tag could contain sensitive data or if the constraints could allow sensitive data to be processed.</p>
+<p><strong>Solution</strong>: Ensure that tags and constraints do not allow sensitive data to be processed. If constraints must be used with sensitive data, implement appropriate protection measures, such as using constraints that enforce data privacy and security requirements.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 130</p>
+<p><strong>Bug Type</strong>: Data Compliance</p>
+<p><strong>Description</strong>: The function &#39;processKeysTag&#39; is being called with the &#39;db.keys&#39; tag of a field, but it&#39;s not clear if this tag could contain sensitive data or if the keys could allow sensitive data to be processed.</p>
+<p><strong>Solution</strong>: Ensure that tags and keys do not allow sensitive data to be processed. If keys must be used with sensitive data, implement appropriate protection measures, such as using keys that enforce data privacy and security requirements.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 78:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (pt *persistableType) processNameTag(fieldName <span class="hljs-keyword">string</span>, <span class="hljs-keyword">tag</span> <span class="hljs-title">string</span>) {
+	if <span class="hljs-keyword">tag</span> <span class="hljs-title">== &quot;&quot; {
+		return</span>
+	}
+
+	pt.dbNames[fieldName] = <span class="hljs-keyword">tag</span>
+<span class="hljs-title">}
+</span></code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:28:33 AM PDT</p>
+<p>The function <code>processNameTag</code> is a method of the <code>persistableType</code> struct. This method processes a name tag for a given field name and assigns it to a map member of the <code>persistableType</code> struct.</p>
+<p>The function takes two arguments: <code>fieldName</code> which is a string that represents the name of a field, and <code>tag</code> which is another string that represents the tag associated with that field name.</p>
+<p>The function starts by checking if the <code>tag</code> argument is an empty string. If it is, the function immediately returns and does not execute any further code. This is a simple way to ignore fields that do not have a tag associated with them.</p>
+<p>If the <code>tag</code> argument is not an empty string, the function proceeds to add an entry to the <code>dbNames</code> map of the <code>persistableType</code> object. The key for this entry is the <code>fieldName</code> argument, and the value is the <code>tag</code> argument. The <code>dbNames</code> map is used to store a mapping between field names and their associated tags.</p>
+<p>In terms of algorithmic complexity, this function performs in constant time, O(1), because it only performs a fixed number of operations that do not depend on the size of the input.</p>
+<p>This function seems to be part of a larger system for mapping struct fields to database columns, a common task in Object-Relational Mapping (ORM) systems. The tags could be used to specify custom column names, handle special serialization/deserialization rules, or for other similar purposes. </p>
+<p>For more information on Go struct tags and how they can be used in serialization and other tasks, see: <a href="https://medium.com/golangspec/tags-in-golang-3e5db0b8ef3e">https://medium.com/golangspec/tags-in-golang-3e5db0b8ef3e</a></p>
+<p>For more information on Go maps and how they can be used to store key-value pairs, see: <a href="https://blog.golang.org/maps">https://blog.golang.org/maps</a></p>
+<p>The function appears to be consistent with the architectural guidelines provided. It is simple, easy to understand, and performs a specific task. It seems to be part of a larger system for handling data persistence, which is a common requirement in server-side applications.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:34:11 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+
+Start-->ExampleProcess;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:37:20 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:42:36 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:50:24 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 157</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;processNameTag&#39; stores field names in a database without any apparent checks for personal data. This could potentially lead to storage of personal data without consent, violating GDPR principles.</p>
+<p><strong>Solution</strong>: Implement a check to verify if the data being stored is personal. If it is, ensure that proper consent has been obtained before storing it. Also, consider anonymizing or pseudonymizing personal data wherever possible.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 157</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: This function may be storing sensitive data such as cardholder data without proper security measures, which could violate PCI DSS requirements.</p>
+<p><strong>Solution</strong>: Ensure that sensitive cardholder data is encrypted before storage and is stored only if necessary. Implement a data retention policy to delete unnecessary data.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 157</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: This function may be storing Protected Health Information (PHI) without adequate security measures, which could violate HIPAA regulations.</p>
+<p><strong>Solution</strong>: Ensure that PHI is encrypted before storage, and implement access controls to limit who can access the stored PHI. Also, implement audit logs to keep track of who accesses PHI.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 86:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">var</span> constraintsRegexp = regexp.MustCompile(<span class="hljs-string">`(unique)(\(([\w,]+)\))?`</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pt *persistableType)</span></span> processConstraintsTag(fieldName <span class="hljs-type">string</span>, tag <span class="hljs-type">string</span>, t *table, errors []gomerr.Gomerr) []gomerr.Gomerr {
+	<span class="hljs-keyword">if</span> tag == <span class="hljs-string">&quot;&quot;</span> {
+		<span class="hljs-keyword">return</span> errors
+	}
+
+	constraints := constraintsRegexp.FindAllStringSubmatch(tag, <span class="hljs-number">-1</span>)
+	<span class="hljs-keyword">if</span> constraints == <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-built_in">append</span>(errors, gomerr.Configuration(<span class="hljs-string">&quot;Invalid `db.constraints` value: &quot;</span>+tag).AddAttribute(<span class="hljs-string">&quot;Field&quot;</span>, fieldName))
+	}
+
+	<span class="hljs-keyword">for</span> _, c := <span class="hljs-keyword">range</span> constraints {
+		<span class="hljs-keyword">switch</span> c[<span class="hljs-number">1</span>] {
+		<span class="hljs-keyword">case</span> <span class="hljs-string">&quot;unique&quot;</span>:
+			<span class="hljs-keyword">var</span> additionalFields []<span class="hljs-type">string</span>
+			fieldTuple := []<span class="hljs-type">string</span>{fieldName}
+			<span class="hljs-keyword">if</span> c[<span class="hljs-number">3</span>] != <span class="hljs-string">&quot;&quot;</span> {
+				additionalFields = strings.Split(strings.ReplaceAll(c[<span class="hljs-number">3</span>], <span class="hljs-string">&quot; &quot;</span>, <span class="hljs-string">&quot;&quot;</span>), <span class="hljs-string">&quot;,&quot;</span>)
+				fieldTuple = <span class="hljs-built_in">append</span>(fieldTuple, additionalFields...)
+			}
+			pt.fieldConstraints[fieldName] = constraint.New(<span class="hljs-string">&quot;Unique&quot;</span>, additionalFields, t.isFieldTupleUnique(fieldTuple))
+		}
+	}
+
+	<span class="hljs-keyword">return</span> errors
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:29:31 AM PDT</p>
+<p>This piece of code is written in Go and is part of a larger system, likely a server-side application, dealing with data constraints in a database. It&#39;s specifically designed to process constraints tags associated with fields in a database table.</p>
+<p>The function <code>processConstraintsTag</code> is a method of the <code>persistableType</code> struct. It takes four arguments: a field name (a string), a tag (a string), a pointer to a table (a <code>table</code> type), and a slice of errors (a slice of <code>gomerr.Gomerr</code> type). It returns a slice of errors.</p>
+<p>The <code>gomerr.Gomerr</code> type is likely a custom error type used in this project for error handling.</p>
+<p>Here&#39;s a detailed breakdown of what the function does:</p>
+<ol>
+<li><p>If the provided tag is an empty string, the function immediately returns the provided errors without making any changes.</p>
+</li>
+<li><p>The function then uses a regular expression to find all matches in the tag. The regular expression is looking for the string &quot;unique&quot; optionally followed by a parenthesis-enclosed, comma-separated list of alphanumeric words.</p>
+</li>
+<li><p>If no matches are found, the function appends a new configuration error to the errors slice and returns it. The error message indicates that an invalid <code>db.constraints</code> value was provided.</p>
+</li>
+<li><p>If matches are found, the function iterates over them. For each match, it checks the first submatch (which should be &quot;unique&quot; according to the regular expression). If it is &quot;unique&quot;, the function adds a new unique constraint to the <code>fieldConstraints</code> map of the <code>persistableType</code>. The constraint is created with the <code>constraint.New</code> function, which takes three arguments: the name of the constraint (&quot;Unique&quot;), any additional fields, and a boolean value indicating whether the field tuple is unique in the table.</p>
+</li>
+</ol>
+<p>The algorithm used here is primarily string processing and pattern matching using regular expressions.</p>
+<p>For more information on regular expressions in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/regular-expressions">Go by Example: Regular Expressions</a></li>
+<li><a href="https://tour.golang.org/moretypes/20">A Tour of Go: Regular Expressions</a></li>
+<li><a href="https://golang.org/pkg/regexp/">Go Docs: Package regexp</a></li>
+</ul>
+<p>For more information on error handling in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/errors">Go by Example: Error Handling</a></li>
+<li><a href="https://tour.golang.org/methods/19">A Tour of Go: Errors</a></li>
+<li><a href="https://golang.org/pkg/errors/">Go Docs: Package errors</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:34:30 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExampleErrorPath-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is as follows:</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Process fill:#228B22, stroke:#000000, stroke-width:4px;
+style ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->Process;
+Process-->End;</pre>
+</code></pre><p>The primary path through the code is represented by the green-colored flow. The code starts at the <code>processConstraintsTag</code> function and proceeds to the <code>constraintsRegexp</code> variable. It then checks if the <code>tag</code> parameter is empty. If it is not empty, the code proceeds to the <code>constraintsRegexp.FindAllStringSubmatch</code> function. If the result is not <code>nil</code>, the code enters a loop and checks each constraint. If the constraint is &quot;unique&quot;, the code performs some operations and assigns a value to <code>pt.fieldConstraints[fieldName]</code>. Finally, the code returns the <code>errors</code> variable.</p>
+<p>The error path is represented by the red-colored flow. If the <code>tag</code> parameter is empty or the result of <code>constraintsRegexp.FindAllStringSubmatch</code> is <code>nil</code>, the code appends an error to the <code>errors</code> variable and returns it.</p>
+<p>Note: The code snippet provided does not show the complete context of the function, so the control flow graph may not capture all possible paths.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:38:05 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 177</p>
+<p><strong>Bug Type</strong>: Insecure Regular Expression</p>
+<p><strong>Description</strong>: The regular expression used to process the <code>db.constraints</code> value could be susceptible to ReDoS (Regular Expression Denial of Service) attacks, where an attacker provides a specially crafted input that takes a very long time to process, effectively causing a denial of service.</p>
+<p><strong>Solution</strong>: Consider using a safer way to parse the <code>db.constraints</code> value, or limit the maximum length of the input that can be processed. More information can be found here: <a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 181</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: When the <code>db.constraints</code> value is invalid, an error is appended to the <code>errors</code> slice and the function continues to execute. This could lead to unexpected behavior later in the function if the error is not properly handled.</p>
+<p><strong>Solution</strong>: Consider immediately returning the error when it occurs, or ensure that it is properly handled later in the function. More information can be found here: <a href="https://owasp.org/www-community/Improper_Error_Handling">https://owasp.org/www-community/Improper_Error_Handling</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 187</p>
+<p><strong>Bug Type</strong>: Insecure Direct Object References (IDOR)</p>
+<p><strong>Description</strong>: The <code>fieldName</code> is directly used to index into the <code>pt.fieldConstraints</code> map. If an attacker can control the <code>fieldName</code>, they could potentially cause a crash by providing an invalid key, or access sensitive data by providing a key that they should not have access to.</p>
+<p><strong>Solution</strong>: Always validate user-controlled input before using it to access data structures. More information can be found here: <a href="https://owasp.org/www-community/attacks/Insecure_Direct_Object_References">https://owasp.org/www-community/attacks/Insecure_Direct_Object_References</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:43:17 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 170</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The usage of regex can be CPU-intensive, especially when used within a function that may be called multiple times.</p>
+<p><strong>Solution</strong>: Consider using simple string manipulation functions or direct comparison if possible. If regex is necessary, ensure that the pattern is as specific as possible to minimize CPU usage.</p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 180</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The usage of <code>strings.ReplaceAll</code> and <code>strings.Split</code> inside a loop can lead to increased CPU usage.</p>
+<p><strong>Solution</strong>: Consider optimizing the code by performing these operations outside the loop if possible.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 183</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The usage of <code>append</code> in a loop can lead to increased memory usage and potential memory leaks if not handled properly.</p>
+<p><strong>Solution</strong>: Consider pre-allocating memory for slices if the length is known beforehand, or using a suitable data structure that does not require resizing.</p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 183</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function <code>t.isFieldTupleUnique</code> is called inside a loop which can lead to increased CPU usage if the function is CPU-intensive.</p>
+<p><strong>Solution</strong>: Consider optimizing the function <code>t.isFieldTupleUnique</code> or calling it outside the loop if possible.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:51:12 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 179</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function &#39;processConstraintsTag&#39; handles data without checking its nature. This could lead to processing of personal data in violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement a mechanism to classify data and handle personal data according to the GDPR requirements. This could include pseudonymization or anonymization techniques, encryption, and obtaining user consent before processing personal data.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 182</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function &#39;processConstraintsTag&#39; may handle health-related data without checking its nature. This could lead to processing of Protected Health Information (PHI) in violation of HIPAA.</p>
+<p><strong>Solution</strong>: Implement a mechanism to classify data and handle PHI according to the HIPAA requirements. This could include encryption, de-identification, access controls, and audit controls.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 190</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function &#39;processConstraintsTag&#39; may handle cardholder data without proper security measures, which could lead to a violation of PCI DSS.</p>
+<p><strong>Solution</strong>: Implement a mechanism to classify data and handle cardholder data according to the PCI DSS requirements. This could include encryption, access controls, and regular security testing.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 114:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-keyword">var</span> ddbKeyStatementRegexp = regexp.MustCompile(<span class="hljs-string">`(?:(!)?(\+|-)?([\w-.]+)?:)?(pk|sk)(?:.(\d))?(?:=(&#x27;\w+&#x27;)(\+)?)?`</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pt *persistableType)</span></span> processKeysTag(fieldName <span class="hljs-type">string</span>, tag <span class="hljs-type">string</span>, indexes <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*index, errors []gomerr.Gomerr) []gomerr.Gomerr {
+	<span class="hljs-keyword">if</span> tag == <span class="hljs-string">&quot;&quot;</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	}
+
+	<span class="hljs-keyword">for</span> _, keyStatement := <span class="hljs-keyword">range</span> strings.Split(strings.ReplaceAll(tag, <span class="hljs-string">&quot; &quot;</span>, <span class="hljs-string">&quot;&quot;</span>), <span class="hljs-string">&quot;,&quot;</span>) {
+		groups := ddbKeyStatementRegexp.FindStringSubmatch(keyStatement)
+		<span class="hljs-keyword">if</span> groups == <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-built_in">append</span>(errors, gomerr.Configuration(<span class="hljs-string">&quot;Invalid `db.keys` value: &quot;</span>+keyStatement).AddAttribute(<span class="hljs-string">&quot;Field&quot;</span>, fieldName))
+		}
+
+		idx, ok := indexes[groups[<span class="hljs-number">3</span>]]
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-keyword">return</span> <span class="hljs-built_in">append</span>(errors, gomerr.Configuration(fmt.Sprintf(<span class="hljs-string">&quot;Undefined index: %s&quot;</span>, groups[<span class="hljs-number">3</span>])).AddAttribute(<span class="hljs-string">&quot;Field&quot;</span>, fieldName))
+		}
+
+		<span class="hljs-keyword">var</span> key *keyAttribute
+		<span class="hljs-keyword">if</span> groups[<span class="hljs-number">4</span>] == <span class="hljs-string">&quot;pk&quot;</span> {
+			key = idx.pk
+		} <span class="hljs-keyword">else</span> {
+			key = idx.sk
+		}
+
+		<span class="hljs-keyword">var</span> partIndex <span class="hljs-type">int</span> <span class="hljs-comment">// default to index 0</span>
+		<span class="hljs-keyword">if</span> groups[<span class="hljs-number">5</span>] != <span class="hljs-string">&quot;&quot;</span> {
+			partIndex, _ = strconv.Atoi(groups[<span class="hljs-number">5</span>])
+		}
+
+		<span class="hljs-keyword">if</span> groups[<span class="hljs-number">6</span>] != <span class="hljs-string">&quot;&quot;</span> { <span class="hljs-comment">// If non-empty, this field has a static value. Replace with that value.</span>
+			fieldName = groups[<span class="hljs-number">6</span>]
+		}
+
+		<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Determine scenarios where skLength/skMissing don&#x27;t map to desired behavior. May need preferred</span>
+		<span class="hljs-comment">//       priority levels to compensate</span>
+		kf := keyField{name: fieldName, preferred: groups[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;!&quot;</span>, ascending: groups[<span class="hljs-number">2</span>] != <span class="hljs-string">&quot;-&quot;</span>}
+		key.keyFieldsByPersistable[pt.name] = insertAtIndex(key.keyFieldsByPersistable[pt.name], &amp;kf, partIndex)
+	}
+
+	<span class="hljs-keyword">return</span> errors
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:30:41 AM PDT</p>
+<p>This Go code is part of a larger system that interacts with an AWS DynamoDB database. It appears to be processing and validating database key tags to ensure they adhere to the expected format and are associated with defined indexes. </p>
+<p>The <code>persistableType</code> struct has a method <code>processKeysTag</code> which takes four parameters: <code>fieldName</code> (a string that represents the name of the field), <code>tag</code> (a string that represents the tag to be processed), <code>indexes</code> (a map where the key is a string and the value is a pointer to an <code>index</code> struct), and <code>errors</code> (a slice of <code>gomerr.Gomerr</code> instances which represent errors that have occurred). This method returns a slice of <code>gomerr.Gomerr</code> instances.</p>
+<p>Here&#39;s a breakdown of the code:</p>
+<ul>
+<li><p>A regular expression (<code>ddbKeyStatementRegexp</code>) is used to parse a <code>tag</code>, which is expected to be in a specific format related to DynamoDB keys.</p>
+</li>
+<li><p>If the <code>tag</code> is an empty string, the function returns <code>nil</code> as no processing is required.</p>
+</li>
+<li><p>The <code>tag</code> string is split into multiple key statements, which are processed individually.</p>
+</li>
+<li><p>For each key statement, it checks if it matches the regular expression. If it doesn&#39;t, an error is appended to the <code>errors</code> slice and returned.</p>
+</li>
+<li><p>It then checks if the parsed index from the key statement exists in the <code>indexes</code> map. If it doesn&#39;t, an error is appended to the <code>errors</code> slice and returned.</p>
+</li>
+<li><p>Depending on whether the key in the key statement is a primary key (pk) or a sort key (sk), it assigns the corresponding key from the index to the <code>key</code> variable.</p>
+</li>
+<li><p>It then checks if there is a part index in the key statement. If there is, it converts it to an integer and assigns it to <code>partIndex</code>.</p>
+</li>
+<li><p>If the key statement has a static value, it replaces the <code>fieldName</code> with that value.</p>
+</li>
+<li><p>It creates a <code>keyField</code> struct with the <code>fieldName</code>, a boolean indicating if it&#39;s preferred (if an exclamation mark was present in the key statement), and a boolean indicating if it&#39;s ascending (if a minus sign was not present in the key statement).</p>
+</li>
+<li><p>It then inserts the <code>keyField</code> struct at the specified <code>partIndex</code> position in the slice of <code>keyFieldsByPersistable</code> for the <code>persistableType</code>.</p>
+</li>
+<li><p>Finally, it returns the <code>errors</code> slice.</p>
+</li>
+</ul>
+<p>One thing to note is the <code>TODO</code> comment, which suggests that there might be scenarios where the current implementation doesn&#39;t meet the desired behavior, and that priority levels might need to be introduced to compensate for this.</p>
+<p>For more information on Go regular expressions, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/regular-expressions">Go by Example: Regular Expressions</a></li>
+<li><a href="https://golang.org/pkg/regexp/">Go Documentation: Package regexp</a></li>
+</ul>
+<p>For more information on error handling in Go, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://gobyexample.com/errors">Go by Example: Errors</a></li>
+<li><a href="https://golang.org/pkg/errors/">Go Documentation: Package errors</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:34:38 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->ExampleProcess;
+Start-->ExampleErrorPath;
+ExampleProcess-->End;
+ExamplErrorPath-->End;</pre>
+</code></pre><p>The code snippet provided does not have any control flow.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:38:52 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 237</p>
+<p><strong>Bug Type</strong>: Insecure Regular Expression</p>
+<p><strong>Description</strong>: The regular expression used in this line may be susceptible to ReDoS (Regular Expression Denial of Service) attacks. An attacker can provide a specially crafted input that causes the regular expression engine to consume a large amount of CPU resources, potentially leading to a denial of service.</p>
+<p><strong>Solution</strong>: Consider using a more efficient regular expression, or replace the regular expression with string manipulation functions if possible. Also, consider using a timeout to prevent long-running regular expression operations. More information can be found here: <a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 246</p>
+<p><strong>Bug Type</strong>: Improper Error Handling</p>
+<p><strong>Description</strong>: The error from the strconv.Atoi function is ignored. This can lead to unexpected behavior if the conversion fails. For example, if the input string is not a valid integer, strconv.Atoi will return 0 and an error, but the error is ignored in this case.</p>
+<p><strong>Solution</strong>: Always handle errors returned by functions. In this case, you should check the error returned by strconv.Atoi and handle it appropriately. More information can be found here: <a href="https://www.owasp.org/index.php/Error_Handling">https://www.owasp.org/index.php/Error_Handling</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 244</p>
+<p><strong>Bug Type</strong>: Improper Access Control</p>
+<p><strong>Description</strong>: The code does not check if the index (groups[3]) is within the bounds of the indexes array. This can lead to an &#39;index out of range&#39; runtime error, which can crash the application.</p>
+<p><strong>Solution</strong>: Always validate array indexes before accessing them. In this case, you should check if the index is within the bounds of the indexes array before accessing it. More information can be found here: <a href="https://owasp.org/www-community/vulnerabilities/Improper_Access_Control">https://owasp.org/www-community/vulnerabilities/Improper_Access_Control</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:44:00 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 228</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The regular expression is compiled every time the processKeysTag function is called. This can lead to high CPU usage if the function is called frequently.</p>
+<p><strong>Solution</strong>: Move the regular expression compilation to a global scope or compile it once and reuse it. This will reduce the CPU usage. Here is a resource for more information: <a href="https://stackoverflow.com/questions/45228519/what-is-the-cost-of-regexp-compile-in-go">https://stackoverflow.com/questions/45228519/what-is-the-cost-of-regexp-compile-in-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 235</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: Appending to a slice (errors) in a loop can cause memory re-allocation and copying. If the slice grows large, this can lead to high memory usage and slow performance.</p>
+<p><strong>Solution</strong>: Consider pre-allocating the slice if the maximum size is known in advance, or use a linked list if the data structure is suitable. More information can be found here: <a href="https://go.dev/play/p/9q9rrC2T9H6">https://go.dev/play/p/9q9rrC2T9H6</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 247</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The insertAtIndex function is called inside a loop. Depending on the implementation of insertAtIndex, this could lead to inefficient CPU usage if it involves shifting elements.</p>
+<p><strong>Solution</strong>: Consider using a data structure that supports efficient insertion, such as a linked list or a tree. More information can be found here: <a href="https://go.dev/play/p/3JHvZQHxQn5">https://go.dev/play/p/3JHvZQHxQn5</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:52:15 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 228</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: Data is being processed and stored without explicit consent. This violates GDPR&#39;s data minimization and consent principles.</p>
+<p><strong>Solution</strong>: Ensure that explicit user consent is obtained before processing and storing data. Implement mechanisms to record this consent. For more information, refer to: <a href="https://gdpr-info.eu/art-6-gdpr/">https://gdpr-info.eu/art-6-gdpr/</a></p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 233</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: Error messages are being logged that could potentially contain sensitive health information. This could be a violation of HIPAA, which requires secure handling of protected health information.</p>
+<p><strong>Solution</strong>: Ensure that error messages do not contain sensitive health information. Implement mechanisms to remove or obfuscate sensitive information from error logs. For more information, refer to: <a href="https://www.hhs.gov/hipaa/for-professionals/security/guidance/index.html">https://www.hhs.gov/hipaa/for-professionals/security/guidance/index.html</a></p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 242</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: Data is being processed and stored without sufficient security measures. This could potentially lead to a breach of credit card information, in violation of PCI DSS standards.</p>
+<p><strong>Solution</strong>: Ensure that all data, especially credit card information, is processed and stored securely. Implement encryption and other security measures as necessary. For more information, refer to: <a href="https://www.pcisecuritystandards.org/pci_security/">https://www.pcisecuritystandards.org/pci_security/</a></p>
+</li>
+<li><p><strong>Severity</strong>: 9/10</p>
+<p><strong>Line Number</strong>: 248</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The software does not provide a mechanism to allow users to access, correct, or delete their data. This violates GDPR&#39;s right to access, right to rectification, and right to erasure principles.</p>
+<p><strong>Solution</strong>: Implement mechanisms to allow users to access, correct, or delete their data. For more information, refer to: <a href="https://gdpr-info.eu/art-15-gdpr/">https://gdpr-info.eu/art-15-gdpr/</a>, <a href="https://gdpr-info.eu/art-16-gdpr/">https://gdpr-info.eu/art-16-gdpr/</a>, <a href="https://gdpr-info.eu/art-17-gdpr/">https://gdpr-info.eu/art-17-gdpr/</a></p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 157:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">insertAtIndex</span><span class="hljs-params">(slice []*keyField, value *keyField, index <span class="hljs-type">int</span>)</span></span> []*keyField {
+	<span class="hljs-keyword">if</span> slice == <span class="hljs-literal">nil</span> || <span class="hljs-built_in">cap</span>(slice) == <span class="hljs-number">0</span> {
+		slice = <span class="hljs-built_in">make</span>([]*keyField, <span class="hljs-number">0</span>, index+<span class="hljs-number">1</span>)
+	}
+
+	lenKeyFields := <span class="hljs-built_in">len</span>(slice)
+	capKeyFields := <span class="hljs-built_in">cap</span>(slice)
+	<span class="hljs-keyword">if</span> index &lt; lenKeyFields {
+		<span class="hljs-keyword">if</span> slice[index] != <span class="hljs-literal">nil</span> {
+			<span class="hljs-built_in">panic</span>(fmt.Sprintf(<span class="hljs-string">&quot;already found value &#x27;%v&#x27; at index %d&quot;</span>, slice[index], index))
+		}
+	} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> index &lt; capKeyFields {
+		slice = slice[<span class="hljs-number">0</span> : index+<span class="hljs-number">1</span>]
+	} <span class="hljs-keyword">else</span> {
+		slice = <span class="hljs-built_in">append</span>(slice, <span class="hljs-built_in">make</span>([]*keyField, index+<span class="hljs-number">1</span>-capKeyFields)...)
+	}
+
+	slice[index] = value
+
+	<span class="hljs-keyword">return</span> slice
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:31:27 AM PDT</p>
+<p>This Go function is named <code>insertAtIndex</code>. It takes a slice of pointers to <code>keyField</code> struct, a pointer to a <code>keyField</code> struct named <code>value</code>, and an integer <code>index</code> as arguments. It returns a slice of pointers to <code>keyField</code> struct. The function is designed to insert the <code>value</code> at the specified <code>index</code> in the <code>slice</code>.</p>
+<p>Here&#39;s a detailed breakdown of the function:</p>
+<ul>
+<li><p>It first checks whether the <code>slice</code> is <code>nil</code> or its capacity is <code>0</code>. If either is true, it initializes the <code>slice</code> to a slice of pointers to <code>keyField</code> struct with a capacity of <code>index+1</code>.</p>
+</li>
+<li><p>It then obtains the length and capacity of the <code>slice</code> and stores them in <code>lenKeyFields</code> and <code>capKeyFields</code> respectively.</p>
+</li>
+<li><p>If the <code>index</code> is less than <code>lenKeyFields</code>, it checks whether the value at the <code>index</code> in the <code>slice</code> is not <code>nil</code>. If it&#39;s not <code>nil</code>, it means there&#39;s already a value at that position, so it panics and prints an error message.</p>
+</li>
+<li><p>If the <code>index</code> is greater or equal to <code>lenKeyFields</code> but less than <code>capKeyFields</code>, it resizes the <code>slice</code> to <code>index+1</code>.</p>
+</li>
+<li><p>If the <code>index</code> is greater or equal to <code>capKeyFields</code>, it appends a new slice of pointers to <code>keyField</code> struct of size <code>index+1-capKeyFields</code> to the <code>slice</code>.</p>
+</li>
+<li><p>Finally, it sets the <code>value</code> at the <code>index</code> in the <code>slice</code> and returns the <code>slice</code>.</p>
+</li>
+</ul>
+<p>The algorithm used in this function is straightforward and does not belong to a specific class of algorithms. However, it uses the slice data structure in Go and demonstrates how to manipulate slices, such as checking their length and capacity, resizing them, and inserting values at specific positions.</p>
+<p>For more information on slices in Go and how to use them, you can refer to this link: <a href="https://blog.golang.org/slices-intro">https://blog.golang.org/slices-intro</a></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:34:49 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;
+style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->A;
+A-->B;
+B-->C;
+C-->D;
+D-->E;
+E-->F;
+F-->G;
+G-->H;
+H-->I;
+I-->J;
+J-->K;
+K-->L;
+L-->M;
+M-->N;
+N-->O;
+O-->P;
+P-->Q;
+Q-->R;
+R-->S;
+S-->T;
+T-->U;
+U-->V;
+V-->W;
+W-->X;
+X-->Y;
+Y-->Z;
+Z-->End;</pre>
+</code></pre><p>The control flow graph for the provided code snippet is a linear flow from start to end, with no branching or error paths.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:39:39 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 318</p>
+<p><strong>Bug Type</strong>: Denial of Service (DoS)</p>
+<p><strong>Description</strong>: The function uses the &#39;panic&#39; function to handle an error case. This can cause the entire program to crash if the condition is met, leading to a denial of service. More info: <a href="https://owasp.org/www-community/attacks/Denial_of_Service">https://owasp.org/www-community/attacks/Denial_of_Service</a></p>
+<p><strong>Solution</strong>: Instead of using &#39;panic&#39;, consider returning an error and handling it gracefully in the calling function. More info: <a href="https://blog.golang.org/error-handling-and-go">https://blog.golang.org/error-handling-and-go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 322</p>
+<p><strong>Bug Type</strong>: Buffer Overflow</p>
+<p><strong>Description</strong>: The function does not check if the index is negative. This can lead to a buffer overflow if a negative index is used, which can cause memory corruption and potentially allow an attacker to execute arbitrary code. More info: <a href="https://owasp.org/www-community/vulnerabilities/Buffer_Overflow">https://owasp.org/www-community/vulnerabilities/Buffer_Overflow</a></p>
+<p><strong>Solution</strong>: Add a check to ensure the index is not negative before using it. More info: <a href="https://wiki.sei.cmu.edu/confluence/display/c/MEM35-C.+Avoid+buffer+overflow">https://wiki.sei.cmu.edu/confluence/display/c/MEM35-C.+Avoid+buffer+overflow</a></p>
+</li>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 324</p>
+<p><strong>Bug Type</strong>: Information Disclosure</p>
+<p><strong>Description</strong>: The function exposes the value of the slice at the index in an error message. This can lead to information disclosure if the error message is logged or displayed to the user. More info: <a href="https://owasp.org/www-community/attacks/Information_disclosure">https://owasp.org/www-community/attacks/Information_disclosure</a></p>
+<p><strong>Solution</strong>: Avoid including sensitive information in error messages. Instead, log the error internally and display a generic error message to the user. More info: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:44:45 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 317</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function &#39;insertAtIndex&#39; uses the &#39;make&#39; function to allocate memory for the slice, even when the slice is not nil. This could lead to unnecessary memory allocation and waste of resources.</p>
+<p><strong>Solution</strong>: Consider checking if the slice is nil or has a capacity of 0 before allocating memory. If the slice already has enough capacity, there is no need to allocate more memory. Here is a link to a resource that explains how to efficiently use slices in Go: <a href="https://go.dev/blog/slices">Efficient Go Slices</a></p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 322</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function &#39;insertAtIndex&#39; uses a panic statement, which can be costly in terms of CPU usage, especially if this function is called frequently.</p>
+<p><strong>Solution</strong>: Instead of using a panic statement, consider returning an error message to the caller. This will allow the caller to handle the error in a way that is appropriate for the context of the application. Here is a link to a resource that explains error handling in Go: <a href="https://blog.golang.org/error-handling-and-go">Error handling in Go</a></p>
+</li>
+<li><p><strong>Severity</strong>: 4/10</p>
+<p><strong>Line Number</strong>: 327</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function &#39;insertAtIndex&#39; uses the &#39;append&#39; function to increase the size of the slice. This could lead to unnecessary memory allocation and waste of resources, especially if the index is much larger than the current capacity of the slice.</p>
+<p><strong>Solution</strong>: Consider using a different data structure, such as a map, that can handle sparse data more efficiently. Here is a link to a resource that explains how to use maps in Go: <a href="https://go.dev/blog/maps">Go Maps in Action</a></p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:52:37 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 318</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function &#39;insertAtIndex&#39; uses a panic statement that includes the value of a potentially sensitive data element. This could lead to the exposure of sensitive data in log files or error messages, which would be a violation of GDPR, PCI DSS, and HIPAA.</p>
+<p><strong>Solution</strong>: Avoid including sensitive data in log or error messages. If you need to log the value for debugging purposes, ensure that the logs are properly secured and that sensitive data is anonymized or pseudonymized. For more information, see the OWASP Logging Cheat Sheet (<a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html</a>).</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 179:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+func (<span class="hljs-keyword">pt</span> *persistableType) dbNameToFieldName(dbName <span class="hljs-built_in">string</span>) <span class="hljs-built_in">string</span> {
+	<span class="hljs-keyword">for</span> <span class="hljs-keyword">k</span>, v := <span class="hljs-built_in">range</span> <span class="hljs-keyword">pt</span>.dbNames {
+		<span class="hljs-keyword">if</span> v == dbName {
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">k</span>
+		}
+	}
+
+	<span class="hljs-keyword">return</span> dbName // If we reach here, <span class="hljs-keyword">no</span> alternative dbName was offered <span class="hljs-keyword">so</span> must <span class="hljs-keyword">be</span> the same <span class="hljs-keyword">as</span> the field name
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:32:08 AM PDT</p>
+<p>This function is a method on a structure named <code>persistableType</code>. The method is called <code>dbNameToFieldName</code> and it takes a single parameter, <code>dbName</code>, which is a string. </p>
+<p>The function is used to map a database field name to a struct field name. The mapping is done using a map <code>pt.dbNames</code> where the keys are struct field names and the values are database field names. </p>
+<p>The algorithm used here is quite simple:</p>
+<ol>
+<li>The function iterates over the <code>pt.dbNames</code> map using the <code>range</code> keyword. <code>range</code> on map iterates over key-value pairs.</li>
+<li>For each key-value pair, it checks if the value (<code>v</code>) is equal to the input <code>dbName</code>. </li>
+<li>If it finds a match, it returns the key (<code>k</code>) which is the struct field name corresponding to the database field name.</li>
+<li>If it iterates over the entire map without finding a match, it returns the input <code>dbName</code> as the struct field name. This implies that if there is no mapping defined for a particular database field name, the field name in the struct is assumed to be the same as the database field name.</li>
+</ol>
+<p>This function is a typical example of a mapping function used in Object-Relational Mapping (ORM) systems where the names of the fields in the database tables may not match exactly with the names of the fields in the corresponding structs in the code. </p>
+<p>Here are some resources for further reading:</p>
+<ol>
+<li><a href="https://gobyexample.com/range">Go by Example: Range</a></li>
+<li><a href="https://tour.golang.org/moretypes/16">A Tour of Go: Range</a></li>
+<li><a href="https://go.dev/blog/maps">Go maps in action</a></li>
+</ol>
+<p>Regarding the architectural guidelines, as the code provided does not mention any specific guidelines or constraints, I would say this code is consistent with common Go practices for mapping database field names to struct field names in ORM systems. It is simple, readable, and does not introduce unnecessary complexity.</p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:34:56 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Loop fill:#228B22, stroke:#000000, stroke-width:2px;
+style End fill:#228B22, stroke:#000000, stroke-width:2px;
+
+Start  -->Loop{Loop};
+Loop-->|v == dbName|End  ;
+Loop-->|v != dbName|Loop;</pre>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:39:43 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:45:02 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 359</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The loop over the &#39;dbNames&#39; map for every call to the &#39;dbNameToFieldName&#39; function can be CPU-intensive if the map has a large number of entries.</p>
+<p><strong>Solution</strong>: Consider using a reverse map to store the dbName to fieldName mapping, which would allow for constant time lookups. If the map is not frequently updated, the overhead of maintaining the reverse map would be outweighed by the performance gain in lookups.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:52:54 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 5/10</p>
+<p><strong>Line Number</strong>: 360</p>
+<p><strong>Bug Type</strong>: Data Exposure</p>
+<p><strong>Description</strong>: The function dbNameToFieldName does not sanitize or validate the dbName input before processing it. This could potentially lead to data exposure or injection attacks.</p>
+<p><strong>Solution</strong>: Add input sanitization and validation before processing the dbName input. This can be achieved by checking the dbName against a whitelist of allowed values or using regular expressions to ensure the dbName adheres to the expected format.</p>
+</li>
+</ol>
+</div'></div><div class="new-page-section">
+                    <h2>./data/dynamodb/persistabletype.go line 189:</h2>
+                    <p>Programming Language: go</p>
+                    <pre><code>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(pt *persistableType)</span></span> convertFieldNamesToDbNames(av *<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue) {
+	<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(pt.dbNames) == <span class="hljs-number">0</span> {
+		<span class="hljs-keyword">return</span>
+	}
+
+	cv := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]*dynamodb.AttributeValue, <span class="hljs-built_in">len</span>(*av))
+	<span class="hljs-keyword">for</span> k, v := <span class="hljs-keyword">range</span> *av {
+		<span class="hljs-keyword">if</span> dbName, ok := pt.dbNames[k]; ok {
+			<span class="hljs-keyword">if</span> dbName != <span class="hljs-string">&quot;-&quot;</span> {
+				cv[dbName] = v
+			}
+		} <span class="hljs-keyword">else</span> {
+			cv[k] = v
+		}
+	}
+
+	*av = cv
+}
+</code></pre>
+                </div><div class='analysis-section'><div class='output-item'><hr>
+<h3 id="boost-code-explanation">Boost Code Explanation</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:33:22 AM PDT</p>
+<p>The provided code is a function written in Go language. It is a method of a struct named <code>persistableType</code>. The function is named <code>convertFieldNamesToDbNames</code> and it takes a pointer to a map as an argument. This map contains string keys and values of type <code>*dynamodb.AttributeValue</code> which is a type from AWS SDK for Go. This function is likely used to convert Go struct field names to the corresponding database column names before saving the data into DynamoDB.</p>
+<p>Let&#39;s break down the code:</p>
+<ol>
+<li><p><code>func (pt *persistableType) convertFieldNamesToDbNames(av *map[string]*dynamodb.AttributeValue)</code>: This line declares a method <code>convertFieldNamesToDbNames</code> on the struct <code>persistableType</code>. The method takes a pointer to a map as an argument. The map&#39;s keys are strings and the values are pointers to <code>dynamodb.AttributeValue</code> instances.</p>
+</li>
+<li><p><code>if len(pt.dbNames) == 0 { return }</code>: This line checks if the <code>dbNames</code> field of the <code>persistableType</code> instance is empty or not. If it is empty, the function returns immediately. This is an early exit condition to optimize performance when there is no conversion to be done.</p>
+</li>
+<li><p><code>cv := make(map[string]*dynamodb.AttributeValue, len(*av))</code>: This line creates a new map with the same length as the input map. This map will hold the converted field names.</p>
+</li>
+<li><p>The <code>for k, v := range *av</code> loop iterates over each key-value pair in the input map.</p>
+</li>
+<li><p><code>if dbName, ok := pt.dbNames[k]; ok</code>: This line checks if the current key exists in the <code>dbNames</code> map of the <code>persistableType</code> instance. If it does, it assigns the corresponding value to <code>dbName</code> and <code>ok</code> is set to <code>true</code>.</p>
+</li>
+<li><p><code>if dbName != &quot;-&quot; { cv[dbName] = v }</code>: If the <code>dbName</code> is not equal to &quot;-&quot;, it adds a new entry to the <code>cv</code> map with <code>dbName</code> as the key and <code>v</code> as the value. This line converts the field name to the database name.</p>
+</li>
+<li><p><code>else { cv[k] = v }</code>: If the current key does not exist in the <code>dbNames</code> map, it adds the original key-value pair to the <code>cv</code> map.</p>
+</li>
+<li><p><code>*av = cv</code>: Finally, it replaces the original map with the new map that has converted field names.</p>
+</li>
+</ol>
+<p>The algorithm used here is a simple map traversal and replacement algorithm. It doesn&#39;t seem to be a standard algorithm but a custom one for this specific task.</p>
+<p>This code is consistent with the architectural guidelines provided. It is a simple, efficient function that follows Go best practices.</p>
+<p>For more information about AWS SDK for Go and DynamoDB, you can refer to the following resources:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/sdk-for-go/api/">AWS SDK for Go API Reference</a></li>
+<li><a href="https://aws.amazon.com/dynamodb/getting-started/">Working with DynamoDB</a></li>
+<li><a href="https://go.dev/blog/maps">Go maps in action</a></li>
+</ul>
+</div'><div class='output-item'><hr>
+<h3 id="boost-flow-diagram">Boost Flow Diagram</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:35:06 AM PDT</p>
+<pre><code class="hljs language-mermaid"><pre class="mermaid">graph TD;
+style Start fill:#228B22, stroke:#000000, stroke-width:2px;
+style Process fill:#228B22, stroke:#000000, stroke-width:2px;
+style ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;
+
+Start-->Process1;
+Process1-->Process2;
+Process2-->Process3;
+Process3-->Process4;
+Process4-->Process5;
+Process5-->End;
+
+Process1-->ErrorPath1;
+ErrorPath1-->End;
+
+Process2-->ErrorPath2;
+ErrorPath2-->End;
+
+Process3-->ErrorPath3;
+ErrorPath3-->End;
+
+Process4-->ErrorPath4;
+ErrorPath4-->End;
+
+Process5-->ErrorPath5;
+ErrorPath5-->End;
+</pre>
+</code></pre><pre><code>
+</code></pre></div'><div class='output-item'><hr>
+<h3 id="boost-source-level-security-analysis">Boost Source-Level Security Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:39:46 AM PDT</p>
+<p><strong>No bugs found</strong></p>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-performance-analysis">Boost Source-Level Performance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:45:23 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 3/10</p>
+<p><strong>Line Number</strong>: 381</p>
+<p><strong>Bug Type</strong>: Memory</p>
+<p><strong>Description</strong>: The function creates a new map <code>cv</code> every time it&#39;s called, which may lead to unnecessary memory allocation and deallocation.</p>
+<p><strong>Solution</strong>: Consider reusing the map if possible, or using a sync.Pool to pool the maps if this function is called frequently.</p>
+</li>
+<li><p><strong>Severity</strong>: 2/10</p>
+<p><strong>Line Number</strong>: 384</p>
+<p><strong>Bug Type</strong>: CPU</p>
+<p><strong>Description</strong>: The function checks for each key in the map if it exists in another map, which can be CPU-intensive if the maps are large.</p>
+<p><strong>Solution</strong>: If the maps are large and this function is called frequently, consider using a more efficient data structure for <code>pt.dbNames</code>, such as a hash map.</p>
+</li>
+</ol>
+</div'><div class='output-item'><hr>
+<h3 id="boost-source-level-data-and-privacy-compliance-analysis">Boost Source-Level Data and Privacy Compliance Analysis</h3>
+<p>Last Updated: Thursday, September 7, 2023 at 2:53:35 AM PDT</p>
+<ol>
+<li><p><strong>Severity</strong>: 7/10</p>
+<p><strong>Line Number</strong>: 379</p>
+<p><strong>Bug Type</strong>: GDPR</p>
+<p><strong>Description</strong>: The function converts field names to DB names without checking if the data is personal data. This could lead to storing personal data without proper consent, which is a violation of GDPR.</p>
+<p><strong>Solution</strong>: Implement a check to ensure that personal data is not stored without explicit user consent. This could be done by adding a function that checks if the data is personal before storing it.</p>
+</li>
+<li><p><strong>Severity</strong>: 6/10</p>
+<p><strong>Line Number</strong>: 386</p>
+<p><strong>Bug Type</strong>: PCI DSS</p>
+<p><strong>Description</strong>: The function handles data without checking if it&#39;s cardholder data. This could lead to cardholder data being processed in violation of PCI DSS.</p>
+<p><strong>Solution</strong>: Implement a check to ensure that cardholder data is not processed without proper security measures. This could be done by adding a function that checks if the data is cardholder data before processing.</p>
+</li>
+<li><p><strong>Severity</strong>: 8/10</p>
+<p><strong>Line Number</strong>: 389</p>
+<p><strong>Bug Type</strong>: HIPAA</p>
+<p><strong>Description</strong>: The function handles data without checking if it&#39;s health-related or not. This could lead to Protected Health Information (PHI) being processed in violation of HIPAA.</p>
+<p><strong>Solution</strong>: Implement a check to ensure that PHI is not processed without proper security measures. This could be done by adding a function that checks if the data is PHI before processing.</p>
+</li>
+</ol>
+</div'></div>
+</body>
+</html>
