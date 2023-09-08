@@ -1,7 +1,108 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 4:28:27 PM PDT\n\nThis Go code is part of a `helpers` package. It provides a function `Unmarshal` that is used to convert JSON data into a Go `Resource` object. \n\nThe `Unmarshal` function takes three parameters:\n- `resourceType` of type `reflect.Type`, which is a Go type that represents the type of the resource.\n- `subject` of type `auth.Subject`, which represents the authenticated user or system that is performing the operation.\n- `bytes` which is a slice of bytes, representing the JSON data to be unmarshalled.\n\nThe function returns two values:\n- `resource.Resource` which is the unmarshalled resource.\n- `gomerr.Gomerr` which is an error object that can be returned if an error occurs during the operation.\n\nHere's a detailed breakdown of the function:\n\n1. It first tries to create a new resource of the specified type with the `resource.New` function, passing the `resourceType` and `subject` as arguments. If an error occurs during this operation (indicated by `ge != nil`), the function returns `nil` and the error.\n\n2. It then checks if the `bytes` slice is not empty. If it's not, it tries to unmarshal the JSON data into the newly created resource using the `json.Unmarshal` function from the `encoding/json` package. If an error occurs during this operation, it returns `nil` and wraps the error using `gomerr.Unmarshal`.\n\n3. If no errors occur, it returns the newly created and populated resource and `nil` for the error.\n\nAs for the algorithms used, JSON unmarshalling is a common operation in Go and it's handled by the `encoding/json` package. The exact algorithm used for JSON unmarshalling can be complex and depends on the JSON data and the Go type it's being unmarshalled into. However, in general, it involves parsing the JSON data and converting it into the appropriate Go types.\n\nHere are some resources for further reading:\n- [The Laws of Reflection](https://blog.golang.org/laws-of-reflection) - a blog post about reflection in Go.\n- [JSON and Go](https://blog.golang.org/json-and-go) - a blog post about JSON encoding and decoding in Go.\n- [Go by Example: JSON](https://gobyexample.com/json) - a tutorial on JSON encoding and decoding in Go."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 4:28:42 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle UnmarshalProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle UnmarshalErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle NewProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle NewErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle UnmarshalJSONProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle UnmarshalJSONErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->UnmarshalProcess;\nUnmarshalProcess-->NewProcess;\nUnmarshalProcess-->UnmarshalErrorPath;\nNewProcess-->UnmarshalJSONProcess;\nNewProcess-->NewErrorPath;\nUnmarshalJSONProcess-->WrapProcess;\nUnmarshalJSONProcess-->UnmarshalJSONErrorPath;\nWrapProcess-->End;\nUnmarshalErrorPath-->End;\nNewErrorPath-->End;\nUnmarshalJSONErrorPath-->End;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:28:48 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:29:13 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 16\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in the 'New' function of the 'resource' package can lead to high CPU usage. Reflection is generally slower than direct access and can lead to performance issues, especially in a hot path.\n\n   **Solution**: Consider using a different approach that does not rely on reflection. If the use of reflection is unavoidable, ensure that it is used sparingly and not in performance-critical paths.\n\n\n2. **Severity**: 7/10\n\n   **Line Number**: 21\n\n   **Bug Type**: Memory\n\n   **Description**: The use of json.Unmarshal can lead to high memory usage, especially when unmarshalling large JSON payloads. This is because json.Unmarshal needs to create a copy of the data in memory.\n\n   **Solution**: Consider using a streaming JSON decoder such as json.Decoder if dealing with large JSON payloads. This allows you to process the JSON data as it is read, reducing memory usage.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 16,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The use of reflection in the 'New' function of the 'resource' package can lead to high CPU usage. Reflection is generally slower than direct access and can lead to performance issues, especially in a hot path.",
+                "solution": "Consider using a different approach that does not rely on reflection. If the use of reflection is unavoidable, ensure that it is used sparingly and not in performance-critical paths."
+              },
+              {
+                "lineNumber": 21,
+                "severity": 7,
+                "bugType": "Memory",
+                "description": "The use of json.Unmarshal can lead to high memory usage, especially when unmarshalling large JSON payloads. This is because json.Unmarshal needs to create a copy of the data in memory.",
+                "solution": "Consider using a streaming JSON decoder such as json.Decoder if dealing with large JSON payloads. This allows you to process the JSON data as it is read, reducing memory usage."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:30:30 PM PDT\n\n1. **Severity**: 8/10\n\n   **Line Number**: 12\n\n   **Bug Type**: GDPR\n\n   **Description**: The function Unmarshal does not validate the incoming data before processing it. This can lead to processing of personal data without the necessary checks and balances in place, which is a violation of GDPR.\n\n   **Solution**: Implement a validation function that checks the incoming data for any personal data and ensures that the necessary consent has been obtained before processing it. The validation function should also check that the data is being processed for the purpose it was collected for, in line with GDPR's purpose limitation principle.\n\n\n2. **Severity**: 7/10\n\n   **Line Number**: 15\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function Unmarshal processes data without checking if it's health-related or not, potentially leading to Protected Health Information (PHI) being processed in violation of HIPAA.\n\n   **Solution**: Implement a check to ensure that any PHI is processed in a compliant manner, such as encrypting the data before processing it and ensuring that only authorized individuals have access to it.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 15\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function Unmarshal processes data without checking if it's payment card data, potentially leading to sensitive cardholder data being processed in violation of PCI DSS.\n\n   **Solution**: Implement a check to ensure that any payment card data is processed in a compliant manner, such as encrypting the data before processing it and ensuring that only authorized individuals have access to it.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 12,
+                "severity": 8,
+                "bugType": "GDPR",
+                "description": "The function Unmarshal does not validate the incoming data before processing it. This can lead to processing of personal data without the necessary checks and balances in place, which is a violation of GDPR.",
+                "solution": "Implement a validation function that checks the incoming data for any personal data and ensures that the necessary consent has been obtained before processing it. The validation function should also check that the data is being processed for the purpose it was collected for, in line with GDPR's purpose limitation principle.",
+                "webLink": "https://gdpr-info.eu/art-5-gdpr/"
+              },
+              {
+                "lineNumber": 15,
+                "severity": 7,
+                "bugType": "HIPAA",
+                "description": "The function Unmarshal processes data without checking if it's health-related or not, potentially leading to Protected Health Information (PHI) being processed in violation of HIPAA.",
+                "solution": "Implement a check to ensure that any PHI is processed in a compliant manner, such as encrypting the data before processing it and ensuring that only authorized individuals have access to it.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              },
+              {
+                "lineNumber": 15,
+                "severity": 7,
+                "bugType": "PCI DSS",
+                "description": "The function Unmarshal processes data without checking if it's payment card data, potentially leading to sensitive cardholder data being processed in violation of PCI DSS.",
+                "solution": "Implement a check to ensure that any payment card data is processed in a compliant manner, such as encrypting the data before processing it and ensuring that only authorized individuals have access to it.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/why_security_matters"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package helpers\n\nimport (\n\t\"encoding/json\"\n\t\"reflect\"\n\n\t\"github.com/jt0/gomer/auth\"\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/resource\"\n)\n\nfunc Unmarshal(resourceType reflect.Type, subject auth.Subject, bytes []byte) (resource.Resource, gomerr.Gomerr) {\n\tnewResource, ge := resource.New(resourceType, subject)\n\tif ge != nil {\n\t\treturn nil, ge\n\t}\n\n\tif len(bytes) != 0 {\n\t\tif err := json.Unmarshal(bytes, &newResource); err != nil {\n\t\t\treturn nil, gomerr.Unmarshal(\"Resource\", bytes, resourceType).Wrap(err)\n\t\t}\n\t}\n\n\treturn newResource, nil\n}\n",

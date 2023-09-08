@@ -1,7 +1,98 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:09:47 PM PDT\n\nThis code is a Go package named `assert` that provides a function `JsonEqual` for comparing two JSON objects for content equality. The comparison is not based on byte equality, which means the order of elements in the JSON objects doesn't matter. \n\nHere's a detailed breakdown of the code:\n\n1. The package `assert` is declared at the beginning. This means that the functions defined in this file are part of the `assert` package.\n\n2. Multiple packages are imported for use in this file, including `encoding/json` for JSON processing, `fmt` for formatting output, `strconv` for conversions between string and other data types, and `testing` which provides support for automated testing of Go packages.\n\n3. The `JsonEqual` function is defined, which accepts a `testing.TB` interface (which can be a testing object from the `testing` package), two byte slices (`expected` and `actual`) containing JSON data, and an optional message (`msg`).\n\n4. Inside the `JsonEqual` function, `expected` and `actual` byte slices are unmarshalled (decoded) into `expectedMap` and `actualMap` variables respectively, which are maps with string keys and values of any type (`interface{}`). If there's an error in unmarshalling, the `Success` function is called with the testing object and the error, presumably to handle the error.\n\n5. A helper function `mapsEqual` is called with the two maps and an empty string. This function is not defined in the provided code, but based on the context, it likely compares the two maps for equality.\n\n6. If `mapsEqual` returns `false`, meaning the two JSON objects are not equal, a failure message is printed using `fmt.Println` and the test is terminated immediately using `tb.FailNow()`.\n\nThis code doesn't seem to use any specific algorithm, but it uses the JSON decoding feature of the `encoding/json` package to convert JSON data into Go data structures, and presumably compares these structures for equality.\n\nFor more information on Go testing and JSON handling, you can refer to the following resources:\n\n- [Go Testing package](https://pkg.go.dev/testing)\n- [Go JSON package](https://pkg.go.dev/encoding/json)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:11:10 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart \u0001 \nJsonEqual-->Success\nJsonEqual-->mapsEqual\nmapsEqual-->fmt.Println\nmapsEqual-->tb.FailNow \u0001 \nSuccess-->End\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:11:36 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:13:05 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 16\n\n   **Bug Type**: Memory\n\n   **Description**: Unmarshalling JSON into map[string]interface{} can be memory intensive, especially for large JSON objects. This is because map[string]interface{} does not have a fixed memory layout and can lead to higher memory usage.\n\n   **Solution**: Consider using a struct that matches the JSON structure to unmarshal the JSON. This can be more efficient as the memory layout is fixed. If the JSON structure is not known beforehand, consider using a streaming JSON parser that does not load the entire JSON into memory.\n\n\n2. **Severity**: 3/10\n\n   **Line Number**: 22\n\n   **Bug Type**: CPU\n\n   **Description**: The mapsEqual function is not shown, but if it is implemented using nested loops, it can lead to O(n^2) complexity which is not efficient for large data sets.\n\n   **Solution**: Consider using a single loop to iterate over the keys in the map and compare the values. This will have a complexity of O(n), which is more efficient.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 16,
+                "severity": 5,
+                "bugType": "Memory",
+                "description": "Unmarshalling JSON into map[string]interface{} can be memory intensive, especially for large JSON objects. This is because map[string]interface{} does not have a fixed memory layout and can lead to higher memory usage.",
+                "solution": "Consider using a struct that matches the JSON structure to unmarshal the JSON. This can be more efficient as the memory layout is fixed. If the JSON structure is not known beforehand, consider using a streaming JSON parser that does not load the entire JSON into memory."
+              },
+              {
+                "lineNumber": 22,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "The mapsEqual function is not shown, but if it is implemented using nested loops, it can lead to O(n^2) complexity which is not efficient for large data sets.",
+                "solution": "Consider using a single loop to iterate over the keys in the map and compare the values. This will have a complexity of O(n), which is more efficient."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:14:28 PM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 13\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The function `JsonEqual` unmarshals JSON data without validating the schema or content of the data. This could lead to processing of sensitive information in violation of GDPR, PCI DSS, or HIPAA if the JSON data contains such information.\n\n   **Solution**: Implement a data validation layer before unmarshalling the JSON data. This could involve checking the schema of the data and/or scanning the data for sensitive information and handling it appropriately.\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 19\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The function `JsonEqual` does not check if the data it is processing contains sensitive information before comparing the data. This could potentially violate GDPR, PCI DSS, or HIPAA if the data contains sensitive information.\n\n   **Solution**: Implement a check for sensitive information before comparing the data. If sensitive information is found, handle it appropriately.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 13,
+                "severity": 6,
+                "bugType": "Data Privacy",
+                "description": "The function `JsonEqual` unmarshals JSON data without validating the schema or content of the data. This could lead to processing of sensitive information in violation of GDPR, PCI DSS, or HIPAA if the JSON data contains such information.",
+                "solution": "Implement a data validation layer before unmarshalling the JSON data. This could involve checking the schema of the data and/or scanning the data for sensitive information and handling it appropriately."
+              },
+              {
+                "lineNumber": 19,
+                "severity": 5,
+                "bugType": "Data Privacy",
+                "description": "The function `JsonEqual` does not check if the data it is processing contains sensitive information before comparing the data. This could potentially violate GDPR, PCI DSS, or HIPAA if the data contains sensitive information.",
+                "solution": "Implement a check for sensitive information before comparing the data. If sensitive information is found, handle it appropriately."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package assert\n\nimport (\n\t\"encoding/json\"\n\t\"fmt\"\n\t\"strconv\"\n\t\"testing\"\n)\n\n// JsonEqual accepts two JSON-containing byte arrays and compares their content equality (rather than their byte\n// equality). This allows ordering to be ignored\nfunc JsonEqual(tb testing.TB, expected, actual []byte, msg ...interface{}) {\n\tvar expectedMap map[string]interface{}\n\terr := json.Unmarshal(expected, &expectedMap)\n\tSuccess(tb, err)\n\n\tvar actualMap map[string]interface{}\n\terr = json.Unmarshal(actual, &actualMap)\n\tSuccess(tb, err)\n\n\tif !mapsEqual(expectedMap, actualMap, \"\") {\n\t\tfmt.Println(append([]interface{}{\"Failed equality check\"}, msg...)...)\n\t\ttb.FailNow()\n\t}\n}\n",
@@ -13,7 +104,76 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:10:06 PM PDT\n\nUnfortunately, the provided code snippet is incomplete. It only contains a comment explaining the purpose of a function named `mapsEqual`. According to the comment, `mapsEqual` is a function that accepts two maps with string keys and values of any type (`map[string]interface{}`). The function walks through both maps to compare their keys and values. If there are any mismatches, it will return false, indicating that the maps are not equal.\n\nHowever, without the actual implementation of the function, it's not possible to provide a detailed explanation or analysis of the algorithms used. The implementation would detail how the function walks through the maps and how it compares the keys and values. \n\nAs for the architectural guidelines, since there are no special guidelines or constraints provided, we would typically expect this function to follow standard Go practices for map comparison. \n\nFor more information on working with maps in Go, you can refer to the following resources:\n\n- [Go Maps in Action](https://go.dev/blog/maps)\n- [A Tour of Go: Maps](https://tour.golang.org/moretypes/19)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:11:17 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle mapsEqual fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle reflect.DeepEqual fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->mapsEqual;\nmapsEqual-->reflect.DeepEqual;\nreflect.DeepEqual-->ExampleProcess;\nreflect.DeepEqual-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe control flow graph for the given code snippet is as follows:\n\n1. The control flow starts at the function `mapsEqual`.\n2. The function `mapsEqual` calls the function `reflect.DeepEqual` to compare the two maps.\n3. If the maps are equal, the control flow proceeds to the end of the function (`ExampleProcess` style).\n4. If the maps are not equal, the control flow proceeds to the end of the function through the error path (`ExampleErrorPath` style).\n\nNote: The external library function `reflect.DeepEqual` is shown as a distinct flow block."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:11:39 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:13:08 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:14:44 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 50\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The function 'mapsEqual' could potentially lead to GDPR, PCI DSS, and HIPAA compliance issues if it is used to compare sensitive data maps without proper encryption or anonymization. Comparing sensitive data in plain text could potentially lead to data breaches.\n\n   **Solution**: Ensure that any sensitive data passed into this function is properly encrypted or anonymized. If the data is health-related, ensure it is de-identified in accordance with HIPAA standards. If the data includes cardholder data, ensure it is encrypted in accordance with PCI DSS standards. If the data includes personal data of EU citizens, ensure it is processed in accordance with GDPR standards.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 25,
+                "severity": 7,
+                "bugType": "Data Privacy",
+                "description": "The function 'mapsEqual' could potentially lead to GDPR, PCI DSS, and HIPAA compliance issues if it is used to compare sensitive data maps without proper encryption or anonymization. Comparing sensitive data in plain text could potentially lead to data breaches.",
+                "solution": "Ensure that any sensitive data passed into this function is properly encrypted or anonymized. If the data is health-related, ensure it is de-identified in accordance with HIPAA standards. If the data includes cardholder data, ensure it is encrypted in accordance with PCI DSS standards. If the data includes personal data of EU citizens, ensure it is processed in accordance with GDPR standards."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\n// mapsEqual accepts two map[string]interface{}s, walking both looking at per-key and value equivalency. Any mismatches\n",
@@ -25,7 +185,151 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:10:56 PM PDT\n\nThe provided Go code is a function named `mapsEqual` that compares two maps of type `map[string]interface{}` for equality. It checks whether the keys and values in both maps are the same.\n\nHere's a detailed breakdown of the function:\n\n1. The function takes three parameters: `expected` and `actual` are the two maps to be compared, and `path` is a string that helps track the path to the current key when the function is called recursively.\n\n2. If either `expected` or `actual` is `nil`, the function checks if both are `nil`. If they are, the function returns `true` (since two `nil` maps can be considered equal). If only one of them is `nil`, a message is printed, and the function returns `false`.\n\n3. The function creates two variables `m1` and `m2` to hold the `expected` and `actual` maps, and a boolean `equal` set to `true`.\n\n4. The function checks the length of both maps. If they don't have the same number of elements, it prints a message, sets `equal` to `false`, and flips `m1` and `m2` if `actual` has more elements than `expected`.\n\n5. Then, the function iterates over the map `m1`. For each key-value pair, it checks if the key exists in `m2`. If not, it prints a message and continues to the next iteration.\n\n6. If the key exists in both maps, it checks the type of the value in `m1`.\n\n    - If the value is a map, it recursively calls `mapsEqual` with the nested maps and the updated path. The result of this call is combined with the current `equal` value using a logical AND operation.\n    \n    - If the value is a slice of `interface{}`, it checks if the lengths of the slices in both maps are equal. If not, it prints a message and sets `equal` to `false`. Then, it iterates over the slice from `m1` and compares each element with the corresponding element in `m2`. If the elements are maps, it recursively calls `mapsEqual`. If they are of different types, it prints a message and sets `equal` to `false`.\n    \n    - If the value is of any other type, it directly compares the values in `m1` and `m2`. If they are not equal, it prints a message and sets `equal` to `false`.\n\n7. Finally, the function returns the `equal` variable, which will be `true` if all keys and values in both maps are equal, and `false` otherwise.\n\nThis function uses recursion to handle nested maps and slices, and a form of the Depth-First Search algorithm to traverse the maps.\n\nFor more information about maps in Go, you can refer to the following resources:\n\n- [A Tour of Go: Maps](https://tour.golang.org/moretypes/19)\n- [Go by Example: Maps](https://gobyexample.com/maps)\n- [Effective Go: Maps](https://golang.org/doc/effective_go#maps)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:11:24 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->A;\nA-->B;\nB-->C;\nC-->D;\nD-->E;\nE-->F;\nF-->G;\nG-->H;\nH-->I;\nI-->J;\nJ-->K;\nK-->L;\nL-->M;\nM-->N;\nN-->O;\nO-->P;\nP-->Q;\nQ-->R;\nR-->S;\nS-->T;\nT-->U;\nU-->V;\nV-->W;\nW-->X;\nX-->Y;\nY-->Z;\nZ-->End;\n```\n\nIn the above control flow graph, the primary path is represented by the colored flow blocks, while the non-error paths are represented by the default non-colored flow blocks. The error path is represented by the red flow block.\n\nPlease note that this control flow graph is generated based on the provided code snippet. If there are any missing or incorrect control flow paths, please let me know."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:11:57 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 79\n\n   **Bug Type**: Data Validation\n\n   **Description**: The code does not verify the type of 'e2' before attempting to cast it to a map[string]interface{}. This could potentially lead to a runtime panic if 'e2' is not of the expected type, compromising the stability of the application.\n\n   **Solution**: Always validate the type of a variable before attempting a type assertion. This can be done using the 'comma, ok' idiom provided by Go. For example: 'e2, ok := e2.(map[string]interface{}); if !ok { /* handle error */ }'. Reference: https://go.dev/play/p/3zHvNntnQvl\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 66\n\n   **Bug Type**: Information Disclosure\n\n   **Description**: The code prints sensitive information to the standard output. If the map contains sensitive data, this could potentially be exposed to unauthorized users or systems.\n\n   **Solution**: Avoid logging sensitive information. If it is necessary for debugging purposes, make sure to sanitize the data or use a secure logging mechanism that restricts who can view the logs. Reference: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html\n\n\n3. **Severity**: 5/10\n\n   **Line Number**: 89\n\n   **Bug Type**: Information Disclosure\n\n   **Description**: The code prints the values of map keys to the standard output when they are not equal. If the map contains sensitive data, this could potentially be exposed to unauthorized users or systems.\n\n   **Solution**: Avoid logging sensitive information. If it is necessary for debugging purposes, make sure to sanitize the data or use a secure logging mechanism that restricts who can view the logs. Reference: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": [
+              {
+                "lineNumber": 52,
+                "severity": 7,
+                "bugType": "Data Validation",
+                "description": "The code does not verify the type of 'e2' before attempting to cast it to a map[string]interface{}. This could potentially lead to a runtime panic if 'e2' is not of the expected type, compromising the stability of the application.",
+                "solution": "Always validate the type of a variable before attempting a type assertion. This can be done using the 'comma, ok' idiom provided by Go. For example: 'e2, ok := e2.(map[string]interface{}); if !ok { /* handle error */ }'. Reference: https://go.dev/play/p/3zHvNntnQvl"
+              },
+              {
+                "lineNumber": 39,
+                "severity": 5,
+                "bugType": "Information Disclosure",
+                "description": "The code prints sensitive information to the standard output. If the map contains sensitive data, this could potentially be exposed to unauthorized users or systems.",
+                "solution": "Avoid logging sensitive information. If it is necessary for debugging purposes, make sure to sanitize the data or use a secure logging mechanism that restricts who can view the logs. Reference: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html"
+              },
+              {
+                "lineNumber": 62,
+                "severity": 5,
+                "bugType": "Information Disclosure",
+                "description": "The code prints the values of map keys to the standard output when they are not equal. If the map contains sensitive data, this could potentially be exposed to unauthorized users or systems.",
+                "solution": "Avoid logging sensitive information. If it is necessary for debugging purposes, make sure to sanitize the data or use a secure logging mechanism that restricts who can view the logs. Reference: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:13:25 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 66\n\n   **Bug Type**: CPU\n\n   **Description**: The function `mapsEqual` is recursively called which might lead to high CPU utilization especially for deeply nested or large maps.\n\n   **Solution**: Consider using iterative approach with a stack or queue to avoid deep recursion. If the map structure is known and does not vary, consider using a more efficient method for comparison.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 66\n\n   **Bug Type**: Memory\n\n   **Description**: Deep recursion in `mapsEqual` can lead to high memory usage due to stack overflow, especially for deeply nested or large maps.\n\n   **Solution**: Consider using iterative approach with a stack or queue to avoid deep recursion. If the map structure is known and does not vary, consider using a more efficient method for comparison.\n\n\n3. **Severity**: 6/10\n\n   **Line Number**: 71\n\n   **Bug Type**: CPU\n\n   **Description**: The function `mapsEqual` is called inside a loop, which can lead to high CPU utilization for large arrays.\n\n   **Solution**: Consider using a more efficient method for comparison if the array structure is known and does not vary. Also, consider breaking the loop as soon as a mismatch is found.\n\n\n4. **Severity**: 5/10\n\n   **Line Number**: 71\n\n   **Bug Type**: Memory\n\n   **Description**: The function `mapsEqual` is called inside a loop, which can lead to high memory usage due to the creation of new map instances for each recursive call.\n\n   **Solution**: Consider using a more efficient method for comparison if the array structure is known and does not vary. Also, consider breaking the loop as soon as a mismatch is found.\n\n\n5. **Severity**: 3/10\n\n   **Line Number**: 54\n\n   **Bug Type**: CPU\n\n   **Description**: The function uses `fmt.Println` and `fmt.Printf` for logging which is slower compared to other logging libraries.\n\n   **Solution**: Consider using a more efficient logging library such as `zap` or `zerolog` which are designed for high performance applications.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 39,
+                "severity": 7,
+                "bugType": "CPU",
+                "description": "The function `mapsEqual` is recursively called which might lead to high CPU utilization especially for deeply nested or large maps.",
+                "solution": "Consider using iterative approach with a stack or queue to avoid deep recursion. If the map structure is known and does not vary, consider using a more efficient method for comparison."
+              },
+              {
+                "lineNumber": 39,
+                "severity": 6,
+                "bugType": "Memory",
+                "description": "Deep recursion in `mapsEqual` can lead to high memory usage due to stack overflow, especially for deeply nested or large maps.",
+                "solution": "Consider using iterative approach with a stack or queue to avoid deep recursion. If the map structure is known and does not vary, consider using a more efficient method for comparison."
+              },
+              {
+                "lineNumber": 44,
+                "severity": 6,
+                "bugType": "CPU",
+                "description": "The function `mapsEqual` is called inside a loop, which can lead to high CPU utilization for large arrays.",
+                "solution": "Consider using a more efficient method for comparison if the array structure is known and does not vary. Also, consider breaking the loop as soon as a mismatch is found."
+              },
+              {
+                "lineNumber": 44,
+                "severity": 5,
+                "bugType": "Memory",
+                "description": "The function `mapsEqual` is called inside a loop, which can lead to high memory usage due to the creation of new map instances for each recursive call.",
+                "solution": "Consider using a more efficient method for comparison if the array structure is known and does not vary. Also, consider breaking the loop as soon as a mismatch is found."
+              },
+              {
+                "lineNumber": 27,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "The function uses `fmt.Println` and `fmt.Printf` for logging which is slower compared to other logging libraries.",
+                "solution": "Consider using a more efficient logging library such as `zap` or `zerolog` which are designed for high performance applications."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:15:01 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 54\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'mapsEqual' compares two maps, which could contain personal data. However, it does not check if the data is personal or not, which could lead to a violation of GDPR principles (lawfulness, fairness, and transparency).\n\n   **Solution**: Implement a mechanism to classify data as personal or not, and handle them accordingly. Personal data should be processed in a lawful, fair, and transparent manner respecting the data subject's rights.\n\n\n2. **Severity**: 8/10\n\n   **Line Number**: 54\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function 'mapsEqual' could potentially process Protected Health Information (PHI) without any checks for encryption or other security measures, which is a requirement of HIPAA.\n\n   **Solution**: Ensure that any PHI is processed in a secure manner, including using encryption and other security measures. PHI should be identified and handled in a way that complies with HIPAA regulations.\n\n\n3. **Severity**: 5/10\n\n   **Line Number**: 54\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function 'mapsEqual' could potentially process cardholder data without any checks for encryption or other security measures, which is a requirement of PCI DSS.\n\n   **Solution**: Ensure that any cardholder data is processed in a secure manner, including using encryption and other security measures. Cardholder data should be identified and handled in a way that complies with PCI DSS regulations.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 27,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The function 'mapsEqual' compares two maps, which could contain personal data. However, it does not check if the data is personal or not, which could lead to a violation of GDPR principles (lawfulness, fairness, and transparency).",
+                "solution": "Implement a mechanism to classify data as personal or not, and handle them accordingly. Personal data should be processed in a lawful, fair, and transparent manner respecting the data subject's rights.",
+                "webLink": "https://gdpr-info.eu/"
+              },
+              {
+                "lineNumber": 27,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "The function 'mapsEqual' could potentially process Protected Health Information (PHI) without any checks for encryption or other security measures, which is a requirement of HIPAA.",
+                "solution": "Ensure that any PHI is processed in a secure manner, including using encryption and other security measures. PHI should be identified and handled in a way that complies with HIPAA regulations.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              },
+              {
+                "lineNumber": 27,
+                "severity": 5,
+                "bugType": "PCI DSS",
+                "description": "The function 'mapsEqual' could potentially process cardholder data without any checks for encryption or other security measures, which is a requirement of PCI DSS.",
+                "solution": "Ensure that any cardholder data is processed in a secure manner, including using encryption and other security measures. Cardholder data should be identified and handled in a way that complies with PCI DSS regulations.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "2",
       "value": "// will be printed to standard out and overall inequality will result in a\nfunc mapsEqual(expected, actual map[string]interface{}, path string) bool {\n\tif expected == nil || actual == nil {\n\t\tif expected == nil && actual == nil {\n\t\t\treturn true\n\t\t}\n\t\tfmt.Println(\"\\tmap and nil cannot be compared\")\n\t\treturn false\n\t}\n\n\tm1 := expected\n\tm2 := actual\n\tequal := true\n\tif len(expected) > len(actual) {\n\t\tfmt.Printf(\"\\t'expected' has more attributes than 'actual' (%d vs %d)\\n\", len(m1), len(m2))\n\t\tequal = false\n\t} else if len(expected) < len(actual) {\n\t\tfmt.Printf(\"\\t'actual' has more attributes than 'expected' (%d vs %d)\\n\", len(m2), len(m1))\n\t\tequal = false\n\t\tm1, m2 = m2, m1 // flip maps so we can emit the missing key\n\t}\n\n\tfor k, v1 := range m1 {\n\t\tv2, ok := m2[k]\n\t\tif !ok {\n\t\t\tprintln(\"\\tkey missing:\", path+k)\n\t\t\tcontinue\n\t\t}\n\t\tswitch a1 := v1.(type) {\n\t\tcase map[string]interface{}:\n\t\t\tequal = equal && mapsEqual(v1.(map[string]interface{}), v2.(map[string]interface{}), path+k+\".\")\n\t\tcase []interface{}:\n\t\t\ta2 := v2.([]interface{})\n\t\t\tif len(a1) != len(a2) {\n\t\t\t\tfmt.Printf(\"\\tlen(%s) are not equal (%d vs %d)\", path+k, len(a1), len(a2))\n\t\t\t\tequal = false\n\t\t\t}\n\t\t\tfor i, _ := range a1 {\n\t\t\t\tif i >= len(a2) {\n\t\t\t\t\tbreak\n\t\t\t\t}\n\t\t\t\te2 := a2[i]\n\t\t\t\tswitch e1 := a1[i].(type) {\n\t\t\t\tcase map[string]interface{}:\n\t\t\t\t\t// TODO: verify e2's type\n\t\t\t\t\tequal = equal && mapsEqual(e1, e2.(map[string]interface{}), path+k+\"[\"+strconv.Itoa(i)+\"].\")\n\t\t\t\tdefault:\n\t\t\t\t\tif e1 != e2 {\n\t\t\t\t\t\tfmt.Printf(\"\\tkey %s[%d]'s values not equal: %v != %v\\n\", path+k, i, e1, e2)\n\t\t\t\t\t\tequal = false\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\tdefault:\n\t\t\tif v1 != v2 {\n\t\t\t\tfmt.Printf(\"\\tkey %s's values not equal: %v != %v\\n\", path+k, v1, v2)\n\t\t\t\tequal = false\n\t\t\t}\n\t\t}\n\t}\n\n\treturn equal\n}\n",

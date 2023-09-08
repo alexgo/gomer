@@ -1,7 +1,83 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:33:07 PM PDT\n\nThis code defines a Go package named `dataerr`. The purpose of this package is to handle specialized errors related to data persistence. \n\nThe `import` statement imports a package named `gomerr` from the GitHub repository `github.com/jt0/gomer`. This package is a library for creating and managing errors in Go. It allows for rich error types and context, and is designed to be used with Go's built-in error handling mechanisms.\n\nThe code then defines a struct named `PersistableNotFoundError`. This struct is a type of error that can be used when a persistable data object is not found. It embeds the `Gomerr` struct from the `gomerr` package, inheriting its methods and properties, and adds two additional fields: `TypeName` and `Key`.\n\n- `TypeName` is a string that presumably represents the type of the persistable data object that was not found.\n- `Key` is an empty interface, meaning it can hold values of any type. This is likely the key used to look up the persistable data object.\n\nBy defining this custom error type, the software can provide more specific error information when a persistable data object is not found, and can handle this specific error type in a different way from other errors if necessary.\n\nThis code follows the Go best practice of defining custom error types for specific error conditions. It also uses composition by embedding the `Gomerr` type in the `PersistableNotFoundError` type, another common Go practice.\n\nFor more information on error handling in Go, you can refer to the Go blog post on the topic: [https://blog.golang.org/go1.13-errors](https://blog.golang.org/go1.13-errors). \n\nFor more information on the `gomerr` package, you can refer to its GitHub page: [https://github.com/jt0/gomer](https://github.com/jt0/gomer)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:33:57 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:34:14 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:34:25 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:35:32 PM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 1\n\n   **Bug Type**: GDPR\n\n   **Description**: The code does not handle data in a manner that ensures that Personal Data is not stored longer than necessary. The 'PersistableNotFoundError' struct could potentially store personal data in the 'Key' field, which may be kept indefinitely.\n\n   **Solution**: Ensure that personal data is not stored longer than necessary for the processing of the personal data. Implement a data retention policy that specifies the duration for which data will be stored and when it will be deleted or anonymized. This should be done in accordance with Article 5(1)(e) of the GDPR.\n\n\n2. **Severity**: 2/10\n\n   **Line Number**: 1\n\n   **Bug Type**: HIPAA\n\n   **Description**: The 'PersistableNotFoundError' struct could potentially store Protected Health Information (PHI) in the 'Key' field, which may be stored indefinitely. This could be a violation of the Minimum Necessary Rule.\n\n   **Solution**: Ensure that only the minimum necessary amount of PHI is used, disclosed, or requested for certain purposes. Implement a data retention policy that specifies the duration for which PHI will be stored and when it will be deleted or anonymized. This should be done in accordance with 45 CFR § 164.502(b) of the HIPAA Privacy Rule.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 1,
+                "severity": 3,
+                "bugType": "GDPR",
+                "description": "The code does not handle data in a manner that ensures that Personal Data is not stored longer than necessary. The 'PersistableNotFoundError' struct could potentially store personal data in the 'Key' field, which may be kept indefinitely.",
+                "solution": "Ensure that personal data is not stored longer than necessary for the processing of the personal data. Implement a data retention policy that specifies the duration for which data will be stored and when it will be deleted or anonymized. This should be done in accordance with Article 5(1)(e) of the GDPR."
+              },
+              {
+                "lineNumber": 1,
+                "severity": 2,
+                "bugType": "HIPAA",
+                "description": "The 'PersistableNotFoundError' struct could potentially store Protected Health Information (PHI) in the 'Key' field, which may be stored indefinitely. This could be a violation of the Minimum Necessary Rule.",
+                "solution": "Ensure that only the minimum necessary amount of PHI is used, disclosed, or requested for certain purposes. Implement a data retention policy that specifies the duration for which PHI will be stored and when it will be deleted or anonymized. This should be done in accordance with 45 CFR § 164.502(b) of the HIPAA Privacy Rule."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package dataerr\n\nimport (\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype PersistableNotFoundError struct {\n\tgomerr.Gomerr\n\tTypeName string\n\tKey      interface{}\n}\n",
@@ -13,7 +89,84 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:33:43 PM PDT\n\nThe function `PersistableNotFound` is a factory function that creates and returns a new instance of `PersistableNotFoundError`. This function is written in the Go programming language.\n\nHere is a detailed breakdown of the function:\n\n- The function `PersistableNotFound` takes two parameters: a string `typeName` and a generic `key` of type `interface{}`. The `interface{}` type in Go is a way to allow a function to accept any type of argument.\n\n- Inside the function, it calls `gomerr.Build` and passes it three parameters: a new instance of `PersistableNotFoundError`, `typeName`, and `key`. `gomerr` is likely a package in the project that deals with error handling, and `Build` is a function within that package. The `Build` function likely constructs a new error object with the provided parameters.\n\n- The `Build` function returns an instance of `gomerr.Error`, which is then type-asserted to `*PersistableNotFoundError` using the `.(*PersistableNotFoundError)` syntax. This is necessary because `Build` returns a generic `gomerr.Error`, but we want a specific `PersistableNotFoundError`.\n\n- Finally, the new `PersistableNotFoundError` instance is returned.\n\nThe function is a part of error handling in the software. The `PersistableNotFoundError` is likely used when a persistable object (an object that can be saved to a database) is not found. The `typeName` parameter is likely the name of the type of the persistable object, and `key` is likely the identifier used to search for the persistable object.\n\nThe algorithm used here is straightforward: create a new `PersistableNotFoundError`, populate it with the given details, and return it.\n\nAs for architectural guidelines, this function seems to follow standard Go error handling practices. It uses a custom error type (`PersistableNotFoundError`) to provide more context about the error, which can be useful for debugging and logging.\n\nFor more information on error handling in Go, you can refer to the official Go blog post on the topic: [Error handling and Go](https://blog.golang.org/error-handling-and-go)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:34:02 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:34:17 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:34:34 PM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 24\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in the `gomerr.Build` function can be computationally expensive, particularly if this function is called frequently.\n\n   **Solution**: Consider using a more direct approach to error handling, such as returning a new instance of the error directly, without using reflection. This could improve CPU performance.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 13,
+                "severity": 6,
+                "bugType": "CPU",
+                "description": "The use of reflection in the `gomerr.Build` function can be computationally expensive, particularly if this function is called frequently.",
+                "solution": "Consider using a more direct approach to error handling, such as returning a new instance of the error directly, without using reflection. This could improve CPU performance."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:35:45 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 24\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'PersistableNotFound' logs the key of the not found persistable. If the key contains personally identifiable information (PII), this could lead to a violation of the General Data Protection Regulation (GDPR) as it might be considered as unnecessary processing of personal data.\n\n   **Solution**: Ensure that the key does not contain PII, or if it does, that it is anonymized or pseudonymized before it is logged. Consider using a hashing function to anonymize the key.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 13,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The function 'PersistableNotFound' logs the key of the not found persistable. If the key contains personally identifiable information (PII), this could lead to a violation of the General Data Protection Regulation (GDPR) as it might be considered as unnecessary processing of personal data.",
+                "solution": "Ensure that the key does not contain PII, or if it does, that it is anonymized or pseudonymized before it is logged. Consider using a hashing function to anonymize the key."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\nfunc PersistableNotFound(typeName string, key interface{}) *PersistableNotFoundError {\n\treturn gomerr.Build(new(PersistableNotFoundError), typeName, key).(*PersistableNotFoundError)\n}\n",

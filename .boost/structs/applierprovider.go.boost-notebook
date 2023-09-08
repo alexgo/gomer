@@ -1,7 +1,115 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:01:04 PM PDT\n\nThis code is written in Go and is part of a package named `structs`. It imports several packages including `fmt`, `reflect`, `regexp`, `strings`, and a custom package `github.com/jt0/gomer/gomerr`.\n\nThe function `ExpressionApplierProvider` is declared with three parameters: an unnamed parameter of type `reflect.Type`, `sf` of type `reflect.StructField`, and `directive` of type `string`. The function returns two values: an `Applier` interface and a `Gomerr` interface from the `gomerr` package.\n\nHere is a step-by-step breakdown of the function:\n\n1. The function first checks if the `directive` is an empty string. If it is, the function immediately returns `nil` for both the `Applier` and `Gomerr` interfaces.\n\n2. It then checks if the second character of the `directive` is a dot (`.`). If it is, it returns a `StructApplier` with the `directive` as a parameter, and `nil` for the `Gomerr`.\n\n3. If the second character of the `directive` is not a dot, it calls the function `GetToolFunction` with the `directive` as a parameter. This function seems to be responsible for retrieving a tool function based on the `directive`.\n\n4. If `GetToolFunction` returns `nil`, it means the requested tool function was not found. In this case, the function returns `nil` for the `Applier` and a `Gomerr` error indicating that the field function was not found.\n\n5. If `GetToolFunction` does return a function, `ExpressionApplierProvider` returns this function as the `Applier` and `nil` for the `Gomerr`.\n\nThe function uses reflection, which is a powerful feature in Go that allows a program to inspect and manipulate its own structure and behavior at runtime. Reflection is used here to dynamically apply validation or other operations to struct fields based on the `directive` provided.\n\nFor more information about reflection in Go, you can refer to this article: [The Laws of Reflection](https://blog.golang.org/laws-of-reflection) from the official Go blog."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:06 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExamplErrorPath-->End;\n```\n\nNO CONTROL FLOW FOUND"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:17 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:10:41 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 19\n\n   **Bug Type**: CPU\n\n   **Description**: The GetToolFunction function is called without any checks. If the directive is not found, it will result in wasted CPU cycles.\n\n   **Solution**: Before calling the GetToolFunction, add a check to ensure the directive exists. This will prevent unnecessary function calls and improve CPU performance.\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 13\n\n   **Bug Type**: CPU\n\n   **Description**: The directive[1] == '.' operation is used without checking the length of the directive. If the directive is empty or has only one character, it will cause an out-of-range panic.\n\n   **Solution**: Before accessing the directive's second character, ensure that the length of the directive is at least 2. This will prevent potential out-of-range panics and improve stability.\n\n\n3. **Severity**: 4/10\n\n   **Line Number**: 19\n\n   **Bug Type**: Memory\n\n   **Description**: Repeated string concatenation using the '+' operator in Go can lead to inefficient memory usage as it can potentially create many temporary strings.\n\n   **Solution**: Use the fmt.Sprintf function or strings.Builder to concatenate strings in a more memory-efficient way.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 19,
+                "severity": 7,
+                "bugType": "CPU",
+                "description": "The GetToolFunction function is called without any checks. If the directive is not found, it will result in wasted CPU cycles.",
+                "solution": "Before calling the GetToolFunction, add a check to ensure the directive exists. This will prevent unnecessary function calls and improve CPU performance."
+              },
+              {
+                "lineNumber": 13,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The directive[1] == '.' operation is used without checking the length of the directive. If the directive is empty or has only one character, it will cause an out-of-range panic.",
+                "solution": "Before accessing the directive's second character, ensure that the length of the directive is at least 2. This will prevent potential out-of-range panics and improve stability."
+              },
+              {
+                "lineNumber": 19,
+                "severity": 4,
+                "bugType": "Memory",
+                "description": "Repeated string concatenation using the '+' operator in Go can lead to inefficient memory usage as it can potentially create many temporary strings.",
+                "solution": "Use the fmt.Sprintf function or strings.Builder to concatenate strings in a more memory-efficient way."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:14:37 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 22\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'GetToolFunction' is potentially non-compliant with GDPR as it does not check for user consent before accessing and potentially manipulating user data.\n\n   **Solution**: Ensure that user consent is obtained before accessing their data. This can be done by implementing a consent mechanism in the 'GetToolFunction'.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 22\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function 'GetToolFunction' does not appear to implement any form of encryption or secure data handling, which is a requirement of PCI DSS.\n\n   **Solution**: Implement secure data handling and encryption within the 'GetToolFunction', particularly if handling sensitive cardholder data.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 22\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function 'GetToolFunction' does not appear to implement secure data handling, encryption, or access controls, which are requirements of HIPAA.\n\n   **Solution**: Implement secure data handling, encryption, and access controls within the 'GetToolFunction', particularly if handling protected health information (PHI).\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 22,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The function 'GetToolFunction' is potentially non-compliant with GDPR as it does not check for user consent before accessing and potentially manipulating user data.",
+                "solution": "Ensure that user consent is obtained before accessing their data. This can be done by implementing a consent mechanism in the 'GetToolFunction'.",
+                "solutionLink": "https://gdpr-info.eu/art-7-gdpr/"
+              },
+              {
+                "lineNumber": 22,
+                "severity": 6,
+                "bugType": "PCI DSS",
+                "description": "The function 'GetToolFunction' does not appear to implement any form of encryption or secure data handling, which is a requirement of PCI DSS.",
+                "solution": "Implement secure data handling and encryption within the 'GetToolFunction', particularly if handling sensitive cardholder data.",
+                "solutionLink": "https://www.pcisecuritystandards.org/pci_security/maintaining_payment_security"
+              },
+              {
+                "lineNumber": 22,
+                "severity": 7,
+                "bugType": "HIPAA",
+                "description": "The function 'GetToolFunction' does not appear to implement secure data handling, encryption, or access controls, which are requirements of HIPAA.",
+                "solution": "Implement secure data handling, encryption, and access controls within the 'GetToolFunction', particularly if handling protected health information (PHI).",
+                "solutionLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package structs\n\nimport (\n\t\"fmt\"\n\t\"reflect\"\n\t\"regexp\"\n\t\"strings\"\n\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\nfunc ExpressionApplierProvider(_ reflect.Type, sf reflect.StructField, directive string) (Applier, gomerr.Gomerr) {\n\tif directive == \"\" {\n\t\treturn nil, nil\n\t}\n\n\t// special chars: $, [ (if map or slice/array)\n\n\t// if directive[0] != '$' {\n\t//\n\t// }\n\n\tif directive[1] == '.' {\n\t\treturn StructApplier{directive}, nil\n\t} else {\n\t\ttf := GetToolFunction(directive) // include the '$'\n\t\tif tf == nil {\n\t\t\treturn nil, gomerr.Configuration(\"Field function not found: \" + directive)\n\t\t}\n\t\treturn tf, nil\n\t}\n}\n",
@@ -13,7 +121,113 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:01:40 PM PDT\n\nThe code defines a function named `ScopeAlias` in Go programming language. The function is designed to allow the caller to specify an alternative value to use when defining scoped configuration from the scope used during the application of a tool. \n\nThe function accepts two parameters: `alias` and `scope`, both of which are strings. The function doesn't return any value.\n\nHere is the detailed explanation of the code:\n\n1. The function first checks if the `scope` variable is an empty string. If it is, the function deletes the `alias` from the `scopeAliases` map and returns immediately. This suggests that `scopeAliases` is a map where the keys are aliases and the values are scopes. The `delete` function is a built-in function in Go that removes the entry from the map for the given key.\n\n2. If the `scope` is not an empty string, the function checks if the `alias` is already present in the `scopeAliases` map and if it is, whether its current value is different from the new `scope` value. If these conditions are met, the function panics with a formatted error message. This is done using the `panic` function, which is a built-in function in Go that stops the ordinary flow of a program and begins panicking. \n\n3. If the `alias` is not present in the `scopeAliases` map or its current value is the same as the new `scope` value, the function sets the `alias` in the `scopeAliases` map to the new `scope` value.\n\nThe algorithm used here is quite straightforward - it's basically a map manipulation algorithm, where the map is used as a dictionary to store key-value pairs and the function provides a way to add or remove entries from it.\n\nThis function is part of a larger system, and its purpose is to manage aliasing of scopes. This could be part of a configuration management system, where scopes are used to define different configuration contexts and aliases can be used to provide alternative names for these contexts.\n\nFor more information on Go maps and built-in functions, you can refer to the following resources:\n\n- [Go Maps in Action](https://go.dev/blog/maps)\n- [Built-in functions in Go](https://golang.org/pkg/builtin/)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:10 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe code snippet provided does not have any control flow."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:34 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 69\n\n   **Bug Type**: Improper Error Handling\n\n   **Description**: The code uses panic() to handle an error condition. This is not a recommended practice as it abruptly terminates the program, which can lead to denial of service if the error is triggered by an attacker. It also discloses information about the system's state, which can aid an attacker in further exploitation.\n\n   **Solution**: Replace panic() with proper error handling. Return an error to the caller, and let the caller decide how to handle the error. This can be done using Go's built-in error handling functionality. More information can be found here: https://blog.golang.org/error-handling-and-go\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": [
+              {
+                "lineNumber": 37,
+                "severity": 5,
+                "bugType": "Improper Error Handling",
+                "description": "The code uses panic() to handle an error condition. This is not a recommended practice as it abruptly terminates the program, which can lead to denial of service if the error is triggered by an attacker. It also discloses information about the system's state, which can aid an attacker in further exploitation.",
+                "solution": "Replace panic() with proper error handling. Return an error to the caller, and let the caller decide how to handle the error. This can be done using Go's built-in error handling functionality. More information can be found here: https://blog.golang.org/error-handling-and-go"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:11:02 PM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 69\n\n   **Bug Type**: CPU\n\n   **Description**: The use of panic() can be costly in terms of CPU usage as it involves stack unwinding.\n\n   **Solution**: Avoid using panic for normal error handling. Use error returns instead.\n\n\n2. **Severity**: 3/10\n\n   **Line Number**: 69\n\n   **Bug Type**: Memory\n\n   **Description**: The use of fmt.Sprintf() can be memory-intensive, especially if the strings involved are large.\n\n   **Solution**: Consider using string concatenation or a buffer if performance is a concern and the strings are large.\n\n\n3. **Severity**: 1/10\n\n   **Line Number**: 71\n\n   **Bug Type**: Memory\n\n   **Description**: Assigning values to a map can increase memory usage.\n\n   **Solution**: Ensure that the map is not unnecessarily large and that values are removed when no longer needed.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 37,
+                "severity": 2,
+                "bugType": "CPU",
+                "description": "The use of panic() can be costly in terms of CPU usage as it involves stack unwinding.",
+                "solution": "Avoid using panic for normal error handling. Use error returns instead."
+              },
+              {
+                "lineNumber": 37,
+                "severity": 3,
+                "bugType": "Memory",
+                "description": "The use of fmt.Sprintf() can be memory-intensive, especially if the strings involved are large.",
+                "solution": "Consider using string concatenation or a buffer if performance is a concern and the strings are large."
+              },
+              {
+                "lineNumber": 39,
+                "severity": 1,
+                "bugType": "Memory",
+                "description": "Assigning values to a map can increase memory usage.",
+                "solution": "Ensure that the map is not unnecessarily large and that values are removed when no longer needed."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:15:01 PM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 68\n\n   **Bug Type**: Data Compliance\n\n   **Description**: The function `ScopeAlias` does not perform any input validation on the `alias` and `scope` parameters. This could potentially lead to security vulnerabilities, such as SQL Injection or Cross-Site Scripting (XSS) attacks, which are violations of GDPR, PCI DSS, and HIPAA.\n\n   **Solution**: Implement input validation for the `alias` and `scope` parameters to ensure they are in the expected format and do not contain malicious code. Use a library or framework that provides built-in functions for input validation.\n\n\n2. **Severity**: 4/10\n\n   **Line Number**: 71\n\n   **Bug Type**: Data Compliance\n\n   **Description**: The function `ScopeAlias` uses a panic in case of an error. This could lead to the application crashing and potentially exposing sensitive information in error messages, which would be a violation of GDPR, PCI DSS, and HIPAA.\n\n   **Solution**: Replace the panic with proper error handling. Return an error to the caller of the function and handle it appropriately, ensuring that no sensitive information is exposed in error messages.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 36,
+                "severity": 2,
+                "bugType": "Data Compliance",
+                "description": "The function `ScopeAlias` does not perform any input validation on the `alias` and `scope` parameters. This could potentially lead to security vulnerabilities, such as SQL Injection or Cross-Site Scripting (XSS) attacks, which are violations of GDPR, PCI DSS, and HIPAA.",
+                "solution": "Implement input validation for the `alias` and `scope` parameters to ensure they are in the expected format and do not contain malicious code. Use a library or framework that provides built-in functions for input validation."
+              },
+              {
+                "lineNumber": 39,
+                "severity": 4,
+                "bugType": "Data Compliance",
+                "description": "The function `ScopeAlias` uses a panic in case of an error. This could lead to the application crashing and potentially exposing sensitive information in error messages, which would be a violation of GDPR, PCI DSS, and HIPAA.",
+                "solution": "Replace the panic with proper error handling. Return an error to the caller of the function and handle it appropriately, ensuring that no sensitive information is exposed in error messages."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\n// ScopeAlias allows the caller to specify an alternative value to use when defining scoped configuration from the\n// scope used during the application of a tool. Aliases need to be defined before PrepareTool() is called.\nfunc ScopeAlias(alias, scope string) {\n\tif scope == \"\" {\n\t\tdelete(scopeAliases, alias)\n\t\treturn\n\t}\n\n\tif current, ok := scopeAliases[alias]; ok && current != scope {\n\t\tpanic(fmt.Sprintf(\"%s already aliased tp %s. First delete the existing alias to %s first.\", alias, current, scope))\n\t}\n\n\tscopeAliases[alias] = scope\n}\n",
@@ -25,7 +239,68 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:02:08 PM PDT\n\nThe provided code snippet is a function written in Go, a statically typed, compiled language developed by Google. The function is named `ScopeAliases` and it accepts a single argument: `aliasToScope`, which is a map where both keys and values are strings.\n\nThe function iterates over the `aliasToScope` map using a `for` loop. In each iteration, it extracts the key-value pair from the map. The key is referred to as `alias` and the value is referred to as `scope`. For each of these key-value pairs, it calls another function named `ScopeAlias` with `alias` and `scope` as arguments. \n\nThe `ScopeAlias` function is not defined in the provided code, but based on its usage, it can be inferred that it's a function that takes two string arguments and does something with them, possibly associating the alias with the scope in some way.\n\nThe algorithm employed in this code is a simple iteration over a map data structure. This is a common pattern in many programming languages and doesn't involve any complex algorithms.\n\nThe code is straightforward and seems to be consistent with general Go programming practices. It doesn't appear to conflict with any standard architectural guidelines. However, without additional context or information about the `ScopeAlias` function and the overall project, it's hard to provide a more detailed analysis.\n\nFor more information about Go maps and for loops, you can refer to the following resources:\n\n- [Go Maps in Action](https://go.dev/blog/maps)\n- [For statement in Go](https://golang.org/ref/spec#For_statements)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:14 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->ExampleProcess;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:37 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:11:06 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:15:05 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
       "languageId": "go",
       "id": "2",
       "value": "\nfunc ScopeAliases(aliasToScope map[string]string) {\n\tfor alias, scope := range aliasToScope {\n\t\tScopeAlias(alias, scope)\n\t}\n}\n",
@@ -37,7 +312,122 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:02:51 PM PDT\n\nThe provided code is written in Go language and it appears to be part of a larger system responsible for applying constraints or directives based on certain scopes. \n\nIt uses regular expressions and reflection, which is a mechanism that allows a program to inspect and manipulate its own structure and behavior at runtime.\n\nThe main function, `applyScopes()`, takes in four arguments: an `ApplierProvider`, a `reflect.Type` representing the type of a struct, a `reflect.StructField` representing a field in that struct, and a directive string.\n\nHere's a detailed breakdown:\n\n1. The `applyScopes()` function is used to apply directives to a struct based on the scope. The function takes a string of directives, which are expected to be in a specific format: `[<scope>:]<tool_config>[;[<scope>:]<tool_config>]]*`. The function will apply the specified tool configuration to the fields in the struct that match the given scope.\n\n2. The function begins by creating an empty map of `Applier` objects, which will eventually be filled with the appropriate `Applier` for each scope found in the directive string.\n\n3. The function then uses a regular expression to parse the directive string and find all matches. For each match, it retrieves the scope and the directive for that scope.\n\n4. If a scope is not provided, it defaults to a wildcard scope, represented by `anyScope`. If the scope is an alias, it is replaced with the actual scope.\n\n5. The function then creates an `Applier` for the scope and directive. If an error occurs during this process, it is returned along with the scope as an attribute.\n\n6. If an `Applier` was successfully created, it is added to the map of `Applier` objects. If no `Applier` was created and the scope is not the wildcard scope, a `NoApplier` object is added to the map.\n\n7. Finally, the function returns the appropriate `Applier` based on the number of `Applier` objects in the map. If there are no `Applier` objects, it returns `nil`. If there is only one `Applier` and it is for the wildcard scope, it is returned directly. Otherwise, a `scopeSelect` object containing the map of `Applier` objects is returned.\n\nThis function is an example of the Strategy pattern, where different strategies (in this case, `Applier` objects) can be selected at runtime based on certain conditions (in this case, the scope).\n\nFor more information on Go's reflection package, you can refer to [Go's official documentation](https://golang.org/pkg/reflect/). For more information on regular expressions in Go, you can refer to [Go's regexp package documentation](https://golang.org/pkg/regexp/)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:21 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ApplyScopes fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ApplyScopesErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle Applier fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle NoApplier fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle NoApplierErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ApplyScopes;\nApplyScopes-->Applier;\nApplyScopes-->NoApplier;\nNoApplier-->ApplyScopes;\nApplier-->ApplyScopes;\nApplyScopes-->ApplyScopesErrorPath;\nNoApplier-->NoApplierErrorPath;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:41 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:11:39 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 124\n\n   **Bug Type**: CPU\n\n   **Description**: The use of regular expressions can be CPU-intensive, especially in a loop where it's being compiled on each iteration.\n\n   **Solution**: Compile the regular expression once and reuse it. If the regular expression is not changing, it should be compiled once and stored in a variable for reuse.\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 124\n\n   **Bug Type**: Memory\n\n   **Description**: The use of FindAllStringSubmatch can lead to increased memory usage as it returns all matches, which can be large depending on the input.\n\n   **Solution**: Consider using FindStringSubmatch if only the first match is needed. If all matches are needed, ensure that the input size is controlled.\n\n\n3. **Severity**: 4/10\n\n   **Line Number**: 135\n\n   **Bug Type**: CPU\n\n   **Description**: The use of strings.ReplaceAll in a loop can be CPU-intensive, especially if the string is large.\n\n   **Solution**: If the string is not changing, consider replacing it once and storing the result for reuse. If the string is changing, consider whether the replace operation is necessary on each iteration.\n\n\n4. **Severity**: 6/10\n\n   **Line Number**: 141\n\n   **Bug Type**: Memory\n\n   **Description**: Creating a new map in each iteration can lead to increased memory usage.\n\n   **Solution**: Consider reusing the map if possible, or using a data structure that does not require creating a new map in each iteration.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 71,
+                "severity": 7,
+                "bugType": "CPU",
+                "description": "The use of regular expressions can be CPU-intensive, especially in a loop where it's being compiled on each iteration.",
+                "solution": "Compile the regular expression once and reuse it. If the regular expression is not changing, it should be compiled once and stored in a variable for reuse."
+              },
+              {
+                "lineNumber": 71,
+                "severity": 5,
+                "bugType": "Memory",
+                "description": "The use of FindAllStringSubmatch can lead to increased memory usage as it returns all matches, which can be large depending on the input.",
+                "solution": "Consider using FindStringSubmatch if only the first match is needed. If all matches are needed, ensure that the input size is controlled."
+              },
+              {
+                "lineNumber": 82,
+                "severity": 4,
+                "bugType": "CPU",
+                "description": "The use of strings.ReplaceAll in a loop can be CPU-intensive, especially if the string is large.",
+                "solution": "If the string is not changing, consider replacing it once and storing the result for reuse. If the string is changing, consider whether the replace operation is necessary on each iteration."
+              },
+              {
+                "lineNumber": 88,
+                "severity": 6,
+                "bugType": "Memory",
+                "description": "Creating a new map in each iteration can lead to increased memory usage.",
+                "solution": "Consider reusing the map if possible, or using a data structure that does not require creating a new map in each iteration."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:15:33 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 113\n\n   **Bug Type**: GDPR\n\n   **Description**: The use of wildcard '*' in the scope of data handling may lead to excessive data processing, which is a violation of GDPR's data minimization principle.\n\n   **Solution**: Replace the wildcard scope with more specific scopes to ensure only necessary data is processed. Implement a mechanism to ensure explicit consent is obtained for each scope of data processing.\n\n\n2. **Severity**: 8/10\n\n   **Line Number**: 116\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The use of regex to parse directive data can lead to potential security vulnerabilities such as injection attacks. This is a violation of PCI DSS requirement 6.5.1.\n\n   **Solution**: Replace the use of regex with a safer data parsing method. Implement input validation and sanitization to prevent injection attacks.\n\n\n3. **Severity**: 8/10\n\n   **Line Number**: 124\n\n   **Bug Type**: HIPAA\n\n   **Description**: The use of scopes in data processing without proper validation can lead to unauthorized access or disclosure of protected health information (PHI), which is a violation of the HIPAA Security Rule.\n\n   **Solution**: Implement proper validation of scopes to ensure that only authorized processes can access and process PHI. Also, implement access controls and audit logs for tracking and monitoring PHI access and modifications.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 60,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The use of wildcard '*' in the scope of data handling may lead to excessive data processing, which is a violation of GDPR's data minimization principle.",
+                "solution": "Replace the wildcard scope with more specific scopes to ensure only necessary data is processed. Implement a mechanism to ensure explicit consent is obtained for each scope of data processing.",
+                "webLink": "https://gdpr-info.eu/art-5-gdpr/"
+              },
+              {
+                "lineNumber": 63,
+                "severity": 8,
+                "bugType": "PCI DSS",
+                "description": "The use of regex to parse directive data can lead to potential security vulnerabilities such as injection attacks. This is a violation of PCI DSS requirement 6.5.1.",
+                "solution": "Replace the use of regex with a safer data parsing method. Implement input validation and sanitization to prevent injection attacks.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/maintaining_payment_security"
+              },
+              {
+                "lineNumber": 71,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "The use of scopes in data processing without proper validation can lead to unauthorized access or disclosure of protected health information (PHI), which is a violation of the HIPAA Security Rule.",
+                "solution": "Implement proper validation of scopes to ensure that only authorized processes can access and process PHI. Also, implement access controls and audit logs for tracking and monitoring PHI access and modifications.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "3",
       "value": "\nconst (\n\tanyScope = \"*\"\n\tscopeKey = \"$_gomer_scope\"\n)\n\nvar (\n\tscopeAliases = make(map[string]string)\n\tscopeRegexp  = regexp.MustCompile(`(?:([^;:]*[^\\\\]):)?([^;]*)`)\n)\n\n// Format: [<scope>:]<tool_config>[;[<scope>:]<tool_config>]]*\n// Note that both ':' and ';' are special chars. Once a scope has been provided, colons are allowed until the\n// end of the input or a ';' is found. If a colon should be used for what would otherwise not contain a scope,\n// one can use the wildcard scope (e.g. \"*:this_colon_:_does_not_indicate_a_scope\").\n//\n// NB: scopes can't be reused within the input. If a scope repeats, the last one wins. This is true for wildcards\n//     (implicit, explicit, or both) as well.\nfunc applyScopes(ap ApplierProvider, structType reflect.Type, structField reflect.StructField, directive string) (Applier, gomerr.Gomerr) {\n\tappliers := make(map[string]Applier)\n\tfor _, match := range scopeRegexp.FindAllStringSubmatch(directive, -1) {\n\t\tscope := match[1]\n\t\tif scope == \"\" {\n\t\t\tscope = anyScope\n\t\t} else if actualScope, ok := scopeAliases[scope]; ok {\n\t\t\tscope = actualScope\n\t\t} // else equals the matched value\n\n\t\tscopedDirective := match[2]\n\t\t// TODO: integrate this w/ expressions logic rather than include here...\n\t\tif strings.IndexAny(directive, \"?&\") == -1 {\n\t\t\tscopedDirective = strings.ReplaceAll(scopedDirective, \"\\\\:\", \":\")\n\t\t}\n\n\t\tapplier, ge := ap.Applier(structType, structField, scopedDirective)\n\t\tif ge != nil {\n\t\t\treturn nil, ge.AddAttribute(\"Scope\", scope)\n\t\t} else if applier != nil {\n\t\t\tappliers[scope] = applier\n\t\t} else if scope != anyScope {\n\t\t\tappliers[scope] = NoApplier{}\n\t\t} // else skip\n\t}\n\n\tswitch len(appliers) {\n\tcase 0:\n\t\treturn nil, nil\n\tcase 1:\n\t\t// If only an anyScope applier, avoid the wrapper\n\t\tif applier, ok := appliers[anyScope]; ok {\n\t\t\treturn applier, nil\n\t\t}\n\t}\n\n\treturn scopeSelect{appliers}, nil\n}\n",
@@ -49,7 +439,76 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:03:27 PM PDT\n\nThis is a simple piece of Go code that defines a struct named `scopeSelect`. This struct has one field, `appliers`, which is a map where the keys are strings and the values are of type `Applier`. \n\nHere's a breakdown of the code:\n\n- `type`: This keyword is used to define a new type. In this case, we are defining a new struct type named `scopeSelect`.\n\n- `scopeSelect`: This is the name of the new struct type being defined.\n\n- `struct`: This keyword is used to define a struct. A struct in Go is a composite data type, which groups together zero or more values of different types. It's a way of creating a data structure that can hold different kinds of data.\n\n- `appliers`: This is the name of the field in the `scopeSelect` struct. Each instance of `scopeSelect` will have this field.\n\n- `map[string]Applier`: This is the type of the `appliers` field. It's a map where the keys are strings (`string`) and the values are of type `Applier`. A map in Go is a built-in associative data type that is used to store key-value pairs.\n\nThe `Applier` type is not defined in this code snippet, so it's not clear what it is. It could be a struct, an interface, or any other type in Go. It's likely defined elsewhere in the codebase.\n\nThis code does not contain any algorithms, it's just a type definition. \n\nAs far as architectural guidelines, this code seems to be consistent with typical Go practices. It's defining a struct with a map field, which is a common way of creating data structures in Go. \n\nI cannot provide any specific architectural conflicts without more context or guidelines.\n\nFor more information on structs and maps in Go, you could refer to the following resources:\n\n- [A Tour of Go - Structs](https://tour.golang.org/moretypes/2)\n- [A Tour of Go - Maps](https://tour.golang.org/moretypes/19)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:25 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Applier fill:#228B22, stroke:#000000, stroke-width:2px;\n\nStart-->Applier;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:44 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:11:43 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:15:47 PM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 222\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The 'scopeSelect' struct uses a map to store 'Applier' objects, which might be handling sensitive data. If not properly managed, this could lead to data leaks or unauthorized access.\n\n   **Solution**: Ensure that all data stored in 'Applier' objects is encrypted and that access to the 'scopeSelect' struct is controlled. Use secure methods to manage sensitive data in memory.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 113,
+                "severity": 3,
+                "bugType": "Data Privacy",
+                "description": "The 'scopeSelect' struct uses a map to store 'Applier' objects, which might be handling sensitive data. If not properly managed, this could lead to data leaks or unauthorized access.",
+                "solution": "Ensure that all data stored in 'Applier' objects is encrypted and that access to the 'scopeSelect' struct is controlled. Use secure methods to manage sensitive data in memory."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "4",
       "value": "\ntype scopeSelect struct {\n\tappliers map[string]Applier\n}\n",
@@ -61,7 +520,112 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:03:46 PM PDT\n\nThe provided code is a method written in Go programming language, which is part of a struct named `scopeSelect`. This struct is not shown in the code snippet, but it appears to be a part of a system that manages scopes in some way, possibly related to data validation or error handling. \n\nThe `Apply` method takes three arguments:\n\n1. `sv` of type `reflect.Value`: This is likely a source value that needs to be processed or validated.\n2. `fv` of type `reflect.Value`: This could be a field value where the source value needs to be applied.\n3. `tc` of type pointer to `ToolContext`: This is likely a context object that holds state or other data relevant to the current operation.\n\nThe `Apply` method returns a `gomerr.Gomerr`. `gomerr` is a package for error handling in Go. `Gomerr` is likely a custom error type defined in this package.\n\nHere's a step-by-step breakdown of the method:\n\n1. It attempts to retrieve a scopedApplier from a map (`s.appliers`) using the current scope as the key (`tc.Scope()`).\n\n2. If it doesn't find a scopedApplier for the current scope (`ok` is false), it tries to get a default scopedApplier using a key `anyScope`.\n\n3. If it still doesn't find a scopedApplier (`ok` is still false), it returns `nil`, indicating no error.\n\n4. If it does find a scopedApplier (either for the current scope or the default one), it calls the `Apply` method on the scopedApplier with the same arguments that were passed in, and returns the result.\n\nThe algorithm used here is a simple map lookup with a fallback to a default value. This is a common pattern in Go when you want to handle a default case when a specific key is not found in a map.\n\nFor more information on Go maps, you can refer to the official Go documentation: [Go Maps in action](https://go.dev/blog/maps).\n\nFor more information on reflection in Go, which is used to handle the `reflect.Value` types, you can refer to: [The Laws of Reflection](https://go.dev/blog/laws-of-reflection).\n\nFor more information on error handling in Go, you can refer to: [Error handling and Go](https://blog.golang.org/error-handling-and-go)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:29 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Apply fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle NoApplier fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle Return fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->Apply;\nApply-->NoApplier;\nNoApplier-->Return;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:47 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:12:10 PM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 231\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in this function could be a potential performance issue. Reflection in Go is known to be slower than direct manipulation.\n\n   **Solution**: If possible, avoid using reflection. If this is not possible, consider caching the results of reflection if the same types are being reflected over multiple times. Here is a link to a resource about reflection in Go: https://blog.golang.org/laws-of-reflection\n\n\n2. **Severity**: 2/10\n\n   **Line Number**: 231\n\n   **Bug Type**: Memory\n\n   **Description**: The use of reflection can also lead to higher memory usage as it involves the creation of temporary objects.\n\n   **Solution**: As above, try to avoid using reflection or cache the results if the same types are being reflected over multiple times.\n\n\n3. **Severity**: 1/10\n\n   **Line Number**: 228\n\n   **Bug Type**: CPU\n\n   **Description**: This function uses map lookups, which are generally fast, but can still be a performance issue if called frequently and/or with large maps.\n\n   **Solution**: If the map is large and this function is called frequently, consider using a more efficient data structure, such as a hash table or a binary search tree. Here is a link to a resource about data structures in Go: https://golang.org/doc/faq#Does_Go_have_data_structures_like_sets_maps_and_lists\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 118,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "The use of reflection in this function could be a potential performance issue. Reflection in Go is known to be slower than direct manipulation.",
+                "solution": "If possible, avoid using reflection. If this is not possible, consider caching the results of reflection if the same types are being reflected over multiple times. Here is a link to a resource about reflection in Go: https://blog.golang.org/laws-of-reflection"
+              },
+              {
+                "lineNumber": 118,
+                "severity": 2,
+                "bugType": "Memory",
+                "description": "The use of reflection can also lead to higher memory usage as it involves the creation of temporary objects.",
+                "solution": "As above, try to avoid using reflection or cache the results if the same types are being reflected over multiple times."
+              },
+              {
+                "lineNumber": 115,
+                "severity": 1,
+                "bugType": "CPU",
+                "description": "This function uses map lookups, which are generally fast, but can still be a performance issue if called frequently and/or with large maps.",
+                "solution": "If the map is large and this function is called frequently, consider using a more efficient data structure, such as a hash table or a binary search tree. Here is a link to a resource about data structures in Go: https://golang.org/doc/faq#Does_Go_have_data_structures_like_sets_maps_and_lists"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:16:13 PM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 230\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'Apply' does not implement any form of data sanitization or validation before processing the data. This could lead to potential data breaches and unauthorized data processing, violating GDPR principles.\n\n   **Solution**: Implement data validation and sanitization checks before processing the data. This could be done by using a data validation library or by implementing custom validation logic.\n\n\n2. **Severity**: 7/10\n\n   **Line Number**: 236\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function 'Apply' does not check for user consent before processing the data. This could lead to unauthorized data processing, violating HIPAA rules.\n\n   **Solution**: Implement a user consent check before processing the data. This could be done by adding a consent parameter to the function and checking its value before processing the data.\n\n\n3. **Severity**: 8/10\n\n   **Line Number**: 236\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function 'Apply' does not implement any form of encryption or secure data handling. This could lead to potential data breaches and unauthorized data access, violating PCI DSS rules.\n\n   **Solution**: Implement secure data handling practices such as data encryption and secure data transmission. This could be done by using a secure data handling library or by implementing custom secure data handling logic.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 117,
+                "severity": 6,
+                "bugType": "GDPR",
+                "description": "The function 'Apply' does not implement any form of data sanitization or validation before processing the data. This could lead to potential data breaches and unauthorized data processing, violating GDPR principles.",
+                "solution": "Implement data validation and sanitization checks before processing the data. This could be done by using a data validation library or by implementing custom validation logic."
+              },
+              {
+                "lineNumber": 123,
+                "severity": 7,
+                "bugType": "HIPAA",
+                "description": "The function 'Apply' does not check for user consent before processing the data. This could lead to unauthorized data processing, violating HIPAA rules.",
+                "solution": "Implement a user consent check before processing the data. This could be done by adding a consent parameter to the function and checking its value before processing the data."
+              },
+              {
+                "lineNumber": 123,
+                "severity": 8,
+                "bugType": "PCI DSS",
+                "description": "The function 'Apply' does not implement any form of encryption or secure data handling. This could lead to potential data breaches and unauthorized data access, violating PCI DSS rules.",
+                "solution": "Implement secure data handling practices such as data encryption and secure data transmission. This could be done by using a secure data handling library or by implementing custom secure data handling logic."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "5",
       "value": "\nfunc (s scopeSelect) Apply(sv reflect.Value, fv reflect.Value, tc *ToolContext) gomerr.Gomerr {\n\tscopedApplier, ok := s.appliers[tc.Scope()]\n\tif !ok {\n\t\tscopedApplier, ok = s.appliers[anyScope]\n\t\tif !ok {\n\t\t\treturn nil // no applier for scope/any, return\n\t\t}\n\t}\n\n\treturn scopedApplier.Apply(sv, fv, tc)\n}\n",
@@ -73,7 +637,112 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:04:39 PM PDT\n\nThis code snippet is written in Go programming language. It defines a function named `Composite` that checks for a composition directive in a string and, if found, creates a composed `Applier` based on the specified semantic. If there isn't a composition directive, the function returns `nil` for both `Applier` and `gomerr.Gomerr`.\n\nHere's a detailed breakdown of the code:\n\n1. The function `Composite` takes four parameters:\n   - `directive`: a string that presumably contains a composition directive (either '?' or '&').\n   - `tool`: a pointer to an object of type `Tool`.\n   - `st`: a `reflect.Type` object representing the static type of the struct.\n   - `sf`: a `reflect.StructField` object representing a field in the struct.\n\n2. The function first checks if the `directive` string starts with \"if(\" and ends with ')'. If it does, the function does nothing (as indicated by the TODO comment) and continues to the next step.\n\n3. The function then finds the index of the first occurrence of '?' or '&' in the `directive` string. If neither character is found, the function returns `nil` for both `Applier` and `gomerr.Gomerr`.\n\n4. If '?' or '&' is found, the function splits the `directive` string into a left-hand side (lhs) and a right-hand side (rhs) based on the index of '?' or '&'. It then tries to apply scopes to both sides using the `applyScopes` function.\n\n5. If applying scopes to either side results in an error that isn't a `gomerr.ConfigurationError`, the function wraps the error in a `gomerr.Configuration` error with a message indicating that it was unable to process the directive.\n\n6. If there are errors from applying scopes to either side, or if both left and right `Applier` are `nil`, the function returns `nil` for `Applier` and the batched errors for `gomerr.Gomerr`.\n\n7. The function then defines a test function `testFn` based on whether the composition directive is '?' or '&'. If it's '?', `testFn` returns true if the value is not zero. If it's '&', `testFn` always returns false.\n\n8. Finally, the function returns an `Applier` in the form of a `leftTestRightApplier` struct, which presumably tests a value using `testFn` and applies the left or right `Applier` based on the result of the test.\n\nThe function uses the `strings` and `reflect` packages from the Go standard library, and the `gomerr` package for error handling, which seems to be a custom package in the project.\n\nFor more information on reflection in Go, you can refer to this article: [The Laws of Reflection](https://go.dev/blog/laws-of-reflection).\n\nFor more information on error handling in Go, you can refer to this article: [Error handling and Go](https://go.dev/blog/error-handling-and-go)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:35 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle CompositeProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle CompositeErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle CompositeProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle CompositeErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->CompositeProcess;\nCompositeProcess-->End;\n```\nThe control flow graph for the given code snippet is a simple linear flow. The function `Composite` starts at the \"Start\" node and proceeds to the \"CompositeProcess\" node. There are no error paths in this code snippet, so the graph does not include any error paths."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:50 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:12:36 PM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 250\n\n   **Bug Type**: CPU\n\n   **Description**: The function Composite uses the function strings.HasPrefix and strings.IndexAny for string manipulation. These operations are not CPU-intensive, but if this function is called in a tight loop, it may lead to increased CPU usage.\n\n   **Solution**: If the function is called frequently, consider optimizing the string operations. For example, you could avoid calling strings.HasPrefix and strings.IndexAny multiple times by storing their results in variables.\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 262\n\n   **Bug Type**: CPU\n\n   **Description**: The function applyScopes is called twice within the function Composite. If applyScopes is CPU-intensive, this could lead to high CPU usage.\n\n   **Solution**: Consider optimizing the applyScopes function if it is CPU-intensive, or if possible, call it once and reuse the result.\n\n\n3. **Severity**: 4/10\n\n   **Line Number**: 287\n\n   **Bug Type**: Memory\n\n   **Description**: The function Composite creates a new function testFn every time it's called. If this function is called frequently, this could lead to high memory usage.\n\n   **Solution**: Consider defining the function testFn outside of the Composite function to avoid creating a new function every time Composite is called.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 125,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "The function Composite uses the function strings.HasPrefix and strings.IndexAny for string manipulation. These operations are not CPU-intensive, but if this function is called in a tight loop, it may lead to increased CPU usage.",
+                "solution": "If the function is called frequently, consider optimizing the string operations. For example, you could avoid calling strings.HasPrefix and strings.IndexAny multiple times by storing their results in variables."
+              },
+              {
+                "lineNumber": 137,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The function applyScopes is called twice within the function Composite. If applyScopes is CPU-intensive, this could lead to high CPU usage.",
+                "solution": "Consider optimizing the applyScopes function if it is CPU-intensive, or if possible, call it once and reuse the result."
+              },
+              {
+                "lineNumber": 162,
+                "severity": 4,
+                "bugType": "Memory",
+                "description": "The function Composite creates a new function testFn every time it's called. If this function is called frequently, this could lead to high memory usage.",
+                "solution": "Consider defining the function testFn outside of the Composite function to avoid creating a new function every time Composite is called."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:16:45 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 256\n\n   **Bug Type**: GDPR\n\n   **Description**: The Composite function doesn't have any explicit data handling or data protection measures. This could potentially lead to GDPR compliance issues if sensitive data is being handled without proper consent or security measures.\n\n   **Solution**: Implement explicit data handling and data protection measures. This could include encryption of sensitive data, obtaining user consent before data processing, and implementing access controls to restrict who can access the data. Consider using a secure coding standard for guidance, such as the OWASP Secure Coding Practices.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 266\n\n   **Bug Type**: HIPAA\n\n   **Description**: If the Composite function is used to handle PHI (Protected Health Information), it may cause HIPAA compliance issues. There are no clear safeguards for PHI in the code, such as encryption or access controls.\n\n   **Solution**: Ensure that all PHI is encrypted in transit and at rest, and that access to PHI is strictly controlled. Regularly audit access logs to detect any unauthorized access to PHI. Consider using a HIPAA compliance guide for software development, such as the one provided by the Department of Health and Human Services.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 275\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The Composite function does not appear to have any measures in place to protect cardholder data, which could lead to PCI DSS compliance issues if it's used to handle such data.\n\n   **Solution**: Implement measures to protect cardholder data, such as encryption, tokenization, and strong access controls. Regularly test and update security systems and processes. Consider using the PCI DSS Quick Reference Guide for guidance.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 131,
+                "severity": 5,
+                "bugType": "GDPR",
+                "description": "The Composite function doesn't have any explicit data handling or data protection measures. This could potentially lead to GDPR compliance issues if sensitive data is being handled without proper consent or security measures.",
+                "solution": "Implement explicit data handling and data protection measures. This could include encryption of sensitive data, obtaining user consent before data processing, and implementing access controls to restrict who can access the data. Consider using a secure coding standard for guidance, such as the OWASP Secure Coding Practices."
+              },
+              {
+                "lineNumber": 141,
+                "severity": 6,
+                "bugType": "HIPAA",
+                "description": "If the Composite function is used to handle PHI (Protected Health Information), it may cause HIPAA compliance issues. There are no clear safeguards for PHI in the code, such as encryption or access controls.",
+                "solution": "Ensure that all PHI is encrypted in transit and at rest, and that access to PHI is strictly controlled. Regularly audit access logs to detect any unauthorized access to PHI. Consider using a HIPAA compliance guide for software development, such as the one provided by the Department of Health and Human Services."
+              },
+              {
+                "lineNumber": 150,
+                "severity": 7,
+                "bugType": "PCI DSS",
+                "description": "The Composite function does not appear to have any measures in place to protect cardholder data, which could lead to PCI DSS compliance issues if it's used to handle such data.",
+                "solution": "Implement measures to protect cardholder data, such as encryption, tokenization, and strong access controls. Regularly test and update security systems and processes. Consider using the PCI DSS Quick Reference Guide for guidance."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "6",
       "value": "\n// Composite checks for a composition directive (either '?' or '&') and if found will create a composed Applier from\n// those based on the specified semantic. If there isn't a composition directive, this returns nil for both Applier and\n// gomerr.Gomerr.\n// TODO:p2 this should perhaps be a default intermediary similar to how the scope applier can be\nfunc Composite(directive string, tool *Tool, st reflect.Type, sf reflect.StructField) (Applier, gomerr.Gomerr) {\n\tif strings.HasPrefix(directive, \"if(\") && directive[len(directive)-1] == ')' {\n\t\t// TODO:p1\n\t\t// Format: if({test},{do}<,{else}>)\n\t\t// Example: if($.Enabled,+,-) or if($IsAdmin,+,=*****)\n\t}\n\n\ttIndex := strings.IndexAny(directive, \"?&\")\n\tif tIndex == -1 {\n\t\treturn nil, nil\n\t}\n\n\tvar left Applier\n\tvar leftGe gomerr.Gomerr\n\tif lhs := directive[:tIndex]; len(lhs) > 0 {\n\t\tleft, leftGe = applyScopes(tool.applierProvider, st, sf, lhs)\n\t\tif _, ok := leftGe.(*gomerr.ConfigurationError); leftGe != nil && !ok {\n\t\t\tleftGe = gomerr.Configuration(fmt.Sprintf(\"Unable to process directive: %s\", directive)).Wrap(leftGe)\n\t\t}\n\t}\n\tvar right Applier\n\tvar rightGe gomerr.Gomerr\n\tif rhs := directive[tIndex+1:]; len(rhs) > 0 {\n\t\tright, rightGe = applyScopes(tool.applierProvider, st, sf, rhs)\n\t\tif _, ok := rightGe.(*gomerr.ConfigurationError); rightGe != nil && !ok {\n\t\t\trightGe = gomerr.Configuration(fmt.Sprintf(\"Unable to process directive: %s\", directive)).Wrap(rightGe)\n\t\t}\n\t}\n\tif ge := gomerr.Batch(leftGe, rightGe); ge != nil || (left == nil && right == nil) {\n\t\treturn nil, ge\n\t}\n\n\t// TODO:p0 special case \"$_b64[encode_type]&[output location]\"\n\n\tvar testFn func(reflect.Value) bool\n\tif directive[tIndex] == '?' {\n\t\ttestFn = func(value reflect.Value) bool { return !value.IsZero() }\n\t} else { // '&'\n\t\ttestFn = func(reflect.Value) bool { return false }\n\t}\n\n\treturn leftTestRightApplier{sf.Name, left, testFn, right}, nil\n}\n",
@@ -85,7 +754,68 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:05:11 PM PDT\n\nThe provided code is a Go language function that is currently commented out. It is a method named `ifApplier` on a struct type `Tool`. This method returns two values, an `Applier` and a `Gomerr`.\n\nThe `ifApplier` method takes three parameters:\n\n- `st` of type `reflect.Type`: This is a type from the `reflect` package in Go, which represents the type of a Go object. Reflection in Go is a powerful feature that allows a program to manipulate objects with arbitrary types.\n\n- `sf` of type `reflect.StructField`: This is also from the `reflect` package and represents a field in a struct type.\n\n- `directive` of type `string`: This could be any string value.\n\nThe method returns two values:\n\n- An `Applier` which could be an interface or a struct type. Without more context, it's hard to say what this type does, but based on the name it likely has something to do with applying changes or operations.\n\n- A `Gomerr`: This is likely a custom error type from the `gomerr` package. The `gomerr` package is not part of the standard Go library, so it's probably a third-party package or something defined elsewhere in this project. Given the name, it's likely used for handling errors in a specific way.\n\nThe function body is currently empty (it immediately returns `nil, nil`), meaning it doesn't do anything at the moment.\n\nFor more information on reflection in Go, you can refer to the following resources:\n\n- [The Laws of Reflection](https://blog.golang.org/laws-of-reflection)\n- [Go by Example: Reflection](https://gobyexample.com/reflection)\n\nFor more information on error handling in Go, you can refer to the following resources:\n\n- [Error handling and Go](https://blog.golang.org/error-handling-and-go)\n- [Go by Example: Errors](https://gobyexample.com/errors)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:39 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->ExampleProcess;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:53 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:12:40 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:16:48 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
       "languageId": "go",
       "id": "7",
       "value": "\n// func (t *Tool) ifApplier(st reflect.Type, sf reflect.StructField, directive string) (Applier, gomerr.Gomerr) {\n// \treturn nil, nil\n// }\n",
@@ -97,7 +827,93 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:05:50 PM PDT\n\nThe code snippet you provided is written in Go language and it defines a struct called `ifThenElseApplier`. This struct is a data structure that contains four fields: `name`, `test`, `then`, and `orElse`.\n\nHere's a breakdown of each field:\n\n1. `name`: This is a string field that likely represents the name of the `ifThenElseApplier` instance.\n\n2. `test`: This is a function field that takes a `reflect.Value` as an argument and returns a boolean value. `reflect.Value` is a struct from the `reflect` package in Go, which provides a way to inspect, modify and create any Go value. The `test` function will likely be used to perform some kind of condition check on a value.\n\n3. `then`: This is a field of type `Applier`. `Applier` is not defined in the provided code snippet, but it's likely to be an interface or a function type that is defined elsewhere in the codebase. The `then` field will likely be used to apply some kind of operation if the `test` function returns `true`.\n\n4. `orElse`: This is another field of type `Applier`, similar to the `then` field. It will likely be used to apply a different operation if the `test` function returns `false`.\n\nThe `ifThenElseApplier` struct seems to be implementing a form of the \"Strategy Pattern\", where you select an algorithm at runtime. In this case, the algorithm is either the `then` or `orElse` function, depending on the result of the `test` function.\n\nThis struct could be used to apply a different operation to a value based on some condition. The `test` function checks the condition, and then either the `then` or `orElse` function is applied to the value.\n\nFor more information on the Strategy Pattern, you can refer to the following resources:\n\n- [Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern)\n- [Design patterns in Golang: Strategy](https://medium.com/@george.b.lopez/design-patterns-in-golang-strategy-57a4e3b1e0e0)\n\nFor more information on the `reflect` package in Go, you can refer to the following resources:\n\n- [The Laws of Reflection](https://blog.golang.org/laws-of-reflection)\n- [Go by Example: Reflection](https://gobyexample.com/reflection)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:44 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ifThenElseApplier fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle Applier fill:#228B22, stroke:#000000, stroke-width:4px;\n\nStart-->ifThenElseApplier;\nifThenElseApplier-->Applier;\nifThenElseApplier-->Applier;\n```\nThe control flow graph for the provided code snippet is a simple if-then-else structure. The start of the graph is the `ifThenElseApplier` function. The function has two branches: one leading to the `then` Applier and the other leading to the `orElse` Applier."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:57 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:12:43 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:17:26 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 354\n\n   **Bug Type**: GDPR\n\n   **Description**: The function `ifThenElseApplier` does not have any mechanism to check or ensure that the data it processes is anonymized or pseudonymized. This could potentially lead to a violation of GDPR's data minimization principle, which requires that personal data is adequately protected.\n\n   **Solution**: Consider adding a mechanism to check whether the data being processed is anonymized or pseudonymized. If it is not, apply appropriate techniques to anonymize or pseudonymize it before processing. Also, consider implementing access controls to limit who can access the data.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 354\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function `ifThenElseApplier` does not have any controls in place to protect cardholder data. This could potentially lead to a violation of PCI DSS, which requires that cardholder data is protected at all times.\n\n   **Solution**: Consider adding controls to ensure that cardholder data is encrypted when it is processed by the `ifThenElseApplier` function. Also, consider implementing access controls to limit who can access the cardholder data.\n\n\n3. **Severity**: 8/10\n\n   **Line Number**: 354\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function `ifThenElseApplier` does not have any controls in place to protect protected health information (PHI). This could potentially lead to a violation of HIPAA, which requires that PHI is protected at all times.\n\n   **Solution**: Consider adding controls to ensure that PHI is encrypted when it is processed by the `ifThenElseApplier` function. Also, consider implementing access controls to limit who can access the PHI.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 177,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The function `ifThenElseApplier` does not have any mechanism to check or ensure that the data it processes is anonymized or pseudonymized. This could potentially lead to a violation of GDPR's data minimization principle, which requires that personal data is adequately protected.",
+                "solution": "Consider adding a mechanism to check whether the data being processed is anonymized or pseudonymized. If it is not, apply appropriate techniques to anonymize or pseudonymize it before processing. Also, consider implementing access controls to limit who can access the data.",
+                "webLink": "https://gdpr-info.eu/art-25-gdpr/"
+              },
+              {
+                "lineNumber": 177,
+                "severity": 6,
+                "bugType": "PCI DSS",
+                "description": "The function `ifThenElseApplier` does not have any controls in place to protect cardholder data. This could potentially lead to a violation of PCI DSS, which requires that cardholder data is protected at all times.",
+                "solution": "Consider adding controls to ensure that cardholder data is encrypted when it is processed by the `ifThenElseApplier` function. Also, consider implementing access controls to limit who can access the cardholder data.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/"
+              },
+              {
+                "lineNumber": 177,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "The function `ifThenElseApplier` does not have any controls in place to protect protected health information (PHI). This could potentially lead to a violation of HIPAA, which requires that PHI is protected at all times.",
+                "solution": "Consider adding controls to ensure that PHI is encrypted when it is processed by the `ifThenElseApplier` function. Also, consider implementing access controls to limit who can access the PHI.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "8",
       "value": "\ntype ifThenElseApplier struct {\n\tname   string\n\ttest   func(value reflect.Value) bool\n\tthen   Applier\n\torElse Applier\n}\n",
@@ -109,7 +925,68 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:06:28 PM PDT\n\nThe code snippet you've provided is a commented out function in Go. It's not possible to provide a complete analysis on this function as it's commented out and doesn't contain any logic. However, I can explain what the function could potentially do based on its signature.\n\nThe function is named `Apply` and it's a method of a struct or an interface named `ifThenElseApplier`. \n\nThe function takes three parameters:\n\n1. `sv`: This parameter is of type `reflect.Value`. The `reflect` package in Go provides a way to inspect the type and value of variables at runtime. `reflect.Value` represents the value of a variable.\n\n2. `fv`: This parameter is also of type `reflect.Value`. It seems like this function might be working with two different values that it needs to compare or manipulate in some way.\n\n3. `tc`: This parameter is a pointer to a `ToolContext` type. Without additional context, it's hard to say what `ToolContext` exactly is, but it's probably a struct or an interface that contains some context or configuration for the tool that's being used.\n\nThe function returns a value of type `gomerr.Gomerr`. `gomerr` is likely a package used for handling errors in this project. The `Gomerr` type is probably a custom error type that provides additional information about errors that can occur in this project.\n\nThe function itself is currently empty, as denoted by the `{}`. All the code inside the function has been commented out.\n\nIn terms of architectural guidelines, this function seems to follow common Go practices. It uses the `reflect` package for working with variables at runtime, and it uses a custom error type for handling errors, which can provide more flexibility and information than Go's built-in error type.\n\nFor more information on the topics mentioned, you can refer to the following resources:\n\n- [The Laws of Reflection](https://blog.golang.org/laws-of-reflection) (Go blog post about the `reflect` package)\n- [Error handling in Go](https://blog.golang.org/error-handling-and-go) (Go blog post about error handling)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:48 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:09:59 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:12:46 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:17:29 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
       "languageId": "go",
       "id": "9",
       "value": "\n//func (a ifThenElseApplier) Apply(sv reflect.Value, fv reflect.Value, tc *ToolContext) gomerr.Gomerr {\n//}\n",
@@ -121,7 +998,76 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:07:06 PM PDT\n\nThis code is written in Go, a statically typed, compiled language developed by Google. The code snippet defines a new data type, `leftTestRightApplier`, which is a struct, Go's complex data type that groups together zero or more values of different types. \n\nThe `leftTestRightApplier` struct has four fields:\n\n1. `name`: This is a string field. In Go, a string is a sequence of characters with a definite length, used to represent text.\n\n2. `left`: This is of type `Applier`. `Applier` is not a built-in Go data type, so it must be a custom type defined elsewhere in your code. Without more context, it's hard to say exactly what `Applier` is, but by its name, it seems to be an interface or a struct that applies some operation.\n\n3. `test`: This is a function field. In Go, functions can be assigned to variables and passed around just like other values. This function takes a `reflect.Value` as input and returns a boolean. `reflect.Value` is a type from the `reflect` package in Go's standard library, which provides a way to inspect the type and value of variables at runtime. This `test` function presumably performs some kind of test on a `reflect.Value` and returns `true` or `false` based on the result.\n\n4. `right`: This is another `Applier` type field. \n\nThe `leftTestRightApplier` struct might be used to represent some kind of rule or operation that has a left side, a test, and a right side. Depending on the outcome of the test, different operations (represented by `Applier` instances) could be applied.\n\nWithout more context, it's hard to identify the specific algorithms used in this code, as it's just a data type definition. However, it's clear that this code uses concepts like data structuring, function passing, and runtime reflection, which are all key aspects of Go programming.\n\nFor more information on Go programming, you can refer to the following resources:\n\n- [A Tour of Go](https://tour.golang.org/welcome/1)\n- [Go by Example: Structs](https://gobyexample.com/structs)\n- [Go by Example: Functions](https://gobyexample.com/functions)\n- [Go by Example: Reflection](https://gobyexample.com/reflection)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:08:53 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExamplErrorPath-->End;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:10:02 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:12:49 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:17:42 PM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 374\n\n   **Bug Type**: Data Exposure\n\n   **Description**: The 'leftTestRightApplier' struct does not implement any form of data protection or encryption, which could potentially expose sensitive data if instances of this struct are transmitted or stored insecurely.\n\n   **Solution**: Consider implementing encryption or other forms of data protection for sensitive fields within the 'leftTestRightApplier' struct. For example, sensitive fields could be encrypted before they are stored and decrypted when they are needed for processing. If the struct is being transmitted, consider using secure transmission protocols to protect the data during transit.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 187,
+                "severity": 2,
+                "bugType": "Data Exposure",
+                "description": "The 'leftTestRightApplier' struct does not implement any form of data protection or encryption, which could potentially expose sensitive data if instances of this struct are transmitted or stored insecurely.",
+                "solution": "Consider implementing encryption or other forms of data protection for sensitive fields within the 'leftTestRightApplier' struct. For example, sensitive fields could be encrypted before they are stored and decrypted when they are needed for processing. If the struct is being transmitted, consider using secure transmission protocols to protect the data during transit."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "10",
       "value": "\ntype leftTestRightApplier struct {\n\tname  string\n\tleft  Applier\n\ttest  func(value reflect.Value) bool\n\tright Applier\n}\n",
@@ -133,7 +1079,112 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 5:07:51 PM PDT\n\nThis code is written in Go and it's a method of a struct called `leftTestRightApplier`. The purpose of this method is to apply some operations (represented by the `left` and `right` fields of the struct) to the provided values (`sv` and `fv`), and return an error if any operation fails.\n\nThe `leftTestRightApplier` struct has three fields:\n- `left`: a pointer to another applier that will be applied before the test.\n- `test`: a test function that will be executed if the `left` applier succeeds.\n- `right`: a pointer to another applier that will be applied after the test.\n\nThe `Apply` method works as follows:\n\n1. If the `left` applier is not `nil`, it is applied to `sv` and `fv`. If this operation fails (i.e., returns a non-nil error), the error is stored in `leftGe`.\n\n2. If `leftGe` is `nil` (i.e., the `left` applier succeeded or was not present) and the test function returns `true` when applied to `fv`, the method returns `nil`, indicating success.\n\n3. If the test function fails or the `left` applier fails, the method proceeds to the `right` applier. If the `right` applier is `nil`, the method returns `leftGe` (which may be `nil` if the `left` applier was not present).\n\n4. If the `right` applier is not `nil`, it is applied to `sv` and `fv`. If this operation fails, the method returns a batch error containing the error from the `right` applier and `leftGe` (which may be `nil`).\n\n5. If the `right` applier succeeds but `leftGe` is not `nil` (i.e., the `left` applier failed but the `right` applier succeeded), a message is printed to the console. This is likely for debugging purposes, as indicated by the `TODO` comment.\n\n6. Finally, if the `right` applier succeeds and `leftGe` is `nil`, the method returns `nil`, indicating success.\n\nThe algorithm used here is a form of sequential processing, where each operation is applied in a specific order and the next operation depends on the success of the previous one. This is a common pattern in Go, especially in error handling.\n\nFor more information on error handling in Go, you can refer to the following resources:\n\n- [Error handling and Go](https://blog.golang.org/error-handling-and-go)\n- [Errors are values](https://blog.golang.org/errors-are-values)\n- [Working with Errors in Go 1.13](https://go.dev/blog/go1.13-errors)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 5:09:05 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle PrimaryPath fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart \u0001 -->leftIsNull{left is null?};\nleftIsNull-->|No| leftApply{Apply left};\nleftIsNull-->|Yes| testCheck{Check test};\ntestCheck-->|True| rightIsNull{right is null?};\ntestCheck-->|False| leftError \u0001 ;\nrightIsNull-->|No| rightApply{Apply right};\nrightIsNull-->|Yes| leftError;\n\nleftApply-->leftError \u0001 ;\nleftApply-->leftError;\nleftError-->|Not Null| rightApply;\nleftError-->|Null| End \u0001 ;\nrightApply-->rightError \u0001 ;\nrightApply-->rightError;\nrightError-->|Not Null| batch{Batch errors};\nrightError-->|Null| leftError;\nbatch-->End;\nEnd-->|Return| Start;\n```\n\nThe control flow graph above represents the control flow of the provided source code. The primary path is shown in green, while error paths are shown in red.\n\nThe control flow starts at the \"Start\" node and proceeds to check if the left value is null. If it is not null, the left applier is applied. If the left applier returns an error, the control flow proceeds to the \"Left Error\" node. If the left applier returns no error, the control flow proceeds to check the test condition.\n\nIf the test condition is true, the control flow proceeds to check if the right value is null. If it is not null, the right applier is applied. If the right applier returns an error, the control flow proceeds to the \"Right Error\" node. If the right applier returns no error, the control flow proceeds to the \"End\" node.\n\nIf the test condition is false, the control flow proceeds directly to the \"Left Error\" node.\n\nIf the left applier returns an error and the right applier returns no error, the control flow proceeds to the \"Batch errors\" node, where the errors are batched. The control flow then returns to the \"Start\" node.\n\nIf the left applier returns no error and the right applier returns an error, the control flow proceeds to the \"Left Error\" node, where the left error is printed. The control flow then returns to the \"Start\" node.\n\nIf both the left applier and the right applier return no error, the control flow proceeds directly to the \"End\" node.\n\nIf the left value is null, the control flow proceeds directly to the \"End\" node.\n\nNote: The control flow graph assumes that the \"left\", \"test\", and \"right\" variables are defined and initialized correctly."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:10:05 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:13:14 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 388\n\n   **Bug Type**: CPU\n\n   **Description**: The function uses reflection which is computationally expensive and can slow down performance.\n\n   **Solution**: Minimize the use of reflection where possible. Consider using interfaces or type assertions if applicable. You can find more information here: https://go.dev/blog/laws-of-reflection\n\n\n2. **Severity**: 3/10\n\n   **Line Number**: 398\n\n   **Bug Type**: CPU\n\n   **Description**: The function uses fmt.Println for debug logging which is not performant and can slow down the application.\n\n   **Solution**: Use a logging library designed for performance and flexibility, such as logrus or zerolog. More details can be found here: https://github.com/sirupsen/logrus and https://github.com/rs/zerolog\n\n\n3. **Severity**: 4/10\n\n   **Line Number**: 396\n\n   **Bug Type**: Memory\n\n   **Description**: The function uses gomerr.Batch which creates a new error object. If this function is called frequently, it could lead to high memory consumption.\n\n   **Solution**: Consider using error wrapping instead of batching errors to reduce memory usage. More information on error wrapping in Go can be found here: https://blog.golang.org/go1.13-errors\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 194,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The function uses reflection which is computationally expensive and can slow down performance.",
+                "solution": "Minimize the use of reflection where possible. Consider using interfaces or type assertions if applicable. You can find more information here: https://go.dev/blog/laws-of-reflection"
+              },
+              {
+                "lineNumber": 204,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "The function uses fmt.Println for debug logging which is not performant and can slow down the application.",
+                "solution": "Use a logging library designed for performance and flexibility, such as logrus or zerolog. More details can be found here: https://github.com/sirupsen/logrus and https://github.com/rs/zerolog"
+              },
+              {
+                "lineNumber": 202,
+                "severity": 4,
+                "bugType": "Memory",
+                "description": "The function uses gomerr.Batch which creates a new error object. If this function is called frequently, it could lead to high memory consumption.",
+                "solution": "Consider using error wrapping instead of batching errors to reduce memory usage. More information on error wrapping in Go can be found here: https://blog.golang.org/go1.13-errors"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 5:18:12 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 396\n\n   **Bug Type**: GDPR\n\n   **Description**: The function Apply does not have any explicit data handling or data protection mechanisms in place. This could potentially lead to unauthorized access or mishandling of personal data, which is a violation of GDPR.\n\n   **Solution**: Implement explicit data handling and protection mechanisms. This could include encryption of personal data, access controls, and logging of data access and modification. Also, ensure that any personal data is processed in a lawful, fair, and transparent manner, and is collected for specified, explicit, and legitimate purposes.\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 404\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function Apply does not have any explicit mechanisms in place for protecting cardholder data, which is a requirement of PCI DSS. This could potentially lead to unauthorized access or mishandling of cardholder data.\n\n   **Solution**: Implement explicit mechanisms for protecting cardholder data. This could include encryption of cardholder data, access controls, and logging of data access and modification. Also, ensure that cardholder data is only used for authorized purposes.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 407\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function Apply does not have any explicit mechanisms in place for protecting health information, which is a requirement of HIPAA. This could potentially lead to unauthorized access or mishandling of health information.\n\n   **Solution**: Implement explicit mechanisms for protecting health information. This could include encryption of health information, access controls, and logging of data access and modification. Also, ensure that health information is only used for authorized purposes.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 202,
+                "severity": 5,
+                "bugType": "GDPR",
+                "description": "The function Apply does not have any explicit data handling or data protection mechanisms in place. This could potentially lead to unauthorized access or mishandling of personal data, which is a violation of GDPR.",
+                "solution": "Implement explicit data handling and protection mechanisms. This could include encryption of personal data, access controls, and logging of data access and modification. Also, ensure that any personal data is processed in a lawful, fair, and transparent manner, and is collected for specified, explicit, and legitimate purposes."
+              },
+              {
+                "lineNumber": 210,
+                "severity": 6,
+                "bugType": "PCI DSS",
+                "description": "The function Apply does not have any explicit mechanisms in place for protecting cardholder data, which is a requirement of PCI DSS. This could potentially lead to unauthorized access or mishandling of cardholder data.",
+                "solution": "Implement explicit mechanisms for protecting cardholder data. This could include encryption of cardholder data, access controls, and logging of data access and modification. Also, ensure that cardholder data is only used for authorized purposes."
+              },
+              {
+                "lineNumber": 213,
+                "severity": 7,
+                "bugType": "HIPAA",
+                "description": "The function Apply does not have any explicit mechanisms in place for protecting health information, which is a requirement of HIPAA. This could potentially lead to unauthorized access or mishandling of health information.",
+                "solution": "Implement explicit mechanisms for protecting health information. This could include encryption of health information, access controls, and logging of data access and modification. Also, ensure that health information is only used for authorized purposes."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "11",
       "value": "\nfunc (a leftTestRightApplier) Apply(sv reflect.Value, fv reflect.Value, tc *ToolContext) gomerr.Gomerr {\n\tvar leftGe gomerr.Gomerr\n\n\tif a.left != nil {\n\t\tleftGe = a.left.Apply(sv, fv, tc)\n\t}\n\n\tif leftGe == nil && a.test(fv) {\n\t\treturn nil\n\t}\n\n\tif a.right == nil {\n\t\treturn leftGe\n\t}\n\n\tge := a.right.Apply(sv, fv, tc)\n\tif ge != nil {\n\t\treturn gomerr.Batch(ge, leftGe) // Okay if leftGe is nil\n\t} else if leftGe != nil {\n\t\t// TODO: replace w/ debug-level log statement\n\t\tfmt.Println(\"Left-side applier failed, but right side succeeded. Left error:\\n\", leftGe.String())\n\t}\n\n\treturn nil\n}\n",

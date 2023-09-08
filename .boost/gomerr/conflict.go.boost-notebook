@@ -1,7 +1,76 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 2:45:48 PM PDT\n\nThis Go code defines a package named `gomerr` and a struct named `ConflictError` within it. The `ConflictError` struct is a type of error that can be used in the application to handle conflict situations. \n\nThe `ConflictError` struct embeds the `Gomerr` struct and adds three more fields: `With`, `Problem`, and `Source`.\n\nHere's a breakdown of the struct:\n\n- `Gomerr`: This is an embedded struct. In Go, when a struct is embedded in another struct, it means that the embedding struct can access the methods and fields of the embedded struct directly. It's a way to achieve inheritance in Go, which doesn't support traditional object-oriented inheritance. The `Gomerr` struct is likely a base error type in the application, providing common error-related functionalities.\n\n- `With`: This field is of type `interface{}`, which means it can hold any type. It's likely used to hold the object or data that is in conflict.\n\n- `Problem`: This is a string that probably describes the conflict in a human-readable form.\n\n- `Source`: This field is also of type `interface{}`, and it's likely used to hold the object or data that is the source of the conflict.\n\nAs per the architectural guidelines, there are no additional constraints or guidelines provided. Therefore, the code seems to be in line with standard Go practices.\n\nAs for the algorithms, there aren't any explicit algorithms used in this code snippet. It's defining a data structure rather than a process or algorithm.\n\nFor more information on Go struct embedding and error handling, you can refer to the following resources:\n\n- [Go by Example: Structs](https://gobyexample.com/structs)\n- [Go by Example: Errors](https://gobyexample.com/errors)\n- [Effective Go: Embedding](https://golang.org/doc/effective_go#embedding)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 2:47:12 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:47:36 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:48:00 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:48:28 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 1\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The 'ConflictError' struct could potentially contain sensitive information. If this struct is logged or outputted in an uncontrolled manner, it could lead to exposure of sensitive data, violating GDPR, PCI DSS, and HIPAA regulations.\n\n   **Solution**: Ensure that any sensitive data within the 'ConflictError' struct is properly handled. This could involve encrypting the data, not logging the data, or ensuring that the data is only accessible to authorized individuals. Also, consider implementing a method to sanitize or anonymize sensitive data before output.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 1,
+                "severity": 7,
+                "bugType": "Data Privacy",
+                "description": "The 'ConflictError' struct could potentially contain sensitive information. If this struct is logged or outputted in an uncontrolled manner, it could lead to exposure of sensitive data, violating GDPR, PCI DSS, and HIPAA regulations.",
+                "solution": "Ensure that any sensitive data within the 'ConflictError' struct is properly handled. This could involve encrypting the data, not logging the data, or ensuring that the data is only accessible to authorized individuals. Also, consider implementing a method to sanitize or anonymize sensitive data before output."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package gomerr\n\ntype ConflictError struct {\n\tGomerr\n\tWith    interface{}\n\tProblem string\n\tSource  interface{}\n}\n",
@@ -13,7 +82,76 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 2:46:23 PM PDT\n\nThis is a function written in Go language. \n\nThe function `Conflict()` takes two arguments: `with` of type `interface{}` and `problem` of type `string`. \n\nThe `interface{}` type in Go is a way to specify that a function can accept any type. It's a powerful feature of Go's type system that enables writing flexible and reusable code.\n\nThe function returns a pointer to a `ConflictError` struct. \n\nThis function seems to be used to create a new `ConflictError` with some specific attributes. \n\nThe `Build()` function is called inside `Conflict()`. It likely constructs an error object of the type passed as the first argument (`new(ConflictError)`), with some additional information provided by the `with` and `problem` arguments. The `new()` function in Go creates a zeroed value of the type passed as an argument and returns a pointer to it.\n\nThe `.(*ConflictError)` part is a type assertion in Go. It asserts that the value returned by `Build()` is a pointer to a `ConflictError`. If the assertion is true, the function proceeds and returns the value. If it's false, the program will panic and stop execution.\n\nThe overall algorithm of the function can be summarized as follows:\n1. Call the `Build()` function with a new `ConflictError` type and the provided `with` and `problem` arguments.\n2. Assert that the returned value is a pointer to a `ConflictError`.\n3. Return the constructed `ConflictError`.\n\nThis function is likely part of an error handling system in a larger application. It's a common practice in Go to create custom error types for different kinds of errors that can occur in your program. This provides more context and makes debugging easier.\n\nFor more information on error handling and type assertions in Go, you can refer to these resources:\n- [Error handling in Go](https://blog.golang.org/error-handling-and-go)\n- [Type assertions in Go](https://tour.golang.org/methods/15)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 2:47:17 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe control flow graph for the provided code snippet is a simple linear flow. The function `Conflict` takes two parameters, `with` and `problem`, and returns a `ConflictError` object. There are no conditional statements or loops in the code, so there are no alternate paths or error paths."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:47:40 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:48:03 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:48:42 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 19\n\n   **Bug Type**: Data and Privacy Compliance\n\n   **Description**: The function 'Conflict' does not perform any data sanitization or validation on the 'with' parameter. This could potentially lead to the processing of sensitive or personal data in violation of GDPR, PCI DSS, and HIPAA.\n\n   **Solution**: Implement data sanitization and validation checks to ensure the 'with' parameter does not contain sensitive or personal data. If the 'with' parameter is expected to contain such data, ensure it is handled in a manner compliant with GDPR, PCI DSS, and HIPAA.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 11,
+                "severity": 7,
+                "bugType": "Data and Privacy Compliance",
+                "description": "The function 'Conflict' does not perform any data sanitization or validation on the 'with' parameter. This could potentially lead to the processing of sensitive or personal data in violation of GDPR, PCI DSS, and HIPAA.",
+                "solution": "Implement data sanitization and validation checks to ensure the 'with' parameter does not contain sensitive or personal data. If the 'with' parameter is expected to contain such data, ensure it is handled in a manner compliant with GDPR, PCI DSS, and HIPAA."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\nfunc Conflict(with interface{}, problem string) *ConflictError {\n\treturn Build(new(ConflictError), with, problem).(*ConflictError)\n}\n",
@@ -25,7 +163,76 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 2:46:58 PM PDT\n\nThis is a function definition in the Go programming language. Go is a statically typed, compiled language developed at Google, known for its simplicity and efficiency. \n\nThe function is named `WithSource` and it is a method on the `ConflictError` type. `ConflictError` is a struct type, and this function is defined as a method on that type. The `*ConflictError` before the function name signifies that this function is a method associated with the pointer to the `ConflictError` struct type.\n\nThe function takes one parameter `source` of the empty interface type `interface{}`. In Go, the `interface{}` type is the empty interface. Every type implements at least zero methods and therefore satisfies the empty interface. So, `interface{}` is a way to accept a value of any type.\n\nInside the function, the `source` parameter is assigned to the `Source` field of the `ConflictError` struct. The function then returns the pointer to the `ConflictError` struct.\n\nThis function is a common pattern in Go called a \"chainable method\" or a \"fluent interface\". This pattern allows you to chain method calls like: `err.WithSource(src).WithMessage(msg)`. Each method modifies the object and returns it, so the next method can be called on the same line. This can make the code more readable and concise.\n\nIn terms of architectural guidelines, this method is quite standard and does not seem to conflict with any architectural guidelines. It is a common and accepted practice in Go to use chainable methods and to use the `interface{}` type to accept any type.\n\nFor more information on Go methods, you can refer to the official Go documentation: https://golang.org/doc/effective_go#methods\n\nFor more information on the empty interface in Go, you can refer to this article: https://tour.golang.org/methods/14\n\nFor more information on the chainable methods pattern in Go, you can refer to this article: https://medium.com/@jadjare/go-fluent-interface-and-method-chaining-5ee0b2c71d62"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 2:47:24 PM PDT\n\n```mermaid\ngraph TD;\n    style Start fill:#228B22, stroke:#000000, stroke-width:2px;\n    style ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\n    style ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\n    Start-->ExampleProcess;\n    ExampleProcess-->End;\n```\n\nIn the provided code snippet, there is a single function named `WithSource` defined within the `ConflictError` struct. The function takes a parameter `source` of type `interface{}` and returns a pointer to a `ConflictError`.\n\nThe control flow of this function is straightforward. It starts at the function entry point and then proceeds to the end of the function, without any conditional statements or error paths.\n\nTherefore, the control flow graph for this code snippet is a simple linear path from the start to the end of the function."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:47:44 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:48:07 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 2:48:54 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 26\n\n   **Bug Type**: Data Exposure\n\n   **Description**: The 'WithSource' function exposes the 'source' data, which may contain sensitive information. This could lead to potential data and privacy compliance issues related to GDPR, PCI DSS, and HIPAA.\n\n   **Solution**: Consider implementing data sanitization or masking techniques to hide sensitive data. Also, it's recommended to use encryption for sensitive data during both transmission and storage.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 14,
+                "severity": 7,
+                "bugType": "Data Exposure",
+                "description": "The 'WithSource' function exposes the 'source' data, which may contain sensitive information. This could lead to potential data and privacy compliance issues related to GDPR, PCI DSS, and HIPAA.",
+                "solution": "Consider implementing data sanitization or masking techniques to hide sensitive data. Also, it's recommended to use encryption for sensitive data during both transmission and storage."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "2",
       "value": "\nfunc (c *ConflictError) WithSource(source interface{}) *ConflictError {\n\tc.Source = source\n\treturn c\n}\n",

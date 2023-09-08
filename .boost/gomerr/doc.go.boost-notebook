@@ -1,7 +1,108 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 7:02:29 PM PDT\n\nThis code snippet is from a Go package named `gomerr`. This package provides an enhanced error framework for capturing errors, error attributes, stack traces, and more. \n\nThe `gomerr` package allows for a \"pretty-print\" mechanism, which means it can format error messages in a way that is easy to read and understand. This is particularly useful for debugging and troubleshooting.\n\nThe package is also designed to be used by renderers to produce content suitable for distribution across process boundaries. This means it can be used to format error messages that are sent as part of an API error response, making it easier for clients of the API to understand and handle errors.\n\nThe `Gomerr` interface is defined in this package. It extends the standard `Error` interface in Go, and includes the `Is(err Error)` and `Unwrap()` functions. The `Is(err Error)` function is used to check if an error is of a specific type, and the `Unwrap()` function is used to retrieve the underlying error in cases where one error wraps another.\n\nIn addition to the `Gomerr` interface, the package also provides a base implementation (`*gomerr`) and a builder function that can be used to create specific `Gomerr` implementation types. The code snippet includes a sample implementation of the `Gomerr` interface, `BooBooError`, which includes an additional `Ouchie` string field.\n\nThe `gomerr` package does not appear to use any specific algorithms, but rather provides a set of tools and structures for handling and reporting errors in a Go application.\n\nThis package can be used to improve error handling and reporting in Go applications, and can be particularly useful in larger applications or those with complex error handling requirements.\n\nFor more information on error handling in Go, you can refer to the following resources:\n\n- [Error handling in Go](https://blog.golang.org/error-handling-and-go)\n- [Go by Example: Errors](https://gobyexample.com/errors)\n- [Effective Go: Errors](https://golang.org/doc/effective_go#errors)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 7:03:49 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\n```\n\nThe provided code snippet does not contain any control flow."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:04:55 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:05:27 PM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 1\n\n   **Bug Type**: Memory\n\n   **Description**: The Gomerr error handling framework could potentially consume excessive memory. If a large number of errors are generated and each error includes a stack trace and other metadata, this can lead to high memory usage.\n\n   **Solution**: Consider implementing a mechanism to limit the amount of data stored with each error or to clean up old errors. Also, consider whether stack traces are necessary for all errors or only for certain severe errors.\n\n\n2. **Severity**: 4/10\n\n   **Line Number**: 1\n\n   **Bug Type**: CPU\n\n   **Description**: Collecting stack traces for each error can be CPU-intensive, especially if a large number of errors are generated.\n\n   **Solution**: Consider whether stack traces are necessary for all errors or only for certain severe errors. An alternative could be to log stack traces separately only in case of severe errors.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 1,
+                "severity": 6,
+                "bugType": "Memory",
+                "description": "The Gomerr error handling framework could potentially consume excessive memory. If a large number of errors are generated and each error includes a stack trace and other metadata, this can lead to high memory usage.",
+                "solution": "Consider implementing a mechanism to limit the amount of data stored with each error or to clean up old errors. Also, consider whether stack traces are necessary for all errors or only for certain severe errors."
+              },
+              {
+                "lineNumber": 1,
+                "severity": 4,
+                "bugType": "CPU",
+                "description": "Collecting stack traces for each error can be CPU-intensive, especially if a large number of errors are generated.",
+                "solution": "Consider whether stack traces are necessary for all errors or only for certain severe errors. An alternative could be to log stack traces separately only in case of severe errors."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:07:08 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 1\n\n   **Bug Type**: GDPR\n\n   **Description**: The code appears to be part of an error handling package that may capture error details, which could include personal data. This could be a violation of GDPR if sensitive data is logged and stored without proper consent and protection.\n\n   **Solution**: Ensure that personal data is not logged or, if it must be logged for debugging purposes, that it is anonymized or pseudonymized. Also, make sure that data is stored securely and that the user has given consent for their data to be used in this way. Implement a mechanism to purge these logs after a certain period.\n\n\n2. **Severity**: 7/10\n\n   **Line Number**: 1\n\n   **Bug Type**: PCI DSS\n\n   **Description**: If the application processes, stores or transmits cardholder data and it logs error details that may contain cardholder data, it can be a violation of PCI DSS requirements.\n\n   **Solution**: Ensure that cardholder data is never logged. If it must be logged for debugging purposes, ensure it is anonymized or pseudonymized. Also, ensure that data is stored securely and logs are purged after a certain period.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 1\n\n   **Bug Type**: HIPAA\n\n   **Description**: If the application handles Protected Health Information (PHI) and it logs error details that may contain PHI, it can be a violation of HIPAA.\n\n   **Solution**: Ensure that PHI is never logged. If it must be logged for debugging purposes, ensure it is anonymized or pseudonymized. Also, ensure that data is stored securely and logs are purged after a certain period.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 1,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The code appears to be part of an error handling package that may capture error details, which could include personal data. This could be a violation of GDPR if sensitive data is logged and stored without proper consent and protection.",
+                "solution": "Ensure that personal data is not logged or, if it must be logged for debugging purposes, that it is anonymized or pseudonymized. Also, make sure that data is stored securely and that the user has given consent for their data to be used in this way. Implement a mechanism to purge these logs after a certain period.",
+                "reference": "https://gdpr-info.eu/art-6-gdpr/"
+              },
+              {
+                "lineNumber": 1,
+                "severity": 7,
+                "bugType": "PCI DSS",
+                "description": "If the application processes, stores or transmits cardholder data and it logs error details that may contain cardholder data, it can be a violation of PCI DSS requirements.",
+                "solution": "Ensure that cardholder data is never logged. If it must be logged for debugging purposes, ensure it is anonymized or pseudonymized. Also, ensure that data is stored securely and logs are purged after a certain period.",
+                "reference": "https://www.pcisecuritystandards.org/pci_security/maintaining_payment_security"
+              },
+              {
+                "lineNumber": 1,
+                "severity": 7,
+                "bugType": "HIPAA",
+                "description": "If the application handles Protected Health Information (PHI) and it logs error details that may contain PHI, it can be a violation of HIPAA.",
+                "solution": "Ensure that PHI is never logged. If it must be logged for debugging purposes, ensure it is anonymized or pseudonymized. Also, ensure that data is stored securely and logs are purged after a certain period.",
+                "reference": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "// Package gomerr provides an enhanced error framework that captures errors,\n// error attributes, stack traces, and more. It includes a \"pretty-print\"\n// mechanism, and can be used by renderers to produce content suitable for\n// distribution across process boundaries (i.e. as part of an API error\n// response).\n//\n// The package defines an interface, `Gomerr`, that extends the Error,\n// interface, includes the the `Is(err Error)` and `Unwrap()` functions, and\n// provides other generally useful functions. The gomerr package also\n// includes a base implementation, `*gomerr`, and a builder function that\n// can be used to build specific Gomerr implementation types. Let's take\n// ConfigurationError as an example:\n//\n//   type BooBooError struct {\n//     Gomerr\n//     Ouchie string\n//   }\n",
@@ -13,7 +114,101 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 7:03:11 PM PDT\n\nThe provided code is written in Go (Golang) and seems to be a part of an error handling mechanism. It defines a function named `BooBoo` which accepts a string parameter `ouchie` and returns a pointer to a `BooBooError` type.\n\nLet's break it down:\n\n1. `func BooBoo(ouchie string) *BooBooError`: This line defines a function named `BooBoo` that takes a string parameter named `ouchie` and returns a pointer to `BooBooError`.\n\n2. `return Build(new(BooBooError), ouchie).(*BooBooError)`: This line creates a new instance of `BooBooError` using the `new` keyword. The `new` keyword in Go creates a new instance of the specified type, in this case `BooBooError`, and returns a pointer to it. This pointer is then passed to the `Build` function along with the `ouchie` string parameter. The `Build` function is expected to construct or modify the `BooBooError` instance and return it. The `.(*BooBooError)` part is a type assertion in Go, which asserts that the return value from the `Build` function is indeed a pointer to a `BooBooError` instance.\n\nThe algorithm used here is quite simple and straightforward:\n\n- Create a new instance of `BooBooError`.\n- Pass this instance and the error message to the `Build` function.\n- The `Build` function is expected to construct or modify the `BooBooError` instance.\n- The result from the `Build` function is returned, after asserting its type to be `*BooBooError`.\n\nUnfortunately, without the context of the `Build` function and the `BooBooError` type, I can't provide more specific details about the behavior of this code.\n\nFor more information on error handling in Go, you can refer to the official Go blog post: [Error handling and Go](https://blog.golang.org/error-handling-and-go). For more details on pointers and type assertions, you can refer to the Go documentation: [Pointers](https://tour.golang.org/moretypes/1) and [Type assertions](https://tour.golang.org/methods/15)."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 7:03:54 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:04:59 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:05:40 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 36\n\n   **Bug Type**: CPU\n\n   **Description**: The function Build is likely using reflection to create a new instance of BooBooError and to perform a type assertion. Reflection in Go is known to be slower and more CPU intensive than direct calls.\n\n   **Solution**: If possible, avoid using reflection. Instead of using a generic Build function, consider creating a new instance of BooBooError directly in the BooBoo function. This would be more efficient and would avoid the overhead of reflection.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 19,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The function Build is likely using reflection to create a new instance of BooBooError and to perform a type assertion. Reflection in Go is known to be slower and more CPU intensive than direct calls.",
+                "solution": "If possible, avoid using reflection. Instead of using a generic Build function, consider creating a new instance of BooBooError directly in the BooBoo function. This would be more efficient and would avoid the overhead of reflection."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:07:51 PM PDT\n\n1. **Severity**: 8/10\n\n   **Line Number**: 36\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'BooBoo' receives a string parameter 'ouchie' which could contain sensitive user data. There's no clear indication of how this data is handled, potentially violating GDPR's data minimization and purpose limitation principles.\n\n   **Solution**: Implement clear data handling policies. Ensure that the 'ouchie' parameter does not contain sensitive user data. If it does, make sure it is processed in a way that complies with GDPR. For instance, consider anonymizing or pseudonymizing the data where possible.\n\n\n2. **Severity**: 7/10\n\n   **Line Number**: 36\n\n   **Bug Type**: PCI DSS\n\n   **Description**: If the 'ouchie' string contains cardholder data, it could violate PCI DSS requirements. PCI DSS requires that cardholder data be protected wherever it is stored, processed, or transmitted.\n\n   **Solution**: Ensure that the 'ouchie' parameter does not contain cardholder data. If it does, it should be encrypted according to PCI DSS requirements. Consider using tokenization or other data protection methods.\n\n\n3. **Severity**: 8/10\n\n   **Line Number**: 36\n\n   **Bug Type**: HIPAA\n\n   **Description**: If 'ouchie' string contains Protected Health Information (PHI), it could violate HIPAA rules. HIPAA requires that PHI be encrypted in transit and at rest, and only be accessible to authorized individuals.\n\n   **Solution**: Ensure that the 'ouchie' parameter does not contain PHI. If it does, it should be encrypted and access controls should be implemented to ensure only authorized individuals can access it.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 19,
+                "severity": 8,
+                "bugType": "GDPR",
+                "description": "The function 'BooBoo' receives a string parameter 'ouchie' which could contain sensitive user data. There's no clear indication of how this data is handled, potentially violating GDPR's data minimization and purpose limitation principles.",
+                "solution": "Implement clear data handling policies. Ensure that the 'ouchie' parameter does not contain sensitive user data. If it does, make sure it is processed in a way that complies with GDPR. For instance, consider anonymizing or pseudonymizing the data where possible.",
+                "webLink": "https://gdpr-info.eu/art-5-gdpr/"
+              },
+              {
+                "lineNumber": 19,
+                "severity": 7,
+                "bugType": "PCI DSS",
+                "description": "If the 'ouchie' string contains cardholder data, it could violate PCI DSS requirements. PCI DSS requires that cardholder data be protected wherever it is stored, processed, or transmitted.",
+                "solution": "Ensure that the 'ouchie' parameter does not contain cardholder data. If it does, it should be encrypted according to PCI DSS requirements. Consider using tokenization or other data protection methods.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/maintaining_payment_security"
+              },
+              {
+                "lineNumber": 19,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "If 'ouchie' string contains Protected Health Information (PHI), it could violate HIPAA rules. HIPAA requires that PHI be encrypted in transit and at rest, and only be accessible to authorized individuals.",
+                "solution": "Ensure that the 'ouchie' parameter does not contain PHI. If it does, it should be encrypted and access controls should be implemented to ensure only authorized individuals can access it.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "//\n//   func BooBoo(ouchie string) *BooBooError {\n//     return Build(new(BooBooError), ouchie).(*BooBooError)\n//   }\n",
@@ -25,7 +220,90 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 7:03:40 PM PDT\n\nThe provided code snippet is very minimal and does not contain any algorithms or functionality. It is simply a package declaration in the Go programming language. \n\nHere's a breakdown of what this code snippet does:\n\n```go\npackage gomerr\n```\n\nThis line of code declares a package named `gomerr`. In Go, a package is a collection of source files in the same directory that are compiled together. Functions, types, variables, and constants defined in one source file are accessible to all other source files within the same package.\n\nThe name `gomerr` suggests that this package could be related to error handling in Go (Go + err = gomerr). However, without additional code, it's impossible to know for sure what this package does.\n\nIn Go, every executable program must contain a `main` package and a `main` function. The `main` function is the entry point of the program. However, the `gomerr` package, as suggested by its name, is likely a non-executable package, meaning it's intended to be imported and used in other packages.\n\nHere are some links for further reading and understanding:\n\n- [Go Packages](https://golang.org/doc/effective_go#packages)\n- [How to write Go code](https://golang.org/doc/code.html)\n- [Go by Example: Packages](https://gobyexample.com/packages)\n\nAs for architectural guidelines, this code snippet doesn't provide enough context to evaluate its consistency with or conflicts between any architectural guidelines. However, declaring a package is a standard practice in Go, so it's likely that this code snippet follows common Go conventions and guidelines."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 7:04:42 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle New fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Error fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle Wrap fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCode fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCodeError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCodeAndStack fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCodeAndStackError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithStack fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithStackError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithStackAndCode fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithStackAndCodeError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCause fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndCode fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndCodeError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStack fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCode fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndData fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtra fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessage fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndData fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtra fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessage fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndData fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtra fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessage fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndData fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtra fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessage fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageError fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndData fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtra fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessage fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndData fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtra fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessage fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndData fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle WrapWithCauseAndStackAndCodeAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndDataAndExtraAndMessageAndData"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:05:02 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:05:43 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:08:17 PM PDT\n\n1. **Severity**: 1/10\n\n   **Line Number**: 42\n\n   **Bug Type**: GDPR\n\n   **Description**: The provided code snippet is too short and does not contain any substantive code to analyze for GDPR compliance issues. GDPR compliance issues typically involve personal data handling, storage, and transfer.\n\n   **Solution**: Please provide a more substantive code snippet for detailed analysis.\n\n\n2. **Severity**: 1/10\n\n   **Line Number**: 42\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The provided code snippet is too short and does not contain any substantive code to analyze for PCI DSS compliance issues. PCI DSS issues typically involve payment card data handling, storage, and transfer.\n\n   **Solution**: Please provide a more substantive code snippet for detailed analysis.\n\n\n3. **Severity**: 1/10\n\n   **Line Number**: 42\n\n   **Bug Type**: HIPAA\n\n   **Description**: The provided code snippet is too short and does not contain any substantive code to analyze for HIPAA compliance issues. HIPAA compliance issues typically involve protected health information (PHI) handling, storage, and transfer.\n\n   **Solution**: Please provide a more substantive code snippet for detailed analysis.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 21,
+                "severity": 1,
+                "bugType": "GDPR",
+                "description": "The provided code snippet is too short and does not contain any substantive code to analyze for GDPR compliance issues. GDPR compliance issues typically involve personal data handling, storage, and transfer.",
+                "solution": "Please provide a more substantive code snippet for detailed analysis."
+              },
+              {
+                "lineNumber": 21,
+                "severity": 1,
+                "bugType": "PCI DSS",
+                "description": "The provided code snippet is too short and does not contain any substantive code to analyze for PCI DSS compliance issues. PCI DSS issues typically involve payment card data handling, storage, and transfer.",
+                "solution": "Please provide a more substantive code snippet for detailed analysis."
+              },
+              {
+                "lineNumber": 21,
+                "severity": 1,
+                "bugType": "HIPAA",
+                "description": "The provided code snippet is too short and does not contain any substantive code to analyze for HIPAA compliance issues. HIPAA compliance issues typically involve protected health information (PHI) handling, storage, and transfer.",
+                "solution": "Please provide a more substantive code snippet for detailed analysis."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "2",
       "value": "//\n//\n\npackage gomerr\n",

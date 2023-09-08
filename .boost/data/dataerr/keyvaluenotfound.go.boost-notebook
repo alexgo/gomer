@@ -1,7 +1,83 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 4:53:27 PM PDT\n\nThis code is written in Go, a statically typed, compiled programming language designed at Google. The code defines a package called `dataerr`. This package seems to be a part of a larger project, likely a server-side application (based on the import statements). \n\nThis package appears to be concerned with error handling related to data operations, especially when a key-value pair is not found.\n\nLet's break down the code:\n\n1. **Import statements:** The code imports two packages from the project itself - `github.com/jt0/gomer/data` and `github.com/jt0/gomer/gomerr`. The `data` package likely contains definitions and operations for data handling in the application. The `gomerr` package is probably a custom error handling package, providing a base error type `Gomerr`.\n\n2. **KeyValueNotFoundError struct:** This struct is a custom error type defined in this package. It embeds the `Gomerr` type, meaning it inherits the behavior of `Gomerr` and can add more fields or methods. The `KeyValueNotFoundError` has three fields:\n\n   - `KeyName`: This is likely the name of the key that was not found.\n   - `KeyFields`: This could be the fields related to the key that was not found.\n   - `Persistable`: This is of type `data.Persistable` (from the imported `data` package). The `gomerr:\"include_type\"` tag suggests that when this error is reported, the type of the `Persistable` should be included in the error message.\n\nThe code doesn't contain any algorithms as such. It's more of a type definition for a specific kind of error in the application.\n\nFor more on error handling in Go, you can refer to [this link](https://blog.golang.org/go1.13-errors).\n\nFor understanding more about Go and its struct types, [this link](https://tour.golang.org/moretypes/2) can be helpful.\n\nIn terms of architectural guidelines, the code appears to follow good practices. It encapsulates the error handling related to data operations in a separate package (`dataerr`), and defines a specific error type (`KeyValueNotFoundError`) for a common error scenario. This makes the error handling more modular and easier to manage."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 4:54:18 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExamplErrorPath-->End;\n```\n\nNO CONTROL FLOW FOUND"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:54:35 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:54:54 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:55:29 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 9\n\n   **Bug Type**: GDPR\n\n   **Description**: This code may violate the data minimization principle of GDPR. The 'KeyName' and 'KeyFields' could potentially contain personal data, which should not be logged or exposed unnecessarily.\n\n   **Solution**: Ensure that 'KeyName' and 'KeyFields' do not contain personal data, or if they do, that this data is anonymized or pseudonymized before being logged or exposed.\n\n\n2. **Severity**: 8/10\n\n   **Line Number**: 10\n\n   **Bug Type**: HIPAA\n\n   **Description**: This code may violate HIPAA rules, as it could potentially expose Protected Health Information (PHI) through error messages. The 'Persistable' field may contain PHI, which should not be included in error messages.\n\n   **Solution**: Ensure that 'Persistable' does not contain PHI, or if it does, that this data is not included in error messages.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 9,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "This code may violate the data minimization principle of GDPR. The 'KeyName' and 'KeyFields' could potentially contain personal data, which should not be logged or exposed unnecessarily.",
+                "solution": "Ensure that 'KeyName' and 'KeyFields' do not contain personal data, or if they do, that this data is anonymized or pseudonymized before being logged or exposed."
+              },
+              {
+                "lineNumber": 10,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "This code may violate HIPAA rules, as it could potentially expose Protected Health Information (PHI) through error messages. The 'Persistable' field may contain PHI, which should not be included in error messages.",
+                "solution": "Ensure that 'Persistable' does not contain PHI, or if it does, that this data is not included in error messages."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package dataerr\n\nimport (\n\t\"github.com/jt0/gomer/data\"\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype KeyValueNotFoundError struct {\n\tgomerr.Gomerr\n\tKeyName     string\n\tKeyFields   []string\n\tPersistable data.Persistable `gomerr:\"include_type\"`\n}\n",
@@ -13,7 +89,98 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 4:54:03 PM PDT\n\nThe provided code snippet is written in Go, a statically typed, compiled programming language developed by Google. This particular function `KeyValueNotFound` is used to create a new instance of `KeyValueNotFoundError` when a key-value pair is not found in the data store. \n\nThe function takes three arguments:\n- `keyName`: a string that represents the name of the key.\n- `keyFields`: a slice of strings that represents the fields of the key.\n- `persistable`: an interface of type `data.Persistable` which represents the object that is persistable to the data store.\n\nThe function returns a pointer to a newly created `KeyValueNotFoundError`.\n\nLet's break down the function:\n\n1. `gomerr.Build(new(KeyValueNotFoundError), keyName, keyFields, persistable)`: This statement is used to build a new error of type `KeyValueNotFoundError`. The `Build` function is a method from the `gomerr` package, which is a common error handling package in Go. This function takes a variable number of arguments. The first argument must be a pointer to a new error (in this case `KeyValueNotFoundError`), and the rest of the arguments are used to populate the error fields.\n\n2. `.(*KeyValueNotFoundError)`: This is a type assertion in Go. It asserts that the result of `gomerr.Build` call is of type `*KeyValueNotFoundError`. If the assertion is true, it returns the error as `*KeyValueNotFoundError`. If the assertion is false, it will panic.\n\nIn summary, this function is used to create and return a new `KeyValueNotFoundError` when a key-value pair is not found in the data store. It uses the `Build` method from `gomerr` package to create the error and then uses a type assertion to return the error as `*KeyValueNotFoundError`.\n\nThe algorithm used here is pretty straightforward. It involves creating a new error and populating it with the provided arguments. The error handling mechanism used here is common in Go and is considered a good practice.\n\nFor more information about error handling in Go, you can refer to the following resources:\n\n- [Error handling and Go](https://blog.golang.org/error-handling-and-go)\n- [Go by Example: Errors](https://gobyexample.com/errors)\n- [Go: Best Practices for Production Environments](https://github.com/golang/go/wiki/Production-Deployments)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 4:54:22 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart \u0001 ;\nExampleProcess-->End \u0001 ;\n\n```"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:54:39 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:55:05 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 28\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in the gomerr.Build function can be computationally expensive, especially if this function is called frequently. This can lead to high CPU usage.\n\n   **Solution**: Consider alternative error handling methods that do not use reflection. For instance, you could directly instantiate the KeyValueNotFoundError struct instead of using the gomerr.Build function. If you must use reflection, try to minimize its use and avoid calling this function in a tight loop.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 15,
+                "severity": 5,
+                "bugType": "CPU",
+                "description": "The use of reflection in the gomerr.Build function can be computationally expensive, especially if this function is called frequently. This can lead to high CPU usage.",
+                "solution": "Consider alternative error handling methods that do not use reflection. For instance, you could directly instantiate the KeyValueNotFoundError struct instead of using the gomerr.Build function. If you must use reflection, try to minimize its use and avoid calling this function in a tight loop."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 4:55:52 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 29\n\n   **Bug Type**: GDPR\n\n   **Description**: This function may lead to a violation of GDPR's right to be forgotten. If a user requests their data to be deleted, but the data is still retrievable through the key-value search, it's a violation.\n\n   **Solution**: Ensure that when a user's data is deleted, all key-value pairs associated with that user are also deleted.\n\n\n2. **Severity**: 8/10\n\n   **Line Number**: 29\n\n   **Bug Type**: HIPAA\n\n   **Description**: If the persistable data contains Protected Health Information (PHI), this function could be a HIPAA violation. PHI should not be used as a key value in any form.\n\n   **Solution**: Avoid using PHI as a key value. If it's necessary to use PHI in this way, it must be de-identified according to HIPAA standards.\n\n\n3. **Severity**: 6/10\n\n   **Line Number**: 29\n\n   **Bug Type**: PCI DSS\n\n   **Description**: If the persistable data contains cardholder data, this function could be a PCI DSS violation. Cardholder data should not be used as a key value in any form.\n\n   **Solution**: Avoid using cardholder data as a key value. If it's necessary to use such data in this way, it must be encrypted according to PCI DSS standards.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 16,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "This function may lead to a violation of GDPR's right to be forgotten. If a user requests their data to be deleted, but the data is still retrievable through the key-value search, it's a violation.",
+                "solution": "Ensure that when a user's data is deleted, all key-value pairs associated with that user are also deleted."
+              },
+              {
+                "lineNumber": 16,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "If the persistable data contains Protected Health Information (PHI), this function could be a HIPAA violation. PHI should not be used as a key value in any form.",
+                "solution": "Avoid using PHI as a key value. If it's necessary to use PHI in this way, it must be de-identified according to HIPAA standards."
+              },
+              {
+                "lineNumber": 16,
+                "severity": 6,
+                "bugType": "PCI DSS",
+                "description": "If the persistable data contains cardholder data, this function could be a PCI DSS violation. Cardholder data should not be used as a key value in any form.",
+                "solution": "Avoid using cardholder data as a key value. If it's necessary to use such data in this way, it must be encrypted according to PCI DSS standards."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\nfunc KeyValueNotFound(keyName string, keyFields []string, persistable data.Persistable) *KeyValueNotFoundError {\n\treturn gomerr.Build(new(KeyValueNotFoundError), keyName, keyFields, persistable).(*KeyValueNotFoundError)\n}\n",

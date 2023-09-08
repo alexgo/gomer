@@ -1,7 +1,93 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:16:20 PM PDT\n\nThis is a Go code snippet that defines a custom error type named `ExceededError`. This type is used when a certain limit has been exceeded in the context of the application. \n\nThe `ExceededError` struct contains several fields:\n\n- `Gomerr`: This is an embedded field of type `gomerr.Gomerr`, which is a package for handling errors in Go. By embedding `Gomerr` in the `ExceededError` struct, `ExceededError` inherits the methods of `Gomerr`. This allows `ExceededError` to be used wherever a `Gomerr` is expected, and to have additional context-specific information. You can learn more about Go error handling and the gomerr package here: [Error Handling in Go](https://blog.golang.org/error-handling-and-go)\n\n- `Limiter`: This field is of type `interface{}`, which means it can hold any type. This could be used to hold the object or entity that is imposing the limit.\n\n- `Limited`: Similar to `Limiter`, this is an `interface{}` type field that can hold any type. It's likely used to hold the object or entity that is being limited.\n\n- `Limit`, `Current`, and `Attempted`: These fields are of type `Amount` (which is not defined in the provided code snippet). They presumably represent the limit that has been set, the current amount or usage, and the amount that was attempted to be used when the limit was exceeded, respectively.\n\nThe `ExceededError` struct doesn't appear to use any specific algorithm. It's a data structure used to hold information about an error condition, specifically when a limit has been exceeded.\n\nThe code follows Go best practices for error handling, which recommends defining custom error types for different error conditions. This allows for more informative error messages and makes it easier to handle specific error conditions in the code. \n\nAs per architectural guidelines, the code appears to be well-structured and follows Go best practices. It does not seem to conflict with any standard architectural guidelines."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:17:42 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:18:43 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:18:59 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:21:07 PM PDT\n\n1. **Severity**: 6/10\n\n   **Line Number**: 6\n\n   **Bug Type**: Data and Privacy Compliance - GDPR\n\n   **Description**: The ExceededError struct could potentially contain sensitive user data, but no explicit mechanisms for data protection, such as encryption, are present. This raises GDPR compliance concerns as GDPR requires personal data to be processed in a manner that ensures appropriate security, including protection against unauthorized or unlawful processing and against accidental loss, destruction or damage.\n\n   **Solution**: Consider encrypting sensitive data stored in the ExceededError struct. Also, implement access controls to ensure only authorized personnel can access this data. Ensure all data processing activities are done in compliance with GDPR requirements.\n\n\n2. **Severity**: 5/10\n\n   **Line Number**: 6\n\n   **Bug Type**: Data and Privacy Compliance - HIPAA\n\n   **Description**: If any of the data stored in the ExceededError struct is Protected Health Information (PHI), it could be in violation of HIPAA compliance. HIPAA requires PHI to be securely stored and only accessible to authorized individuals.\n\n   **Solution**: If PHI is stored in the ExceededError struct, ensure it is encrypted and access controls are in place. Regularly audit access logs to detect any unauthorized access attempts.\n\n\n3. **Severity**: 3/10\n\n   **Line Number**: 6\n\n   **Bug Type**: Data and Privacy Compliance - PCI DSS\n\n   **Description**: If the ExceededError struct stores cardholder data or sensitive authentication data, it could be in violation of PCI DSS. PCI DSS requires such data to be securely stored, transmitted and disposed of.\n\n   **Solution**: If cardholder data or sensitive authentication data is stored in the ExceededError struct, ensure it is encrypted and access controls are in place. Regularly monitor and test networks to detect and mitigate vulnerabilities.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 6,
+                "severity": 6,
+                "bugType": "Data and Privacy Compliance - GDPR",
+                "description": "The ExceededError struct could potentially contain sensitive user data, but no explicit mechanisms for data protection, such as encryption, are present. This raises GDPR compliance concerns as GDPR requires personal data to be processed in a manner that ensures appropriate security, including protection against unauthorized or unlawful processing and against accidental loss, destruction or damage.",
+                "solution": "Consider encrypting sensitive data stored in the ExceededError struct. Also, implement access controls to ensure only authorized personnel can access this data. Ensure all data processing activities are done in compliance with GDPR requirements.",
+                "webLink": "https://gdpr-info.eu/issues/data-protection/"
+              },
+              {
+                "lineNumber": 6,
+                "severity": 5,
+                "bugType": "Data and Privacy Compliance - HIPAA",
+                "description": "If any of the data stored in the ExceededError struct is Protected Health Information (PHI), it could be in violation of HIPAA compliance. HIPAA requires PHI to be securely stored and only accessible to authorized individuals.",
+                "solution": "If PHI is stored in the ExceededError struct, ensure it is encrypted and access controls are in place. Regularly audit access logs to detect any unauthorized access attempts.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/index.html"
+              },
+              {
+                "lineNumber": 6,
+                "severity": 3,
+                "bugType": "Data and Privacy Compliance - PCI DSS",
+                "description": "If the ExceededError struct stores cardholder data or sensitive authentication data, it could be in violation of PCI DSS. PCI DSS requires such data to be securely stored, transmitted and disposed of.",
+                "solution": "If cardholder data or sensitive authentication data is stored in the ExceededError struct, ensure it is encrypted and access controls are in place. Regularly monitor and test networks to detect and mitigate vulnerabilities.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package limit\n\nimport (\n\t\"github.com/jt0/gomer/gomerr\"\n)\n\ntype ExceededError struct {\n\tgomerr.Gomerr\n\tLimiter   interface{}\n\tLimited   interface{}\n\tLimit     Amount\n\tCurrent   Amount\n\tAttempted Amount\n}\n",
@@ -13,7 +99,108 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:16:51 PM PDT\n\nThe provided code snippet is a function written in Go language. The function `Exceeded` returns an error of type `ExceededError` when a limit is exceeded. Here's a breakdown of the function:\n\n- The function `Exceeded` takes five parameters:\n  - `limiter`: This could be any type of object that is enforcing a limit.\n  - `limited`: This could be any type of object that is being limited.\n  - `limit`: This is the maximum limit or the threshold that should not be exceeded.\n  - `current`: This is the current value or state.\n  - `attempted`: This is the value that was attempted to be set or added.\n\n- The function uses `gomerr.Build` to create a new error of type `ExceededError`. The `gomerr` package is a Go package for creating and handling errors. The `Build` function in `gomerr` is used to construct an error object. The parameters passed to the `Build` function are used to initialize the `ExceededError` object.\n\n- The function returns the newly created `ExceededError` object.\n\nThis code does not seem to use any specific algorithms. However, it uses the Go error handling mechanism and the `gomerr` package for creating custom errors.\n\nAs for architectural guidelines, this code appears to be well-structured and follows good practices for error handling in Go. It encapsulates the creation of a specific type of error (`ExceededError`) in a separate function, which improves modularity and reusability of the code.\n\nFor more information on error handling in Go, you can refer to the following resources:\n\n- [Error handling in Go](https://blog.golang.org/error-handling-and-go)\n- [Go by Example: Errors](https://gobyexample.com/errors)\n- [Go error handling best practices](https://www.digitalocean.com/community/tutorials/how-to-handle-errors-in-go)\n\nNote: There isn't much information available online about the `gomerr` package. It seems to be a custom package used in the project."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:17:47 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe code snippet provided does not have any control flow."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:18:46 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:19:12 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 30\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in the `gomerr.Build` function can be CPU-intensive, especially if this function is called frequently or with complex data structures.\n\n   **Solution**: Consider refactoring the code to avoid the use of reflection. For example, you could pass the `ExceededError` directly instead of using `new(ExceededError)`. If the use of reflection is unavoidable, consider using caching or other optimization techniques to minimize the performance impact. You can refer to this resource for more information on optimizing reflection in Go: https://go.dev/blog/laws-of-reflection\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 30\n\n   **Bug Type**: Memory\n\n   **Description**: The use of the `new` function in `new(ExceededError)` creates a new instance of `ExceededError` every time the function is called, which could potentially lead to high memory usage if the function is called frequently.\n\n   **Solution**: Consider using a pool of `ExceededError` objects that can be reused, instead of creating a new instance every time the function is called. This can help reduce memory usage and improve performance. You can refer to this resource for more information on object pooling in Go: https://golangbyexample.com/go-object-pool/\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 16,
+                "severity": 7,
+                "bugType": "CPU",
+                "description": "The use of reflection in the `gomerr.Build` function can be CPU-intensive, especially if this function is called frequently or with complex data structures.",
+                "solution": "Consider refactoring the code to avoid the use of reflection. For example, you could pass the `ExceededError` directly instead of using `new(ExceededError)`. If the use of reflection is unavoidable, consider using caching or other optimization techniques to minimize the performance impact. You can refer to this resource for more information on optimizing reflection in Go: https://go.dev/blog/laws-of-reflection"
+              },
+              {
+                "lineNumber": 16,
+                "severity": 6,
+                "bugType": "Memory",
+                "description": "The use of the `new` function in `new(ExceededError)` creates a new instance of `ExceededError` every time the function is called, which could potentially lead to high memory usage if the function is called frequently.",
+                "solution": "Consider using a pool of `ExceededError` objects that can be reused, instead of creating a new instance every time the function is called. This can help reduce memory usage and improve performance. You can refer to this resource for more information on object pooling in Go: https://golangbyexample.com/go-object-pool/"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:21:43 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 31\n\n   **Bug Type**: GDPR\n\n   **Description**: The function 'Exceeded' does not have any data validation or sanitization logic, which is a requirement under GDPR. The data processed by this function could potentially include personal data, which under GDPR must be processed in a way that ensures its security.\n\n   **Solution**: Add data validation and sanitization logic to the function to ensure that any personal data processed by the function is handled securely. This could include checking that the data is of the correct type and format, and sanitizing it to remove any potentially harmful content.\n\n\n2. **Severity**: 8/10\n\n   **Line Number**: 31\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function 'Exceeded' does not check whether the data it is processing is Protected Health Information (PHI), which is a requirement under HIPAA. If the function processes PHI without appropriate safeguards in place, this could constitute a violation of HIPAA.\n\n   **Solution**: Add a check to the function to determine whether the data it is processing is PHI. If it is, the function should implement appropriate safeguards to ensure the security of the data, such as encryption.\n\n\n3. **Severity**: 6/10\n\n   **Line Number**: 31\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The function 'Exceeded' does not have any mechanisms in place to protect cardholder data, which is a requirement under PCI DSS. If the function processes cardholder data without appropriate security measures in place, this could constitute a violation of PCI DSS.\n\n   **Solution**: Add security measures to the function to protect cardholder data. This could include encryption, tokenization, or other methods of protecting sensitive data.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 17,
+                "severity": 7,
+                "bugType": "GDPR",
+                "description": "The function 'Exceeded' does not have any data validation or sanitization logic, which is a requirement under GDPR. The data processed by this function could potentially include personal data, which under GDPR must be processed in a way that ensures its security.",
+                "solution": "Add data validation and sanitization logic to the function to ensure that any personal data processed by the function is handled securely. This could include checking that the data is of the correct type and format, and sanitizing it to remove any potentially harmful content.",
+                "webLink": "https://gdpr-info.eu/art-5-gdpr/"
+              },
+              {
+                "lineNumber": 17,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "The function 'Exceeded' does not check whether the data it is processing is Protected Health Information (PHI), which is a requirement under HIPAA. If the function processes PHI without appropriate safeguards in place, this could constitute a violation of HIPAA.",
+                "solution": "Add a check to the function to determine whether the data it is processing is PHI. If it is, the function should implement appropriate safeguards to ensure the security of the data, such as encryption.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              },
+              {
+                "lineNumber": 17,
+                "severity": 6,
+                "bugType": "PCI DSS",
+                "description": "The function 'Exceeded' does not have any mechanisms in place to protect cardholder data, which is a requirement under PCI DSS. If the function processes cardholder data without appropriate security measures in place, this could constitute a violation of PCI DSS.",
+                "solution": "Add security measures to the function to protect cardholder data. This could include encryption, tokenization, or other methods of protecting sensitive data.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/why_security_matters"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\nfunc Exceeded(limiter, limited interface{}, limit, current, attempted Amount) *ExceededError {\n\treturn gomerr.Build(new(ExceededError), limiter, limited, limit, current, attempted).(*ExceededError)\n}\n",
@@ -25,7 +212,91 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:17:29 PM PDT\n\nThe provided code is a function definition in Go language. The function is named `UnquantifiedExcess` and it takes two parameters, `limiter` and `limited`, both of any type (`interface{}`). The function returns a pointer to an `ExceededError` object.\n\nThe function uses the `gomerr.Build` method to create a new error object. `gomerr` is a package in Go for creating and handling errors. The `Build` method is used to construct an error with additional context or properties. In this case, the `Build` method is being used to create a new `ExceededError` object.\n\nThe `Build` method takes several parameters. The first parameter is a new `ExceededError` object, created using `new(ExceededError)`. The `new` keyword in Go is used to allocate memory for a new object of the specified type. In this case, it is allocating memory for a new `ExceededError` object.\n\nThe next three parameters to the `Build` method are `limiter`, `limited`, and three `Unknown` values. These parameters are used to provide additional context or properties to the error being built. The purpose of these parameters would be clearer with more context about the `ExceededError` type and the `gomerr` package.\n\nFinally, the result of the `Build` method is type asserted to an `ExceededError` pointer using `.(*ExceededError)`. Type assertion in Go is a way to extract the underlying value of an interface. In this case, it is used to extract the `ExceededError` object from the result of the `Build` method.\n\nIn summary, this function creates a new `ExceededError` object with some context or properties, and returns it.\n\nFor more information about error handling in Go, you can refer to the [official Go blog on error handling](https://blog.golang.org/go1.13-errors).\n\nFor more information about the `gomerr` package, you can refer to its [GitHub repository](https://github.com/BlueBasher/gomerr). Please note that this is a third-party package and is not part of the standard Go library."
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:18:36 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe code snippet provided does not have any control flow."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:18:50 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:19:33 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 38\n\n   **Bug Type**: CPU\n\n   **Description**: Use of reflection in gomerr.Build function can lead to high CPU usage.\n\n   **Solution**: Avoid using reflection unless necessary. If the types of 'limiter' and 'limited' are known at compile time, consider using a type-specific function instead of a generic one. Here is a reference on how to avoid reflection in Go: https://go.dev/play/p/8ByZqdK2-W6\n\n\n2. **Severity**: 6/10\n\n   **Line Number**: 38\n\n   **Bug Type**: Memory\n\n   **Description**: The gomerr.Build function creates a new ExceededError object each time it is called, which can lead to high memory usage if called frequently.\n\n   **Solution**: Consider using an object pool or another method of reusing ExceededError objects to reduce memory usage. Here's a reference on object pooling in Go: https://www.ardanlabs.com/blog/2013/05/pool-gonuts-part-iii.html\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 20,
+                "severity": 7,
+                "bugType": "CPU",
+                "description": "Use of reflection in gomerr.Build function can lead to high CPU usage.",
+                "solution": "Avoid using reflection unless necessary. If the types of 'limiter' and 'limited' are known at compile time, consider using a type-specific function instead of a generic one. Here is a reference on how to avoid reflection in Go: https://go.dev/play/p/8ByZqdK2-W6"
+              },
+              {
+                "lineNumber": 20,
+                "severity": 6,
+                "bugType": "Memory",
+                "description": "The gomerr.Build function creates a new ExceededError object each time it is called, which can lead to high memory usage if called frequently.",
+                "solution": "Consider using an object pool or another method of reusing ExceededError objects to reduce memory usage. Here's a reference on object pooling in Go: https://www.ardanlabs.com/blog/2013/05/pool-gonuts-part-iii.html"
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:22:00 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 38\n\n   **Bug Type**: Data Privacy and Compliance\n\n   **Description**: The function `UnquantifiedExcess` does not perform any checks or validations on the data it processes. This could potentially lead to the processing of sensitive data, such as Personal Identifiable Information (PII) or Protected Health Information (PHI), without proper authorization or consent, which would be a violation of GDPR, PCI DSS, and HIPAA.\n\n   **Solution**: Implement checks to validate the type and sensitivity of the data processed by the function. If the data is sensitive, ensure that it is processed in accordance with the relevant data protection regulations. This could involve encrypting the data, obtaining user consent before processing, or anonymizing the data to protect user privacy.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 20,
+                "severity": 7,
+                "bugType": "Data Privacy and Compliance",
+                "description": "The function `UnquantifiedExcess` does not perform any checks or validations on the data it processes. This could potentially lead to the processing of sensitive data, such as Personal Identifiable Information (PII) or Protected Health Information (PHI), without proper authorization or consent, which would be a violation of GDPR, PCI DSS, and HIPAA.",
+                "solution": "Implement checks to validate the type and sensitivity of the data processed by the function. If the data is sensitive, ensure that it is processed in accordance with the relevant data protection regulations. This could involve encrypting the data, obtaining user consent before processing, or anonymizing the data to protect user privacy."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "2",
       "value": "\nfunc UnquantifiedExcess(limiter, limited interface{}) *ExceededError {\n\treturn gomerr.Build(new(ExceededError), limiter, limited, Unknown, Unknown, Unknown).(*ExceededError)\n}\n",

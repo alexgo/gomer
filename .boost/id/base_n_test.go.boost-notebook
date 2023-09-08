@@ -1,7 +1,68 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 12:01:55 PM PDT\n\nThis is a unit test in Go that verifies the functionality of different ID generators. It checks if the ID generators are producing the expected number of characters per ID for a given number of bits.\n\nHere's a detailed explanation of the code:\n\n1. Package Declaration: `package id` declares that this file belongs to package 'id'.\n\n2. Import Statement: `import (\"testing\")` imports the \"testing\" package from the Go standard library, which provides support for automated testing of Go packages.\n\n3. Test Function Declaration: `func TestBaseNIdGenerator_CharsPerId(t *testing.T)` declares a test function named \"TestBaseNIdGenerator_CharsPerId\". The '*testing.T' parameter provides methods for reporting test failures and logging additional information.\n\n4. Test Cases: `tests := []struct {...}` defines an array of anonymous structs. Each struct represents a test case with the following fields: name (the name of the test case), generator (a function that returns an ID generator), bitsPerId (the number of bits in each ID), and charsPerId (the expected number of characters in each ID).\n\n5. Test Execution: `for _, tt := range tests {...}` is a loop that iterates over each test case. For each test case, it uses the 't.Run' method to execute a subtest with the given name and function. The function creates an ID generator using 'tt.generator', calculates the number of characters per ID using 'charsPerId', and then checks if the calculated value matches the expected value 'tt.charsPerId'. If the values don't match, it calls 't.Errorf' to report a test failure.\n\nThe algorithm used in this code is a simple iteration over a collection of test cases. Each test case is independently executed and checked for correctness. \n\nFor more information about testing in Go, you can refer to the official documentation: https://golang.org/pkg/testing/"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 12:02:34 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nNO CONTROL FLOW FOUND"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 12:02:52 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 12:03:05 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 12:03:36 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package id\n\nimport (\n\t\"testing\"\n)\n\nfunc TestBaseNIdGenerator_CharsPerId(t *testing.T) {\n\t//goland:noinspection SpellCheckingInspection\n\ttests := []struct {\n\t\tname       string\n\t\tgenerator  func(idLength int, lengthUnit LengthUnit) Generator\n\t\tbitsPerId  int\n\t\tcharsPerId uint16\n\t}{\n\t\t{\"Base10\", NewBase10IdGenerator, 128, 39},\n\t\t{\"Base16\", NewBase16IdGenerator, 128, 32},\n\t\t{\"Base36\", NewBase36IdGenerator, 128, 25},\n\t\t{\"Base62\", NewBase62IdGenerator, 128, 22},\n\t}\n\tfor _, tt := range tests {\n\t\tt.Run(tt.name, func(t *testing.T) {\n\t\t\tg := tt.generator(tt.bitsPerId, Bits).(*baseNIdGenerator)\n\t\t\tif charsPerId := charsPerId[Bits](tt.bitsPerId, uint16(g.base)); charsPerId != tt.charsPerId {\n\t\t\t\tt.Errorf(\"charsPerId = %d, want %d\", charsPerId, tt.charsPerId)\n\t\t\t}\n\t\t})\n\t}\n}\n",
@@ -13,7 +74,83 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 12:02:18 PM PDT\n\nThe provided code is a commented-out unit test function in Go. This test is specifically for a function named `Generate()` which belongs to a struct type `baseNIdGenerator`. The test is designed to ensure that the `Generate()` function behaves as expected.\n\nHere's a breakdown of the code:\n\n1. The function `Test_baseNIdGenerator_Generate(t *testing.T)` is a unit test function. The `t *testing.T` parameter is a pointer to `testing.T`, which provides methods for reporting test failures and logging additional information.\n\n2. Inside this function, a `fields` struct type is defined, which represents the fields of the `baseNIdGenerator` struct. This struct includes `bitsPerId`, `base`, `charsPerId`, `charsPerUint64`, and `chars` fields.\n\n3. The `tests` slice is defined, which contains anonymous structs. Each struct represents a test case, with `name` for the test case name, `fields` for the `baseNIdGenerator` fields, and `want` for the expected result.\n\n4. The `for _, tt := range tests` loop iterates over each test case. The `t.Run(tt.name, func(t *testing.T) {})` function is used to run each test case as a subtest, which allows for more granular reporting of test results.\n\n5. Inside each subtest, a new `baseNIdGenerator` struct `g` is created with the fields defined in the test case.\n\n6. The `if got := g.Generate(); got != tt.want {}` statement calls the `Generate()` method of the `baseNIdGenerator` struct `g` and compares the result (`got`) with the expected result (`tt.want`). If they are not equal, the test fails and reports the discrepancy with `t.Errorf()`.\n\nThe algorithm used here is a simple iteration over test cases and comparison of function output with expected output. This is a common pattern in unit testing.\n\nAs for the architectural guidelines, this code seems to be in line with common Go testing practices, which recommend structuring tests in this manner for clarity and robustness.\n\nFor more information on testing in Go, you can refer to the following resources:\n\n- [Testing in Go](https://golang.org/pkg/testing/)\n- [How to write tests in Go](https://medium.com/rungo/unit-testing-made-easy-in-go-25077669318)\n- [Go Test -v Template Explanation](https://ieftimov.com/post/testing-in-go-test-templates/)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 12:02:45 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Test fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle fields fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle tests fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle name fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle g fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle got fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle want fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Generate fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle End fill:#228B22, stroke:#000000, stroke-width:2px;\n\nStart-->Test;\nTest-->fields;\nfields-->tests;\ntests-->name;\nname-->g;\ng-->Generate;\nGenerate-->got;\ngot-->want;\nwant-->End;\n```\n\nThe control flow graph for the provided code snippet is as follows:\n\n```\nTest_baseNIdGenerator_Generate-->fields;\nfields-->tests;\ntests-->name;\nname-->g;\ng-->Generate;\nGenerate-->got;\ngot-->want;\nwant-->End;\n```\n\nPlease note that the control flow graph is generated based on the provided code snippet. If there are any missing or incomplete parts, the control flow graph may not accurately represent the complete flow of the code."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 12:02:56 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 12:03:27 PM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 73\n\n   **Bug Type**: CPU\n\n   **Description**: The Generate function is called within a loop. Depending on the number of test cases, this could potentially lead to high CPU usage.\n\n   **Solution**: Consider using techniques like parallel execution of tests or lazy evaluation to reduce CPU usage. Refer to https://golang.org/pkg/testing/ for more details on how to use these techniques in Go.\n\n\n2. **Severity**: 2/10\n\n   **Line Number**: 76\n\n   **Bug Type**: Memory\n\n   **Description**: Each iteration of the loop creates a new instance of baseNIdGenerator. This could lead to increased memory usage if the number of test cases is large.\n\n   **Solution**: Consider reusing the baseNIdGenerator instance if possible, or use a setup function to create a single instance before the tests run. Refer to https://golang.org/pkg/testing/#hdr-Main for more details on how to use setup functions in Go.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 45,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "The Generate function is called within a loop. Depending on the number of test cases, this could potentially lead to high CPU usage.",
+                "solution": "Consider using techniques like parallel execution of tests or lazy evaluation to reduce CPU usage. Refer to https://golang.org/pkg/testing/ for more details on how to use these techniques in Go."
+              },
+              {
+                "lineNumber": 48,
+                "severity": 2,
+                "bugType": "Memory",
+                "description": "Each iteration of the loop creates a new instance of baseNIdGenerator. This could lead to increased memory usage if the number of test cases is large.",
+                "solution": "Consider reusing the baseNIdGenerator instance if possible, or use a setup function to create a single instance before the tests run. Refer to https://golang.org/pkg/testing/#hdr-Main for more details on how to use setup functions in Go."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 12:03:40 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": []
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\n// func Test_baseNIdGenerator_Generate(t *testing.T) {\n// \ttype fields struct {\n// \t\tbitsPerId      int\n// \t\tbase           uint64\n// \t\tcharsPerId     int\n// \t\tcharsPerUint64 int\n// \t\tchars          []byte\n// \t}\n// \ttests := []struct {\n// \t\tname   string\n// \t\tfields fields\n// \t\twant   string\n// \t}{\n// \t}\n// \tfor _, tt := range tests {\n// \t\tt.Run(tt.name, func(t *testing.T) {\n// \t\t\tg := baseNIdGenerator{\n// \t\t\t\tbitsPerId:      tt.fields.bitsPerId,\n// \t\t\t\tbase:           tt.fields.base,\n// \t\t\t\tcharsPerId:     tt.fields.charsPerId,\n// \t\t\t\tcharsPerUint64: tt.fields.charsPerUint64,\n// \t\t\t\tchars:          tt.fields.chars,\n// \t\t\t}\n// \t\t\tif got := g.Generate(); got != tt.want {\n// \t\t\t\tt.Errorf(\"Generate() = %v, want %v\", got, tt.want)\n// \t\t\t}\n// \t\t})\n// \t}\n// }\n",

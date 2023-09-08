@@ -1,7 +1,91 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:04:18 PM PDT\n\nThis code snippet is written in Go, a statically typed, compiled language developed by Google. The snippet is a part of a test file for the `structs` package, which is why the package is named `structs_test`. \n\nThe `import` statement at the top of the file is used to include other packages that this code depends on. These packages provide various functionalities that are used in the code:\n\n1. `testing`: This is a standard Go library for writing unit tests. It provides functions and types that help with automated testing of Go packages.\n\n2. `github.com/jt0/gomer/_test/assert`: This package is likely a custom assertion library used to assert conditions in tests. Assertion libraries provide functions to check if certain conditions are met. If the conditions are not met, the test fails.\n\n3. `github.com/jt0/gomer/gomerr`: This package is likely used for error handling in the `gomer` project. It probably provides custom error types and functions to create and handle these errors.\n\n4. `github.com/jt0/gomer/structs`: This is the package that is being tested. It probably provides functions and types related to Go structs, which are typed collections of fields.\n\nThe `TestCase` struct is defined to encapsulate all the necessary elements for a single test case. The fields of the `TestCase` struct are:\n\n1. `Name`: This is likely the name of the test case, used for identification.\n\n2. `Tool`: This is a pointer to a `Tool` struct from the `structs` package. This is likely the object that is being tested.\n\n3. `Context`: This is a pointer to a `ToolContext` struct from the `structs` package. This probably provides context for the `Tool` that is being tested, such as dependencies or configurations.\n\n4. `Input`: This is the input that will be passed to the `Tool` for testing. Its type is `interface{}`, which means it can be any type.\n\n5. `Expected`: This is the expected output of the `Tool` when the `Input` is passed to it. Its type is `interface{}`, so it can be any type. The comment indicates that it can be the same type as `Input` or a `gomerr.Gomerr`, which is a custom error type from the `gomerr` package.\n\nThe `TestCase` struct will be used to run multiple test cases, each with different inputs and expected outputs, to ensure that the `Tool` behaves as expected in different scenarios.\n\nThis code does not contain any specific algorithms. It's a structural setup for testing, which is a fundamental part of software development to ensure the code works as expected and to catch any bugs or issues early in the development process.\n\nFor more information on testing in Go, you can refer to the official Go documentation on testing: https://golang.org/pkg/testing/"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:04:57 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\n```\nNO CONTROL FLOW FOUND"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:06:01 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:07:18 PM PDT\n\n1. **Severity**: 2/10\n\n   **Line Number**: 1\n\n   **Bug Type**: Memory\n\n   **Description**: The TestCase struct uses pointers for the Tool and ToolContext fields. This can lead to potential memory overhead if not handled properly, as each new pointer requires additional memory allocation.\n\n   **Solution**: Consider if the Tool and ToolContext fields need to be pointers. If they do not need to be modified, it would be more memory efficient to use the actual value instead of a pointer. If they do need to be modified, consider using a design pattern that reduces the need for pointers, such as the builder pattern.\n\n\n2. **Severity**: 1/10\n\n   **Line Number**: 1\n\n   **Bug Type**: CPU\n\n   **Description**: The 'Expected' field in the TestCase struct can be of any type. This might lead to unnecessary type assertions or reflections which can be CPU intensive.\n\n   **Solution**: Consider using a more specific type for the 'Expected' field if possible. If a generic type is necessary, consider using an interface that defines the expected behavior of the 'Expected' field.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 1,
+                "severity": 2,
+                "bugType": "Memory",
+                "description": "The TestCase struct uses pointers for the Tool and ToolContext fields. This can lead to potential memory overhead if not handled properly, as each new pointer requires additional memory allocation.",
+                "solution": "Consider if the Tool and ToolContext fields need to be pointers. If they do not need to be modified, it would be more memory efficient to use the actual value instead of a pointer. If they do need to be modified, consider using a design pattern that reduces the need for pointers, such as the builder pattern."
+              },
+              {
+                "lineNumber": 1,
+                "severity": 1,
+                "bugType": "CPU",
+                "description": "The 'Expected' field in the TestCase struct can be of any type. This might lead to unnecessary type assertions or reflections which can be CPU intensive.",
+                "solution": "Consider using a more specific type for the 'Expected' field if possible. If a generic type is necessary, consider using an interface that defines the expected behavior of the 'Expected' field."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:08:05 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 11\n\n   **Bug Type**: Data Privacy\n\n   **Description**: The 'TestCase' struct contains 'Input' and 'Expected' fields which could potentially hold sensitive data. There are no apparent mechanisms in place to ensure that this data is handled securely and in compliance with GDPR, PCI DSS, and HIPAA regulations.\n\n   **Solution**: Implement data encryption, anonymization, or pseudonymization techniques to protect sensitive data. Ensure that any data stored or transmitted is done so securely and in compliance with relevant regulations. Implement access controls to restrict access to sensitive data.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 11,
+                "severity": 7,
+                "bugType": "Data Privacy",
+                "description": "The 'TestCase' struct contains 'Input' and 'Expected' fields which could potentially hold sensitive data. There are no apparent mechanisms in place to ensure that this data is handled securely and in compliance with GDPR, PCI DSS, and HIPAA regulations.",
+                "solution": "Implement data encryption, anonymization, or pseudonymization techniques to protect sensitive data. Ensure that any data stored or transmitted is done so securely and in compliance with relevant regulations. Implement access controls to restrict access to sensitive data."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package structs_test\n\nimport (\n\t\"testing\"\n\n\t\"github.com/jt0/gomer/_test/assert\"\n\t\"github.com/jt0/gomer/gomerr\"\n\t\"github.com/jt0/gomer/structs\"\n)\n\ntype TestCase struct {\n\tName     string\n\tTool     *structs.Tool\n\tContext  *structs.ToolContext\n\tInput    interface{}\n\tExpected interface{} // can be the same type as output or a gomerr.Gomerr\n}\n",
@@ -13,7 +97,115 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 3:04:50 PM PDT\n\nThis is a function in Go (Golang) that is used to run a set of tests. It's a standard pattern in Go testing. This function takes in a pointer to a testing object (`t *testing.T`) and a slice of `TestCase` objects (`tests []TestCase`). \n\nThe `TestCase` is a custom type, which is not defined in this snippet, but it likely contains fields such as `Name`, `Input`, `Context`, `Tool`, and `Expected` based on how they are used in the function.\n\nThe function iterates over each test case in the `tests` slice. For each test case, it runs a subtest using the `t.Run` method, passing in the test case's name and a function that conducts the test.\n\nThe test applies some tools to the input of the test case and context using the `structs.ApplyTools` function. The result is stored in the `ge` variable.\n\nThe `Expected` field of the test case is then checked. If it is not of type `gomerr.Gomerr`, it means no error is expected. So, it asserts that `ge` is a success and that the input has not been modified.\n\nIf an error is expected (`Expected` is of type `gomerr.Gomerr`), it asserts that `ge` is of the same error type as expected.\n\nThe `assert` functions come from a testing library (not shown in this code) and are used to check if certain conditions hold. If they do not, the test will fail.\n\nThe algorithm used here is quite straightforward - it's a loop that iterates over each test case and runs the tests, checking the results against the expected outcomes.\n\nFor more information on testing in Go, you can refer to the following resources:\n\n- [Testing in Go](https://go.dev/blog/table-driven-tests)\n- [Package testing](https://golang.org/pkg/testing/)\n- [Assert package in Go](https://pkg.go.dev/github.com/stretchr/testify/assert)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 3:05:05 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Loop fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Test fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle Error fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart \u0001 ;\nLoop-->Test \u0001 ;\nTest-->Error{Is expected error?};\nError-- Yes -->AssertError \u0001 ;\nError-- No -->AssertSuccess \u0001 ;\nAssertError-->End \u0001 ;\nAssertSuccess-->End;\nEnd \u0001 -->Loop;\n```\n\nThe control flow graph for the `RunTests` function is as follows:\n\n1. The control flow starts at the `Start` node.\n2. The code enters a loop to iterate over the `tests` array.\n3. Inside the loop, the code runs the test by calling the `Run` function with the test case parameters.\n4. After running the test, the code checks if the expected error is of type `gomerr.Gomerr`.\n5. If the expected error is not of type `gomerr.Gomerr`, the code asserts that the test result is a success and the input matches the expected output.\n6. If the expected error is of type `gomerr.Gomerr`, the code asserts that the test result is an error and the error type matches the expected error type.\n7. After the assertion, the control flow returns to the loop to process the next test case.\n8. The control flow continues in this loop until all test cases have been processed.\n9. Finally, the control flow reaches the `End` node, indicating the end of the function.\n\nThe primary path through the code is the non-error path, where the expected error is not of type `gomerr.Gomerr`. This path is shown with the primary style. The error path, where the expected error is of type `gomerr.Gomerr`, is shown with the error style."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:06:05 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:07:45 PM PDT\n\n1. **Severity**: 3/10\n\n   **Line Number**: 36\n\n   **Bug Type**: CPU\n\n   **Description**: The use of reflection in the ApplyTools function can be computationally expensive and slow down performance, especially if the 'tests' slice is large.\n\n   **Solution**: Consider if there's a way to achieve the same result without using reflection. If reflection is necessary, try to minimize its use and consider caching results if the same operations are performed multiple times.\n\n\n2. **Severity**: 2/10\n\n   **Line Number**: 38\n\n   **Bug Type**: Memory\n\n   **Description**: The assert.Equals function may create a deep copy of tt.Input and tt.Expected. If these are large data structures, this could result in high memory usage.\n\n   **Solution**: Consider using a more efficient comparison function that doesn't require making a deep copy of the data structures. Alternatively, if the data structures are not expected to be mutated, consider using shared pointers to them instead of copying.\n\n\n3. **Severity**: 2/10\n\n   **Line Number**: 39\n\n   **Bug Type**: CPU\n\n   **Description**: The ErrorType function may use reflection, which can be computationally expensive and slow down performance.\n\n   **Solution**: Consider if there's a way to achieve the same result without using reflection. If reflection is necessary, try to minimize its use and consider caching results if the same operations are performed multiple times.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": [
+              {
+                "lineNumber": 19,
+                "severity": 3,
+                "bugType": "CPU",
+                "description": "The use of reflection in the ApplyTools function can be computationally expensive and slow down performance, especially if the 'tests' slice is large.",
+                "solution": "Consider if there's a way to achieve the same result without using reflection. If reflection is necessary, try to minimize its use and consider caching results if the same operations are performed multiple times."
+              },
+              {
+                "lineNumber": 21,
+                "severity": 2,
+                "bugType": "Memory",
+                "description": "The assert.Equals function may create a deep copy of tt.Input and tt.Expected. If these are large data structures, this could result in high memory usage.",
+                "solution": "Consider using a more efficient comparison function that doesn't require making a deep copy of the data structures. Alternatively, if the data structures are not expected to be mutated, consider using shared pointers to them instead of copying."
+              },
+              {
+                "lineNumber": 22,
+                "severity": 2,
+                "bugType": "CPU",
+                "description": "The ErrorType function may use reflection, which can be computationally expensive and slow down performance.",
+                "solution": "Consider if there's a way to achieve the same result without using reflection. If reflection is necessary, try to minimize its use and consider caching results if the same operations are performed multiple times."
+              }
+            ]
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 3:08:31 PM PDT\n\n1. **Severity**: 8/10\n\n   **Line Number**: 38\n\n   **Bug Type**: GDPR\n\n   **Description**: The function `ApplyTools` could potentially be processing personal data without explicit user consent, which is a violation of GDPR.\n\n   **Solution**: Ensure explicit user consent before processing personal data. Implement checks to confirm user consent before processing.\n\n\n2. **Severity**: 8/10\n\n   **Line Number**: 38\n\n   **Bug Type**: HIPAA\n\n   **Description**: The function `ApplyTools` could potentially be processing Protected Health Information (PHI) without implementing necessary security measures, which is a violation of HIPAA.\n\n   **Solution**: Implement necessary security measures such as encryption when processing PHI. Also, ensure compliance with HIPAA's minimum necessary standard.\n\n\n3. **Severity**: 7/10\n\n   **Line Number**: 44\n\n   **Bug Type**: PCI DSS\n\n   **Description**: The error handling in this function could potentially expose sensitive information, which is a violation of PCI DSS.\n\n   **Solution**: Ensure that error messages do not expose sensitive information. Implement proper logging and masking of sensitive information in error messages.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 21,
+                "severity": 8,
+                "bugType": "GDPR",
+                "description": "The function `ApplyTools` could potentially be processing personal data without explicit user consent, which is a violation of GDPR.",
+                "solution": "Ensure explicit user consent before processing personal data. Implement checks to confirm user consent before processing.",
+                "webLink": "https://gdpr-info.eu/issues/consent/"
+              },
+              {
+                "lineNumber": 21,
+                "severity": 8,
+                "bugType": "HIPAA",
+                "description": "The function `ApplyTools` could potentially be processing Protected Health Information (PHI) without implementing necessary security measures, which is a violation of HIPAA.",
+                "solution": "Implement necessary security measures such as encryption when processing PHI. Also, ensure compliance with HIPAA's minimum necessary standard.",
+                "webLink": "https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html"
+              },
+              {
+                "lineNumber": 27,
+                "severity": 7,
+                "bugType": "PCI DSS",
+                "description": "The error handling in this function could potentially expose sensitive information, which is a violation of PCI DSS.",
+                "solution": "Ensure that error messages do not expose sensitive information. Implement proper logging and masking of sensitive information in error messages.",
+                "webLink": "https://www.pcisecuritystandards.org/pci_security/maintaining_payment_security"
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\nfunc RunTests(t *testing.T, tests []TestCase) {\n\tfor _, tt := range tests {\n\t\tt.Run(tt.Name, func(t *testing.T) {\n\t\t\tge := structs.ApplyTools(tt.Input, tt.Context, tt.Tool)\n\t\t\tif expectedError, ok := tt.Expected.(gomerr.Gomerr); !ok {\n\t\t\t\tassert.Success(t, ge)\n\t\t\t\tassert.Equals(t, tt.Expected, tt.Input)\n\t\t\t} else {\n\t\t\t\tassert.ErrorType(t, ge, expectedError, \"Error did not match expected type\")\n\t\t\t}\n\t\t})\n\t}\n}\n",

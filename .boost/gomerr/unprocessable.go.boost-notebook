@@ -1,7 +1,76 @@
 {
   "cells": [
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 7:09:55 PM PDT\n\nThe provided code snippet is written in Go, a statically typed, compiled programming language developed by Google. It defines a new error type in the \"gomerr\" package. \n\n`package gomerr`\n\nThis line declares the package name for this file. All Go files belong to a package, and a package is the way to group functions, types, and variables together. The package here is named \"gomerr\". \n\n`type UnprocessableError struct {`\n\nThis line declares a new type named \"UnprocessableError\". This type is a struct, which is a collection of fields. Structs are used to group together zero or more named values of arbitrary types as a single entity. Each value in a struct is called a field. \n\n`Gomerr`\n\nThis field is of type Gomerr. It's an embedded field, also known as anonymous field. When we embed a type into a struct, the struct can access all the methods that are associated with that type (also known as promoting methods). This suggests that there is another struct type named Gomerr defined elsewhere in this package or another package, and UnprocessableError will have all the methods that Gomerr has.\n\n`Reason string`\n\nThis line declares a field named \"Reason\" of type string. This field is likely used to store a human-readable reason why the error occurred. \n\n`Value  interface{} `gomerr:\"include_type\"` `\n\nThis line declares a field named \"Value\" of type interface{}. In Go, an interface{} type is the empty interface. It has no methods, so all types implement the empty interface. This means that you can store any value in the Value field. \n\nThe `gomerr:\"include_type\"` is a struct tag. Struct tags are string-based metadata and are made visible through a reflection interface and take part in no language semantics. They are used to attach metadata to the fields of a struct, which can be acquired using reflection. You can think of them as annotations in other languages like Java.\n\nThe struct tag here suggests that there might be some processing in the gomerr package that handles this tag, likely including the type of the Value in the error message or some kind of processing.\n\nIn summary, the UnprocessableError struct is a custom error type that includes a reason for the error and the value that caused the error. This can be useful in providing more context about the error to the caller.\n\nFor more information about Go struct and interfaces, you can refer to the following resources:\n\n- [A Tour of Go - Structs](https://tour.golang.org/moretypes/2)\n- [Go by Example: Structs](https://gobyexample.com/structs)\n- [A Tour of Go - Interfaces](https://tour.golang.org/methods/9)\n- [Go by Example: Interfaces](https://gobyexample.com/interfaces)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 7:10:26 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\n```\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:10:46 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:10:59 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:11:22 PM PDT\n\n1. **Severity**: 7/10\n\n   **Line Number**: 1\n\n   **Bug Type**: Data Exposure\n\n   **Description**: The struct 'UnprocessableError' has a field 'Value' that is tagged to include its type during error reporting. This can potentially lead to exposure of sensitive data if the value contains such information.\n\n   **Solution**: Avoid including sensitive data in error messages. If the 'Value' field is expected to contain sensitive data, remove the 'gomerr:\"include_type\"' tag or implement a custom error formatting method that excludes sensitive data.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 1,
+                "severity": 7,
+                "bugType": "Data Exposure",
+                "description": "The struct 'UnprocessableError' has a field 'Value' that is tagged to include its type during error reporting. This can potentially lead to exposure of sensitive data if the value contains such information.",
+                "solution": "Avoid including sensitive data in error messages. If the 'Value' field is expected to contain sensitive data, remove the 'gomerr:\"include_type\"' tag or implement a custom error formatting method that excludes sensitive data."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "0",
       "value": "package gomerr\n\ntype UnprocessableError struct {\n\tGomerr\n\tReason string\n\tValue  interface{} `gomerr:\"include_type\"`\n}\n",
@@ -13,7 +82,76 @@
       }
     },
     {
-      "outputs": [],
+      "outputs": [
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Code Explanation\n\nLast Updated: Thursday, September 7, 2023 at 7:10:11 PM PDT\n\nThis Go code snippet is a function named `Unprocessable` which returns a pointer to an instance of `UnprocessableError`. \n\nThis function takes two parameters: \n1. `reason`: a string that presumably describes why the error occurred.\n2. `value`: an interface{} type, which means it can accept any type of value.\n\nHere is a detailed breakdown of what the function does:\n\n1. It creates a new instance of `UnprocessableError` using the `new` keyword. The `new` function in Go allocates zeroed storage for a new item of a specified type and returns its address, a value of type `*T`.\n\n2. The `Build` function is then called with three arguments: the newly created `UnprocessableError`, the `reason`, and the `value`. The `Build` function is not shown in this snippet, but it presumably constructs an `UnprocessableError` object with the provided `reason` and `value`.\n\n3. The result of the `Build` function is then type-asserted to be a pointer to `UnprocessableError` using `.(*UnprocessableError)`. This is necessary because the `Build` function may return a value of type `interface{}`, and we need to assert that the returned value is indeed a pointer to `UnprocessableError`.\n\n4. Finally, the function returns the constructed `UnprocessableError`.\n\nThe algorithm used here is straightforward: create a new error object, build it with the provided parameters, and return it.\n\nThe code appears to be consistent with Go's standard conventions for error handling. One of Go's idioms is to handle errors where they occur, and this function helps facilitate that by providing a way to build and return a detailed error object.\n\nFor more information on error handling in Go, you can refer to the following resources:\n\n- [Go by Example: Errors](https://gobyexample.com/errors)\n- [Effective Go: Errors](https://golang.org/doc/effective_go#errors)"
+            }
+          ],
+          "metadata": {
+            "outputType": "explainCode",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Flow Diagram\n\nLast Updated: Thursday, September 7, 2023 at 7:10:32 PM PDT\n\n```mermaid\ngraph TD;\nstyle Start fill:#228B22, stroke:#000000, stroke-width:2px;\nstyle ExampleProcess fill:#228B22, stroke:#000000, stroke-width:4px;\nstyle ExampleErrorPath fill:#B22222, stroke:#000000, stroke-width:2px;\n\nStart-->ExampleProcess;\nStart-->ExampleErrorPath;\nExampleProcess-->End;\nExampleErrorPath-->End;\n```\n\nThe control flow graph for the provided code snippet is a simple linear flow. There are no external library calls or non-standard functions present in the code."
+            }
+          ],
+          "metadata": {
+            "outputType": "flowDiagram",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Security Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:10:49 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "bugAnalysisList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Performance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:11:02 PM PDT\n\n**No bugs found**"
+            }
+          ],
+          "metadata": {
+            "outputType": "performanceList",
+            "details": []
+          }
+        },
+        {
+          "items": [
+            {
+              "mime": "text/markdown",
+              "data": "\n\n---\n\n### Boost Source-Level Data and Privacy Compliance Analysis\n\nLast Updated: Thursday, September 7, 2023 at 7:11:29 PM PDT\n\n1. **Severity**: 5/10\n\n   **Line Number**: 16\n\n   **Bug Type**: Data Exposure\n\n   **Description**: The function 'Unprocessable' could potentially expose sensitive data. The 'reason' and 'value' parameters are directly included in the error message without any form of sanitization or filtering.\n\n   **Solution**: Avoid including sensitive data in error messages. If necessary, sanitize or filter the data before including it in the error message. Consider using a logging system that can safely handle sensitive data.\n\n\n"
+            }
+          ],
+          "metadata": {
+            "outputType": "complianceCodeList",
+            "details": [
+              {
+                "lineNumber": 9,
+                "severity": 5,
+                "bugType": "Data Exposure",
+                "description": "The function 'Unprocessable' could potentially expose sensitive data. The 'reason' and 'value' parameters are directly included in the error message without any form of sanitization or filtering.",
+                "solution": "Avoid including sensitive data in error messages. If necessary, sanitize or filter the data before including it in the error message. Consider using a logging system that can safely handle sensitive data."
+              }
+            ]
+          }
+        }
+      ],
       "languageId": "go",
       "id": "1",
       "value": "\nfunc Unprocessable(reason string, value interface{}) *UnprocessableError {\n\treturn Build(new(UnprocessableError), reason, value).(*UnprocessableError)\n}\n",
